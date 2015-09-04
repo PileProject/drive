@@ -27,7 +27,7 @@ import com.pileproject.drivecommand.model.nxt.NxtProtocol;
 
 
 public class NxtExecutionActivity extends ExecutionActivityBase {
-	private Machine mMachine;
+	private NxtMachine mMachine;
 
 	@Override
 	protected void connectToDevice() {
@@ -62,14 +62,14 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 	
 	@Override
 	protected DeviceController getDeviceController() {
-		NxtController controller = new NxtController(mMachine);
-		controller.setMotorPower(PileController.MotorKind.LeftMotor,
-				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
-						SetLeftMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
-		controller.setMotorPower(PileController.MotorKind.RightMotor,
-				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
-						SetRightMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
-		return controller;
-		return new NxtController(new NxtControllerBuilder(this));
+		return new NxtController(mMachine, new NxtControllerBuilder(this));
+//		NxtController controller = new NxtController(mMachine);
+//		controller.setMotorPower(PileController.MotorKind.LeftMotor,
+//				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
+//						SetLeftMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
+//		controller.setMotorPower(PileController.MotorKind.RightMotor,
+//				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
+//						SetRightMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
+//		return controller;
 	}
 }

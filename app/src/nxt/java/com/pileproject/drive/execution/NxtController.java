@@ -60,7 +60,8 @@ public class NxtController implements MachineController {
 	 * Default constructor.
 	 * binds each sensor and motor to their default port
 	 */
-	public NxtController() {
+	public NxtController(NxtMachine machine) {
+		mMachine = machine;
 		rightMotor = machine.createMotor(NxtMotorPort.PORT_B);
 		leftMotor = machine.createMotor(MotorPort.PORT_C);
 		
@@ -69,7 +70,8 @@ public class NxtController implements MachineController {
 		lineSensor = machine.createLineSensor(NxtSensorPort.PORT_3);
 	}
 	
-	public NxtController(NxtControllerBuilder builder) {
+	public NxtController(NxtMachine machine, NxtControllerBuilder builder) {
+		mMachine = machine;
 		setMotorPort(builder);
 		setSensorPort(builder);
 	}
