@@ -59,8 +59,8 @@ public class NxtThresholdFragment extends Fragment {
 		});
 		
 		final int savedLightValue = SharedPreferencesWrapper.loadIntPreference(activity, IfNXTIsOutOfLineBlock.class.getName(), -1);
-		mLightSensorSeek.setMax(NxtController.SensorProperty.LightSensor.PctMax);
-		mLightSensorSeek.setProgress((savedLightValue == -1) ? NxtController.SensorProperty.LightSensor.DEFAULT : savedLightValue);
+		mLightSensorSeek.setMax(NxtController.SensorProperty.LineSensor.PctMax);
+		mLightSensorSeek.setProgress((savedLightValue == -1) ? NxtController.SensorProperty.LineSensor.DEFAULT : savedLightValue);
 		
 		mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
 

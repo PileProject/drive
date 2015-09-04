@@ -21,7 +21,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
@@ -46,7 +46,7 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		// need multiply 10 because getdB returns 10 times value 
 		// the comment is messed up
 		condition.pushSelectionResult(((NxtController) controller).soundSensor.getdB() > mThreshold * 10);

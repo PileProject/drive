@@ -23,25 +23,28 @@ import android.content.Intent;
 
 import com.pileproject.drive.comm.BluetoothCommunicator;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drivecommand.model.nxt.NxtProtocol;
 
 
 public class NxtExecutionActivity extends ExecutionActivityBase {
-	
+	private Machine mMachine;
+
 	@Override
 	protected void connectToDevice() {
 		// Get mac address
-		String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
+		String address
+				= SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
 		
 		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothDevice device = adapter.getRemoteDevice(address);
-		BluetoothCommunicator bt = new BluetoothCommunicator(device);
-		
+		mMachine = new NxtMachine(new NxtProtocol(new BluetoothCommunicator(device)));
+
 		showConnectionProgressDialog(); // Create a ProgressDialog
 		
 		// Try to connect
 		new Thread(() -> {
             try {
-                bt.open();
+				mMachine.connect();
 
                 // Inform this activity has already connected to nxt
                 Intent intent = new Intent();
@@ -59,6 +62,14 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 	
 	@Override
 	protected DeviceController getDeviceController() {
+		NxtController controller = new NxtController(mMachine);
+		controller.setMotorPower(PileController.MotorKind.LeftMotor,
+				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
+						SetLeftMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
+		controller.setMotorPower(PileController.MotorKind.RightMotor,
+				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
+						SetRightMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
+		return controller;
 		return new NxtController(new NxtControllerBuilder(this));
 	}
 }

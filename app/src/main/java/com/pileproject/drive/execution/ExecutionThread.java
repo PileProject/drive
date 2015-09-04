@@ -49,7 +49,7 @@ public class ExecutionThread extends Thread {
 	private DBManager mManager;
 	
 	private ExecutionCondition mCondition;
-	private DeviceController mController;
+	private MachineController mController;
 	
 	private Handler mUiHandler;
 	private boolean mStop;
@@ -63,7 +63,7 @@ public class ExecutionThread extends Thread {
 	 * @param uiHandler
 	 *            Handler for controlling the showing progress layout
 	 */
-	public ExecutionThread(Context context, Handler uiHandler, DeviceController controler) {
+	public ExecutionThread(Context context, Handler uiHandler, MachineController controler) {
 		super();
 		mManager = new DBManager(context);
 		mCondition = new ExecutionCondition();

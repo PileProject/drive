@@ -21,7 +21,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.execution.ExecutionCondition;
 
@@ -39,7 +39,7 @@ public class IfNXTWasTouchedBlock extends SelectionBlock {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		condition.pushSelectionResult(((NxtController) controller).touchSensor.isPressed());
 		return 0;
 	}

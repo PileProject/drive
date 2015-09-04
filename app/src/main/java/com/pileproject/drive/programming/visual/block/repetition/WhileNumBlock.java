@@ -23,7 +23,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.util.Unit;
 
@@ -71,7 +71,7 @@ public class WhileNumBlock extends RepetitionHasNumText {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		int index = condition.programCount;
 		for (int i = 1; i < getNum(); i++) {
 			condition.whileStack.push(index);

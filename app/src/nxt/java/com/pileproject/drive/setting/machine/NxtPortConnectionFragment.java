@@ -53,7 +53,7 @@ public class NxtPortConnectionFragment extends Fragment {
 		
 		preferences.put("sensorPort1", NxtController.SensorProperty.SENSOR_TOUCH);
 		preferences.put("sensorPort2", NxtController.SensorProperty.SENSOR_SOUND);
-		preferences.put("sensorPort3", NxtController.SensorProperty.SENSOR_LIGHT);
+		preferences.put("sensorPort3", NxtController.SensorProperty.SENSOR_LINE);
 		preferences.put("motorPortB", NxtController.MotorProperty.MOTOR_LEFT);
 		preferences.put("motorPortC", NxtController.MotorProperty.MOTOR_RIGHT);
 		

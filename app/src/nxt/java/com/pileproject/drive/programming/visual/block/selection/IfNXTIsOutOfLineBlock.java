@@ -21,7 +21,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
@@ -47,7 +47,7 @@ public class IfNXTIsOutOfLineBlock extends SelectionBlock {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		// comment is weird.
 		// getLightPercent returns tenfold value
 		condition.pushSelectionResult(((NxtController) controller).lightSensor.getLightPercent() > mThreshold * 10);

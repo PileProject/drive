@@ -21,7 +21,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 
 /**
@@ -38,7 +38,7 @@ public class WhileForeverBlock extends RepetitionBlock {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		int index = condition.programCount;
 		condition.whileStack.push(index + FOREVER_WHILE_OFFSET); // push with offset
 		condition.beginningOfCurrentWhileLoop = index;	// update previous index

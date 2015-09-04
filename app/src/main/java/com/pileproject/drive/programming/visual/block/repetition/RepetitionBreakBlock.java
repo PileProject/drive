@@ -21,7 +21,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
@@ -44,7 +44,7 @@ public class RepetitionBreakBlock extends BlockBase {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecutionCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		if (!condition.whileStack.isEmpty()) {
 			// Abandon the indices of current while loop
 			int index = condition.whileStack.peek();	// target index

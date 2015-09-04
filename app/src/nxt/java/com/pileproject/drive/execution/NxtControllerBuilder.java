@@ -26,76 +26,61 @@ import com.pileproject.drivecommand.machine.output.Motor;
 import java.util.Deque;
 import java.util.LinkedList;
 
-
-
-
 public class NxtControllerBuilder {
-	private SparseArray<SensorPort> mSensorPorts = null;
-	private SparseArray<Motor> mMotors = null;
-	
-	private Deque<SensorPort> mUnusedSensorPorts = null;
-	private Deque<Motor> mUnusedMotors = null;
+	private SparseArray<NxtInputPort> mSensorPorts = null;
+	private SparseArray<NxtOutputPort> mMotorPorts = null;
 
 	public NxtControllerBuilder(Context context) {
-		mSensorPorts = new SparseArray<SensorPort>();
-		mMotors = new SparseArray<Motor>();
-		
-		mUnusedSensorPorts = new LinkedList<SensorPort>();
-		mUnusedMotors = new LinkedList<Motor>();
+		mSensorPorts = new SparseArray<>();
+		mMotorPorts = new SparseArray<>();
 		
 		loadSensorsFromPreferences(context);
 		loadMotorsFromPreferences(context);
 	}
 	
-	public SensorPort getSensorPort(int sensorType) {
+	public NxtInputPort getSensorPort(int sensorType) {
 		return mSensorPorts.get(sensorType);
 	}
 
-	public Motor getMotorPort(int motorType) {
-		return mMotors.get(motorType);
+	public NxtOutputPort getMotorPort(int motorType) {
+		return mMotorPorts.get(motorType);
 	}
 
-	public SensorPort getFirstUnusedSensorPort(int sensorType) {
-		return mUnusedSensorPorts.pop();
-	}
-	
-	public Motor getFirstUnusedMotor(int motorType) {
-		return mUnusedMotors.pop();
-	}
-	
 	private void loadSensorsFromPreferences(Context context) {
-		final int notAssigned = NxtController.SensorProperty.SENSOR_UNUSED;
+		final int notAssigned = NxtMachine.SensorProperty.SENSOR_UNUSED;
 
-		final SensorPort[] sensorPorts = { SensorPort.S1, SensorPort.S2, SensorPort.S3, SensorPort.S4 };
-		final String[] sensorPortPrefTags = { "sensorPort1", "sensorPort2", "sensorPort3", "sensorPort4" };
+		final NxtInputPort[] sensorPorts
+				= { NxtInputPort.PORT_1,
+					NxtInputPort.PORT_2,
+                    NxtInputPort.PORT_3,
+                    NxtInputPort.PORT_4};
+		final String[] sensorPortPrefTags
+				= { NxtController.TAG_SENSOR_PORT_1,
+					NxtController.TAG_SENSOR_PORT_2,
+					NxtController.TAG_SENSOR_PORT_3,
+					NxtController.TAG_SENSOR_PORT_4 };
 
-		for (int i = 0; i < sensorPortPrefTags.length; ++ i) {
+		for (int i = 0; i < sensorPortPrefTags.length; ++i) {
 			int key = SharedPreferencesWrapper.loadIntPreference(context, sensorPortPrefTags[i], notAssigned);
-			
-			if (key == notAssigned) {
-				mUnusedSensorPorts.push(sensorPorts[i]);
-				continue;
-			}
-			
 			mSensorPorts.put(key, sensorPorts[i]);
 		}
 	}
 	
 	private void loadMotorsFromPreferences(Context context) {
-		final int notAssigned = NxtController.MotorProperty.MOTOR_UNUSED;
+		final int notAssigned = NxtMachine.MotorProperty.MOTOR_UNUSED;
 		
-		final Motor[] motors = { Motor.A, Motor.B, Motor.C };
-		final String[] motorPortPrefTags = { "motorPortA", "motorPortB", "motorPortC" };
-		
-		for (int i = 0; i < motorPortPrefTags.length; ++ i) {
+		final NxtOutputPort[] motorPorts
+				= { NxtOutputPort.PORT_A,
+					NxtOutputPort.PORT_B,
+					NxtOutputPort.PORT_C };
+		final String[] motorPortPrefTags
+				= { NxtController.TAG_MOTOR_PORT_A,
+                    NxtController.TAG_MOTOR_PORT_B,
+                    NxtController.TAG_MOTOR_PORT_C };
+
+		for (int i = 0; i < motorPortPrefTags.length; ++i) {
 			int key = SharedPreferencesWrapper.loadIntPreference(context, motorPortPrefTags[i], notAssigned);
-			
-			if (key == notAssigned) {
-				mUnusedMotors.add(motors[i]);
-				continue;
-			}
-			
-			mMotors.put(key, motors[i]);
+			mMotors.put(key, motorPorts[i]);
 		}
 	}
 }

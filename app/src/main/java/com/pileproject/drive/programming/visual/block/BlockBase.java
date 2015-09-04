@@ -20,7 +20,7 @@ package com.pileproject.drive.programming.visual.block;
 import android.content.Context;
 import android.widget.RelativeLayout;
 
-import com.pileproject.drive.execution.DeviceController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.ExecutionCondition;
 
 /**
@@ -50,7 +50,7 @@ public abstract class BlockBase extends RelativeLayout {
 	 *            Condition of the executing program
 	 * @return 
 	 */
-	public abstract int action(DeviceController controller, ExecutionCondition condition);
+	public abstract int action(MachineController controller, ExecutionCondition condition);
 	
 	/**
 	 * Return class to check a program is correct or not

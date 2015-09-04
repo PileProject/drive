@@ -33,7 +33,7 @@ public class NxtSensorPortTextView extends PortTextView {
 
 	public static String getSensorName(Context context, int sensorType) {
 		switch (sensorType) {
-		case NxtController.SensorProperty.SENSOR_LIGHT:
+		case NxtController.SensorProperty.SENSOR_LINE:
 			return context.getString(R.string.sensors_light);
 		case NxtController.SensorProperty.SENSOR_SOUND:
 			return context.getString(R.string.sensors_sound);
@@ -46,7 +46,7 @@ public class NxtSensorPortTextView extends PortTextView {
 	
 	public static int getSensorColor(int sensorType) {
 		switch (sensorType) {
-		case NxtController.SensorProperty.SENSOR_LIGHT:
+		case NxtController.SensorProperty.SENSOR_LINE:
 			return Color.rgb(50, 142, 183);
 		case NxtController.SensorProperty.SENSOR_TOUCH:
 			return Color.rgb(65, 163, 86);

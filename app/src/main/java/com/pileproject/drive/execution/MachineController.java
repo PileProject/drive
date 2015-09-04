@@ -17,7 +17,7 @@
 
 package com.pileproject.drive.execution;
 
-public interface DeviceController {
+public interface MachineController {
 	/***
 	 * e.g. halt motors 
 	 */

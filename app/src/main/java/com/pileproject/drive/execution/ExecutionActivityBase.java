@@ -33,9 +33,9 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.block.BlockFactory;
-import com.pileproject.drive.block.layout.BlockSpaceLayout;
-import com.pileproject.drive.block.layout.ProgressSpaceManager;
+import com.pileproject.drive.programming.visual.block.BlockFactory;
+import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
+import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
 
 /**
  * this Activity shows the execution of program
@@ -228,7 +228,7 @@ public abstract class ExecutionActivityBase extends Activity {
 		}
 	}
 	
-	protected abstract DeviceController getDeviceController();
+	protected abstract MachineController getDeviceController();
 
 	private void showConnectionErrorDialog() {
 		AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this)
