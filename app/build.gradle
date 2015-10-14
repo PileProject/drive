@@ -42,13 +42,13 @@ android {
 repositories {
     apply plugin: 'maven'
 
-    maven { url 'https://github.com/pileproject/drivecommand/raw/master/' }
+    maven { url 'http://pileproject.github.io/drivecommand/' }
 }
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:22.2.0'
-    compile 'com.pileproject.drivecommand:drivecommand:1.0.1'
-
+    compile 'com.pileproject:drivecommand:2.0.1'
+    
     testCompile 'junit:junit:4.12'
 }
