@@ -209,7 +209,7 @@ public class DBManager {
 
     private ArrayList<BlockBase> loadBlocks(Cursor c) {
         int numRows = c.getCount();
-        ArrayList<BlockBase> blocks = new ArrayList<BlockBase>(numRows);
+        ArrayList<BlockBase> blocks = new ArrayList<>(numRows);
 
         c.moveToFirst();
         for (int i = 0; i < numRows; i++) {

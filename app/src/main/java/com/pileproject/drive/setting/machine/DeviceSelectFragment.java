@@ -52,7 +52,6 @@ import com.pileproject.drive.util.SharedPreferencesWrapper;
 import java.io.IOException;
 import java.lang.reflect.Method;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.UUID;
 
@@ -153,7 +152,7 @@ public class DeviceSelectFragment extends Fragment {
             }
         });
 
-        mBondedDevices = new LinkedList<BluetoothDevice>();
+        mBondedDevices = new LinkedList<>();
         mBondedDevicesAdapter = new DeviceListAdapter(mActivity, R.layout.view_devicelist, mBondedDevices);
         mBondedDevicesListView.setAdapter(mBondedDevicesAdapter);
         mBondedDevicesListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
@@ -169,7 +168,7 @@ public class DeviceSelectFragment extends Fragment {
             }
         });
 
-        mNewDevices = new LinkedList<BluetoothDevice>();
+        mNewDevices = new LinkedList<>();
         mNewDevicesAdapter = new DeviceListAdapter(mActivity, R.layout.view_devicelistitem, mNewDevices);
         mNewDevicesListView.setAdapter(mNewDevicesAdapter);
         mNewDevicesListView.setOnItemClickListener(new OnItemClickListener() {
@@ -194,11 +193,11 @@ public class DeviceSelectFragment extends Fragment {
 
         // check whether bluetooth function is available or not
         if (mBtAdapter == null) {
-            ConfirmationDialogFragment btDiag =
+            ConfirmationDialogFragment btDia =
                     ConfirmationDialogFragment.newInstance(getString(R.string.deviceselect_needBt_title),
                                                            getString(R.string.deviceselect_needBt_message));
 
-            btDiag.setOnClickListener(new DialogInterface.OnClickListener() {
+            btDia.setOnClickListener(new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     // turn discover button unable
@@ -206,7 +205,7 @@ public class DeviceSelectFragment extends Fragment {
                 }
             });
 
-            btDiag.show(getFragmentManager(), "dialog");
+            btDia.show(getFragmentManager(), "dialog");
         } else {
             getBondedDevices();
         }
@@ -265,9 +264,7 @@ public class DeviceSelectFragment extends Fragment {
         }
 
         int index = 0;
-        for (Iterator<BluetoothDevice> itr = devices.iterator(); itr.hasNext(); ) {
-            BluetoothDevice btdev = itr.next();
-
+        for (BluetoothDevice btdev : devices) {
             if (btdev.getAddress().equals(address)) {
                 return index;
             }
@@ -356,8 +353,7 @@ public class DeviceSelectFragment extends Fragment {
             builder.setTitle(title);
             builder.setMessage(msg);
             builder.setPositiveButton(getString(R.string.ok), listener);
-            AlertDialog dialog = builder.create();
-            return dialog;
+            return builder.create();
         }
 
         public void setOnClickListener(
@@ -436,7 +432,7 @@ public class DeviceSelectFragment extends Fragment {
                 try {
                     // try another method
                     Method method = device.getClass().getMethod("createRfcommSocket", int.class);
-                    socket = (BluetoothSocket) method.invoke(device, Integer.valueOf(1));
+                    socket = (BluetoothSocket) method.invoke(device, 1);
                     socket.connect();
                     socket.close();
                 } catch (IOException e2) {

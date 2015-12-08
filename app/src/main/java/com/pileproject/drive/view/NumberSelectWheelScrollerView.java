@@ -56,7 +56,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
 
         mIntegralPart = (integralPart > 0) ? integralPart : 3;
         mDecimalPart = (decimalPart >= 0) ? decimalPart : 0;
-        mNumbers = new ArrayList<NumberPicker>(mIntegralPart + mDecimalPart);
+        mNumbers = new ArrayList<>(mIntegralPart + mDecimalPart);
 
         // Create LayoutParams (width = 0, height = wrap_content, weight = 1.0f)
         LayoutParams lp = new LayoutParams(0, WC);

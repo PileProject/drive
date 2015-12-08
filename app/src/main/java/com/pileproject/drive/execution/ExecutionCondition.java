@@ -52,7 +52,7 @@ public class ExecutionCondition {
      * @param result
      */
     public void pushSelectionResult(boolean result) {
-        HashMap<String, Integer> map = new HashMap<String, Integer>();
+        HashMap<String, Integer> map = new HashMap<>();
         map.put("index", programCount);    // current index
         map.put("result", result ? TRUE : FALSE);
         ifStack.push(map);

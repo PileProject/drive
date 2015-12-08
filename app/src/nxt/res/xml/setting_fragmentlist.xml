@@ -18,14 +18,14 @@
 <preference-headers xmlns:android="http://schemas.android.com/apk/res/android">
     <header
         android:id="@+id/fragment_deviceselect"
-        android:fragment="jp.mity.drivecore.setting.device.DeviceSelectFragment"
+        android:fragment="com.pileproject.drive.setting.machine.DeviceSelectFragment"
         android:title="@string/setting.deviceSelect"/>
     <header
         android:id="@+id/fragment_portconfig"
-        android:fragment="jp.mity.nxtdrive.setting.portconfig.NxtPortConfigFragment"
+        android:fragment="com.pileproject.drive.setting.machine.NxtPortConnectionFragment"
         android:title="@string/setting.portconfig"/>
     <header
         android:id="@+id/fragment_threshold"
-        android:fragment="jp.mity.nxtdrive.setting.threshold.NxtThresholdFragment"
+        android:fragment="com.pileproject.drive.setting.machine.NxtThresholdFragment"
         android:title="@string/setting.threshold"/>
 </preference-headers>

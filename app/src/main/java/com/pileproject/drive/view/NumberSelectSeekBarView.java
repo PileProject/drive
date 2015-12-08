@@ -76,16 +76,16 @@ public class NumberSelectSeekBarView extends NumberSelectView {
      * @param range               - a range users can select within this range
      * @param unit                - a unit of the value in this view
      * @param numOfIntegralDigits - number of integral digits
-     * @param numOfDecimalDigis   - number of decimal digits
+     * @param numOfDecimalDigits   - number of decimal digits
      */
     public NumberSelectSeekBarView(
-            Context context, Range<Double> range, Unit unit, int numOfIntegralDigits, int numOfDecimalDigis) {
+            Context context, Range<Double> range, Unit unit, int numOfIntegralDigits, int numOfDecimalDigits) {
         super(context, range);
 
         mUnit = unit;
 
         mNumberOfIntegralDigits = numOfIntegralDigits;
-        mNumberOfDecimalDigits = numOfDecimalDigis;
+        mNumberOfDecimalDigits = numOfDecimalDigits;
 
         View layout = LayoutInflater.from(context).inflate(R.layout.view_number_select_seekbar, this);
 

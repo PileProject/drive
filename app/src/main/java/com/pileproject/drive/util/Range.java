@@ -32,21 +32,21 @@ public class Range<T extends Comparable<T>> {
     }
 
     public static <T extends Comparable<T>> Range<T> open(T lower, T upper) {
-        return new Range<T>(lower, false, upper, false);
+        return new Range<>(lower, false, upper, false);
     }
 
     public static <T extends Comparable<T>> Range<T> closed(T lower, T upper) {
-        return new Range<T>(lower, true, upper, true);
+        return new Range<>(lower, true, upper, true);
     }
 
     public static <T extends Comparable<T>> Range<T> openClosed(
             T lower, T upper) {
-        return new Range<T>(lower, false, upper, true);
+        return new Range<>(lower, false, upper, true);
     }
 
     public static <T extends Comparable<T>> Range<T> closedOpen(
             T lower, T upper) {
-        return new Range<T>(lower, true, upper, false);
+        return new Range<>(lower, true, upper, false);
     }
 
     public boolean contains(T value) {

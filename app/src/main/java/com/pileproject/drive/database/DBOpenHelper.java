@@ -195,7 +195,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                                "NULL, " +
                                SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
                                // foreign key
-                               // (TBL_SAVED_PROGAMR)
+                               // (TBL_SAVED_PROGRAM
                                + BLOCK_NAME + " TEXT NOT NULL, "
                                // class name of block
                                + BLOCK_LEFT + " INTEGER NOT NULL, "

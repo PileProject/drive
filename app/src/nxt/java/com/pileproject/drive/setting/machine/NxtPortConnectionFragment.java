@@ -41,7 +41,7 @@ public class NxtPortConnectionFragment extends Fragment {
     private View mRootView;
 
     public static void setDefaultValueOnPreferences(Context context) {
-        Map<String, Integer> preferences = new HashMap<String, Integer>();
+        Map<String, Integer> preferences = new HashMap<>();
 
         preferences.put("sensorPort1", NxtController.SensorProperty.SENSOR_TOUCH);
         preferences.put("sensorPort2", NxtController.SensorProperty.SENSOR_SOUND);
@@ -89,7 +89,7 @@ public class NxtPortConnectionFragment extends Fragment {
                 R.id.setting_portconfig_sensor1, R.id.setting_portconfig_sensor2, R.id.setting_portconfig_sensor3,
         };
 
-        LinkedList<Integer> sensorsInUsed = new LinkedList<Integer>();
+        LinkedList<Integer> sensorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.SensorProperty.NUMBER_OF_SENSOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(sensorPortIds[i]);
             int sensorType = SharedPreferencesWrapper.loadIntPreference(context,
@@ -122,7 +122,7 @@ public class NxtPortConnectionFragment extends Fragment {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,
         };
 
-        LinkedList<Integer> motorsInUsed = new LinkedList<Integer>();
+        LinkedList<Integer> motorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.MotorProperty.NUMBER_OF_MOTOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(motorPortIds[i]);
             int motorType = SharedPreferencesWrapper.loadIntPreference(context,

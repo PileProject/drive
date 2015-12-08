@@ -38,9 +38,9 @@ public enum Unit {
      */
     public static String getUnitString(
             Context context, Unit unit, String format, double value) {
-        final String formatedValue = String.format(format, value);
+        final String formattedValue = String.format(format, value);
 
-        final int quantity = getQuantityOfValueInStringFormat(formatedValue, format);
+        final int quantity = getQuantityOfValueInStringFormat(formattedValue, format);
 
         switch (unit) {
             case Second:
@@ -52,7 +52,7 @@ public enum Unit {
 
             case NumberOfTimes:
                 return context.getResources()
-                        .getString(R.string.blocks_repeatNum, Integer.parseInt(formatedValue.trim()));
+                        .getString(R.string.blocks_repeatNum, Integer.parseInt(formattedValue.trim()));
 
             default:
                 break;
@@ -62,18 +62,18 @@ public enum Unit {
     }
 
     /**
-     * returns a quantity of formatedValue
+     * returns a quantity of formattedValue
      * TODO: apply this for other locale than English
      * See also: http://www.unicode
      * .org/cldr/charts/latest/supplemental/language_plural_rules.html
      *
-     * @param formatedValue
+     * @param formattedValue
      * @param format
      * @return
      */
     private static int getQuantityOfValueInStringFormat(
-            String formatedValue, String format) {
-        if (formatedValue.equals(String.format(format, 1.0))) {
+            String formattedValue, String format) {
+        if (formattedValue.equals(String.format(format, 1.0))) {
             return 1;
         }
 

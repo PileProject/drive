@@ -57,11 +57,11 @@ public class ExecutionThread extends Thread {
      * @param uiHandler Handler for controlling the showing progress layout
      */
     public ExecutionThread(
-            Context context, Handler uiHandler, MachineController controler) {
+            Context context, Handler uiHandler, MachineController controller) {
         super();
         mManager = new DBManager(context);
         mCondition = new ExecutionCondition();
-        mController = controler;
+        mController = controller;
         mUiHandler = uiHandler;
     }
 
@@ -158,9 +158,9 @@ public class ExecutionThread extends Thread {
     }
 
     // Wait on the millisecond time scale
-    private void waitMillSec(int millsec) {
+    private void waitMillSec(int milli) {
         try {
-            Thread.sleep(millsec); // Sleep for milli sec
+            Thread.sleep(milli); // Sleep for milli sec
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

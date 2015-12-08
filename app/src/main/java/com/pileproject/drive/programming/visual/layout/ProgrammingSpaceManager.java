@@ -161,8 +161,8 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
         super(context, layout);
         mButtonsManager = buttonsManager;
 
-        mLogForUndo = new Stack<EventBase>();
-        mLogForRedo = new Stack<EventBase>();
+        mLogForUndo = new Stack<>();
+        mLogForRedo = new Stack<>();
     }
 
     public boolean canUndo() {

@@ -34,11 +34,11 @@ import java.util.ArrayList;
  */
 public class BlockFactory {
     private static final String TAG = "BlockFactory";
-    public static int SEQUENCE = 0;
-    public static int REPETITION = 1;
-    public static int SELECTION = 2;
-    public static int UNDO = 3;
-    public static int LOAD = 4;
+    public static final int SEQUENCE = 0;
+    public static final int REPETITION = 1;
+    public static final int SELECTION = 2;
+    public static final int UNDO = 3;
+    public static final int LOAD = 4;
     private static Context sContext = null;
 
     /**
@@ -93,9 +93,7 @@ public class BlockFactory {
         Constructor<BlockBase> constructor;
         try {
             constructor = blockClass.getConstructor(types);
-        } catch (SecurityException e) {
-            throw new RuntimeException(e);
-        } catch (NoSuchMethodException e) {
+        } catch (SecurityException | NoSuchMethodException e) {
             throw new RuntimeException(e);
         }
 
@@ -123,7 +121,7 @@ public class BlockFactory {
      * @return
      */
     private static ArrayList<BlockBase> createSequenceBlock(String blockName) {
-        ArrayList<BlockBase> blocks = new ArrayList<BlockBase>();
+        ArrayList<BlockBase> blocks = new ArrayList<>();
         BlockBase b = create(blockName);
         blocks.add(b);
         return blocks;
@@ -153,7 +151,7 @@ public class BlockFactory {
      * @return
      */
     private static ArrayList<BlockBase> createSelectionBlock(String blockName) {
-        ArrayList<BlockBase> blocks = new ArrayList<BlockBase>();
+        ArrayList<BlockBase> blocks = new ArrayList<>();
         BlockBase b = new SelectionEndBlock(sContext); // Add RepetitionEndBlock
         blocks.add(b);
         b = create(blockName);

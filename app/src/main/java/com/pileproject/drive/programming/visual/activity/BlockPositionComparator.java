@@ -57,7 +57,7 @@ public class BlockPositionComparator implements Comparator<BlockBase> {
         if (a == null && b == null) {
             return 0; // a = b
         } else if (a == null) {
-            return 1 * mSort; // a > b
+            return mSort; // a > b
         } else if (b == null) {
             return -1 * mSort; // a < b
         }

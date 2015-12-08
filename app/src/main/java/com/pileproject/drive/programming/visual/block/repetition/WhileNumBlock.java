@@ -53,8 +53,7 @@ public class WhileNumBlock extends RepetitionHasNumText {
 
     @Override
     public Integer[] getDigit() {
-        Integer[] digit = {2, 0};
-        return digit;
+        return new Integer[]{2, 0};
     }
 
     @Override

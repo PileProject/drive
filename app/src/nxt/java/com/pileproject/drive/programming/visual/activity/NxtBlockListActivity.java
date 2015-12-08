@@ -33,7 +33,7 @@ import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock
 public class NxtBlockListActivity extends BlockListActivityBase {
     @Override
     protected BlockClassHolder[][] getBlockIcons() {
-        BlockClassHolder[][] blocks = {
+        return new BlockClassHolder[][]{
                 {
                         new BlockClassHolder(ForwardSecBlock.class),
                         new BlockClassHolder(BackwardSecBlock.class),
@@ -52,6 +52,5 @@ public class NxtBlockListActivity extends BlockListActivityBase {
                         new BlockClassHolder(IfThereWasALargeSoundBlock.class),
                 },
         };
-        return blocks;
     }
 }

@@ -37,7 +37,7 @@ import java.util.List;
 public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
     private Context mContext = null;
-    private int mTextViewResouceId = 0;
+    private int mTextViewResourceId = 0;
     private List<BluetoothDevice> mDevices;
     private LayoutInflater mInflater;
 
@@ -46,7 +46,7 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         super(context, textViewResourceId, devices);
 
         mContext = context;
-        mTextViewResouceId = textViewResourceId;
+        mTextViewResourceId = textViewResourceId;
         mDevices = devices;
 
         mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -59,7 +59,7 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         if (convertView != null) {
             view = convertView;
         } else {
-            view = mInflater.inflate(mTextViewResouceId, parent, false);
+            view = mInflater.inflate(mTextViewResourceId, parent, false);
         }
 
         BluetoothDevice device = mDevices.get(position);
