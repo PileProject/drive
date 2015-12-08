@@ -36,14 +36,13 @@ public abstract class PortTextView extends TextView {
 	final protected Context mContext;
 	protected int mAttachmentType;
 
-	MediaPlayer se;
+	MediaPlayer mSoundEffectOfMovingBlock;
 	
 	public PortTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);
 
-		
 		mContext = context;
-		se = MediaPlayer.create(getContext(), R.raw.pon);
+		mSoundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
 
 		TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
 		String port;
@@ -52,51 +51,48 @@ public abstract class PortTextView extends TextView {
 		mPortType = (port != null) ? port : "";
 		mIsAcceptable = (mPortName != null);
 		tar.recycle();
-		
 
 		setOnTouchListener((v, arg1) -> {
-            v.startDrag(null, new DragShadowBuilder(v), v, 0);
-            return true;
-        });
+			v.startDrag(null, new DragShadowBuilder(v), v, 0);
+			return true;
+		});
 	}
 	
 	@Override
 	public boolean onDragEvent(DragEvent event) {
 		final int action = event.getAction();
 		final PortTextView localState = (PortTextView) event.getLocalState();
-		
+
 		if (action == DragEvent.ACTION_DRAG_STARTED) {
 			return true;
 		}
 		else if (action == DragEvent.ACTION_DROP) {
 			if (localState.mPortType.equals(this.mPortType)) {
 				swap(localState, this);
-				
-				se.start();	// play sound
-				
+
+				mSoundEffectOfMovingBlock.start(); // play sound
+
 				if (mIsAcceptable) {
 					SharedPreferencesWrapper.saveIntPreference(mContext, mPortName, mAttachmentType);
 				}
-				
+
 				if (localState.mIsAcceptable) {
 					SharedPreferencesWrapper.saveIntPreference(mContext, localState.mPortName, localState.mAttachmentType);
 				}
 			}
-			
 			return true;
 		}
-		
 		return false;
 	}
-	
+
 	public abstract void setAttachmentType(int attachmentType);
-	
+
 	public abstract int getAttachmentType();
-	
+
 	public String getPortName() {
 		return mPortName;
 	}
-	
+
 	public static void swap(PortTextView lhs, PortTextView rhs) {
 		int lhsAttachmentType = lhs.getAttachmentType();
 		lhs.setAttachmentType(rhs.getAttachmentType());
