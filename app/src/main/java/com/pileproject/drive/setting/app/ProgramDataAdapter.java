@@ -33,20 +33,17 @@ public class ProgramDataAdapter extends ArrayAdapter<ProgramData> {
     public ProgramDataAdapter(
             Context context, int resourceId, List<ProgramData> objects) {
         super(context, resourceId, objects);
-        mLayoutInflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ProgramData item = (ProgramData) getItem(position);
+        ProgramData item = getItem(position);
         if (null == convertView) {
-            convertView =
-                    mLayoutInflater.inflate(R.layout.view_program_item, null);
+            convertView = mLayoutInflater.inflate(R.layout.view_program_item, null);
         }
 
-        CheckBox checkbox =
-                (CheckBox) convertView.findViewById(R.id.programList_checkBox);
+        CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.programList_checkBox);
         checkbox.setText(item.getProgramName());
         return convertView;
     }

@@ -43,7 +43,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     public static final String CREATED_AT = "created_at";
     // saved program data
     public static final String TBL_SAVED_PROGRAM_DATA = "saved_program_data";
-    // use columns in TBL_PROGRM_DATA
+    // use columns in TBL_PROGRAM_DATA
     public static final String SAVED_PROGRAM_ID = "saved_program_id";    //
     // foreign key
     private static final String DB_NAME = "Mity.db";
@@ -98,7 +98,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     }
 
     /**
-     * Create database if the database dosen't exist
+     * Create database if the database doesn't exist
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -130,14 +130,14 @@ public class DBOpenHelper extends SQLiteOpenHelper {
                            + CREATED_AT +
                            " DATETIME DEFAULT CURRENT_TIMESTAMP);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA //
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA
                            // name of table
                            +
                            " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                            " " +
                            SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
                            // foreign key
-                           // (TBL_SAVED_PROGAMR)
+                           // (TBL_SAVED_PROGRAM)
                            + BLOCK_NAME + " TEXT NOT NULL, "
                            // class name of block
                            + BLOCK_LEFT + " INTEGER NOT NULL, "

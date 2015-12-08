@@ -50,12 +50,8 @@ public class Range<T extends Comparable<T>> {
     }
 
     public boolean contains(T value) {
-        boolean aboveLower = (includesLower) ?
-                lower.compareTo(value) <= 0 :
-                lower.compareTo(value) < 0;
-        boolean belowUpper = (includesUpper) ?
-                value.compareTo(upper) <= 0 :
-                value.compareTo(upper) < 0;
+        boolean aboveLower = (includesLower) ? lower.compareTo(value) <= 0 : lower.compareTo(value) < 0;
+        boolean belowUpper = (includesUpper) ? value.compareTo(upper) <= 0 : value.compareTo(upper) < 0;
 
         return aboveLower && belowUpper;
     }

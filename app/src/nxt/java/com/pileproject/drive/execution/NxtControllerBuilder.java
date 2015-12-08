@@ -47,10 +47,7 @@ public class NxtControllerBuilder {
         final int notAssigned = NxtController.SensorProperty.SENSOR_UNUSED;
 
         final NxtInputPort[] sensorPorts = {
-                NxtInputPort.PORT_1,
-                NxtInputPort.PORT_2,
-                NxtInputPort.PORT_3,
-                NxtInputPort.PORT_4
+                NxtInputPort.PORT_1, NxtInputPort.PORT_2, NxtInputPort.PORT_3, NxtInputPort.PORT_4
         };
         final String[] sensorPortPrefTags = {
                 NxtController.TAG_SENSOR_PORT_1,
@@ -60,9 +57,7 @@ public class NxtControllerBuilder {
         };
 
         for (int i = 0; i < sensorPortPrefTags.length; ++i) {
-            int key = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                 sensorPortPrefTags[i],
-                                                                 notAssigned);
+            int key = SharedPreferencesWrapper.loadIntPreference(context, sensorPortPrefTags[i], notAssigned);
             mSensorPorts.put(key, sensorPorts[i]);
         }
     }
@@ -74,15 +69,11 @@ public class NxtControllerBuilder {
                 NxtOutputPort.PORT_A, NxtOutputPort.PORT_B, NxtOutputPort.PORT_C
         };
         final String[] motorPortPrefTags = {
-                NxtController.TAG_MOTOR_PORT_A,
-                NxtController.TAG_MOTOR_PORT_B,
-                NxtController.TAG_MOTOR_PORT_C
+                NxtController.TAG_MOTOR_PORT_A, NxtController.TAG_MOTOR_PORT_B, NxtController.TAG_MOTOR_PORT_C
         };
 
         for (int i = 0; i < motorPortPrefTags.length; ++i) {
-            int key = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                 motorPortPrefTags[i],
-                                                                 notAssigned);
+            int key = SharedPreferencesWrapper.loadIntPreference(context, motorPortPrefTags[i], notAssigned);
             mMotorPorts.put(key, motorPorts[i]);
         }
     }

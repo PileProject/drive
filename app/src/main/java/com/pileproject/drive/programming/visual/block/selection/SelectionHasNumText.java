@@ -27,8 +27,7 @@ import com.pileproject.drive.programming.visual.block.NumTextHolder;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public abstract class SelectionHasNumText extends SelectionBlock
-        implements NumTextHolder {
+public abstract class SelectionHasNumText extends SelectionBlock implements NumTextHolder {
 
     protected TextView numText;
 

@@ -39,13 +39,10 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
 
     public IfThereWasALargeSoundBlock(Context context) {
         super(context);
-        LayoutInflater.from(context)
-                .inflate(R.layout.block_if_there_was_a_large_sound, this);
+        LayoutInflater.from(context).inflate(R.layout.block_if_there_was_a_large_sound, this);
 
-        mThreshold = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                IfThereWasALargeSoundBlock.class
-                                                                        .getName(),
-                                                                70);
+        mThreshold =
+                SharedPreferencesWrapper.loadIntPreference(context, IfThereWasALargeSoundBlock.class.getName(), 70);
     }
 
     @Override
@@ -53,9 +50,7 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
             MachineController controller, ExecutionCondition condition) {
         // need multiply 10 because getdB returns 10 times value
         // the comment is messed up
-        condition.pushSelectionResult(
-                ((NxtController) controller).getSoundSensorValue() >
-                        mThreshold * 10);
+        condition.pushSelectionResult(((NxtController) controller).getSoundSensorValue() > mThreshold * 10);
         return 0;
     }
 }

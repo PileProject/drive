@@ -32,12 +32,8 @@ public class DeployUtils {
             return false;
         }
 
-        if ((info.flags & ApplicationInfo.FLAG_DEBUGGABLE) ==
-                ApplicationInfo.FLAG_DEBUGGABLE) {
-            return true;
-        }
+        return (info.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE;
 
-        return false;
     }
 
     public static boolean isReleaseMode(Context context) {

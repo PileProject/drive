@@ -25,8 +25,7 @@ import android.util.Log;
 import com.pileproject.drive.database.DBManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
-import com.pileproject.drive.programming.visual.block.selection
-        .SelectionEndBlock;
+import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -119,10 +118,8 @@ public class ExecutionThread extends Thread {
                 }
 
                 // Get block to be executed
-                BlockBase block =
-                        mCondition.blocks.get(mCondition.programCount);
-                Log.d(TAG,
-                      "Current Block: " + block.getClass().getSimpleName());
+                BlockBase block = mCondition.blocks.get(mCondition.programCount);
+                Log.d(TAG, "Current Block: " + block.getClass().getSimpleName());
 
                 // Emphasize the current executing block
                 sendIndex(EMPHASIZE_BLOCK, mCondition.programCount);

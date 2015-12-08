@@ -32,8 +32,7 @@ public class SharedPreferencesWrapper {
 
     public static boolean saveStringPreference(
             Context context, String tag, String prf) {
-        SharedPreferences shared =
-                PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = shared.edit();
         editor.putString(tag, prf);
         return editor.commit();
@@ -41,28 +40,24 @@ public class SharedPreferencesWrapper {
 
     public static String loadStringPreference(
             Context context, String tag, String def) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(tag, def);
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(tag, def);
     }
 
     public static boolean saveIntPreference(
             Context context, String tag, int prf) {
-        SharedPreferences shared =
-                PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = shared.edit();
         editor.putInt(tag, prf);
         return editor.commit();
     }
 
     public static int loadIntPreference(Context context, String tag, int def) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getInt(tag, def);
+        return PreferenceManager.getDefaultSharedPreferences(context).getInt(tag, def);
     }
 
     public static boolean saveBoolPreference(
             Context context, String tag, boolean prf) {
-        SharedPreferences shared =
-                PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
         Editor editor = shared.edit();
         editor.putBoolean(tag, prf);
         return editor.commit();
@@ -70,8 +65,7 @@ public class SharedPreferencesWrapper {
 
     public static boolean loadBoolPreference(
             Context context, String tag, boolean def) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean(tag, def);
+        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(tag, def);
     }
 
     public static boolean saveDefaultDeviceAddress(
@@ -80,7 +74,6 @@ public class SharedPreferencesWrapper {
     }
 
     public static String loadDefaultDeviceAddress(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context)
-                .getString(PREF_ADDRESS, null);
+        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_ADDRESS, null);
     }
 }

@@ -40,13 +40,11 @@ public enum Unit {
             Context context, Unit unit, String format, double value) {
         final String formatedValue = String.format(format, value);
 
-        final int quantity =
-                getQuantityOfValueInStringFormat(formatedValue, format);
+        final int quantity = getQuantityOfValueInStringFormat(formatedValue, format);
 
         switch (unit) {
             case Second:
-                return value + " " + context.getResources()
-                        .getQuantityString(R.plurals.seconds, quantity);
+                return value + " " + context.getResources().getQuantityString(R.plurals.seconds, quantity);
 
             case Percentage:
                 return value + " " +
@@ -54,8 +52,7 @@ public enum Unit {
 
             case NumberOfTimes:
                 return context.getResources()
-                        .getString(R.string.blocks_repeatNum,
-                                   Integer.parseInt(formatedValue.trim()));
+                        .getString(R.string.blocks_repeatNum, Integer.parseInt(formatedValue.trim()));
 
             default:
                 break;

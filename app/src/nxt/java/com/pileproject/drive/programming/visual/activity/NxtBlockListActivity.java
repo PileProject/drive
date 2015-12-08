@@ -16,27 +16,19 @@
 
 package com.pileproject.drive.programming.visual.activity;
 
-import com.pileproject.drive.programming.visual.block.repetition
-        .RepetitionBreakBlock;
-import com.pileproject.drive.programming.visual.block.repetition
-        .WhileForeverBlock;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
+import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
 import com.pileproject.drive.programming.visual.block.repetition.WhileNumBlock;
-import com.pileproject.drive.programming.visual.block.selection
-        .IfNXTIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection
-        .IfNXTWasTouchedBlock;
-import com.pileproject.drive.programming.visual.block.selection
-        .IfThereWasALargeSoundBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfNXTIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfNXTWasTouchedBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
 import com.pileproject.drive.programming.visual.block.sequence.BackwardSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.ForwardSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence
-        .SetLeftMotorSpeedBlock;
-import com.pileproject.drive.programming.visual.block.sequence
-        .SetRightMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.sequence.SetLeftMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.sequence.SetRightMotorSpeedBlock;
 import com.pileproject.drive.programming.visual.block.sequence.StopSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.TurnLeftSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence
-        .TurnRightSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock;
 
 public class NxtBlockListActivity extends BlockListActivityBase {
     @Override

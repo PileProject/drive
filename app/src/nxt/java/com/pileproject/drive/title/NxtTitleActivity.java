@@ -31,28 +31,23 @@ public class NxtTitleActivity extends TitleActivityBase {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
         // Button to move NxtProgrammingActivity
-        findViewById(R.id.title_startButton).setOnClickListener(new View
-                .OnClickListener() {
+        findViewById(R.id.title_startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),
-                                           NxtProgrammingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NxtProgrammingActivity.class);
                 startActivity(intent);
             }
         });
 
         // Button to move DeviceSelectActivity
-        findViewById(R.id.title_settingButton).setOnClickListener(new View
-                .OnClickListener() {
+        findViewById(R.id.title_settingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(),
-                                           NxtSettingActivity.class);
+                Intent intent = new Intent(getApplicationContext(), NxtSettingActivity.class);
                 startActivity(intent);
             }
         });
 
-        NxtPortConnectionFragment.setDefaultValueOnPreferences(
-                getApplicationContext());
+        NxtPortConnectionFragment.setDefaultValueOnPreferences(getApplicationContext());
     }
 }

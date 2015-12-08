@@ -39,8 +39,7 @@ public class TurnRightSecBlock extends SequenceBlockHasNumText {
 
     public TurnRightSecBlock(Context context) {
         super(context);
-        View layout = LayoutInflater.from(context)
-                .inflate(R.layout.block_turn_right_sec, this);
+        View layout = LayoutInflater.from(context).inflate(R.layout.block_turn_right_sec, this);
         numText = (TextView) layout.findViewById(R.id.block_numText);
     }
 
@@ -73,8 +72,7 @@ public class TurnRightSecBlock extends SequenceBlockHasNumText {
 
     @Override
     public int action(
-            MachineController controller,
-            ExecutionCondition condition) {
+            MachineController controller, ExecutionCondition condition) {
         ((NxtController) controller).turnRight();
         return getNum();
     }

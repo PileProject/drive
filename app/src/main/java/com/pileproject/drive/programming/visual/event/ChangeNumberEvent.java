@@ -44,9 +44,8 @@ public class ChangeNumberEvent extends EventBase {
         int curNum = ((NumTextHolder) block).getNum();
         ((NumTextHolder) block).setNum(mOldNum); // Set old number to TextView
 
-        // Create a new ChangeNumberEvent for Redox
-        EventBase diffForRedo =
-                new ChangeNumberEvent(elementCount, mIndex, curNum);
+        // Create a new ChangeNumberEvent for Redo
+        EventBase diffForRedo = new ChangeNumberEvent(elementCount, mIndex, curNum);
 
         return diffForRedo;
     }

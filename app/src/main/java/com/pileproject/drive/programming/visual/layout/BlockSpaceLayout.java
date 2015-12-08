@@ -39,10 +39,8 @@ public class BlockSpaceLayout extends FrameLayout {
 
     public BlockSpaceLayout(Context context, AttributeSet attr) {
         super(context, attr);
-        View layout = LayoutInflater.from(context)
-                .inflate(R.layout.layout_block_space, this);
-        mTrashBox =
-                (ImageView) layout.findViewById(R.id.placing_block_space_trash);
+        View layout = LayoutInflater.from(context).inflate(R.layout.layout_block_space, this);
+        mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
         mDefaultChildrenNum = getChildCount();
     }
 
@@ -54,13 +52,10 @@ public class BlockSpaceLayout extends FrameLayout {
      * true - a block is on the trash box, false - otherwise
      */
     public boolean isOnTrash(View view) {
-        if (view.getLeft() > mTrashBox.getLeft() - view.getWidth() + 20 &&
+        return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + 20 &&
                 view.getLeft() < mTrashBox.getRight() &&
                 view.getTop() > mTrashBox.getTop() - view.getHeight() + 20 &&
-                view.getTop() < mTrashBox.getBottom()) {
-            return true;
-        }
-        return false;
+                view.getTop() < mTrashBox.getBottom();
     }
 
     /**
@@ -70,10 +65,8 @@ public class BlockSpaceLayout extends FrameLayout {
     public void removeAllViews() {
         super.removeAllViews();
         // Reload layout because this layout needs a trash box
-        View layout = LayoutInflater.from(getContext())
-                .inflate(R.layout.layout_block_space, this);
-        mTrashBox =
-                (ImageView) layout.findViewById(R.id.placing_block_space_trash);
+        View layout = LayoutInflater.from(getContext()).inflate(R.layout.layout_block_space, this);
+        mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
     }
 
     /**
@@ -95,17 +88,13 @@ public class BlockSpaceLayout extends FrameLayout {
             if (child.getVisibility() != GONE) { // Haven't been gone
 
                 // a new view
-                if (child.getLeft() == child.getRight() &&
-                        child.getTop() == child.getBottom()) {
+                if (child.getLeft() == child.getRight() && child.getTop() == child.getBottom()) {
                     child.layout(child.getLeft(),
                                  child.getTop(),
                                  child.getLeft() + child.getMeasuredWidth(),
                                  child.getTop() + child.getMeasuredHeight());
                 } else {
-                    child.layout(child.getLeft(),
-                                 child.getTop(),
-                                 child.getRight(),
-                                 child.getBottom());
+                    child.layout(child.getLeft(), child.getTop(), child.getRight(), child.getBottom());
                 }
             }
         }

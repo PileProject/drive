@@ -33,16 +33,11 @@ public class SupervisorModeFragment extends Fragment {
 
     @Override
     public View onCreateView(
-            LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) {
+            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_supervisor_mode,
-                                  container,
-                                  false);
+        View v = inflater.inflate(R.layout.fragment_supervisor_mode, container, false);
 
-        mEnableDebugModeCheckBox =
-                (CheckBox) v.findViewById(R.id.supervisorMode_enableSupervisorMode);
+        mEnableDebugModeCheckBox = (CheckBox) v.findViewById(R.id.supervisorMode_enableSupervisorMode);
         return v;
     }
 
@@ -51,10 +46,7 @@ public class SupervisorModeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
         boolean isEnabledSupervisorMode =
-                SharedPreferencesWrapper.loadBoolPreference(activity,
-                                                            SupervisorModeFragment.class
-                                                                    .getName(),
-                                                            false);
+                SharedPreferencesWrapper.loadBoolPreference(activity, SupervisorModeFragment.class.getName(), false);
 
         mEnableDebugModeCheckBox.setChecked(isEnabledSupervisorMode);
         mEnableDebugModeCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -64,8 +56,7 @@ public class SupervisorModeFragment extends Fragment {
                 boolean isChecked = checkBox.isChecked();
 
                 SharedPreferencesWrapper.saveBoolPreference(getActivity(),
-                                                            SupervisorModeFragment.class
-                                                                    .getName(),
+                                                            SupervisorModeFragment.class.getName(),
                                                             isChecked);
             }
         });

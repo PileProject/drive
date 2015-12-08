@@ -32,8 +32,7 @@ import java.util.UUID;
 public class BluetoothCommunicator implements ICommunicator {
 
     private final static String TAG = "BluetoothCommunicator";
-    private static final UUID SPP_UUID =
-            UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+    private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private BluetoothDevice mDevice;
     private BluetoothSocket mSocket;
@@ -61,8 +60,7 @@ public class BluetoothCommunicator implements ICommunicator {
             Log.d(TAG, "Failed to connect by orthodox method");
             try {
                 // Redundancy check
-                Method method = mDevice.getClass()
-                        .getMethod("createRfcommSocket", int.class);
+                Method method = mDevice.getClass().getMethod("createRfcommSocket", int.class);
                 mSocket = (BluetoothSocket) method.invoke(mDevice, 1);
                 mSocket.connect();
             } catch (IOException secondIOException) {
@@ -76,9 +74,7 @@ public class BluetoothCommunicator implements ICommunicator {
                 throw secondIOException;
             } catch (Exception exception) {
                 exception.printStackTrace();
-                Log.d(TAG,
-                      "this exception should not be occured in release " +
-                              "version");
+                Log.d(TAG, "this exception should not be occurred in release " + "version");
             }
         }
 

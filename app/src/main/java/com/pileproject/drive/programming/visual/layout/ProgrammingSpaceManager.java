@@ -32,8 +32,7 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.programming.visual.activity
-        .ProgrammingActivityBase;
+import com.pileproject.drive.programming.visual.activity.ProgrammingActivityBase;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.NumTextHolder;
 import com.pileproject.drive.programming.visual.event.AddEvent;
@@ -107,10 +106,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                 case MotionEvent.ACTION_UP:
                     int elementCount = 1;
 
-                    EventBase diff = new MoveEvent(elementCount++,
-                                                   mLayout.indexOfChild(view),
-                                                   originX,
-                                                   originY);
+                    EventBase diff = new MoveEvent(elementCount++, mLayout.indexOfChild(view), originX, originY);
                     mLogForUndo.push(diff);
 
                     // This view will be removed if it is on the trash box
@@ -119,15 +115,10 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                             // Get old value
                             int oldNum = ((NumTextHolder) view).getNum();
 
-                            diff = new ChangeNumberEvent(elementCount++,
-                                                         mLayout.indexOfChild(
-                                                                 view),
-                                                         oldNum);
+                            diff = new ChangeNumberEvent(elementCount++, mLayout.indexOfChild(view), oldNum);
                             mLogForUndo.push(diff);
                         }
-                        diff = new DeleteEvent(elementCount++,
-                                               mLayout.indexOfChild(view),
-                                               view.getClass().getName());
+                        diff = new DeleteEvent(elementCount++, mLayout.indexOfChild(view), view.getClass().getName());
                         mLogForUndo.push(diff);
                         mLayout.removeView(view);
                     }
@@ -159,10 +150,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                 currentY = parentHeight - view.getHeight();
             }
 
-            view.layout(currentX,
-                        currentY,
-                        currentX + view.getWidth(),
-                        currentY + view.getHeight());
+            view.layout(currentX, currentY, currentX + view.getWidth(), currentY + view.getHeight());
         }
     };
 
@@ -196,8 +184,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 
             EventBase forRedo = diff.undo(mLayout, elementCount);
             if (diff instanceof DeleteEvent) {
-                BlockBase block =
-                        (BlockBase) mLayout.getChildAt(forRedo.getIndex());
+                BlockBase block = (BlockBase) mLayout.getChildAt(forRedo.getIndex());
                 setListeners(block);
             }
             mLogForRedo.push(forRedo);
@@ -221,8 +208,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             EventBase diff = mLogForRedo.pop();
             EventBase forUndo = diff.undo(mLayout, elementCount);
             if (diff instanceof DeleteEvent) {
-                BlockBase block =
-                        (BlockBase) mLayout.getChildAt(forUndo.getIndex());
+                BlockBase block = (BlockBase) mLayout.getChildAt(forUndo.getIndex());
                 setListeners(block);
             }
             mLogForUndo.push(forUndo);
@@ -254,8 +240,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             block.setAnimation(alpha);
 
             // Create new AddEventBase
-            EventBase diff =
-                    new AddEvent(blocks.size(), mLayout.indexOfChild(block));
+            EventBase diff = new AddEvent(blocks.size(), mLayout.indexOfChild(block));
             mLogForUndo.push(diff);
         }
         mLogForRedo.clear();
@@ -286,16 +271,11 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             final int numOfIntegralDigits = digit[0];
             final int numOfDecimalDigits = digit[1];
 
-            final Range<Double> range =
-                    Range.closed(mParent.getMin(), mParent.getMax());
+            final Range<Double> range = Range.closed(mParent.getMin(), mParent.getMax());
             final Unit unit = mParent.getUnit();
 
             final NumberSelectView numberSelectView =
-                    new NumberSelectSeekBarView(mContext,
-                                                range,
-                                                unit,
-                                                numOfIntegralDigits,
-                                                numOfDecimalDigits);
+                    new NumberSelectSeekBarView(mContext, range, unit, numOfIntegralDigits, numOfDecimalDigits);
 
             numberSelectView.setNum(oldNum);
 
@@ -309,17 +289,13 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                 public void onClick(DialogInterface dialog, int which) {
                     double rawNum = numberSelectView.getSelectedNum();
 
-                    int newNum =
-                            (int) (rawNum * Math.pow(10, numOfDecimalDigits));
+                    int newNum = (int) (rawNum * Math.pow(10, numOfDecimalDigits));
 
                     // Set new value
                     mParent.setNum(newNum);
 
                     // Create ChangeNumberEvent
-                    EventBase diff = new ChangeNumberEvent(1,
-                                                           mLayout.indexOfChild(
-                                                                   (View) mParent),
-                                                           oldNum);
+                    EventBase diff = new ChangeNumberEvent(1, mLayout.indexOfChild((View) mParent), oldNum);
 
                     mLogForUndo.push(diff);
                     mLogForRedo.clear();

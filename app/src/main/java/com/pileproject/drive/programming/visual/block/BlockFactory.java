@@ -19,10 +19,8 @@ package com.pileproject.drive.programming.visual.block;
 import android.content.Context;
 import android.util.Log;
 
-import com.pileproject.drive.programming.visual.block.repetition
-        .RepetitionEndBlock;
-import com.pileproject.drive.programming.visual.block.selection
-        .SelectionEndBlock;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
+import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -66,8 +64,7 @@ public class BlockFactory {
      * @return Class
      */
     @SuppressWarnings("unchecked")
-    private static <T> Class<T> getClassForName(String className)
-            throws RuntimeException {
+    private static <T> Class<T> getClassForName(String className) throws RuntimeException {
         try {
             return (Class<T>) Class.forName(className);
         } catch (ClassNotFoundException e) {

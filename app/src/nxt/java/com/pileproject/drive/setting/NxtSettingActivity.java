@@ -32,13 +32,9 @@ public class NxtSettingActivity extends SettingActivity {
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
-        if (DeviceSelectFragment.class.getName().equals(fragmentName) ||
-                NxtPortConnectionFragment.class.getName()
-                        .equals(fragmentName) ||
-                NxtThresholdFragment.class.getName().equals(fragmentName)) {
-            return true;
-        }
+        return DeviceSelectFragment.class.getName().equals(fragmentName) ||
+                NxtPortConnectionFragment.class.getName().equals(fragmentName) ||
+                NxtThresholdFragment.class.getName().equals(fragmentName);
 
-        return false;
     }
 }

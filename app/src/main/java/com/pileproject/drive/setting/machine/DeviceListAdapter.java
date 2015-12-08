@@ -42,17 +42,14 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
     private LayoutInflater mInflater;
 
     public DeviceListAdapter(
-            Context context,
-            int textViewResourceId,
-            List<BluetoothDevice> devices) {
+            Context context, int textViewResourceId, List<BluetoothDevice> devices) {
         super(context, textViewResourceId, devices);
 
         mContext = context;
         mTextViewResouceId = textViewResourceId;
         mDevices = devices;
 
-        mInflater =
-                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -67,11 +64,8 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
 
         BluetoothDevice device = mDevices.get(position);
 
-        ((TextView) view.findViewById(R.id.deviceListItemView_deviceNameText)
-        ).setText(
-                device.getName());
-        ((TextView) view.findViewById(R.id.deviceListItemView_deviceAddressText))
-                .setText(device.getAddress());
+        ((TextView) view.findViewById(R.id.deviceListItemView_deviceNameText)).setText(device.getName());
+        ((TextView) view.findViewById(R.id.deviceListItemView_deviceAddressText)).setText(device.getAddress());
 
         return view;
     }

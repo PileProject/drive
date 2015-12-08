@@ -34,8 +34,7 @@ public class SelectionEndBlock extends BlockBase {
 
     public SelectionEndBlock(Context context) {
         super(context);
-        LayoutInflater.from(context)
-                .inflate(R.layout.block_selection_end, this);
+        LayoutInflater.from(context).inflate(R.layout.block_selection_end, this);
     }
 
     @Override
@@ -45,8 +44,7 @@ public class SelectionEndBlock extends BlockBase {
 
     @Override
     public int action(
-            MachineController controller,
-            ExecutionCondition condition) {
+            MachineController controller, ExecutionCondition condition) {
         // just pop one
         if (!condition.ifStack.isEmpty()) {
             condition.ifStack.pop();

@@ -37,8 +37,7 @@ public class WhileNumBlock extends RepetitionHasNumText {
     public WhileNumBlock(Context context) {
         super(context);
 
-        View layout = LayoutInflater.from(context)
-                .inflate(R.layout.block_while_num, this);
+        View layout = LayoutInflater.from(context).inflate(R.layout.block_while_num, this);
         numText = (TextView) layout.findViewById(R.id.block_numText);
     }
 

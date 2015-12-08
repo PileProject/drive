@@ -48,10 +48,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
      * @param decimalPart  the length of decimal part
      */
     public NumberSelectWheelScrollerView(
-            Context context,
-            Range<Double> range,
-            int integralPart,
-            int decimalPart) {
+            Context context, Range<Double> range, int integralPart, int decimalPart) {
         super(context, range);
 
         final double min = range.getLowerBound();
@@ -72,8 +69,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
             picker.setMinValue(0);
 
             // Hide software keyboard
-            picker.setDescendantFocusability(NumberPicker
-                                                     .FOCUS_BLOCK_DESCENDANTS);
+            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
             picker.setOnValueChangedListener(new OnValueChangeListener() {
                 @Override
                 public void onValueChange(
@@ -87,8 +83,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
                     if ((oldVal + 1) % 10 == newVal) {
                         // Check the new value is larger than the maximum value
                         // or not
-                        if (raw + Math.pow(10, mIntegralPart - (index + 1)) >
-                                max) {
+                        if (raw + Math.pow(10, mIntegralPart - (index + 1)) > max) {
                             changeToMax(); // Change value to max.
                             return;
                         }
@@ -97,8 +92,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
                     else {
                         // Check the new value is lower than the minimum
                         // value or not
-                        if (raw - Math.pow(10, mIntegralPart - (index + 1)) <
-                                min) {
+                        if (raw - Math.pow(10, mIntegralPart - (index + 1)) < min) {
                             changeToMin(); // Change value to min.
                             return;
                         }
@@ -170,8 +164,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
     public double getSelectedNum() {
         double result = 0;
         for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            result += mNumbers.get(i).getValue() *
-                    Math.pow(10, mIntegralPart - (i + 1));
+            result += mNumbers.get(i).getValue() * Math.pow(10, mIntegralPart - (i + 1));
         }
         return result;
     }
@@ -185,8 +178,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
     public void setNum(int num) {
         // Set the number to NumberPicker
         for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            int digit =
-                    (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
+            int digit = (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
             mNumbers.get(i).setValue(num / digit);
             num %= digit;
         }
@@ -200,8 +192,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
 
         int num = (int) (max * Math.pow(10, mDecimalPart));
         for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            int digit =
-                    (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
+            int digit = (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
             mNumbers.get(i).setValue(num / digit);
             num %= digit;
         }
@@ -215,8 +206,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
 
         int num = (int) (min * Math.pow(10, mDecimalPart));
         for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            int digit =
-                    (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
+            int digit = (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
             mNumbers.get(i).setValue(num / digit);
             num %= digit;
         }

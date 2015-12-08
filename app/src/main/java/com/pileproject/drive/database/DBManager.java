@@ -23,8 +23,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 import android.view.View;
 
-import com.pileproject.drive.programming.visual.activity
-        .BlockPositionComparator;
+import com.pileproject.drive.programming.visual.activity.BlockPositionComparator;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.block.NumTextHolder;
@@ -147,7 +146,7 @@ public class DBManager {
         String selection = DBOpenHelper.IS_SAMPLE + " = ?";
         String[] selectionArgs = {"0"}; // false = not sample
         Cursor c = mDb.query(DBOpenHelper.TBL_SAVED_PROGRAMS, new String[]{
-                // this assumes the name of users's
+                // this assumes the name of users'
                 // programs are integer strings
                 "max(cast(program_name as integer))"
         }, selection, selectionArgs, null, null, null);
@@ -173,9 +172,7 @@ public class DBManager {
             // delete old data
             String selection = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
             String[] selectionArgs = {programId + ""};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA,
-                       selection,
-                       selectionArgs);
+            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, selection, selectionArgs);
         }
         // Insert all Views attached to the layout
         for (int i = 0; i < layout.getChildCount(); i++) {
@@ -216,9 +213,7 @@ public class DBManager {
 
         c.moveToFirst();
         for (int i = 0; i < numRows; i++) {
-            BlockBase b =
-                    BlockFactory.createBlocks(BlockFactory.LOAD, c.getString(0))
-                            .get(0);
+            BlockBase b = BlockFactory.createBlocks(BlockFactory.LOAD, c.getString(0)).get(0);
 
             b.left = c.getInt(1);
             b.top = c.getInt(2);
@@ -342,16 +337,12 @@ public class DBManager {
         {
             String whereClause = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
             String[] whereClauseConditions = {id + ""};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA,
-                       whereClause,
-                       whereClauseConditions);
+            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, whereClause, whereClauseConditions);
         }
         {
             String whereClause = DBOpenHelper.PROGRAM_NAME + " = ?";
             String[] whereClauseConditions = {programName};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAMS,
-                       whereClause,
-                       whereClauseConditions);
+            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAMS, whereClause, whereClauseConditions);
         }
     }
 

@@ -46,19 +46,15 @@ public class ProgramListFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 // Return selected program name
-                ProgrammingActivityBase activity =
-                        (ProgrammingActivityBase) getActivity();
-                activity.onFinishSelectDialog(mItems[which].toString(),
-                                              mIsSample);
+                ProgrammingActivityBase activity = (ProgrammingActivityBase) getActivity();
+                activity.onFinishSelectDialog(mItems[which].toString(), mIsSample);
                 dismiss();
             }
         });
-        builder.setNegativeButton(R.string.cancel,
-                                  new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
                                       @Override
                                       public void onClick(
-                                              DialogInterface dialog,
-                                              int which) {
+                                              DialogInterface dialog, int which) {
                                           dismiss();
                                       }
                                   });

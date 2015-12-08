@@ -33,21 +33,21 @@ public interface NumTextHolder {
      * @return int
      * Value of textView as integer
      */
-    public int getNum();
+    int getNum();
 
     /**
      * Set number to TextView
      *
      * @param num the number that is set to TextView
      */
-    public void setNum(int num);
+    void setNum(int num);
 
     /**
      * Get TextView
      *
      * @return TextView
      */
-    public TextView getTextView();
+    TextView getTextView();
 
     /**
      * Get Digit of the number of this block
@@ -55,7 +55,7 @@ public interface NumTextHolder {
      * @return Integer[]
      * 0 - Integral Part, 1 - Decimal Part
      */
-    public Integer[] getDigit();
+    Integer[] getDigit();
 
     /**
      * Get Max Value of this block
@@ -63,7 +63,7 @@ public interface NumTextHolder {
      * @return double
      * Maximum value
      */
-    public double getMax();
+    double getMax();
 
     /**
      * Get Min Value of this block
@@ -71,12 +71,12 @@ public interface NumTextHolder {
      * @return double
      * Minimum value
      */
-    public double getMin();
+    double getMin();
 
     /**
      * Returns unit of the value which is contained in this text field
      *
      * @return
      */
-    public Unit getUnit();
+    Unit getUnit();
 }

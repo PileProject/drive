@@ -39,24 +39,17 @@ public class IfNXTIsOutOfLineBlock extends SelectionBlock {
 
     public IfNXTIsOutOfLineBlock(Context context) {
         super(context);
-        LayoutInflater.from(context)
-                .inflate(R.layout.block_if_nxt_is_out_of_line, this);
+        LayoutInflater.from(context).inflate(R.layout.block_if_nxt_is_out_of_line, this);
 
-        mThreshold = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                IfNXTIsOutOfLineBlock.class
-                                                                        .getName(),
-                                                                50);
+        mThreshold = SharedPreferencesWrapper.loadIntPreference(context, IfNXTIsOutOfLineBlock.class.getName(), 50);
     }
 
     @Override
     public int action(
-            MachineController controller,
-            ExecutionCondition condition) {
+            MachineController controller, ExecutionCondition condition) {
         // comment is weird.
         // getLightPercent returns tenfold value
-        condition.pushSelectionResult(
-                ((NxtController) controller).getLineSensorValue() >
-                        mThreshold * 10);
+        condition.pushSelectionResult(((NxtController) controller).getLineSensorValue() > mThreshold * 10);
         return 0;
     }
 }
