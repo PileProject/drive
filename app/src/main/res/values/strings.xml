@@ -16,6 +16,8 @@
   ~
   -->
 <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="action_settings">Action Settings</string>
+    <string name="app_name">App Name</string>
 
     <string name="ok">OK</string>
     <string name="back">Back</string>

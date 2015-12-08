@@ -29,13 +29,13 @@ android {
             applicationId = "com.pileproject.drive.nxt"
         }
 
-        ev3 {
-            applicationId = "com.pileproject.drive.ev3"
-        }
+        // ev3 {
+        //     applicationId = "com.pileproject.drive.ev3"
+        // }
 
-        pile {
-            applicationId = "com.pileproject.drive.pile"
-        }
+        // pile {
+        //     applicationId = "com.pileproject.drive.pile"
+        // }
     }
 }
 

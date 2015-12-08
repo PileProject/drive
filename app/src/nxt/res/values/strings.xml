@@ -17,7 +17,7 @@
   -->
 <resources>
 
-    <string name="appName">NXTDrive</string>
+    <string name="app_name">NXTDrive</string>
     
     <!-- Title -->
     <string name="title">NXTDrive</string>
