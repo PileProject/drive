@@ -32,7 +32,8 @@ public class DeployUtils {
             return false;
         }
 
-        if ((info.flags & ApplicationInfo.FLAG_DEBUGGABLE) == ApplicationInfo.FLAG_DEBUGGABLE) {
+        if ((info.flags & ApplicationInfo.FLAG_DEBUGGABLE) ==
+                ApplicationInfo.FLAG_DEBUGGABLE) {
             return true;
         }
 

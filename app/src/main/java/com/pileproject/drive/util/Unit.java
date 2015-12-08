@@ -36,20 +36,26 @@ public enum Unit {
      *
      * @return string which contains the value and its unit
      */
-    public static String getUnitString(Context context, Unit unit, String format, double value) {
+    public static String getUnitString(
+            Context context, Unit unit, String format, double value) {
         final String formatedValue = String.format(format, value);
 
-        final int quantity = getQuantityOfValueInStringFormat(formatedValue, format);
+        final int quantity =
+                getQuantityOfValueInStringFormat(formatedValue, format);
 
         switch (unit) {
             case Second:
-                return value + " " + context.getResources().getQuantityString(R.plurals.seconds, quantity);
+                return value + " " + context.getResources()
+                        .getQuantityString(R.plurals.seconds, quantity);
 
             case Percentage:
-                return value + " " + context.getResources().getString(R.string.percent);
+                return value + " " +
+                        context.getResources().getString(R.string.percent);
 
             case NumberOfTimes:
-                return context.getResources().getString(R.string.blocks_repeatNum, Integer.parseInt(formatedValue.trim()));
+                return context.getResources()
+                        .getString(R.string.blocks_repeatNum,
+                                   Integer.parseInt(formatedValue.trim()));
 
             default:
                 break;
@@ -61,13 +67,15 @@ public enum Unit {
     /**
      * returns a quantity of formatedValue
      * TODO: apply this for other locale than English
-     * See also: http://www.unicode.org/cldr/charts/latest/supplemental/language_plural_rules.html
+     * See also: http://www.unicode
+     * .org/cldr/charts/latest/supplemental/language_plural_rules.html
      *
      * @param formatedValue
      * @param format
      * @return
      */
-    private static int getQuantityOfValueInStringFormat(String formatedValue, String format) {
+    private static int getQuantityOfValueInStringFormat(
+            String formatedValue, String format) {
         if (formatedValue.equals(String.format(format, 1.0))) {
             return 1;
         }

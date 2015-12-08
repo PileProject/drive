@@ -16,24 +16,50 @@
 
 package com.pileproject.drive.programming.visual.activity;
 
-import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
-import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
+import com.pileproject.drive.programming.visual.block.repetition
+        .RepetitionBreakBlock;
+import com.pileproject.drive.programming.visual.block.repetition
+        .WhileForeverBlock;
 import com.pileproject.drive.programming.visual.block.repetition.WhileNumBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNXTIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNXTWasTouchedBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
+import com.pileproject.drive.programming.visual.block.selection
+        .IfNXTIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection
+        .IfNXTWasTouchedBlock;
+import com.pileproject.drive.programming.visual.block.selection
+        .IfThereWasALargeSoundBlock;
 import com.pileproject.drive.programming.visual.block.sequence.BackwardSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.ForwardSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.SetLeftMotorSpeedBlock;
-import com.pileproject.drive.programming.visual.block.sequence.SetRightMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.sequence
+        .SetLeftMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.sequence
+        .SetRightMotorSpeedBlock;
 import com.pileproject.drive.programming.visual.block.sequence.StopSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.TurnLeftSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence
+        .TurnRightSecBlock;
 
 public class NxtBlockListActivity extends BlockListActivityBase {
     @Override
     protected BlockClassHolder[][] getBlockIcons() {
-        BlockClassHolder[][] blocks = {{new BlockClassHolder(ForwardSecBlock.class), new BlockClassHolder(BackwardSecBlock.class), new BlockClassHolder(TurnRightSecBlock.class), new BlockClassHolder(TurnLeftSecBlock.class), new BlockClassHolder(StopSecBlock.class), new BlockClassHolder(SetLeftMotorSpeedBlock.class), new BlockClassHolder(SetRightMotorSpeedBlock.class),}, {new BlockClassHolder(WhileForeverBlock.class), new BlockClassHolder(WhileNumBlock.class), new BlockClassHolder(RepetitionBreakBlock.class),}, {new BlockClassHolder(IfNXTIsOutOfLineBlock.class), new BlockClassHolder(IfNXTWasTouchedBlock.class), new BlockClassHolder(IfThereWasALargeSoundBlock.class),},};
+        BlockClassHolder[][] blocks = {
+                {
+                        new BlockClassHolder(ForwardSecBlock.class),
+                        new BlockClassHolder(BackwardSecBlock.class),
+                        new BlockClassHolder(TurnRightSecBlock.class),
+                        new BlockClassHolder(TurnLeftSecBlock.class),
+                        new BlockClassHolder(StopSecBlock.class),
+                        new BlockClassHolder(SetLeftMotorSpeedBlock.class),
+                        new BlockClassHolder(SetRightMotorSpeedBlock.class),
+                }, {
+                        new BlockClassHolder(WhileForeverBlock.class),
+                        new BlockClassHolder(WhileNumBlock.class),
+                        new BlockClassHolder(RepetitionBreakBlock.class),
+                }, {
+                        new BlockClassHolder(IfNXTIsOutOfLineBlock.class),
+                        new BlockClassHolder(IfNXTWasTouchedBlock.class),
+                        new BlockClassHolder(IfThereWasALargeSoundBlock.class),
+                },
+        };
         return blocks;
     }
 }

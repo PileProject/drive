@@ -33,14 +33,19 @@ public class WhileForeverBlock extends RepetitionBlock {
 
     public WhileForeverBlock(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_while_forever, this);
+        LayoutInflater.from(context)
+                .inflate(R.layout.block_while_forever, this);
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(
+            MachineController controller,
+            ExecutionCondition condition) {
         int index = condition.programCount;
-        condition.whileStack.push(index + FOREVER_WHILE_OFFSET); // push with offset
-        condition.beginningOfCurrentWhileLoop = index;    // update previous index
+        condition.whileStack.push(
+                index + FOREVER_WHILE_OFFSET); // push with offset
+        condition.beginningOfCurrentWhileLoop =
+                index;    // update previous index
         return 1;
     }
 }

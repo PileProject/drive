@@ -19,8 +19,10 @@ package com.pileproject.drive.programming.visual.block;
 import android.content.Context;
 import android.util.Log;
 
-import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
-import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
+import com.pileproject.drive.programming.visual.block.repetition
+        .RepetitionEndBlock;
+import com.pileproject.drive.programming.visual.block.selection
+        .SelectionEndBlock;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -64,7 +66,8 @@ public class BlockFactory {
      * @return Class
      */
     @SuppressWarnings("unchecked")
-    private static <T> Class<T> getClassForName(String className) throws RuntimeException {
+    private static <T> Class<T> getClassForName(String className)
+            throws RuntimeException {
         try {
             return (Class<T>) Class.forName(className);
         } catch (ClassNotFoundException e) {
@@ -135,9 +138,11 @@ public class BlockFactory {
      * @param blockName
      * @return
      */
-    private static ArrayList<BlockBase> createRepetitionBlock(String blockName) {
+    private static ArrayList<BlockBase> createRepetitionBlock(
+            String blockName) {
         ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = new RepetitionEndBlock(sContext); // Add RepetitionEndBlock
+        BlockBase b = new RepetitionEndBlock(sContext); // Add
+        // RepetitionEndBlock
         blocks.add(b);
         b = create(blockName);
         blocks.add(b);
@@ -159,9 +164,12 @@ public class BlockFactory {
         return blocks;
     }
 
-    public static ArrayList<BlockBase> createBlocks(int howToMake, String blockName) {
+    public static ArrayList<BlockBase> createBlocks(
+            int howToMake, String blockName) {
         // TODO: Should throw exception
-        if (sContext == null) return null;
+        if (sContext == null) {
+            return null;
+        }
 
         ArrayList<BlockBase> blocks = null;
         if (howToMake == SEQUENCE) {
@@ -172,7 +180,8 @@ public class BlockFactory {
             blocks = createSelectionBlock(blockName);
         } else if (howToMake == UNDO || howToMake == LOAD) {
             // When users undo or load their program, this app should create
-            // a block. It is the same way when in which app makes sequence block
+            // a block. It is the same way when in which app makes sequence
+            // block
             blocks = createSequenceBlock(blockName);
         }
         return blocks;

@@ -49,69 +49,90 @@ public abstract class ExecutionActivityBase extends Activity {
     @SuppressWarnings("unused")
     private static final String TAG = "NxtExecutionActivity";
     // Handler for connecting
-    private final Handler mConnectingHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.what) {
-                case FAILED_TO_CONNECT:
-                    // Show error and finish
-                    AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error).setMessage(R.string.execute_bluetoothConnectionError).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
-                        }
-                    }).create();
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.show();
-                    return true;
-            }
-            return false;
-        }
-    });
+    private final Handler mConnectingHandler =
+            new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    switch (message.what) {
+                        case FAILED_TO_CONNECT:
+                            // Show error and finish
+                            AlertDialog alertDialog = new AlertDialog.Builder(
+                                    ExecutionActivityBase.this).setTitle(R.string.error)
+                                    .setMessage(R.string.execute_bluetoothConnectionError)
+                                    .setPositiveButton(R.string.ok,
+                                                       new DialogInterface
+                                                               .OnClickListener() {
+                                                           @Override
+                                                           public void onClick(
+                                                                   DialogInterface dialog,
+                                                                   int which) {
+                                                               finish();
+                                                           }
+                                                       })
+                                    .create();
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            alertDialog.show();
+                            return true;
+                    }
+                    return false;
+                }
+            });
     private BluetoothAdapter mBtAdapter = null;
     private ProgressDialog mProgressDialog;
     private ProgressSpaceManager mSpaceManager;
     // Handler for showing the progress of executions
-    private final Handler mProgressHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.getData().getInt("message")) {
-                case ExecutionThread.START_THREAD: {
-                    Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                case ExecutionThread.EMPHASIZE_BLOCK: {
-                    // Emphasize the current executing block
-                    int index = message.getData().getInt("index");
-                    mSpaceManager.emphasizeBlock(index);
-                    return true;
-                }
-
-                case ExecutionThread.END_THREAD: {
-                    // Inform the end of the thread
-                    AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.execute_executionIsOver).setMessage(R.string.execute_showNoteOfPort).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            finish();
+    private final Handler mProgressHandler =
+            new Handler(new Handler.Callback() {
+                @Override
+                public boolean handleMessage(Message message) {
+                    switch (message.getData().getInt("message")) {
+                        case ExecutionThread.START_THREAD: {
+                            Toast.makeText(getBaseContext(),
+                                           R.string.execute_startExecution,
+                                           Toast.LENGTH_SHORT).show();
+                            return true;
                         }
-                    }).create();
-                    // Move to bottom
-                    alertDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.show();
-                    return true;
-                }
 
-                case ExecutionThread.CONNECTION_ERROR: {
-                    // Inform the error of the thread
-                    showConnectionErrorDialog();
-                    return true;
+                        case ExecutionThread.EMPHASIZE_BLOCK: {
+                            // Emphasize the current executing block
+                            int index = message.getData().getInt("index");
+                            mSpaceManager.emphasizeBlock(index);
+                            return true;
+                        }
+
+                        case ExecutionThread.END_THREAD: {
+                            // Inform the end of the thread
+                            AlertDialog alertDialog = new AlertDialog.Builder(
+                                    ExecutionActivityBase.this).setTitle(R.string.execute_executionIsOver)
+                                    .setMessage(R.string.execute_showNoteOfPort)
+                                    .setPositiveButton(R.string.ok,
+                                                       new DialogInterface
+                                                               .OnClickListener() {
+                                                           @Override
+                                                           public void onClick(
+                                                                   DialogInterface dialog,
+                                                                   int which) {
+                                                               finish();
+                                                           }
+                                                       })
+                                    .create();
+                            // Move to bottom
+                            alertDialog.getWindow().getAttributes().gravity =
+                                    Gravity.BOTTOM;
+                            alertDialog.setCanceledOnTouchOutside(false);
+                            alertDialog.show();
+                            return true;
+                        }
+
+                        case ExecutionThread.CONNECTION_ERROR: {
+                            // Inform the error of the thread
+                            showConnectionErrorDialog();
+                            return true;
+                        }
+                    }
+                    return false;
                 }
-            }
-            return false;
-        }
-    });
+            });
     private Button mStopAndRestartButton;
     private Button mFinishButton;
     private ExecutionThread mThread = null;
@@ -160,7 +181,9 @@ public abstract class ExecutionActivityBase extends Activity {
         } else {
             if (hasBluetoothFunction()) {
                 if (!mBtAdapter.isEnabled()) {
-                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
+                    startActivityForResult(new Intent(BluetoothAdapter
+                                                              .ACTION_REQUEST_ENABLE),
+                                           REQUEST_ENABLE_BT);
                 } else {
                     connectToDevice();
                 }
@@ -194,8 +217,12 @@ public abstract class ExecutionActivityBase extends Activity {
     }
 
     private void findViews() {
-        mSpaceManager = new ProgressSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.execute_showingProgressLayout));
-        mStopAndRestartButton = (Button) findViewById(R.id.execute_stopAndRestartButton);
+        mSpaceManager = new ProgressSpaceManager(this,
+                                                 (BlockSpaceLayout)
+                                                         findViewById(
+                                                         R.id.execute_showingProgressLayout));
+        mStopAndRestartButton =
+                (Button) findViewById(R.id.execute_stopAndRestartButton);
         mFinishButton = (Button) findViewById(R.id.execute_finishButton);
     }
 
@@ -237,12 +264,22 @@ public abstract class ExecutionActivityBase extends Activity {
     private boolean hasBluetoothFunction() {
         // check the tablet has bluetooth connecting
         if (mBtAdapter == null) {
-            AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error).setMessage(R.string.execute_noBluetoothFunction).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    finish();
-                }
-            }).create();
+            AlertDialog alertDialog =
+                    new AlertDialog.Builder(ExecutionActivityBase.this)
+                            .setTitle(R.string.error)
+                            .setMessage(R.string.execute_noBluetoothFunction)
+                            .setPositiveButton(R.string.ok,
+                                               new DialogInterface
+                                                       .OnClickListener() {
+                                                   @Override
+                                                   public void onClick(
+                                                           DialogInterface
+                                                                   dialog,
+                                                           int which) {
+                                                       finish();
+                                                   }
+                                               })
+                            .create();
             alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
             return false;
@@ -269,7 +306,9 @@ public abstract class ExecutionActivityBase extends Activity {
 
     protected void startExecution() {
         if (mThread == null || !mThread.isAlive()) {
-            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getDeviceController());
+            mThread = new ExecutionThread(getApplicationContext(),
+                                          mProgressHandler,
+                                          getDeviceController());
             mThread.setPriority(Thread.MAX_PRIORITY);
             mThread.start();
         }
@@ -278,12 +317,21 @@ public abstract class ExecutionActivityBase extends Activity {
     protected abstract MachineController getDeviceController();
 
     private void showConnectionErrorDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error).setMessage(R.string.execute_disconnectedByNXT).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finish();
-            }
-        }).create();
+        AlertDialog alertDialog =
+                new AlertDialog.Builder(ExecutionActivityBase.this).setTitle
+                        (R.string.error)
+                        .setMessage(R.string.execute_disconnectedByNXT)
+                        .setPositiveButton(R.string.ok,
+                                           new DialogInterface
+                                                   .OnClickListener() {
+                                               @Override
+                                               public void onClick(
+                                                       DialogInterface dialog,
+                                                       int which) {
+                                                   finish();
+                                               }
+                                           })
+                        .create();
         alertDialog.setCanceledOnTouchOutside(false);
         alertDialog.show();
 
@@ -294,14 +342,23 @@ public abstract class ExecutionActivityBase extends Activity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data) {
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(getBaseContext(), R.string.turnedOnBluetooth, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(),
+                                   R.string.turnedOnBluetooth,
+                                   Toast.LENGTH_SHORT).show();
                     connectToDevice();
                 } else {
-                    new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error).setMessage(R.string.bluetoothFunctionIsOff).setPositiveButton(R.string.ok, null).show();
+                    new AlertDialog.Builder(ExecutionActivityBase.this)
+                            .setTitle(R.string.error)
+                            .setMessage(R.string.bluetoothFunctionIsOff)
+                            .setPositiveButton(R.string.ok, null)
+                            .show();
                 }
                 break;
         }

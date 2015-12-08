@@ -34,12 +34,16 @@ public class IfNXTWasTouchedBlock extends SelectionBlock {
 
     public IfNXTWasTouchedBlock(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_if_nxt_was_touched, this);
+        LayoutInflater.from(context)
+                .inflate(R.layout.block_if_nxt_was_touched, this);
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        condition.pushSelectionResult(((NxtController) controller).getTouchSensorValue());
+    public int action(
+            MachineController controller,
+            ExecutionCondition condition) {
+        condition.pushSelectionResult(((NxtController) controller)
+                                              .getTouchSensorValue());
         return 0;
     }
 }

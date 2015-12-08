@@ -43,29 +43,37 @@ public class NumberSelectSeekBarView extends NumberSelectView {
 
     private SeekBar mSeekBar;
     private TextView mTextView;
-    private final SeekBar.OnSeekBarChangeListener mListener = new SeekBar.OnSeekBarChangeListener() {
-        @Override
-        public void onProgressChanged(SeekBar seekbar, int value, boolean fromUser) {
-            // the value should be jacked up by the apparent minimum value of SeekBar
-            // when the value is displayed
-            mValue = toDoubleExpression(value) + mRange.getLowerBound();
+    private final SeekBar.OnSeekBarChangeListener mListener =
+            new SeekBar.OnSeekBarChangeListener() {
+                @Override
+                public void onProgressChanged(
+                        SeekBar seekbar, int value, boolean fromUser) {
+                    // the value should be jacked up by the apparent minimum
+                    // value of
+                    // SeekBar
+                    // when the value is displayed
+                    mValue = toDoubleExpression(value) + mRange.getLowerBound();
 
-            final String fmt = "%" + mNumberOfIntegralDigits + "." + mNumberOfDecimalDigits + "f";
+                    final String fmt = "%" + mNumberOfIntegralDigits + "." +
+                            mNumberOfDecimalDigits + "f";
 
-            // use the proper unit based on the value
-            mTextView.setText(Unit.getUnitString(mContext, mUnit, fmt, mValue));
-        }
+                    // use the proper unit based on the value
+                    mTextView.setText(Unit.getUnitString(mContext,
+                                                         mUnit,
+                                                         fmt,
+                                                         mValue));
+                }
 
-        @Override
-        public void onStartTrackingTouch(SeekBar arg0) {
-            // not used
-        }
+                @Override
+                public void onStartTrackingTouch(SeekBar arg0) {
+                    // not used
+                }
 
-        @Override
-        public void onStopTrackingTouch(SeekBar arg0) {
-            // not used
-        }
-    };
+                @Override
+                public void onStopTrackingTouch(SeekBar arg0) {
+                    // not used
+                }
+            };
 
     /**
      * @param context
@@ -74,7 +82,12 @@ public class NumberSelectSeekBarView extends NumberSelectView {
      * @param numOfIntegralDigits - number of integral digits
      * @param numOfDecimalDigis   - number of decimal digits
      */
-    public NumberSelectSeekBarView(Context context, Range<Double> range, Unit unit, int numOfIntegralDigits, int numOfDecimalDigis) {
+    public NumberSelectSeekBarView(
+            Context context,
+            Range<Double> range,
+            Unit unit,
+            int numOfIntegralDigits,
+            int numOfDecimalDigis) {
         super(context, range);
 
         mUnit = unit;
@@ -82,10 +95,13 @@ public class NumberSelectSeekBarView extends NumberSelectView {
         mNumberOfIntegralDigits = numOfIntegralDigits;
         mNumberOfDecimalDigits = numOfDecimalDigis;
 
-        View layout = LayoutInflater.from(context).inflate(R.layout.view_number_select_seekbar, this);
+        View layout = LayoutInflater.from(context)
+                .inflate(R.layout.view_number_select_seekbar, this);
 
-        mTextView = (TextView) layout.findViewById(R.id.programming_numberSelectView_valueText);
-        mSeekBar = (SeekBar) layout.findViewById(R.id.programming_numberSelectView_seekBar);
+        mTextView =
+                (TextView) layout.findViewById(R.id.programming_numberSelectView_valueText);
+        mSeekBar =
+                (SeekBar) layout.findViewById(R.id.programming_numberSelectView_seekBar);
 
         mSeekBar.setOnSeekBarChangeListener(mListener);
 
@@ -100,12 +116,15 @@ public class NumberSelectSeekBarView extends NumberSelectView {
         double value = toDoubleExpression(num);
 
         if (!mRange.contains(value)) {
-            throw new RuntimeException("The value to set SeekBar is out of range " +
-                    "(range: " + mRange + ", value: " + value + ")");
+            throw new RuntimeException("The value to set SeekBar is out of " +
+                                               "range " +
+                                               "(range: " + mRange +
+                                               ", value: " + value + ")");
         }
 
         // because minimum value of SeekBar is always 0,
-        // the value to set SeekBar should be subtracted by its "apparent" minimum
+        // the value to set SeekBar should be subtracted by its "apparent"
+        // minimum
         mValue = value - mRange.getLowerBound();
 
         mSeekBar.setProgress(toIntegerExpression(mValue));

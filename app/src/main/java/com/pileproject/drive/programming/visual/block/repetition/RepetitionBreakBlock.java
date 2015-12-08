@@ -34,7 +34,8 @@ public class RepetitionBreakBlock extends BlockBase {
 
     public RepetitionBreakBlock(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_repetition_break, this);
+        LayoutInflater.from(context)
+                .inflate(R.layout.block_repetition_break, this);
     }
 
     @Override
@@ -43,33 +44,41 @@ public class RepetitionBreakBlock extends BlockBase {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(
+            MachineController controller,
+            ExecutionCondition condition) {
         if (!condition.whileStack.isEmpty()) {
             // Abandon the indices of current while loop
             int index = condition.whileStack.peek();    // target index
-            while (!condition.whileStack.isEmpty() && index == condition.whileStack.peek()) {
+            while (!condition.whileStack.isEmpty() &&
+                    index == condition.whileStack.peek()) {
                 condition.whileStack.pop();
             }
 
             // Update index
             if (!condition.whileStack.isEmpty()) {
                 if (condition.whileStack.peek() >= 0) {
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek();
+                    condition.beginningOfCurrentWhileLoop =
+                            condition.whileStack.peek();
                 } else {
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+                    condition.beginningOfCurrentWhileLoop =
+                            condition.whileStack.peek() -
+                                    WhileForeverBlock.FOREVER_WHILE_OFFSET;
                 }
             } else {
                 condition.beginningOfCurrentWhileLoop = -1;
             }
 
             // Exclude if commands that this loop contains
-            while (!condition.ifStack.isEmpty() && condition.ifStack.peek().get("index") >= index) {
+            while (!condition.ifStack.isEmpty() &&
+                    condition.ifStack.peek().get("index") >= index) {
                 condition.ifStack.pop();    // delete
             }
 
             // Move to the end of current while loop
             while (condition.blocks.size() >= condition.programCount) {
-                if (condition.blocks.get(++condition.programCount).getKind() == RepetitionEndBlock.class) {
+                if (condition.blocks.get(++condition.programCount).getKind() ==
+                        RepetitionEndBlock.class) {
                     break;
                 }
             }

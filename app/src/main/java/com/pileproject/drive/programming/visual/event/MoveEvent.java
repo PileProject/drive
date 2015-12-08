@@ -44,7 +44,10 @@ public class MoveEvent extends EventBase {
         // Get current position of View and move
         int curX = view.getLeft();
         int curY = view.getTop();
-        view.layout(mOldX, mOldY, mOldX + view.getWidth(), mOldY + view.getHeight());
+        view.layout(mOldX,
+                    mOldY,
+                    mOldX + view.getWidth(),
+                    mOldY + view.getHeight());
 
         // Create New MoveEvent for Redo
         EventBase diffForRedo = new MoveEvent(elementCount, mIndex, curX, curY);

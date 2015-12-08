@@ -25,7 +25,8 @@ import android.util.Log;
 import com.pileproject.drive.database.DBManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
-import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
+import com.pileproject.drive.programming.visual.block.selection
+        .SelectionEndBlock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -56,7 +57,8 @@ public class ExecutionThread extends Thread {
      * @param context   The context of Activity that calls this thread
      * @param uiHandler Handler for controlling the showing progress layout
      */
-    public ExecutionThread(Context context, Handler uiHandler, MachineController controler) {
+    public ExecutionThread(
+            Context context, Handler uiHandler, MachineController controler) {
         super();
         mManager = new DBManager(context);
         mCondition = new ExecutionCondition();
@@ -86,7 +88,9 @@ public class ExecutionThread extends Thread {
         mCondition.blocks = mManager.loadAll();
         boolean isStopped = false;
         try {
-            for (mCondition.programCount = 0; mCondition.programCount < mCondition.blocks.size(); mCondition.programCount++) {
+            for (mCondition.programCount = 0;
+                 mCondition.programCount < mCondition.blocks.size();
+                 mCondition.programCount++) {
                 // Halt execution
                 if (mHalt) {
                     break;
@@ -115,8 +119,10 @@ public class ExecutionThread extends Thread {
                 }
 
                 // Get block to be executed
-                BlockBase block = mCondition.blocks.get(mCondition.programCount);
-                Log.d(TAG, "Current Block: " + block.getClass().getSimpleName());
+                BlockBase block =
+                        mCondition.blocks.get(mCondition.programCount);
+                Log.d(TAG,
+                      "Current Block: " + block.getClass().getSimpleName());
 
                 // Emphasize the current executing block
                 sendIndex(EMPHASIZE_BLOCK, mCondition.programCount);
@@ -235,7 +241,8 @@ public class ExecutionThread extends Thread {
                 // Execute only if this block is under the nearest selection
                 // block and the right side of the second nearest selection
                 // block.
-                if (secondNearestSelectionBlock.right >= block.left + MARGIN || nearestSelectionBlock.right < block.left + MARGIN) {
+                if (secondNearestSelectionBlock.right >= block.left + MARGIN ||
+                        nearestSelectionBlock.right < block.left + MARGIN) {
                     return true;
                 }
             }

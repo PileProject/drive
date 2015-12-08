@@ -41,7 +41,8 @@ public class ForwardSecBlock extends SequenceBlockHasNumText {
         super(context);
         // Create view defined as the layout XML by LayoutInflater
         // Set this view to LayoutInflater#inflate() 2nd argument
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_forward_sec, this);
+        View layout = LayoutInflater.from(context)
+                .inflate(R.layout.block_forward_sec, this);
         numText = (TextView) layout.findViewById(R.id.block_numText);
     }
 
@@ -73,7 +74,8 @@ public class ForwardSecBlock extends SequenceBlockHasNumText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(
+            MachineController controller, ExecutionCondition condition) {
         ((NxtController) controller).moveForward();
         return getNum();
     }

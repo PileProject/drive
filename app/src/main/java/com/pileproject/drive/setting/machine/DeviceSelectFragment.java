@@ -94,19 +94,24 @@ public class DeviceSelectFragment extends Fragment {
             // When discovery finds a device
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 // Get a BluetoothDevice object from the Intent
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                BluetoothDevice device =
+                        intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 // If it's already paired, skip it, because it's been listed
                 // already
                 if (device.getBondState() != BluetoothDevice.BOND_BONDED) {
-                    if (/*( device.getAddress().startsWith(DEVICE_ADDRESS_PREFIX) || DeployUtils.isDebugMode(mActivity.getApplicationContext())) && */ mNewDevices.indexOf(device) == -1) {
+                    if (/*( device.getAddress().startsWith
+                    (DEVICE_ADDRESS_PREFIX) || DeployUtils.isDebugMode
+                    (mActivity.getApplicationContext())) && */
+                            mNewDevices.indexOf(device) == -1) {
                         mNewDevices.add(device);
                     }
                 }
             }
 
             // When discovery is finished, change the Activity title
-            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals(action)) {
+            else if (BluetoothAdapter.ACTION_DISCOVERY_FINISHED.equals
+                    (action)) {
                 finalizeDiscovery();
             }
         }
@@ -115,15 +120,23 @@ public class DeviceSelectFragment extends Fragment {
     private BluetoothTask mBluetoothTask = null;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_deviceselect, container, false);
+        View v = inflater.inflate(R.layout.fragment_deviceselect,
+                                  container,
+                                  false);
 
-        mDiscoverButton = (Button) v.findViewById(R.id.deviceselect_discoverButton);
+        mDiscoverButton =
+                (Button) v.findViewById(R.id.deviceselect_discoverButton);
         mBackButton = (Button) v.findViewById(R.id.deviceselect_backButton);
-        mBondedDevicesListView = (ListView) v.findViewById(R.id.deviceselect_bondedDeviceList);
+        mBondedDevicesListView =
+                (ListView) v.findViewById(R.id.deviceselect_bondedDeviceList);
         mBondedDevicesListView.setEmptyView((View) v.findViewById(R.id.deviceselect_emptyBondedDeviceList));
-        mNewDevicesListView = (ListView) v.findViewById(R.id.deviceselect_newDeviceList);
+        mNewDevicesListView =
+                (ListView) v.findViewById(R.id.deviceselect_newDeviceList);
         mNewDevicesListView.setEmptyView((View) v.findViewById(R.id.deviceselect_emptyNewDeviceList));
 
         return v;
@@ -150,29 +163,42 @@ public class DeviceSelectFragment extends Fragment {
         });
 
         mBondedDevices = new LinkedList<BluetoothDevice>();
-        mBondedDevicesAdapter = new DeviceListAdapter(mActivity, R.layout.view_devicelist, mBondedDevices);
+        mBondedDevicesAdapter = new DeviceListAdapter(mActivity,
+                                                      R.layout.view_devicelist,
+                                                      mBondedDevices);
         mBondedDevicesListView.setAdapter(mBondedDevicesAdapter);
         mBondedDevicesListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
-        mBondedDevicesListView.setOnItemClickListener(new OnItemClickListener() {
+        mBondedDevicesListView.setOnItemClickListener(new OnItemClickListener
+                () {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(
+                    AdapterView<?> parent, View view, int position, long id) {
                 ListView listView = (ListView) parent;
-                BluetoothDevice btDev = (BluetoothDevice) listView.getItemAtPosition(position);
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity, btDev.getAddress());
-                Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) + "\n" + btDev.getName(), Toast.LENGTH_LONG).show();
+                BluetoothDevice btDev =
+                        (BluetoothDevice) listView.getItemAtPosition(position);
+                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity,
+                                                                  btDev.getAddress());
+                Toast.makeText(mActivity,
+                               getString(R.string.deviceselect_toast_setDefault) +
+                                       "\n" + btDev.getName(),
+                               Toast.LENGTH_LONG).show();
             }
         });
 
         mNewDevices = new LinkedList<BluetoothDevice>();
-        mNewDevicesAdapter = new DeviceListAdapter(mActivity, R.layout.view_devicelistitem, mNewDevices);
+        mNewDevicesAdapter = new DeviceListAdapter(mActivity,
+                                                   R.layout.view_devicelistitem,
+                                                   mNewDevices);
         mNewDevicesListView.setAdapter(mNewDevicesAdapter);
         mNewDevicesListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(
+                    AdapterView<?> parent, View view, int position, long id) {
                 ListView listView = (ListView) parent;
                 mBluetoothTask = new BluetoothTask();
-                mBluetoothTask.execute((BluetoothDevice) listView.getItemAtPosition(position));
+                mBluetoothTask.execute((BluetoothDevice) listView
+                        .getItemAtPosition(position));
             }
         });
     }
@@ -187,7 +213,9 @@ public class DeviceSelectFragment extends Fragment {
 
         // check whether bluetooth function is available or not
         if (mBtAdapter == null) {
-            ConfirmationDialogFragment btDiag = ConfirmationDialogFragment.newInstance(getString(R.string.deviceselect_needBt_title), getString(R.string.deviceselect_needBt_message));
+            ConfirmationDialogFragment btDiag =
+                    ConfirmationDialogFragment.newInstance(getString(R.string.deviceselect_needBt_title),
+                                                           getString(R.string.deviceselect_needBt_message));
 
             btDiag.setOnClickListener(new DialogInterface.OnClickListener() {
                 @Override
@@ -201,8 +229,12 @@ public class DeviceSelectFragment extends Fragment {
         } else {
             getBondedDevices();
         }
-        mActivity.registerReceiver(mReceiver, new IntentFilter(BluetoothDevice.ACTION_FOUND));
-        mActivity.registerReceiver(mReceiver, new IntentFilter(BluetoothAdapter.ACTION_DISCOVERY_FINISHED));
+        mActivity.registerReceiver(mReceiver,
+                                   new IntentFilter(BluetoothDevice
+                                                            .ACTION_FOUND));
+        mActivity.registerReceiver(mReceiver,
+                                   new IntentFilter(BluetoothAdapter
+                                                            .ACTION_DISCOVERY_FINISHED));
     }
 
     @Override
@@ -218,13 +250,18 @@ public class DeviceSelectFragment extends Fragment {
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    public void onActivityResult(
+            int requestCode, int resultCode, Intent intent) {
         switch (requestCode) {
             case REQUEST_ENABLE_BT:
                 if (resultCode == Activity.RESULT_OK) {
                     discoverBluetoothDevices();
                 } else {
-                    ConfirmationDialogFragment cfrmDiag = ConfirmationDialogFragment.newInstance(getString(R.string.deviceselect_enableBt_title), getString(R.string.deviceselect_enableBt_message));
+                    ConfirmationDialogFragment cfrmDiag =
+                            ConfirmationDialogFragment.newInstance(getString
+                                                                           (R.string.deviceselect_enableBt_title),
+                                                                   getString
+                                                                           (R.string.deviceselect_enableBt_message));
                     cfrmDiag.show(getFragmentManager(), "tag");
                 }
         }
@@ -235,22 +272,26 @@ public class DeviceSelectFragment extends Fragment {
             return;
         }
 
-        //		for (Iterator<BluetoothDevice> itr = devices.iterator(); itr.hasNext();) {
+        //		for (Iterator<BluetoothDevice> itr = devices.iterator(); itr
+        // .hasNext();) {
         //			BluetoothDevice btDev = itr.next();
         //
-        //			if (!btDev.getAddress().startsWith(DEVICE_ADDRESS_PREFIX) && DeployUtils.isReleaseMode(mActivity.getApplicationContext())) {
+        //			if (!btDev.getAddress().startsWith(DEVICE_ADDRESS_PREFIX)
+        // && DeployUtils.isReleaseMode(mActivity.getApplicationContext())) {
         //				itr.remove();
         //			}
         //		}
     }
 
-    private int findIndexOfDevice(Collection<BluetoothDevice> devices, String address) {
+    private int findIndexOfDevice(
+            Collection<BluetoothDevice> devices, String address) {
         if (devices.size() == 0) {
             return -1;
         }
 
         int index = 0;
-        for (Iterator<BluetoothDevice> itr = devices.iterator(); itr.hasNext(); ) {
+        for (Iterator<BluetoothDevice> itr = devices.iterator();
+             itr.hasNext(); ) {
             BluetoothDevice btdev = itr.next();
 
             if (btdev.getAddress().equals(address)) {
@@ -275,7 +316,8 @@ public class DeviceSelectFragment extends Fragment {
         sieveDevices(mBondedDevices);
         mBondedDevicesAdapter.notifyDataSetChanged();
 
-        String defaultDevAddr = SharedPreferencesWrapper.loadDefaultDeviceAddress(mActivity);
+        String defaultDevAddr =
+                SharedPreferencesWrapper.loadDefaultDeviceAddress(mActivity);
         int defaultDevIdx = findIndexOfDevice(mBondedDevices, defaultDevAddr);
         mBondedDevicesListView.setItemChecked(defaultDevIdx, true);
     }
@@ -283,18 +325,23 @@ public class DeviceSelectFragment extends Fragment {
     private void discoverBluetoothDevices() {
         // if the bluetooth function is not enabled, let the user enable it
         if (mBtAdapter != null && !mBtAdapter.isEnabled()) {
-            startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
+            startActivityForResult(new Intent(BluetoothAdapter
+                                                      .ACTION_REQUEST_ENABLE),
+                                   REQUEST_ENABLE_BT);
             return;
         }
 
-        mProgressDialogFragment = ProgressDialogFragment.newInstance(getString(R.string.deviceselect_progress_scanning_title), getString(R.string.deviceselect_progress_scanning_message));
+        mProgressDialogFragment =
+                ProgressDialogFragment.newInstance(getString(R.string.deviceselect_progress_scanning_title),
+                                                   getString(R.string.deviceselect_progress_scanning_message));
         mProgressDialogFragment.setCancelable(false);
 
         FragmentTransaction ft = getFragmentManager().beginTransaction();
         ft.add(mProgressDialogFragment, null);
         ft.commitAllowingStateLoss();
 
-        mActivity.findViewById(R.id.deviceselect_newDeviceLayout).setVisibility(View.VISIBLE);
+        mActivity.findViewById(R.id.deviceselect_newDeviceLayout)
+                .setVisibility(View.VISIBLE);
         mActivity.setTitle(R.string.deviceselect_scanning);
         mActivity.setProgressBarIndeterminate(true);
 
@@ -319,8 +366,10 @@ public class DeviceSelectFragment extends Fragment {
     public static class ConfirmationDialogFragment extends DialogFragment {
         private DialogInterface.OnClickListener listener = null;
 
-        public static ConfirmationDialogFragment newInstance(String title, String msg) {
-            ConfirmationDialogFragment cfrmDiag = new ConfirmationDialogFragment();
+        public static ConfirmationDialogFragment newInstance(
+                String title, String msg) {
+            ConfirmationDialogFragment cfrmDiag =
+                    new ConfirmationDialogFragment();
             Bundle args = new Bundle();
             args.putString("title", title);
             args.putString("msg", msg);
@@ -342,7 +391,8 @@ public class DeviceSelectFragment extends Fragment {
             return dialog;
         }
 
-        public void setOnClickListener(DialogInterface.OnClickListener listener) {
+        public void setOnClickListener(
+                DialogInterface.OnClickListener listener) {
             this.listener = listener;
         }
     }
@@ -352,7 +402,8 @@ public class DeviceSelectFragment extends Fragment {
      */
     public static class ProgressDialogFragment extends DialogFragment {
 
-        public static ProgressDialogFragment newInstance(String title, String message) {
+        public static ProgressDialogFragment newInstance(
+                String title, String message) {
             ProgressDialogFragment prgDiag = new ProgressDialogFragment();
             Bundle args = new Bundle();
             args.putString("title", title);
@@ -380,13 +431,16 @@ public class DeviceSelectFragment extends Fragment {
     class BluetoothTask extends AsyncTask<BluetoothDevice, Void, Boolean> {
         private static final String BT_TAG = "BluetoothTask";
 
-        private final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+        private final UUID SPP_UUID =
+                UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
         private BluetoothDevice device;
 
         @Override
         protected void onPreExecute() {
-            mBtConnectionProgressDialogFragment = ProgressDialogFragment.newInstance(getString(R.string.deviceselect_progress_connecting_title), getString(R.string.deviceselect_progress_connecting_message));
+            mBtConnectionProgressDialogFragment =
+                    ProgressDialogFragment.newInstance(getString(R.string.deviceselect_progress_connecting_title),
+                                                       getString(R.string.deviceselect_progress_connecting_message));
             mBtConnectionProgressDialogFragment.setCancelable(false);
 
             FragmentTransaction ft = getFragmentManager().beginTransaction();
@@ -413,8 +467,12 @@ public class DeviceSelectFragment extends Fragment {
 
                 try {
                     // try another method
-                    Method method = device.getClass().getMethod("createRfcommSocket", new Class[]{int.class});
-                    socket = (BluetoothSocket) method.invoke(device, Integer.valueOf(1));
+                    Method method = device.getClass()
+                            .getMethod("createRfcommSocket",
+                                       new Class[]{int.class});
+                    socket = (BluetoothSocket) method.invoke(device,
+                                                             Integer.valueOf
+                                                                     (1));
                     socket.connect();
                     socket.close();
                 } catch (IOException e2) {
@@ -438,15 +496,24 @@ public class DeviceSelectFragment extends Fragment {
             if (result) {
                 if (mBondedDevicesAdapter.getPosition(device) == -1) {
                     mBondedDevicesAdapter.add(device);
-                    mBondedDevicesListView.setItemChecked(mBondedDevicesAdapter.getPosition(device), true);
+                    mBondedDevicesListView.setItemChecked
+                            (mBondedDevicesAdapter.getPosition(
+                            device), true);
                 }
 
                 mNewDevicesAdapter.remove(device);
 
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity, device.getAddress());
-                Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) + "\n" + device.getName(), Toast.LENGTH_LONG).show();
+                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity,
+                                                                  device.getAddress());
+                Toast.makeText(mActivity,
+                               getString(R.string.deviceselect_toast_setDefault) +
+                                       "\n" + device.getName(),
+                               Toast.LENGTH_LONG).show();
             } else {
-                Toast.makeText(mActivity, getString(R.string.deviceselect_toast_cannotConnect) + "\n" + device.getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(mActivity,
+                               getString(R.string.deviceselect_toast_cannotConnect) +
+                                       "\n" + device.getName(),
+                               Toast.LENGTH_LONG).show();
             }
         }
 

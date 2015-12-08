@@ -44,7 +44,8 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     // saved program data
     public static final String TBL_SAVED_PROGRAM_DATA = "saved_program_data";
     // use columns in TBL_PROGRM_DATA
-    public static final String SAVED_PROGRAM_ID = "saved_program_id";    // foreign key
+    public static final String SAVED_PROGRAM_ID = "saved_program_id";    //
+    // foreign key
     private static final String DB_NAME = "Mity.db";
     private static final int DB_VERSION = 3;
     private static DBOpenHelper mInstance = null;
@@ -101,26 +102,53 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA // name of table
-                + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + BLOCK_NAME + " TEXT NOT NULL, " // class name of block
-                + BLOCK_LEFT + " INTEGER NOT NULL, " // left (x) of block
-                + BLOCK_TOP + " INTEGER NOT NULL, " // top (y) of block
-                + BLOCK_RIGHT + " INTEGER NOT NULL, " // right (x) of block
-                + BLOCK_BOTTOM + " INTEGER NOT NULL, " // bottom (y) of block
-                + BLOCK_NUM + " INTEGER NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA // name
+                           // of table
+                           +
+                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                           " " +
+                           BLOCK_NAME + " TEXT NOT NULL, "
+                           // class name of block
+                           + BLOCK_LEFT + " INTEGER NOT NULL, "
+                           // left (x) of block
+                           + BLOCK_TOP + " INTEGER NOT NULL, "
+                           // top (y) of block
+                           + BLOCK_RIGHT + " INTEGER NOT NULL, "
+                           // right (x) of block
+                           + BLOCK_BOTTOM + " INTEGER NOT NULL, "
+                           // bottom (y) of block
+                           + BLOCK_NUM + " INTEGER NOT NULL);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS // name of table
-                + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE + " INTEGER NOT NULL, " // sample (1) or not (0)
-                + CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS // name
+                           // of table
+                           +
+                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                           " " +
+                           PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE +
+                           " INTEGER NOT" +
+                           " NULL, " // sample (1) or not (0)
+                           + CREATED_AT +
+                           " DATETIME DEFAULT CURRENT_TIMESTAMP);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA // name of table
-                + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + SAVED_PROGRAM_ID + " INTEGER NOT NULL, " // foreign key (TBL_SAVED_PROGAMR)
-                + BLOCK_NAME + " TEXT NOT NULL, " // class name of block
-                + BLOCK_LEFT + " INTEGER NOT NULL, " // left (x) of block
-                + BLOCK_TOP + " INTEGER NOT NULL, " // top (y) of block
-                + BLOCK_RIGHT + " INTEGER NOT NULL, " // right (x) of block
-                + BLOCK_BOTTOM + " INTEGER NOT NULL, " // bottom (y) of block
-                + BLOCK_NUM + " INTEGER NOT NULL);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA //
+                           // name of table
+                           +
+                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                           " " +
+                           SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
+                           // foreign key
+                           // (TBL_SAVED_PROGAMR)
+                           + BLOCK_NAME + " TEXT NOT NULL, "
+                           // class name of block
+                           + BLOCK_LEFT + " INTEGER NOT NULL, "
+                           // left (x) of block
+                           + BLOCK_TOP + " INTEGER NOT NULL, "
+                           // top (y) of block
+                           + BLOCK_RIGHT + " INTEGER NOT NULL, "
+                           // right (x) of block
+                           + BLOCK_BOTTOM + " INTEGER NOT NULL, "
+                           // bottom (y) of block
+                           + BLOCK_NUM + " INTEGER NOT NULL);");
     }
 
     /**
@@ -131,26 +159,55 @@ public class DBOpenHelper extends SQLiteOpenHelper {
 
         if (oldVersion < DB_VERSION) {
             db.execSQL("DROP TABLE " + TBL_PROGRAM_DATA + ";");
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA // name of table
-                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + BLOCK_NAME + " TEXT NOT NULL, " // class name of block
-                    + BLOCK_LEFT + " INTEGER NOT NULL, " // left (x) of block
-                    + BLOCK_TOP + " INTEGER NOT NULL, " // top (y) of block
-                    + BLOCK_RIGHT + " INTEGER NOT NULL, " // right (x) of block
-                    + BLOCK_BOTTOM + " INTEGER NOT NULL, " // bottom (y) of block
-                    + BLOCK_NUM + " INTEGER NOT NULL);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA //
+                               // name of table
+                               +
+                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
+                               "NULL, " +
+                               BLOCK_NAME + " TEXT NOT NULL, "
+                               // class name of block
+                               + BLOCK_LEFT + " INTEGER NOT NULL, "
+                               // left (x) of block
+                               + BLOCK_TOP + " INTEGER NOT NULL, "
+                               // top (y) of block
+                               + BLOCK_RIGHT + " INTEGER NOT NULL, "
+                               // right (x) of block
+                               + BLOCK_BOTTOM + " INTEGER NOT NULL, "
+                               // bottom (y) of
+                               // block
+                               + BLOCK_NUM + " INTEGER NOT NULL);");
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS // name of table
-                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE + " INTEGER NOT NULL, " // sample (1) or not (0)
-                    + CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS //
+                               // name of table
+                               +
+                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
+                               "NULL, " +
+                               PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE +
+                               " INTEGER" +
+                               " NOT NULL, " // sample (1) or not (0)
+                               + CREATED_AT +
+                               " DATETIME DEFAULT CURRENT_TIMESTAMP);");
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA // name of table
-                    + " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " + SAVED_PROGRAM_ID + " INTEGER NOT NULL, " // foreign key (TBL_SAVED_PROGAMR)
-                    + BLOCK_NAME + " TEXT NOT NULL, " // class name of block
-                    + BLOCK_LEFT + " INTEGER NOT NULL, " // left (x) of block
-                    + BLOCK_TOP + " INTEGER NOT NULL, " // top (y) of block
-                    + BLOCK_RIGHT + " INTEGER NOT NULL, " // right (x) of block
-                    + BLOCK_BOTTOM + " INTEGER NOT NULL, " // bottom (y) of block
-                    + BLOCK_NUM + " INTEGER NOT NULL);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA
+                               // name of table
+                               +
+                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
+                               "NULL, " +
+                               SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
+                               // foreign key
+                               // (TBL_SAVED_PROGAMR)
+                               + BLOCK_NAME + " TEXT NOT NULL, "
+                               // class name of block
+                               + BLOCK_LEFT + " INTEGER NOT NULL, "
+                               // left (x) of block
+                               + BLOCK_TOP + " INTEGER NOT NULL, "
+                               // top (y) of block
+                               + BLOCK_RIGHT + " INTEGER NOT NULL, "
+                               // right (x) of block
+                               + BLOCK_BOTTOM + " INTEGER NOT NULL, "
+                               // bottom (y) of
+                               // block
+                               + BLOCK_NUM + " INTEGER NOT NULL);");
         }
     }
 

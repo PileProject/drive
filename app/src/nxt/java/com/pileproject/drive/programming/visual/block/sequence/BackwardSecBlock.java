@@ -40,7 +40,8 @@ public class BackwardSecBlock extends SequenceBlockHasNumText {
     public BackwardSecBlock(Context context) {
         super(context);
 
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_backward_sec, this);
+        View layout = LayoutInflater.from(context)
+                .inflate(R.layout.block_backward_sec, this);
         numText = (TextView) layout.findViewById(R.id.block_numText);
     }
 
@@ -72,7 +73,8 @@ public class BackwardSecBlock extends SequenceBlockHasNumText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(
+            MachineController controller, ExecutionCondition condition) {
         ((NxtController) controller).moveBackward();
         return getNum();
     }

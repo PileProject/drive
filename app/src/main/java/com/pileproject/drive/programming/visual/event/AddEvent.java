@@ -35,11 +35,13 @@ public class AddEvent extends EventBase {
     @Override
     public EventBase undo(BlockSpaceLayout layout, int elementCount) {
         // Get block name
-        String blockName = ((BlockBase) layout.getChildAt(mIndex)).getClass().getName();
+        String blockName =
+                ((BlockBase) layout.getChildAt(mIndex)).getClass().getName();
         layout.removeViewAt(mIndex); // Remove it
 
         // Create a new DeleteNumDiff for Redo
-        EventBase diffForRedo = new DeleteEvent(elementCount, mIndex, blockName);
+        EventBase diffForRedo =
+                new DeleteEvent(elementCount, mIndex, blockName);
         return diffForRedo;
     }
 }

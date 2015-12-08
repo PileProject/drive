@@ -30,18 +30,23 @@ import java.util.List;
 public class ProgramDataAdapter extends ArrayAdapter<ProgramData> {
     private LayoutInflater mLayoutInflater;
 
-    public ProgramDataAdapter(Context context, int resourceId, List<ProgramData> objects) {
+    public ProgramDataAdapter(
+            Context context, int resourceId, List<ProgramData> objects) {
         super(context, resourceId, objects);
-        mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mLayoutInflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ProgramData item = (ProgramData) getItem(position);
-        if (null == convertView)
-            convertView = mLayoutInflater.inflate(R.layout.view_program_item, null);
+        if (null == convertView) {
+            convertView =
+                    mLayoutInflater.inflate(R.layout.view_program_item, null);
+        }
 
-        CheckBox checkbox = (CheckBox) convertView.findViewById(R.id.programList_checkBox);
+        CheckBox checkbox =
+                (CheckBox) convertView.findViewById(R.id.programList_checkBox);
         checkbox.setText(item.getProgramName());
         return convertView;
     }

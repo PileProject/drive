@@ -47,7 +47,8 @@ public abstract class BlockBase extends RelativeLayout {
      * @param condition  Condition of the executing program
      * @return
      */
-    public abstract int action(MachineController controller, ExecutionCondition condition);
+    public abstract int action(
+            MachineController controller, ExecutionCondition condition);
 
     /**
      * Return class to check a program is correct or not

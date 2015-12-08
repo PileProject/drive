@@ -42,10 +42,13 @@ public class DeleteEvent extends EventBase {
     @Override
     public EventBase undo(BlockSpaceLayout layout, int elementCount) {
         // Recreate block
-        BlockBase block = BlockFactory.createBlocks(BlockFactory.UNDO, mBlockName).get(0);
+        BlockBase block =
+                BlockFactory.createBlocks(BlockFactory.UNDO, mBlockName).get(0);
 
         // Attach it to layout
-        layout.addView(block, mIndex, new BlockSpaceLayout.LayoutParams(WC, WC));
+        layout.addView(block,
+                       mIndex,
+                       new BlockSpaceLayout.LayoutParams(WC, WC));
 
         // Create a new AddNumDiff for Redo
         EventBase diffForRedo = new AddEvent(elementCount, mIndex);

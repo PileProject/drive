@@ -23,7 +23,8 @@ public class Range<T extends Comparable<T>> {
     final private boolean includesLower;
     final private boolean includesUpper;
 
-    private Range(T lower, boolean includesLower, T upper, boolean includesUpper) {
+    private Range(
+            T lower, boolean includesLower, T upper, boolean includesUpper) {
         this.lower = lower;
         this.upper = upper;
         this.includesLower = includesLower;
@@ -38,17 +39,23 @@ public class Range<T extends Comparable<T>> {
         return new Range<T>(lower, true, upper, true);
     }
 
-    public static <T extends Comparable<T>> Range<T> openClosed(T lower, T upper) {
+    public static <T extends Comparable<T>> Range<T> openClosed(
+            T lower, T upper) {
         return new Range<T>(lower, false, upper, true);
     }
 
-    public static <T extends Comparable<T>> Range<T> closedOpen(T lower, T upper) {
+    public static <T extends Comparable<T>> Range<T> closedOpen(
+            T lower, T upper) {
         return new Range<T>(lower, true, upper, false);
     }
 
     public boolean contains(T value) {
-        boolean aboveLower = (includesLower) ? lower.compareTo(value) <= 0 : lower.compareTo(value) < 0;
-        boolean belowUpper = (includesUpper) ? value.compareTo(upper) <= 0 : value.compareTo(upper) < 0;
+        boolean aboveLower = (includesLower) ?
+                lower.compareTo(value) <= 0 :
+                lower.compareTo(value) < 0;
+        boolean belowUpper = (includesUpper) ?
+                value.compareTo(upper) <= 0 :
+                value.compareTo(upper) < 0;
 
         return aboveLower && belowUpper;
     }
@@ -66,6 +73,7 @@ public class Range<T extends Comparable<T>> {
         String leftSideParenthesis = (includesLower) ? "[" : "(";
         String rightSideParenthesis = (includesUpper) ? "]" : "(";
 
-        return leftSideParenthesis + lower + ", " + upper + rightSideParenthesis;
+        return leftSideParenthesis + lower + ", " + upper +
+                rightSideParenthesis;
     }
 }

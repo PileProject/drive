@@ -47,13 +47,20 @@ public class ProgramListFragment extends Fragment {
     // 0 : Sample Programs, 1 : User Programs
     private Button[] mProgramsCheckAllButton = new Button[2];
     private ListView[] mProgramListView = new ListView[2];
-    private ProgramDataAdapter[] mProgramDataAdapter = new ProgramDataAdapter[2];
-    private ArrayList<Map<String, Boolean>> mCheckedPrograms = new ArrayList<>();
+    private ProgramDataAdapter[] mProgramDataAdapter =
+            new ProgramDataAdapter[2];
+    private ArrayList<Map<String, Boolean>> mCheckedPrograms =
+            new ArrayList<>();
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(
+            LayoutInflater inflater,
+            ViewGroup container,
+            Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_programlist, container, false);
+        View v = inflater.inflate(R.layout.fragment_programlist,
+                                  container,
+                                  false);
 
         // create DBManager to list programs
         mManager = new DBManager(getActivity());
@@ -66,16 +73,20 @@ public class ProgramListFragment extends Fragment {
 
         // create ListView to show all programs
         // an item in ListView consists of (checkbox, program name) [CustomView]
-        mProgramListView[0] = (ListView) v.findViewById(R.id.programList_sampleProgramListView);
-        mProgramListView[1] = (ListView) v.findViewById(R.id.programList_userProgramListView);
+        mProgramListView[0] =
+                (ListView) v.findViewById(R.id.programList_sampleProgramListView);
+        mProgramListView[1] =
+                (ListView) v.findViewById(R.id.programList_userProgramListView);
 
         // create "delete" Button
         // by clicking it, checked items (programs) will be deleted
         mDeleteButton = (Button) v.findViewById(R.id.programList_deleteButton);
 
         // create "check all" Button for good user experience
-        mProgramsCheckAllButton[0] = (Button) v.findViewById(R.id.programList_samplePrograms_checkAllButton);
-        mProgramsCheckAllButton[1] = (Button) v.findViewById(R.id.programList_userPrograms_checkAllButton);
+        mProgramsCheckAllButton[0] =
+                (Button) v.findViewById(R.id.programList_samplePrograms_checkAllButton);
+        mProgramsCheckAllButton[1] =
+                (Button) v.findViewById(R.id.programList_userPrograms_checkAllButton);
 
         return v;
     }
@@ -87,7 +98,8 @@ public class ProgramListFragment extends Fragment {
         mDeleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ConfirmDialogFragment().show(getFragmentManager(), "confirmation");
+                new ConfirmDialogFragment().show(getFragmentManager(),
+                                                 "confirmation");
             }
         });
 
@@ -103,13 +115,20 @@ public class ProgramListFragment extends Fragment {
             mProgramListView[dataId].setAdapter(mProgramDataAdapter[dataId]);
             mProgramListView[dataId].setOnItemClickListener(new OnItemClickListener() {
                 @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    ProgramData data = mProgramDataAdapter[dataId].getItem(position);
-                    CheckBox chk = (CheckBox) view.findViewById(R.id.programList_checkBox);
+                public void onItemClick(
+                        AdapterView<?> parent,
+                        View view,
+                        int position,
+                        long id) {
+                    ProgramData data =
+                            mProgramDataAdapter[dataId].getItem(position);
+                    CheckBox chk =
+                            (CheckBox) view.findViewById(R.id.programList_checkBox);
                     chk.setChecked(!chk.isChecked()); // toggle check
 
                     // update state
-                    mCheckedPrograms.get(dataId).put(data.getProgramName(), chk.isChecked());
+                    mCheckedPrograms.get(dataId)
+                            .put(data.getProgramName(), chk.isChecked());
                 }
             });
         }
@@ -133,7 +152,8 @@ public class ProgramListFragment extends Fragment {
                 // put (program name, false)
                 mCheckedPrograms.get(dataId).put(programName, false);
             }
-            mProgramDataAdapter[dataId] = new ProgramDataAdapter(getActivity(), 0, data);
+            mProgramDataAdapter[dataId] =
+                    new ProgramDataAdapter(getActivity(), 0, data);
         }
     }
 
@@ -144,7 +164,8 @@ public class ProgramListFragment extends Fragment {
 
         for (int i = 0; i < lv.getChildCount(); i++) {
             View view = lv.getChildAt(i);
-            CheckBox chk = (CheckBox) view.findViewById(R.id.programList_checkBox);
+            CheckBox chk =
+                    (CheckBox) view.findViewById(R.id.programList_checkBox);
             chk.setChecked(true);
 
             m.put(chk.getText().toString(), true);
@@ -156,11 +177,16 @@ public class ProgramListFragment extends Fragment {
         String separator = ", ";
         StringBuilder sb = new StringBuilder();
         for (int dataId = 0; dataId < 2; dataId++) {
-            for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
-                if (!e.getValue()) continue; // won't be deleted
+            for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId)
+                    .entrySet()) {
+                if (!e.getValue()) {
+                    continue; // won't be deleted
+                }
 
                 // not initial addition
-                if (sb.length() > 0) sb.append(separator);
+                if (sb.length() > 0) {
+                    sb.append(separator);
+                }
 
                 sb.append(e.getKey());
             }
@@ -170,7 +196,8 @@ public class ProgramListFragment extends Fragment {
 
     private void deletePrograms() {
         for (int dataId = 0; dataId < 2; dataId++) {
-            for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
+            for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId)
+                    .entrySet()) {
                 if (e.getValue()) {
                     mManager.deleteProgramByName(e.getKey(), true);
                 }
@@ -187,13 +214,21 @@ public class ProgramListFragment extends Fragment {
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
             // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.confirmation).setMessage(getString(R.string.delete, generateProgramNamesToBeDeleted())).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    deletePrograms();
-                }
-            }).setNegativeButton(R.string.cancel, null);
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.confirmation)
+                    .setMessage(getString(R.string.delete,
+                                          generateProgramNamesToBeDeleted()))
+                    .setPositiveButton(R.string.ok,
+                                       new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(
+                                                   DialogInterface dialog,
+                                                   int which) {
+                                               deletePrograms();
+                                           }
+                                       })
+                    .setNegativeButton(R.string.cancel, null);
             return builder.create();
         }
     }

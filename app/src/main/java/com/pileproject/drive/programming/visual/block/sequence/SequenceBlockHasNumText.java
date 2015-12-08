@@ -28,7 +28,8 @@ import com.pileproject.drive.programming.visual.block.NumTextHolder;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public abstract class SequenceBlockHasNumText extends SequenceBlock implements NumTextHolder {
+public abstract class SequenceBlockHasNumText extends SequenceBlock
+        implements NumTextHolder {
 
     protected TextView numText;
 

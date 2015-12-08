@@ -46,7 +46,8 @@ public abstract class EventBase {
      * Undo method
      *
      * @param layout       Layout that has blocks
-     * @param elementCount Number that shows how many undos should be done at once
+     * @param elementCount Number that shows how many undos should be done at
+     *                     once
      * @return
      */
     public abstract EventBase undo(BlockSpaceLayout layout, int elementCount);

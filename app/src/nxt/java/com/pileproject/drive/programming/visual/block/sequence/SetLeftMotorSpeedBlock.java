@@ -37,7 +37,8 @@ public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumText {
 
     public SetLeftMotorSpeedBlock(Context context) {
         super(context);
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_set_left_motor_speed, this);
+        View layout = LayoutInflater.from(context)
+                .inflate(R.layout.block_set_left_motor_speed, this);
         numText = (TextView) layout.findViewById(R.id.block_numText);
     }
 
@@ -67,8 +68,11 @@ public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).setMotorPower(NxtController.MotorKind.LeftMotor, getNum());
+    public int action(
+            MachineController controller, ExecutionCondition condition) {
+        ((NxtController) controller).setMotorPower(NxtController.MotorKind
+                                                           .LeftMotor,
+                                                   getNum());
         return 0;
     }
 

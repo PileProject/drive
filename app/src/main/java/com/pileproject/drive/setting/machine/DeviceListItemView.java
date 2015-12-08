@@ -45,14 +45,16 @@ public class DeviceListItemView extends LinearLayout implements Checkable {
         initialize();
     }
 
-    public DeviceListItemView(Context context, AttributeSet attrs, int defStyle) {
+    public DeviceListItemView(
+            Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
     }
 
     private void initialize() {
         addView(inflate(getContext(), R.layout.view_devicelistitem, null));
-        mRadioButton = (RadioButton) findViewById(R.id.deviceListItemView_radioButton);
+        mRadioButton =
+                (RadioButton) findViewById(R.id.deviceListItemView_radioButton);
     }
 
     @Override

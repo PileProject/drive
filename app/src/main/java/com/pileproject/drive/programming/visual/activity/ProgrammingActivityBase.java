@@ -55,7 +55,8 @@ import java.util.ArrayList;
  * @version 1.0 18-June-2013
  */
 @SuppressWarnings("deprecation")
-public abstract class ProgrammingActivityBase extends Activity implements OnItemClickListener {
+public abstract class ProgrammingActivityBase extends Activity
+        implements OnItemClickListener {
 
     private final int NKINDS = 3;
     private final int ADD_BLOCK = 1;
@@ -83,15 +84,18 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 
         // Set OnClickListeners to buttons that add blocks
         for (int i = 0; i < NKINDS; i++) {
-            mAddBlockButtons.get(i).setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = getIntentToBlockList();
-                    intent.putExtra("category", mAddBlockButtons.indexOf(v));
-                    Log.d(TAG, "category: " + mAddBlockButtons.indexOf(v));
-                    startActivityForResult(intent, ADD_BLOCK);
-                }
-            });
+            mAddBlockButtons.get(i)
+                    .setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Intent intent = getIntentToBlockList();
+                            intent.putExtra("category",
+                                            mAddBlockButtons.indexOf(v));
+                            Log.d(TAG,
+                                  "category: " + mAddBlockButtons.indexOf(v));
+                            startActivityForResult(intent, ADD_BLOCK);
+                        }
+                    });
         }
 
         mExecButton.setOnClickListener(new View.OnClickListener() {
@@ -102,7 +106,8 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
         });
 
         // Set ArrayAdapter to ListView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         adapter.add(getString(R.string.programming_deleteAllBlocks));
         adapter.add(getString(R.string.programming_goBackToTitle));
 
@@ -118,7 +123,8 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
             @SuppressLint("NewApi")
             @Override
             public void onDrawerClosed() {
-                LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
+                LinearLayout ll =
+                        (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
                 int sdk = android.os.Build.VERSION.SDK_INT;
 
                 // check the sdk if older than Jelly bean
@@ -126,15 +132,18 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
                     ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_left));
                 } else {
                     // this code won't work in older version than Jelly bean
-                    ll.setBackground(getResources().getDrawable(R.drawable.to_left));
+                    ll.setBackground(getResources().getDrawable(R.drawable
+                                                                        .to_left));
                 }
             }
         });
-        mMenuHandle.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+        mMenuHandle.setOnDrawerOpenListener(new SlidingDrawer
+                .OnDrawerOpenListener() {
             @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
             @Override
             public void onDrawerOpened() {
-                LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
+                LinearLayout ll =
+                        (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
                 int sdk = android.os.Build.VERSION.SDK_INT;
 
                 // check the sdk if older than Jelly bean
@@ -142,17 +151,22 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
                     ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_right));
                 } else {
                     // this code won't work in older version than Jelly bean
-                    ll.setBackground(getResources().getDrawable(R.drawable.to_right));
+                    ll.setBackground(getResources().getDrawable(R.drawable
+                                                                        .to_right));
                 }
             }
         });
-        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress(this);
+        String deviceAddress =
+                SharedPreferencesWrapper.loadDefaultDeviceAddress(this);
         if (deviceAddress != null) {
             CharSequence title = getTitle();
-            setTitle(title + ": " + getResources().getString(R.string.programming_targetDevice) + deviceAddress);
+            setTitle(title + ": " +
+                             getResources().getString(R.string.programming_targetDevice) +
+                             deviceAddress);
         } else {
             CharSequence title = getTitle();
-            setTitle(title + ": " + getResources().getString(R.string.programming_noTargetDevice));
+            setTitle(title + ": " +
+                             getResources().getString(R.string.programming_noTargetDevice));
         }
     }
 
@@ -163,8 +177,14 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
     protected abstract Intent getIntentToExecute();
 
     private void findViews() {
-        mButtonsManager = new UndoAndRedoButtonsManager((Button) findViewById(R.id.programming_undoButton), (Button) findViewById(R.id.programming_redoButton));
-        mSpaceManager = new ProgrammingSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout), mButtonsManager);
+        mButtonsManager =
+                new UndoAndRedoButtonsManager((Button) findViewById(R.id.programming_undoButton),
+                                              (Button) findViewById(R.id.programming_redoButton));
+        mSpaceManager = new ProgrammingSpaceManager(this,
+                                                    (BlockSpaceLayout)
+                                                            findViewById(
+                                                            R.id.programming_placingBlockSpaceLayout),
+                                                    mButtonsManager);
         mAddBlockButtons = new ArrayList<>(NKINDS);
         mAddBlockButtons.add((Button) findViewById(R.id.programming_sequenceButton));
         mAddBlockButtons.add((Button) findViewById(R.id.programming_repetitionButton));
@@ -177,16 +197,28 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 
     private void moveToAnotherActivity() {
         mSpaceManager.save();
-        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
+        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(
+                getApplicationContext());
         // TODO this check does not work when dissolves paring
         if (address == null) {
-            AlertDialog alertDialog = new AlertDialog.Builder(ProgrammingActivityBase.this).setTitle(R.string.error).setMessage(R.string.deviceselect_didNotSelectDevice).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Intent intent = getIntentToDeviceList();
-                    startActivity(intent);
-                }
-            }).create();
+            AlertDialog alertDialog =
+                    new AlertDialog.Builder(ProgrammingActivityBase.this)
+                            .setTitle(R.string.error)
+                            .setMessage(R.string.deviceselect_didNotSelectDevice)
+                            .setPositiveButton(R.string.ok,
+                                               new DialogInterface
+                                                       .OnClickListener() {
+                                                   @Override
+                                                   public void onClick(
+                                                           DialogInterface
+                                                                   dialog,
+                                                           int which) {
+                                                       Intent intent =
+                                                               getIntentToDeviceList();
+                                                       startActivity(intent);
+                                                   }
+                                               })
+                            .create();
             alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
         } else {
@@ -202,58 +234,85 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(
+            int requestCode,
+            int resultCode,
+            Intent data) {
         switch (requestCode) {
             case ADD_BLOCK:
                 if (resultCode == Activity.RESULT_OK) {
                     // Get results
-                    int howToMake = data.getIntExtra("how_to_make", BlockFactory.SEQUENCE);
+                    int howToMake = data.getIntExtra("how_to_make",
+                                                     BlockFactory.SEQUENCE);
                     String blockName = data.getStringExtra("block_name");
-                    ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
+                    ArrayList<BlockBase> blocks =
+                            BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
                     mButtonsManager.checkButtonsWorkability();
                 }
                 break;
 
             case EXECUTE_PROGRAM:
-                mIsConnected = !(data == null || !data.getBooleanExtra("is_connected", false));
+                mIsConnected = !(data == null ||
+                        !data.getBooleanExtra("is_connected", false));
                 break;
         }
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(
+            AdapterView<?> parent,
+            View view,
+            int position,
+            long id) {
         ListView list = (ListView) parent;
         String item = (String) list.getItemAtPosition(position);
 
         // Initializing layout
         if (item.equals(getString(R.string.programming_deleteAllBlocks))) {
             // Create an AlertDialog show confirmation
-            new AlertDialog.Builder(this).setTitle(R.string.programming_deleteAllBlocks).setMessage(R.string.confirmation).setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    mSpaceManager.deleteAllBlocks();
-                    mButtonsManager.checkButtonsWorkability();
-                    mMenuHandle.close();
-                }
-            }).setNegativeButton(R.string.cancel, null).show();
+            new AlertDialog.Builder(this).setTitle(R.string.programming_deleteAllBlocks)
+                    .setMessage(R.string.confirmation)
+                    .setPositiveButton(R.string.ok,
+                                       new DialogInterface.OnClickListener() {
+                                           @Override
+                                           public void onClick(
+                                                   DialogInterface dialog,
+                                                   int which) {
+                                               mSpaceManager.deleteAllBlocks();
+                                               mButtonsManager
+                                                       .checkButtonsWorkability();
+                                               mMenuHandle.close();
+                                           }
+                                       })
+                    .setNegativeButton(R.string.cancel, null)
+                    .show();
         }
         // Going back to NxtTitleActivity
         else if (item.equals(getString(R.string.programming_goBackToTitle))) {
             mSpaceManager.save();
             finish();
         } else if (item.equals(getString(R.string.programming_loadSampleProgram))) {
-            CharSequence[] programs = mSpaceManager.loadSavedSampleProgramNames();
-            DialogFragment programListFragment = new ProgramListFragment(programs, true);
-            programListFragment.show(getFragmentManager(), "sample_program_list");
+            CharSequence[] programs =
+                    mSpaceManager.loadSavedSampleProgramNames();
+            DialogFragment programListFragment =
+                    new ProgramListFragment(programs, true);
+            programListFragment.show(getFragmentManager(),
+                                     "sample_program_list");
             mMenuHandle.close();
         } else if (item.equals(getString(R.string.programming_saveProgram))) {
-            boolean isEnabledSupervisorMode = SharedPreferencesWrapper.loadBoolPreference(this, SupervisorModeFragment.class.getName(), false);
+            boolean isEnabledSupervisorMode =
+                    SharedPreferencesWrapper.loadBoolPreference(this,
+                                                                SupervisorModeFragment.class
+                                                                        .getName(),
+                                                                false);
             if (isEnabledSupervisorMode) {
                 // supervisor
                 // save this program as a new sample one
-                final InputSampleProgramNameDialogFragment fragment = new InputSampleProgramNameDialogFragment();
-                fragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
+                final InputSampleProgramNameDialogFragment fragment =
+                        new InputSampleProgramNameDialogFragment();
+                fragment.setOnOkClickListener(new DialogInterface
+                        .OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String programName = fragment.getInputtedProgramName();
@@ -272,14 +331,16 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
             }
         } else if (item.equals(getString(R.string.programming_loadProgram))) {
             CharSequence[] programs = mSpaceManager.loadSavedProgramNames();
-            DialogFragment programListFragment = new ProgramListFragment(programs);
+            DialogFragment programListFragment =
+                    new ProgramListFragment(programs);
             programListFragment.show(getFragmentManager(), "program_list");
             mMenuHandle.close();
         }
     }
 
     public void showSavedProgramNameDialog(String programName) {
-        new SaveProgramDialogFragment(programName).show(getFragmentManager(), "save_program");
+        new SaveProgramDialogFragment(programName).show(getFragmentManager(),
+                                                        "save_program");
     }
 
     public static class SaveProgramDialogFragment extends DialogFragment {
@@ -291,13 +352,18 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.programming_saveProgram).setMessage(getString(R.string.programming_savedAs, mProgramName)).setPositiveButton(R.string.ok, null);
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.programming_saveProgram)
+                    .setMessage(getString(R.string.programming_savedAs,
+                                          mProgramName))
+                    .setPositiveButton(R.string.ok, null);
             return builder.create();
         }
     }
 
-    public static class InputSampleProgramNameDialogFragment extends DialogFragment {
+    public static class InputSampleProgramNameDialogFragment
+            extends DialogFragment {
         private EditText mEditText;
         private DialogInterface.OnClickListener mOkClickListener = null;
         private DialogInterface.OnClickListener mCancelClickListener = null;
@@ -307,16 +373,23 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
             mEditText = new EditText(getActivity());
             mEditText.setMaxLines(1); // disable new lines
 
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.programming_saveProgramAsASample).setMessage(R.string.programming_inputProgramName).setView(mEditText).setPositiveButton(R.string.ok, mOkClickListener).setNegativeButton(R.string.cancel, mCancelClickListener);
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.programming_saveProgramAsASample)
+                    .setMessage(R.string.programming_inputProgramName)
+                    .setView(mEditText)
+                    .setPositiveButton(R.string.ok, mOkClickListener)
+                    .setNegativeButton(R.string.cancel, mCancelClickListener);
             return builder.create();
         }
 
-        public void setOnOkClickListener(DialogInterface.OnClickListener listener) {
+        public void setOnOkClickListener(DialogInterface.OnClickListener
+                                                 listener) {
             this.mOkClickListener = listener;
         }
 
-        public void setOnCancelClickListener(DialogInterface.OnClickListener listener) {
+        public void setOnCancelClickListener(
+                DialogInterface.OnClickListener listener) {
             this.mCancelClickListener = listener;
         }
 

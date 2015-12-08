@@ -22,7 +22,8 @@ import android.widget.TextView;
 import com.pileproject.drive.programming.visual.block.NumTextHolder;
 
 
-public abstract class RepetitionHasNumText extends RepetitionBlock implements NumTextHolder {
+public abstract class RepetitionHasNumText extends RepetitionBlock
+        implements NumTextHolder {
 
     protected TextView numText;
 

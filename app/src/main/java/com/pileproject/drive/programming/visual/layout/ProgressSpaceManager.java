@@ -63,13 +63,18 @@ public class ProgressSpaceManager extends BlockSpaceManager {
     public void emphasizeBlock(int index) {
         // Get the target block
         // Add the number of default children count of PlacingSpaceLayout
-        View view = mLayout.getChildAt(index + mLayout.getDefaultChildrenCount());
+        View view =
+                mLayout.getChildAt(index + mLayout.getDefaultChildrenCount());
         if (view instanceof BlockBase) {
             if (mFrame != null) {
                 mLayout.removeView(mFrame);
             }
             // Create frame for emphasizing
-            mFrame = new FrameView(mContext, view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
+            mFrame = new FrameView(mContext,
+                                   view.getLeft(),
+                                   view.getTop(),
+                                   view.getRight(),
+                                   view.getBottom());
             mLayout.addView(mFrame, new BlockSpaceLayout.LayoutParams(WC, WC));
         }
     }

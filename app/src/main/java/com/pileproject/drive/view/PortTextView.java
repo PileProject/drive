@@ -43,7 +43,8 @@ public abstract class PortTextView extends TextView {
         mContext = context;
         mSoundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
 
-        TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
+        TypedArray tar =
+                context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
         String port;
         mPortName = tar.getString(R.styleable.PortTextView_portName);
         port = tar.getString(R.styleable.PortTextView_portType);
@@ -80,11 +81,17 @@ public abstract class PortTextView extends TextView {
                 mSoundEffectOfMovingBlock.start(); // play sound
 
                 if (mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mContext, mPortName, mAttachmentType);
+                    SharedPreferencesWrapper.saveIntPreference(mContext,
+                                                               mPortName,
+                                                               mAttachmentType);
                 }
 
                 if (localState.mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mContext, localState.mPortName, localState.mAttachmentType);
+                    SharedPreferencesWrapper.saveIntPreference(mContext,
+                                                               localState
+                                                                       .mPortName,
+                                                               localState
+                                                                       .mAttachmentType);
                 }
             }
             return true;

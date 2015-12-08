@@ -34,7 +34,8 @@ public class RepetitionEndBlock extends BlockBase {
 
     public RepetitionEndBlock(Context context) {
         super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_repetition_end, this);
+        LayoutInflater.from(context)
+                .inflate(R.layout.block_repetition_end, this);
     }
 
     @Override
@@ -43,7 +44,9 @@ public class RepetitionEndBlock extends BlockBase {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(
+            MachineController controller,
+            ExecutionCondition condition) {
 
         if (!condition.whileStack.isEmpty()) {
             // Check the pair of this RepetitionEndBlock is  WhileForeverBlock
@@ -51,9 +54,12 @@ public class RepetitionEndBlock extends BlockBase {
             if (condition.whileStack.peek() >= 0) {
                 // Check the while loop had already finished or not
                 // Had already finished
-                if (condition.beginningOfCurrentWhileLoop != condition.whileStack.peek()) {
-                    // just update the index of the beginning of current while loop
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek();
+                if (condition.beginningOfCurrentWhileLoop !=
+                        condition.whileStack.peek()) {
+                    // just update the index of the beginning of current
+                    // while loop
+                    condition.beginningOfCurrentWhileLoop =
+                            condition.whileStack.peek();
                 }
                 // Had not finished yet
                 else {
@@ -63,11 +69,14 @@ public class RepetitionEndBlock extends BlockBase {
             }
             // ForeverWhile
             else {
-                int indexWithoutOffset = condition.whileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+                int indexWithoutOffset = condition.whileStack.peek() -
+                        WhileForeverBlock.FOREVER_WHILE_OFFSET;
                 // Check the while loop had already finished or not
                 // Had already finished
-                if (condition.beginningOfCurrentWhileLoop != indexWithoutOffset) {
-                    // just update the index of the beginning of current while loop
+                if (condition.beginningOfCurrentWhileLoop !=
+                        indexWithoutOffset) {
+                    // just update the index of the beginning of current
+                    // while loop
                     condition.beginningOfCurrentWhileLoop = indexWithoutOffset;
                 }
                 // Had not finished yet

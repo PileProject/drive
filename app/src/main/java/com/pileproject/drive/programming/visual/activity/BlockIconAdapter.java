@@ -33,7 +33,8 @@ import com.pileproject.drive.R;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 4-June-2013
  */
-public class BlockIconAdapter extends ArrayAdapter<BlockListActivityBase.BlockClassHolder> {
+public class BlockIconAdapter
+        extends ArrayAdapter<BlockListActivityBase.BlockClassHolder> {
     private LayoutInflater inflater;
     private int layoutId;
 
@@ -44,9 +45,13 @@ public class BlockIconAdapter extends ArrayAdapter<BlockListActivityBase.BlockCl
      * @param layoutId The resource id of layout
      * @param objects  The data sets of BindData
      */
-    public BlockIconAdapter(Context context, int layoutId, BlockListActivityBase.BlockClassHolder[] objects) {
+    public BlockIconAdapter(
+            Context context,
+            int layoutId,
+            BlockListActivityBase.BlockClassHolder[] objects) {
         super(context, 0, objects);
-        this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         this.layoutId = layoutId;
     }
 
@@ -58,8 +63,10 @@ public class BlockIconAdapter extends ArrayAdapter<BlockListActivityBase.BlockCl
         if (convertView == null) {
             convertView = inflater.inflate(layoutId, parent, false);
             holder = new ViewHolder();
-            holder.textView = (TextView) convertView.findViewById(R.id.blockIcon_blockText);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.blockIcon_blockImage);
+            holder.textView =
+                    (TextView) convertView.findViewById(R.id.blockIcon_blockText);
+            holder.imageView =
+                    (ImageView) convertView.findViewById(R.id.blockIcon_blockImage);
             convertView.setTag(holder);
         } else {
             holder = (ViewHolder) convertView.getTag();
