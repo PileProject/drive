@@ -20,7 +20,8 @@ package com.pileproject.drive.title;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.pileproject.drive.block.programming.NxtProgrammingActivity;
+import com.pileproject.drive.R;
+import com.pileproject.drive.programming.visual.activity.a.NxtProgrammingActivity;
 
 public class NxtTitleActivity extends TitleActivityBase {
 	

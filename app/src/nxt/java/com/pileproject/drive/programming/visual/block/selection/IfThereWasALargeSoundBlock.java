@@ -49,7 +49,7 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
 	public int action(MachineController controller, ExecutionCondition condition) {
 		// need multiply 10 because getdB returns 10 times value 
 		// the comment is messed up
-		condition.pushSelectionResult(((NxtController) controller).soundSensor.getdB() > mThreshold * 10);
+		condition.pushSelectionResult(((NxtController) controller).getSoundSensorValue() > mThreshold * 10);
 		return 0;
 	}
 }

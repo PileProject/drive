@@ -21,10 +21,9 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import com.pileproject.drive.util.SharedPreferencesWrapper;
-import com.pileproject.drivecommand.machine.output.Motor;
-
-import java.util.Deque;
-import java.util.LinkedList;
+import com.pileproject.drivecommand.model.nxt.NxtMachine;
+import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
+import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
 public class NxtControllerBuilder {
 	private SparseArray<NxtInputPort> mSensorPorts = null;
@@ -33,7 +32,7 @@ public class NxtControllerBuilder {
 	public NxtControllerBuilder(Context context) {
 		mSensorPorts = new SparseArray<>();
 		mMotorPorts = new SparseArray<>();
-		
+
 		loadSensorsFromPreferences(context);
 		loadMotorsFromPreferences(context);
 	}
@@ -51,14 +50,14 @@ public class NxtControllerBuilder {
 
 		final NxtInputPort[] sensorPorts
 				= { NxtInputPort.PORT_1,
-					NxtInputPort.PORT_2,
-                    NxtInputPort.PORT_3,
-                    NxtInputPort.PORT_4};
+				NxtInputPort.PORT_2,
+				NxtInputPort.PORT_3,
+				NxtInputPort.PORT_4};
 		final String[] sensorPortPrefTags
 				= { NxtController.TAG_SENSOR_PORT_1,
-					NxtController.TAG_SENSOR_PORT_2,
-					NxtController.TAG_SENSOR_PORT_3,
-					NxtController.TAG_SENSOR_PORT_4 };
+				NxtController.TAG_SENSOR_PORT_2,
+				NxtController.TAG_SENSOR_PORT_3,
+				NxtController.TAG_SENSOR_PORT_4 };
 
 		for (int i = 0; i < sensorPortPrefTags.length; ++i) {
 			int key = SharedPreferencesWrapper.loadIntPreference(context, sensorPortPrefTags[i], notAssigned);
@@ -67,20 +66,20 @@ public class NxtControllerBuilder {
 	}
 	
 	private void loadMotorsFromPreferences(Context context) {
-		final int notAssigned = NxtMachine.MotorProperty.MOTOR_UNUSED;
-		
+		final int notAssigned = NxtController.MotorProperty.MOTOR_UNUSED;
+
 		final NxtOutputPort[] motorPorts
 				= { NxtOutputPort.PORT_A,
-					NxtOutputPort.PORT_B,
-					NxtOutputPort.PORT_C };
+				NxtOutputPort.PORT_B,
+				NxtOutputPort.PORT_C };
 		final String[] motorPortPrefTags
 				= { NxtController.TAG_MOTOR_PORT_A,
-                    NxtController.TAG_MOTOR_PORT_B,
-                    NxtController.TAG_MOTOR_PORT_C };
+				NxtController.TAG_MOTOR_PORT_B,
+				NxtController.TAG_MOTOR_PORT_C };
 
 		for (int i = 0; i < motorPortPrefTags.length; ++i) {
 			int key = SharedPreferencesWrapper.loadIntPreference(context, motorPortPrefTags[i], notAssigned);
-			mMotors.put(key, motorPorts[i]);
+
 		}
 	}
 }

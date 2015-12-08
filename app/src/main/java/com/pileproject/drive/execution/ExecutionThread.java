@@ -23,9 +23,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.pileproject.drive.block.BlockBase;
-import com.pileproject.drive.block.selection.SelectionBlock;
-import com.pileproject.drive.block.selection.SelectionEndBlock;
+import com.pileproject.drive.programming.visual.block.BlockBase;
+import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
+import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 import com.pileproject.drive.database.DBManager;
 
 import java.util.ArrayList;

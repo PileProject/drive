@@ -40,7 +40,7 @@ public class IfNXTWasTouchedBlock extends SelectionBlock {
 	
 	@Override
 	public int action(MachineController controller, ExecutionCondition condition) {
-		condition.pushSelectionResult(((NxtController) controller).touchSensor.isPressed());
+		condition.pushSelectionResult(((NxtController) controller).getTouchSensorValue());
 		return 0;
 	}
 }

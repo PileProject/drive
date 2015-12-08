@@ -17,16 +17,13 @@
 
 package com.pileproject.drive.execution;
 
-import com.pileproject.drivecommand.machine.Machine;
+import com.pileproject.drivecommand.machine.device.input.LineSensor;
 import com.pileproject.drivecommand.machine.device.input.SoundSensor;
 import com.pileproject.drivecommand.machine.device.input.TouchSensor;
-import com.pileproject.drivecommand.machine.device.input.LineSensor;
 import com.pileproject.drivecommand.machine.device.output.Motor;
+import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
-
-import java.util.LinkedList;
-import java.util.List;
 
 public class NxtController implements MachineController {
 	private NxtMachine mMachine = null;
@@ -36,17 +33,20 @@ public class NxtController implements MachineController {
 	private LineSensor mLineSensor = null;
 	private SoundSensor mSoundSensor = null;
 
-	private int mRightMotorPower = NxtMachine.INIT_MOTOR_POWER;
-	private int mLeftMotorPower = NxtMachine.INIT_MOTOR_POWER;
+	public static final int MAX_MOTOR_POWER = 900;
+	public static final int INIT_MOTOR_POWER = 500;
 
-	public static String TAG_SENSOR_PORT_1 = "sensorPort1";
-	public static String TAG_SENSOR_PORT_2 = "sensorPort2";
-	public static String TAG_SENSOR_PORT_3 = "sensorPort3";
-	public static String TAG_SENSOR_PORT_4 = "sensorPort4";
+	private int mRightMotorPower = INIT_MOTOR_POWER;
+	private int mLeftMotorPower = INIT_MOTOR_POWER;
 
-	public static String TAG_MOTOR_PORT_A = "motorPortA";
-	public static String TAG_MOTOR_PORT_B = "motorPortB";
-	public static String TAG_MOTOR_PORT_C = "motorPortC";
+	public static final String TAG_SENSOR_PORT_1 = "sensorPort1";
+	public static final String TAG_SENSOR_PORT_2 = "sensorPort2";
+	public static final String TAG_SENSOR_PORT_3 = "sensorPort3";
+	public static final String TAG_SENSOR_PORT_4 = "sensorPort4";
+
+	public static final String TAG_MOTOR_PORT_A = "motorPortA";
+	public static final String TAG_MOTOR_PORT_B = "motorPortB";
+	public static final String TAG_MOTOR_PORT_C = "motorPortC";
 
 	public enum MotorDir {
 		Forward, Neutral, Backward
@@ -62,12 +62,12 @@ public class NxtController implements MachineController {
 	 */
 	public NxtController(NxtMachine machine) {
 		mMachine = machine;
-		rightMotor = machine.createMotor(NxtMotorPort.PORT_B);
-		leftMotor = machine.createMotor(MotorPort.PORT_C);
+		mRightMotor = machine.createMotor(NxtOutputPort.PORT_B);
+		mLeftMotor = machine.createMotor(NxtOutputPort.PORT_C);
 		
-		touchSensor = machine.createTouchSensor(NxtSensorPort.PORT_1);
-		soundSensor = machine.createSoundSensor(NxtSensorPort.PORT_2);
-		lineSensor = machine.createLineSensor(NxtSensorPort.PORT_3);
+		mTouchSensor = machine.createTouchSensor(NxtInputPort.PORT_1);
+		mSoundSensor = machine.createSoundSensor(NxtInputPort.PORT_2);
+		mLineSensor = machine.createLineSensor(NxtInputPort.PORT_3);
 	}
 	
 	public NxtController(NxtMachine machine, NxtControllerBuilder builder) {
@@ -86,7 +86,7 @@ public class NxtController implements MachineController {
 
 		motorPort = builder.getMotorPort(NxtMachine.MotorProperty.MOTOR_RIGHT);
 		if (motorPort != null) {
-			mRightMotor = mMachine.createMotor();
+			mRightMotor = mMachine.createMotor(motorPort);
 		}
 	}
 	
@@ -186,15 +186,15 @@ public class NxtController implements MachineController {
 		if (mLeftMotor != null) {
 			switch (leftMotorDir) {
 				case Forward:
-					leftMotor.setSpeed(leftMotorPower);
-					leftMotor.forward();
+					mLeftMotor.setSpeed(mLeftMotorPower);
+					mLeftMotor.forward();
 					break;
 				case Neutral:
-					leftMotor.stop();
+					mLeftMotor.stop();
 					break;
 				case Backward:
-					leftMotor.setSpeed(leftMotorPower);
-					leftMotor.backward();
+					mLeftMotor.setSpeed(mLeftMotorPower);
+					mLeftMotor.backward();
 					break;
 			}
 		}
@@ -202,15 +202,15 @@ public class NxtController implements MachineController {
 		if (mRightMotor != null) {
 			switch (rightMotorDir) {
 				case Forward:
-					rightMotor.setSpeed(rightMotorPower);
-					rightMotor.forward();
+					mRightMotor.setSpeed(mRightMotorPower);
+					mRightMotor.forward();
 					break;
 				case Neutral:
-					rightMotor.stop();
+					mRightMotor.stop();
 					break;
 				case Backward:
-					rightMotor.setSpeed(rightMotorPower);
-					rightMotor.backward();
+					mRightMotor.setSpeed(mRightMotorPower);
+					mRightMotor.backward();
 					break;
 			}
 		}
@@ -219,16 +219,16 @@ public class NxtController implements MachineController {
 	/**
 	 * set motor's power as percent
 	 * 
-	 * @param motor
+	 * @param kind
 	 * @param percent
 	 */
-	public void setMotorPower(MotorKind motor, double percent) {
+	public void setMotorPower(MotorKind kind, double percent) {
 		if (percent > 100.0) percent = 100.0;
 		else if (percent < 0) percent = 0.0;
 		
-		switch (motor) {
+		switch (kind) {
 			case LeftMotor:
-				mLeftMotorPower = (int) ((NxtMachine.MAX_MOTOR_POWER * percent) / 100.0);
+				mLeftMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);
 				break;
 			case RightMotor:
 				mRightMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);

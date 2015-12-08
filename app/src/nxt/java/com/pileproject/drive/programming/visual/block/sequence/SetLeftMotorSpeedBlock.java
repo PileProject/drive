@@ -17,17 +17,16 @@
 
 package com.pileproject.drive.programming.visual.block.sequence;
 
-import jp.mity.drivecore.execute.ExecuteCondition;
-import jp.mity.drivecore.execute.DeviceController;
-import jp.mity.drivecore.factory.sequence.option.SequenceBlockHasNumText;
-import jp.mity.drivecore.utils.Unit;
-import jp.mity.nxtdrive.execute.NxtController;
-import jp.mity.nxtdrive.execute.NxtController.MotorKind;
-import jp.mity.nxtdrive.R;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.pileproject.drive.R;
+import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.util.Unit;
 
 /***
  * Set left motor power
@@ -72,8 +71,9 @@ public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumText {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecuteCondition condition) {
-		((NxtController) controller).setMotorPower(MotorKind.LeftMotor, getNum());
+	public int action(MachineController controller, ExecutionCondition condition) {
+		((NxtController) controller)
+				.setMotorPower(NxtController.MotorKind.LeftMotor, getNum());
 		return 0;
 	}
 	

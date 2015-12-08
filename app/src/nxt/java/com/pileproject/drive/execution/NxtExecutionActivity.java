@@ -23,8 +23,7 @@ import android.content.Intent;
 
 import com.pileproject.drive.comm.BluetoothCommunicator;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
-import com.pileproject.drivecommand.model.nxt.NxtProtocol;
-
+import com.pileproject.drivecommand.model.nxt.NxtMachine;
 
 public class NxtExecutionActivity extends ExecutionActivityBase {
 	private NxtMachine mMachine;
@@ -34,42 +33,34 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 		// Get mac address
 		String address
 				= SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
-		
+
 		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
 		BluetoothDevice device = adapter.getRemoteDevice(address);
-		mMachine = new NxtMachine(new NxtProtocol(new BluetoothCommunicator(device)));
+		mMachine = new NxtMachine(new BluetoothCommunicator(device));
 
 		showConnectionProgressDialog(); // Create a ProgressDialog
-		
+
 		// Try to connect
 		new Thread(() -> {
-            try {
+			try {
 				mMachine.connect();
 
-                // Inform this activity has already connected to nxt
-                Intent intent = new Intent();
-                intent.putExtra("is_connected", true);
-                setResult(RESULT_OK, intent);
+				// Inform this activity has already connected to nxt
+				Intent intent = new Intent();
+				intent.putExtra("is_connected", true);
+				setResult(RESULT_OK, intent);
 
-                startExecution();
-            }
-            catch (Exception e) {
-                showConnectionFailedDialog();
-            }
-            dismissConnectionProgressDialog();
-        }).start();
+				startExecution();
+			}
+			catch (Exception e) {
+				showConnectionFailedDialog();
+			}
+			dismissConnectionProgressDialog();
+		}).start();
 	}
-	
+
 	@Override
-	protected DeviceController getDeviceController() {
+	protected MachineController getDeviceController() {
 		return new NxtController(mMachine, new NxtControllerBuilder(this));
-//		NxtController controller = new NxtController(mMachine);
-//		controller.setMotorPower(PileController.MotorKind.LeftMotor,
-//				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
-//						SetLeftMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
-//		controller.setMotorPower(PileController.MotorKind.RightMotor,
-//				SharedPreferencesWrapper.loadIntPreference(getApplicationContext(),
-//						SetRightMotorSpeedBlock.class.getName(), PileController.INIT_MOTOR_POWER));
-//		return controller;
 	}
 }

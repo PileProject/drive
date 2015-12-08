@@ -17,18 +17,18 @@
 
 package com.pileproject.drive.programming.visual.block.sequence;
 
-import java.util.Locale;
-
-import jp.mity.drivecore.execute.ExecuteCondition;
-import jp.mity.drivecore.execute.DeviceController;
-import jp.mity.drivecore.factory.sequence.option.SequenceBlockHasNumText;
-import jp.mity.drivecore.utils.Unit;
-import jp.mity.nxtdrive.R;
-import jp.mity.nxtdrive.execute.NxtController;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
+
+import com.pileproject.drive.R;
+import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.util.Unit;
+
+import java.util.Locale;
 
 /***
  * Backward for a while
@@ -44,7 +44,7 @@ public class BackwardSecBlock extends SequenceBlockHasNumText {
 		View layout = LayoutInflater.from(context).inflate(R.layout.block_backward_sec, this);
 		numText = (TextView) layout.findViewById(R.id.block_numText);
 	}
-	
+
 	@Override
 	public void setNum(int num) {
 		double raw = num / 1000.0;
@@ -76,7 +76,7 @@ public class BackwardSecBlock extends SequenceBlockHasNumText {
 	}
 	
 	@Override
-	public int action(DeviceController controller, ExecuteCondition condition) {
+	public int action(MachineController controller, ExecutionCondition condition) {
 		((NxtController) controller).moveBackward();
 		return getNum();
 	}

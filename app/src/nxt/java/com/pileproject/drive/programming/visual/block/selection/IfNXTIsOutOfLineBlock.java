@@ -26,7 +26,6 @@ import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
-
 /**
  * This block check the light sensor's value
  * If the value is higher than threshold, it means nxt is on the
@@ -50,7 +49,7 @@ public class IfNXTIsOutOfLineBlock extends SelectionBlock {
 	public int action(MachineController controller, ExecutionCondition condition) {
 		// comment is weird.
 		// getLightPercent returns tenfold value
-		condition.pushSelectionResult(((NxtController) controller).lightSensor.getLightPercent() > mThreshold * 10);
+		condition.pushSelectionResult(((NxtController) controller).getLineSensorValue() > mThreshold * 10);
 		return 0;
 	}
 }
