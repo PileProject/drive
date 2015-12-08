@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.setting;
@@ -25,20 +24,18 @@ import com.pileproject.drive.setting.machine.NxtThresholdFragment;
 import java.util.List;
 
 public class NxtSettingActivity extends SettingActivity {
-	@Override
-	public void onBuildHeaders(List<Header> target) {
-		loadHeadersFromResource(R.xml.setting_fragmentlist, target);
-		super.onBuildHeaders(target);
-	}
+    @Override
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.setting_fragmentlist, target);
+        super.onBuildHeaders(target);
+    }
 
-	@Override
-	protected boolean isValidFragment(String fragmentName) {
-		if (DeviceSelectFragment.class.getName().equals(fragmentName)
-				|| NxtPortConnectionFragment.class.getName().equals(fragmentName)
-				|| NxtThresholdFragment.class.getName().equals(fragmentName)) {
-			return true;
-		}
+    @Override
+    protected boolean isValidFragment(String fragmentName) {
+        if (DeviceSelectFragment.class.getName().equals(fragmentName) || NxtPortConnectionFragment.class.getName().equals(fragmentName) || NxtThresholdFragment.class.getName().equals(fragmentName)) {
+            return true;
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

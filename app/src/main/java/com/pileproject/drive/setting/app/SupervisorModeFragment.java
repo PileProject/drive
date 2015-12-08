@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.setting.app;
@@ -29,34 +28,33 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public class SupervisorModeFragment extends Fragment {
-	
-	CheckBox mEnableDebugModeCheckBox;
-	
-	@Override
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		super.onCreateView(inflater, container, savedInstanceState);
-		View v = inflater.inflate(R.layout.fragment_supervisor_mode, container, false);
-		
-		mEnableDebugModeCheckBox = (CheckBox) v.findViewById(R.id.supervisorMode_enableSupervisorMode);
-		return v;
-	}
-	
-	@Override
-	public void onActivityCreated(Bundle savedInstanceState) {
-		super.onActivityCreated(savedInstanceState);
-		Activity activity = getActivity();
-		boolean isEnabledSupervisorMode 
-		= SharedPreferencesWrapper.loadBoolPreference(activity, SupervisorModeFragment.class.getName(), false);
-		
-		mEnableDebugModeCheckBox.setChecked(isEnabledSupervisorMode);
-		mEnableDebugModeCheckBox.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				CheckBox checkBox = (CheckBox) v;
-				boolean isChecked = checkBox.isChecked();
-				
-				SharedPreferencesWrapper.saveBoolPreference(getActivity(), SupervisorModeFragment.class.getName(), isChecked);
-			}
-		});
-	}
+
+    CheckBox mEnableDebugModeCheckBox;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View v = inflater.inflate(R.layout.fragment_supervisor_mode, container, false);
+
+        mEnableDebugModeCheckBox = (CheckBox) v.findViewById(R.id.supervisorMode_enableSupervisorMode);
+        return v;
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        Activity activity = getActivity();
+        boolean isEnabledSupervisorMode = SharedPreferencesWrapper.loadBoolPreference(activity, SupervisorModeFragment.class.getName(), false);
+
+        mEnableDebugModeCheckBox.setChecked(isEnabledSupervisorMode);
+        mEnableDebugModeCheckBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CheckBox checkBox = (CheckBox) v;
+                boolean isChecked = checkBox.isChecked();
+
+                SharedPreferencesWrapper.saveBoolPreference(getActivity(), SupervisorModeFragment.class.getName(), isChecked);
+            }
+        });
+    }
 }

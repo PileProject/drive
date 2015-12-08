@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -12,21 +12,20 @@
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
-  ~ Limitations under the License.
-  ~
+  ~ limitations under the License.
   -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="@dimen/block_repetition_break_width"
                 android:layout_height="@dimen/block_repetition_break_height"
                 android:background="@drawable/block_repetition_break">
-    
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="3dp"
         android:gravity="center"
         android:text="@string/textOnBlocks.repetitionBreak"
-        android:textColor="@android:color/white" />
+        android:textColor="@android:color/white"/>
 
     <ImageView
         android:layout_width="@dimen/block_icon_width"
@@ -34,6 +33,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/noImage"
-        android:src="@drawable/icon_repetition_break" />
+        android:src="@drawable/icon_repetition_break"/>
 
 </RelativeLayout>

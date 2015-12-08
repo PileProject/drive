@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.view;
@@ -30,76 +29,74 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public abstract class PortTextView extends TextView {
-	final private boolean mIsAcceptable;
-	final private String mPortName;
-	final private String mPortType;
+    final protected Context mContext;
+    final private boolean mIsAcceptable;
+    final private String mPortName;
+    final private String mPortType;
+    protected int mAttachmentType;
 
-	final protected Context mContext;
-	protected int mAttachmentType;
+    private MediaPlayer mSoundEffectOfMovingBlock;
 
-	private MediaPlayer mSoundEffectOfMovingBlock;
-	
-	public PortTextView(Context context, AttributeSet attrs) {
-		super(context, attrs);
+    public PortTextView(Context context, AttributeSet attrs) {
+        super(context, attrs);
 
-		mContext = context;
-		mSoundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
+        mContext = context;
+        mSoundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
 
-		TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
-		String port;
-		mPortName = tar.getString(R.styleable.PortTextView_portName);
-		port = tar.getString(R.styleable.PortTextView_portType);
-		mPortType = (port != null) ? port : "";
-		mIsAcceptable = (mPortName != null);
-		tar.recycle();
+        TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
+        String port;
+        mPortName = tar.getString(R.styleable.PortTextView_portName);
+        port = tar.getString(R.styleable.PortTextView_portType);
+        mPortType = (port != null) ? port : "";
+        mIsAcceptable = (mPortName != null);
+        tar.recycle();
 
-		setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(View v, MotionEvent event) {
-				v.startDrag(null, new DragShadowBuilder(v), v, 0);
-				return true;
-			}
-		});
-	}
-	
-	@Override
-	public boolean onDragEvent(DragEvent event) {
-		final int action = event.getAction();
-		final PortTextView localState = (PortTextView) event.getLocalState();
+        setOnTouchListener(new OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                v.startDrag(null, new DragShadowBuilder(v), v, 0);
+                return true;
+            }
+        });
+    }
 
-		if (action == DragEvent.ACTION_DRAG_STARTED) {
-			return true;
-		}
-		else if (action == DragEvent.ACTION_DROP) {
-			if (localState.mPortType.equals(this.mPortType)) {
-				swap(localState, this);
+    public static void swap(PortTextView lhs, PortTextView rhs) {
+        int lhsAttachmentType = lhs.getAttachmentType();
+        lhs.setAttachmentType(rhs.getAttachmentType());
+        rhs.setAttachmentType(lhsAttachmentType);
+    }
 
-				mSoundEffectOfMovingBlock.start(); // play sound
+    @Override
+    public boolean onDragEvent(DragEvent event) {
+        final int action = event.getAction();
+        final PortTextView localState = (PortTextView) event.getLocalState();
 
-				if (mIsAcceptable) {
-					SharedPreferencesWrapper.saveIntPreference(mContext, mPortName, mAttachmentType);
-				}
+        if (action == DragEvent.ACTION_DRAG_STARTED) {
+            return true;
+        } else if (action == DragEvent.ACTION_DROP) {
+            if (localState.mPortType.equals(this.mPortType)) {
+                swap(localState, this);
 
-				if (localState.mIsAcceptable) {
-					SharedPreferencesWrapper.saveIntPreference(mContext, localState.mPortName, localState.mAttachmentType);
-				}
-			}
-			return true;
-		}
-		return false;
-	}
+                mSoundEffectOfMovingBlock.start(); // play sound
 
-	public abstract void setAttachmentType(int attachmentType);
+                if (mIsAcceptable) {
+                    SharedPreferencesWrapper.saveIntPreference(mContext, mPortName, mAttachmentType);
+                }
 
-	public abstract int getAttachmentType();
+                if (localState.mIsAcceptable) {
+                    SharedPreferencesWrapper.saveIntPreference(mContext, localState.mPortName, localState.mAttachmentType);
+                }
+            }
+            return true;
+        }
+        return false;
+    }
 
-	public String getPortName() {
-		return mPortName;
-	}
+    public abstract int getAttachmentType();
 
-	public static void swap(PortTextView lhs, PortTextView rhs) {
-		int lhsAttachmentType = lhs.getAttachmentType();
-		lhs.setAttachmentType(rhs.getAttachmentType());
-		rhs.setAttachmentType(lhsAttachmentType);
-	}
+    public abstract void setAttachmentType(int attachmentType);
+
+    public String getPortName() {
+        return mPortName;
+    }
 }

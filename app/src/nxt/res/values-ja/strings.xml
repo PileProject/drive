@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -12,13 +12,12 @@
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
-  ~ Limitations under the License.
-  ~
+  ~ limitations under the License.
   -->
 <resources>
 
     <string name="app_name">NXTDrive</string>
-    
+
     <!-- Title -->
     <string name="title">NXTDrive</string>
     <string name="title.start">はじめる</string>
@@ -38,7 +37,7 @@
     <string name="blocks.ifNXTIsOutOfLine">ラインから出たら</string>
     <string name="blocks.ifNXTWasTouched">タッチされたら</string>
     <string name="blocks.ifThereWasALargeSound">大きな音がしたら</string>
-    
+
     <!-- TextsOnBlock -->
     <!-- Sequence -->
     <string name="textOnBlocks.forwardSec">秒前進</string>
@@ -58,7 +57,7 @@
     <string name="sensors.sound">サウンドセンサ</string>
     <string name="motors.left">左モータ</string>
     <string name="motors.right">右モータ</string>
-    
+
     <string name="setting.portconfig">ポート設定</string>
     <string name="setting.portconfig.sensors">センサ</string>
     <string name="setting.portconfig.motors">モータ</string>
@@ -71,7 +70,7 @@
     <string name="setting.portconfig.deviceMotorPortA">PortA</string>
     <string name="setting.portconfig.deviceMotorPortB">PortB</string>
     <string name="setting.portconfig.deviceMotorPortC">PortC</string>
-    
+
     <string name="setting.threshold">センサ閾値設定</string>
     <string name="setting.threshold.lightSensor">ライトセンサの閾値</string>
     <string name="setting.threshold.soundSensor">サウンドセンサの閾値</string>

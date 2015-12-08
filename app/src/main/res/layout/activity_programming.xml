@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -12,12 +12,11 @@
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
-  ~ Limitations under the License.
-  ~
+  ~ limitations under the License.
   -->
 <RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/programming.screen"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="top"
@@ -30,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/programming.sequenceButton"
@@ -40,7 +39,7 @@
             android:layout_weight="1"
             android:background="@color/holo_blue_light"
             android:text="@string/programming.sequence"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <!-- android:background="@drawable/bar_sequence" -->
 
@@ -52,7 +51,7 @@
             android:layout_weight="1"
             android:background="@color/holo_orange_light"
             android:text="@string/programming.repetition"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <!-- android:background="@drawable/bar_repetition" -->
 
@@ -64,7 +63,7 @@
             android:layout_weight="1"
             android:background="@color/holo_green_light"
             android:text="@string/programming.selection"
-            android:textColor="@android:color/white" />
+            android:textColor="@android:color/white"/>
 
         <!-- android:background="@drawable/bar_selection" -->
     </LinearLayout>
@@ -75,12 +74,12 @@
         android:layout_height="fill_parent"
         android:layout_above="@+id/programming.redoAndUndoButtonsLayout"
         android:layout_below="@id/programming.addBlockButtonsLayout"
-        android:orientation="horizontal" >
+        android:orientation="horizontal">
 
         <jp.mity.drivecore.component.PlacingBlockSpaceLayout
             android:id="@+id/programming.placingBlockSpaceLayout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"/>
 
         <!-- android:layout_toRightOf="@+id/programming_space_layout" -->
 
@@ -92,7 +91,7 @@
             android:background="#00000000"
             android:content="@+id/programming.menuDrawerContent"
             android:handle="@+id/programming.menuDrawerHandle"
-            android:orientation="horizontal" >
+            android:orientation="horizontal">
 
             <LinearLayout
                 android:id="@id/programming.menuDrawerHandle"
@@ -100,7 +99,7 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/to_left"
                 android:orientation="horizontal"
-                android:padding="10dip" />
+                android:padding="10dip"/>
 
             <LinearLayout
                 android:id="@+id/programming.menuDrawerContent"
@@ -108,14 +107,14 @@
                 android:layout_height="match_parent"
                 android:background="#00000000"
                 android:gravity="center_vertical"
-                android:orientation="vertical" >
+                android:orientation="vertical">
 
                 <ListView
                     android:id="@+id/programming.menuList"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="#AAAAAAAA"
-                    android:cacheColorHint="@android:color/background_dark" />
+                    android:cacheColorHint="@android:color/background_dark"/>
 
             </LinearLayout>
         </SlidingDrawer>
@@ -127,21 +126,21 @@
         android:id="@+id/programming.redoAndUndoButtonsLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/programming.execButtonLayout" >
+        android:layout_above="@+id/programming.execButtonLayout">
 
         <Button
             android:id="@+id/programming.undoButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/programming.undo" />
+            android:text="@string/programming.undo"/>
 
         <Button
             android:id="@+id/programming.redoButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="@string/programming.redo" />
+            android:text="@string/programming.redo"/>
     </LinearLayout>
 
     <!-- "実行画面へ" ボタン -->
@@ -150,13 +149,13 @@
         android:id="@+id/programming.execButtonLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true" >
+        android:layout_alignParentBottom="true">
 
         <Button
             android:id="@+id/programming.execButton"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:text="@string/programming.execute" />
+            android:text="@string/programming.execute"/>
     </LinearLayout>
 
 </RelativeLayout>

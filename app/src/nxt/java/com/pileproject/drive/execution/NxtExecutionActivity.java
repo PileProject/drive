@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.execution;
@@ -26,44 +25,42 @@ import com.pileproject.drive.util.SharedPreferencesWrapper;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 
 public class NxtExecutionActivity extends ExecutionActivityBase {
-	private NxtMachine mMachine;
+    private NxtMachine mMachine;
 
-	@Override
-	protected void connectToDevice() {
-		// Get mac address
-		String address
-				= SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
+    @Override
+    protected void connectToDevice() {
+        // Get mac address
+        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
 
-		BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
-		BluetoothDevice device = adapter.getRemoteDevice(address);
-		mMachine = new NxtMachine(new BluetoothCommunicator(device));
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        BluetoothDevice device = adapter.getRemoteDevice(address);
+        mMachine = new NxtMachine(new BluetoothCommunicator(device));
 
-		showConnectionProgressDialog(); // Create a ProgressDialog
+        showConnectionProgressDialog(); // Create a ProgressDialog
 
-		// Try to connect
-		new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					mMachine.connect();
+        // Try to connect
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    mMachine.connect();
 
-					// Inform this activity has already connected to nxt
-					Intent intent = new Intent();
-					intent.putExtra("is_connected", true);
-					setResult(RESULT_OK, intent);
+                    // Inform this activity has already connected to nxt
+                    Intent intent = new Intent();
+                    intent.putExtra("is_connected", true);
+                    setResult(RESULT_OK, intent);
 
-					startExecution();
-				}
-				catch (Exception e) {
-					showConnectionFailedDialog();
-				}
-				dismissConnectionProgressDialog();
-			}
-		}).start();
-	}
+                    startExecution();
+                } catch (Exception e) {
+                    showConnectionFailedDialog();
+                }
+                dismissConnectionProgressDialog();
+            }
+        }).start();
+    }
 
-	@Override
-	protected MachineController getDeviceController() {
-		return new NxtController(mMachine, new NxtControllerBuilder(this));
-	}
+    @Override
+    protected MachineController getDeviceController() {
+        return new NxtController(mMachine, new NxtControllerBuilder(this));
+    }
 }

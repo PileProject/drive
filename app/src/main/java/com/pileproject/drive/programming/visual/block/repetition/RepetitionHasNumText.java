@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.programming.visual.block.repetition;
@@ -24,21 +23,20 @@ import com.pileproject.drive.programming.visual.block.NumTextHolder;
 
 
 public abstract class RepetitionHasNumText extends RepetitionBlock implements NumTextHolder {
-	
-	protected TextView numText;
-	
-	/**
-	 * Constructor
-	 * 
-	 * @param context
-	 *            The context of activity that creates this view
-	 */
-	public RepetitionHasNumText(Context context) {
-		super(context);
-	}
-	
-	@Override
-	public TextView getTextView() {
-		return numText;
-	}
+
+    protected TextView numText;
+
+    /**
+     * Constructor
+     *
+     * @param context The context of activity that creates this view
+     */
+    public RepetitionHasNumText(Context context) {
+        super(context);
+    }
+
+    @Override
+    public TextView getTextView() {
+        return numText;
+    }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,8 +11,7 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.setting.machine;
@@ -25,49 +24,49 @@ import android.widget.RadioButton;
 
 import com.pileproject.drive.R;
 
-/***
+/**
  * View class for ListView displaying devices in an activity setting default
  * device
- * 
+ *
  * @author yusaku
  * @version 1.0 4-June-2013
  */
 public class DeviceListItemView extends LinearLayout implements Checkable {
-	
-	private RadioButton mRadioButton;
-	
-	private void initialize() {
-		addView(inflate(getContext(), R.layout.view_devicelistitem, null));
-		mRadioButton = (RadioButton) findViewById(R.id.deviceListItemView_radioButton);
-	}
-	
-	public DeviceListItemView(Context context) {
-		super(context);
-		initialize();
-	}
-	
-	public DeviceListItemView(Context context, AttributeSet attrs) {
-		super(context, attrs);
-		initialize();
-	}
-	
-	public DeviceListItemView(Context context, AttributeSet attrs, int defStyle) {
-		super(context, attrs, defStyle);
-		initialize();
-	}
-	
-	@Override
-	public boolean isChecked() {
-		return mRadioButton.isChecked();
-	}
-	
-	@Override
-	public void setChecked(boolean checked) {
-		mRadioButton.setChecked(checked);
-	}
-	
-	@Override
-	public void toggle() {
-	}
-	
+
+    private RadioButton mRadioButton;
+
+    public DeviceListItemView(Context context) {
+        super(context);
+        initialize();
+    }
+
+    public DeviceListItemView(Context context, AttributeSet attrs) {
+        super(context, attrs);
+        initialize();
+    }
+
+    public DeviceListItemView(Context context, AttributeSet attrs, int defStyle) {
+        super(context, attrs, defStyle);
+        initialize();
+    }
+
+    private void initialize() {
+        addView(inflate(getContext(), R.layout.view_devicelistitem, null));
+        mRadioButton = (RadioButton) findViewById(R.id.deviceListItemView_radioButton);
+    }
+
+    @Override
+    public boolean isChecked() {
+        return mRadioButton.isChecked();
+    }
+
+    @Override
+    public void setChecked(boolean checked) {
+        mRadioButton.setChecked(checked);
+    }
+
+    @Override
+    public void toggle() {
+    }
+
 }

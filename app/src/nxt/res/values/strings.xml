@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
   ~ you may not use this file except in compliance with the License.
@@ -12,13 +12,12 @@
   ~ distributed under the License is distributed on an "AS IS" BASIS,
   ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
   ~ See the License for the specific language governing permissions and
-  ~ Limitations under the License.
-  ~
+  ~ limitations under the License.
   -->
 <resources>
 
     <string name="app_name">NXTDrive</string>
-    
+
     <!-- Title -->
     <string name="title">NXTDrive</string>
     <string name="title.start">Start</string>
@@ -38,7 +37,7 @@
     <string name="blocks.ifNXTIsOutOfLine">If nxt is out of line</string>
     <string name="blocks.ifNXTWasTouched">If nxt was touched</string>
     <string name="blocks.ifThereWasALargeSound">If there was a large sound</string>
-    
+
     <!-- TextsOnBlock -->
     <!-- Sequence -->
     <string name="textOnBlocks.forwardSec">sec for</string>
@@ -52,13 +51,13 @@
     <string name="textOnBlocks.ifNXTIsOutOfLine">Out of line?</string>
     <string name="textOnBlocks.ifNXTWasTouched">Touched?</string>
     <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
-    
+
     <string name="sensors.touch">Touch Sensor</string>
     <string name="sensors.light">Light Sensor</string>
     <string name="sensors.sound">Sound Sensor</string>
     <string name="motors.left">Left Motor</string>
     <string name="motors.right">Right Motor</string>
-    
+
     <string name="setting.portconfig">Port Setting</string>
     <string name="setting.portconfig.sensors">Sensors</string>
     <string name="setting.portconfig.motors">Motors</string>

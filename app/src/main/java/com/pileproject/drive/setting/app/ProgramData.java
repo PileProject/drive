@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015 PILE Project, Inc <pileproject@googlegroups.com>
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -11,20 +11,19 @@
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
- * Limitations under the License.
- *
+ * limitations under the License.
  */
 
 package com.pileproject.drive.setting.app;
 
 class ProgramData {
-	private String mProgramName;
-	
-	public void setProgramName(String name) {
-		mProgramName = name;
-	}
-	
-	public String getProgramName() {
-		return mProgramName;
-	}
+    private String mProgramName;
+
+    public String getProgramName() {
+        return mProgramName;
+    }
+
+    public void setProgramName(String name) {
+        mProgramName = name;
+    }
 }
