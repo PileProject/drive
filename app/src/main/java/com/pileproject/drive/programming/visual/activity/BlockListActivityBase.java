@@ -42,9 +42,15 @@ import java.util.Locale;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 18-June-2013
  */
-public abstract class BlockListActivityBase extends Activity implements OnClickListener, OnItemClickListener {
-    private final int mCategoryText[] = {R.string.sequence, R.string.repetition, R.string.selection,};
-    private final int mHelpImage[] = {R.drawable.help_sequence, R.drawable.help_repetition, R.drawable.help_selection,};
+public abstract class BlockListActivityBase extends Activity
+        implements OnClickListener, OnItemClickListener {
+    private final int mCategoryText[] =
+            {R.string.sequence, R.string.repetition, R.string.selection,};
+    private final int mHelpImage[] = {
+            R.drawable.help_sequence,
+            R.drawable.help_repetition,
+            R.drawable.help_selection,
+    };
     private Button mCancelButton;
     private Button mHelpButton;
     private int mCategory = 0;
@@ -64,13 +70,16 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
         mCategory = intent.getIntExtra("category", BlockFactory.SEQUENCE);
 
         // Show title
-        setTitle(getString(R.string.blockList_label) + getString(mCategoryText[mCategory]));
+        setTitle(getString(R.string.blockList_label) +
+                         getString(mCategoryText[mCategory]));
 
         mBlocks = getBlockIcons();
 
         // Initialize GridView
         GridView gridview = (GridView) findViewById(R.id.blockList_screen);
-        gridview.setAdapter(new BlockIconAdapter(this, R.layout.view_block_icon, mBlocks[mCategory]));
+        gridview.setAdapter(new BlockIconAdapter(this,
+                                                 R.layout.view_block_icon,
+                                                 mBlocks[mCategory]));
         gridview.setOnItemClickListener(this);
 
         findViews();
@@ -93,7 +102,11 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+    public void onItemClick(
+            AdapterView<?> parent,
+            View v,
+            int position,
+            long id) {
         Intent data = new Intent();
         // RepetitionBreakBlock will be created in the same way in which
         // SequenceBlock is created
@@ -102,7 +115,8 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
         } else {
             data.putExtra("how_to_make", mCategory);
         }
-        data.putExtra("block_name", mBlocks[mCategory][position].getBlockName());
+        data.putExtra("block_name",
+                      mBlocks[mCategory][position].getBlockName());
 
         // Set result OK and return data
         setResult(Activity.RESULT_OK, data);
@@ -112,7 +126,8 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
     @Override
     public void onClick(View v) {
         // Create a view witch has a help image
-        LayoutInflater inflater = LayoutInflater.from(BlockListActivityBase.this);
+        LayoutInflater inflater =
+                LayoutInflater.from(BlockListActivityBase.this);
         View view = inflater.inflate(R.layout.view_help, null);
         ImageView help = (ImageView) view.findViewById(R.id.help_showHelpImage);
         help.setImageResource(mHelpImage[mCategory]);
@@ -120,7 +135,13 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
         help.setScaleType(ScaleType.FIT_CENTER);
 
         // Create an AlertDialog that shows helps
-        new AlertDialog.Builder(BlockListActivityBase.this).setTitle(R.string.blockList_howToUseBlock).setMessage(getString(mCategoryText[mCategory]) + getString(R.string.blockList_theseBlocksAreUsedLikeThis)).setView(view).setPositiveButton(R.string.close, null).show();
+        new AlertDialog.Builder(BlockListActivityBase.this)
+                .setTitle(R.string.blockList_howToUseBlock)
+                .setMessage(getString(mCategoryText[mCategory]) +
+                                    getString(R.string.blockList_theseBlocksAreUsedLikeThis))
+                .setView(view)
+                .setPositiveButton(R.string.close, null)
+                .show();
     }
 
     // Data that has class
@@ -142,10 +163,15 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
             name.replace(nameLength - "Block".length(), nameLength, "");
 
             // Convert the initial character from upper case to lower case
-            name.setCharAt(0, className.toLowerCase(Locale.getDefault()).charAt(0));
+            name.setCharAt(0,
+                           className.toLowerCase(Locale.getDefault())
+                                   .charAt(0));
             name.insert(0, "blocks."); // Add prefix ("blocks_" does not work)
 
-            return getString(getResources().getIdentifier(name.toString(), "string", getPackageName()));
+            return getString(getResources()
+                                     .getIdentifier(name.toString(),
+                                                      "string",
+                                                      getPackageName()));
         }
 
         public String getBlockName() {
@@ -160,8 +186,11 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
             String className = mClass.getSimpleName();
 
             // Convert string from CamelCalse to snake_case
-            String snake = className.replaceAll("([A-Z0-9]+)([A-Z][a-z])", "$1_$2").replaceAll("([a-z])([A-Z])", "$1_$2");
-            StringBuffer name = new StringBuffer(snake.toLowerCase(Locale.getDefault()));
+            String snake =
+                    className.replaceAll("([A-Z0-9]+)([A-Z][a-z])", "$1_$2")
+                            .replaceAll("([a-z])([A-Z])", "$1_$2");
+            StringBuffer name =
+                    new StringBuffer(snake.toLowerCase(Locale.getDefault()));
 
             // Get the length of the class name
             int nameLength = name.length();
@@ -169,7 +198,9 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
             name.replace(nameLength - "_block".length(), nameLength, "");
             name.insert(0, "icon_"); // Add prefix
 
-            return getResources().getIdentifier(name.toString(), "drawable", getPackageName());
+            return getResources().getIdentifier(name.toString(),
+                                                "drawable",
+                                                getPackageName());
         }
     }
 }
