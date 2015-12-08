@@ -211,7 +211,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 					mLogForRedo.clear();
 
 					// Check Undo/Redo buttons' workability
-					mButtonsManager.checkButtonsWorkablity();
+					mButtonsManager.checkButtonsWorkability();
 				}
 			});
 			dialog.show();
@@ -288,7 +288,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 				mLogForRedo.clear();
 
 				// Check Undo/Redo buttons' workability
-				mButtonsManager.checkButtonsWorkablity();
+				mButtonsManager.checkButtonsWorkability();
 				break;
 			}
 			return true;

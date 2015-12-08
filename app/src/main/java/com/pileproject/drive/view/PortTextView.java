@@ -22,6 +22,8 @@ import android.content.res.TypedArray;
 import android.media.MediaPlayer;
 import android.util.AttributeSet;
 import android.view.DragEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
@@ -51,9 +53,12 @@ public abstract class PortTextView extends TextView {
 		mIsAcceptable = (mPortName != null);
 		tar.recycle();
 
-		setOnTouchListener((v, arg1) -> {
-			v.startDrag(null, new DragShadowBuilder(v), v, 0);
-			return true;
+		setOnTouchListener(new OnTouchListener() {
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				v.startDrag(null, new DragShadowBuilder(v), v, 0);
+				return true;
+			}
 		});
 	}
 	

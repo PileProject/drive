@@ -18,12 +18,14 @@
 package com.pileproject.drive.programming.visual.activity;
 
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -88,19 +90,25 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 			mRedoButton = redoButton;
 			
 			mUndoButton.setEnabled(false);
-			mUndoButton.setOnClickListener(v -> {
-                mSpaceManager.undo();
-                checkButtonsWorkablity();
-            });
+			mUndoButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mSpaceManager.undo();
+					checkButtonsWorkability();
+				}
+			});
 			
 			mRedoButton.setEnabled(false);
-			mRedoButton.setOnClickListener(v -> {
-                mSpaceManager.redo();
-                checkButtonsWorkablity();
-            });
+			mRedoButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					mSpaceManager.redo();
+					checkButtonsWorkability();
+				}
+			});
 		}
 		
-		public void checkButtonsWorkablity() {
+		public void checkButtonsWorkability() {
 			mUndoButton.setEnabled(mSpaceManager.canUndo());
 			mRedoButton.setEnabled(mSpaceManager.canRedo());
 		}
@@ -120,18 +128,26 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 		
 		// Set OnClickListeners to buttons that add blocks
 		for (int i = 0; i < NKINDS; i++) {
-			mAddBlockButtons.get(i).setOnClickListener(v -> {
-                Intent intent = getIntentToBlockList();
-                intent.putExtra("category", mAddBlockButtons.indexOf(v));
-                Log.d(TAG, "category: " + mAddBlockButtons.indexOf(v));
-                startActivityForResult(intent, ADD_BLOCK);
-            });
+			mAddBlockButtons.get(i).setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					Intent intent = getIntentToBlockList();
+					intent.putExtra("category", mAddBlockButtons.indexOf(v));
+					Log.d(TAG, "category: " + mAddBlockButtons.indexOf(v));
+					startActivityForResult(intent, ADD_BLOCK);
+				}
+			});
 		}
 		
-		mExecButton.setOnClickListener(v -> moveToAnotherActivity());
+		mExecButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				moveToAnotherActivity();
+			}
+		});
 		
 		// Set ArrayAdapter to ListView
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1);
+		ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
 		adapter.add(getString(R.string.programming_deleteAllBlocks));
 		adapter.add(getString(R.string.programming_goBackToTitle));
 		
@@ -142,7 +158,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 		mMenuList.setAdapter(adapter);
 		mMenuList.setOnItemClickListener(this);
 		
-		// set listers for changing handler's image
+		// set listeners for changing handler's image
 		mMenuHandle.setOnDrawerCloseListener(new OnDrawerCloseListener() {
 			@SuppressLint("NewApi")
 			@Override
@@ -160,19 +176,23 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 				}
 			}
 		});
-		mMenuHandle.setOnDrawerOpenListener(() -> {
-            LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
-            int sdk = android.os.Build.VERSION.SDK_INT;
+		mMenuHandle.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
+			@TargetApi(Build.VERSION_CODES.JELLY_BEAN)
+			@Override
+			public void onDrawerOpened() {
+				LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
+				int sdk = android.os.Build.VERSION.SDK_INT;
 
-            // check the sdk if older than Jelly bean
-            if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_right));
-            }
-            else {
-                // this code won't work in older version than Jelly bean
-                ll.setBackground(getResources().getDrawable(R.drawable.to_right));
-            }
-        });
+				// check the sdk if older than Jelly bean
+				if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
+					ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_right));
+				}
+				else {
+					// this code won't work in older version than Jelly bean
+					ll.setBackground(getResources().getDrawable(R.drawable.to_right));
+				}
+			}
+		});
 		String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress(this);
 		if (deviceAddress != null) {
 			CharSequence title = getTitle();
@@ -196,7 +216,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 		mSpaceManager = new ProgrammingSpaceManager(this,
 				(BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout),
 				mButtonsManager);
-		mAddBlockButtons = new ArrayList<Button>(NKINDS);
+		mAddBlockButtons = new ArrayList<>(NKINDS);
 		mAddBlockButtons.add((Button) findViewById(R.id.programming_sequenceButton));
 		mAddBlockButtons.add((Button) findViewById(R.id.programming_repetitionButton));
 		mAddBlockButtons.add((Button) findViewById(R.id.programming_selectionButton));
@@ -232,9 +252,9 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 	}
 	
 	public void onFinishSelectDialog(String selectedText, boolean isSample) {
-		mSpaceManager.deleteAllBlocks(); // delete exsiting blocks
+		mSpaceManager.deleteAllBlocks(); // delete existing blocks
 		mSpaceManager.loadByName(selectedText, isSample); // load programs
-	};
+	}
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -246,17 +266,12 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 					String blockName = data.getStringExtra("block_name");
 					ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
 					mSpaceManager.addBlocks(blocks);
-					mButtonsManager.checkButtonsWorkablity();
+					mButtonsManager.checkButtonsWorkability();
 				}
 				break;
-			
+
 			case EXECUTE_PROGRAM:
-				if (data == null || !data.getBooleanExtra("is_connected", false)) {
-					mIsConnected = false;
-				}
-				else {
-					mIsConnected = true;
-				}
+				mIsConnected = !(data == null || !data.getBooleanExtra("is_connected", false));
 				break;
 		}
 	}
@@ -276,7 +291,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
 							mSpaceManager.deleteAllBlocks();
-							mButtonsManager.checkButtonsWorkablity();
+							mButtonsManager.checkButtonsWorkability();
 							mMenuHandle.close();
 						}
 					})
@@ -300,11 +315,14 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 				// supervisor
 				// save this program as a new sample one
 				final InputSampleProgramNameDialogFragment fragment = new InputSampleProgramNameDialogFragment();
-				fragment.setOnOkClickListener((dialog, which) -> {
-                    String programName = fragment.getInputedProgramName();
-                    mSpaceManager.saveWithName(programName, true);
-                    showSavedProgramNameDialog(programName);
-                });
+				fragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						String programName = fragment.getInputtedProgramName();
+						mSpaceManager.saveWithName(programName, true);
+						showSavedProgramNameDialog(programName);
+					}
+				});
 				fragment.show(getFragmentManager(), "input_program_name");
 				mMenuHandle.close();
 			}
@@ -328,14 +346,14 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 		new SaveProgramDialogFragment(programName)
 				.show(getFragmentManager(), "save_program");
 	}
-	
+
 	public static class SaveProgramDialogFragment extends DialogFragment {
 		private String mProgramName;
-		
+
 		public SaveProgramDialogFragment(String programName) {
 			mProgramName = programName;
 		}
-		
+
 		@Override
 		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -345,36 +363,35 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 			return builder.create();
 		}
 	}
-	
+
 	public static class InputSampleProgramNameDialogFragment extends DialogFragment {
 		private EditText mEditText;
 		private DialogInterface.OnClickListener mOkClickListener = null;
 		private DialogInterface.OnClickListener mCancelClickListener = null;
-		
+
 		@Override
-		public Dialog onCreateDialog(Bundle safedInstanceState) {
+		public Dialog onCreateDialog(Bundle savedInstanceState) {
 			mEditText = new EditText(getActivity());
-			mEditText.setMaxLines(1);	// disable new lines
-			
+			mEditText.setMaxLines(1); // disable new lines
+
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.programming_saveProgramAsASample)
 					.setMessage(R.string.programming_inputProgramName)
 					.setView(mEditText)
 					.setPositiveButton(R.string.ok, mOkClickListener)
 					.setNegativeButton(R.string.cancel, mCancelClickListener);
-			
 			return builder.create();
 		}
 		
 		public void setOnOkClickListener(DialogInterface.OnClickListener listener) {
 			this.mOkClickListener = listener;
 		}
-		
+
 		public void setOnCancelClickListener(DialogInterface.OnClickListener listener) {
 			this.mCancelClickListener = listener;
 		}
-		
-		public String getInputedProgramName() {
+
+		public String getInputtedProgramName() {
 			return mEditText.getText().toString();
 		}
 	}

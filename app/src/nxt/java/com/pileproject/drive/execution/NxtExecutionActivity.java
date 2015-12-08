@@ -41,21 +41,24 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 		showConnectionProgressDialog(); // Create a ProgressDialog
 
 		// Try to connect
-		new Thread(() -> {
-			try {
-				mMachine.connect();
+		new Thread(new Runnable() {
+			@Override
+			public void run() {
+				try {
+					mMachine.connect();
 
-				// Inform this activity has already connected to nxt
-				Intent intent = new Intent();
-				intent.putExtra("is_connected", true);
-				setResult(RESULT_OK, intent);
+					// Inform this activity has already connected to nxt
+					Intent intent = new Intent();
+					intent.putExtra("is_connected", true);
+					setResult(RESULT_OK, intent);
 
-				startExecution();
+					startExecution();
+				}
+				catch (Exception e) {
+					showConnectionFailedDialog();
+				}
+				dismissConnectionProgressDialog();
 			}
-			catch (Exception e) {
-				showConnectionFailedDialog();
-			}
-			dismissConnectionProgressDialog();
 		}).start();
 	}
 

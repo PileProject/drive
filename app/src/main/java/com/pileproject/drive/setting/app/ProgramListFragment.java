@@ -33,13 +33,13 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ListView;
 
+import com.pileproject.drive.R;
+import com.pileproject.drive.database.DBManager;
+
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
-import com.pileproject.drive.R;
-import com.pileproject.drive.database.DBManager;
 
 public class ProgramListFragment extends Fragment {
 	private DBManager mManager;
@@ -49,27 +49,27 @@ public class ProgramListFragment extends Fragment {
 	private Button[] mProgramsCheckAllButton = new Button[2];
 	private ListView[] mProgramListView = new ListView[2];
 	private ProgramDataAdapter[] mProgramDataAdapter = new ProgramDataAdapter[2];
-	private Map<String, Boolean>[] mCheckedPrograms = new Map[2];
-	
+	private ArrayList<Map<String, Boolean>> mCheckedPrograms = new ArrayList<>();
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		super.onCreateView(inflater, container, savedInstanceState);
 		View v = inflater.inflate(R.layout.fragment_programlist, container, false);
-		
+
 		// create DBManager to list programs
 		mManager = new DBManager(getActivity());
-		
-		mCheckedPrograms[0] = new LinkedHashMap<String, Boolean>();
-		mCheckedPrograms[1] = new LinkedHashMap<String, Boolean>();
-		
+
+		mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
+		mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
+
 		// prepare data for Data adapter
 		initializeProgramDataAdapter();
-		
+
 		// create ListView to show all programs
 		// an item in ListView consists of (checkbox, program name) [CustomView]
 		mProgramListView[0] = (ListView) v.findViewById(R.id.programList_sampleProgramListView);
 		mProgramListView[1] = (ListView) v.findViewById(R.id.programList_userProgramListView);
-		
+
 		// create "delete" Button
 		// by clicking it, checked items (programs) will be deleted
 		mDeleteButton = (Button) v.findViewById(R.id.programList_deleteButton);
@@ -111,7 +111,7 @@ public class ProgramListFragment extends Fragment {
 					chk.setChecked(!chk.isChecked()); // toggle check
 					
 					// update state
-					mCheckedPrograms[dataId].put(data.getProgramName(), chk.isChecked());
+					mCheckedPrograms.get(dataId).put(data.getProgramName(), chk.isChecked());
 				}
 			});
 		}
@@ -119,21 +119,21 @@ public class ProgramListFragment extends Fragment {
 	
 	private void initializeProgramDataAdapter() {
 		for (int dataId = 0; dataId < 2; dataId++) {
-			mCheckedPrograms[dataId].clear();
+			mCheckedPrograms.get(dataId).clear();
 			
 			// items are categorized into 2 parts; samples and user programs.
 			String[] programNames = mManager.loadSavedProgramNames(dataId == 0);
 			
 			// create an adapter for ListView
-			List<ProgramData> data = new ArrayList<ProgramData>();
-			for (int i = 0; i < programNames.length; i++) {
+			List<ProgramData> data = new ArrayList<>();
+			for (String programName : programNames) {
 				ProgramData one = new ProgramData();
-				one.setProgramName(programNames[i]);
+				one.setProgramName(programName);
 				data.add(one);
-				
+
 				// initialize checked program list
 				// put (program name, false)
-				mCheckedPrograms[dataId].put(programNames[i], false);
+				mCheckedPrograms.get(dataId).put(programName, false);
 			}
 			mProgramDataAdapter[dataId] = new ProgramDataAdapter(getActivity(), 0, data);
 		}
@@ -141,7 +141,7 @@ public class ProgramListFragment extends Fragment {
 	
 	private void checkAllItems(int dataId) {
 		ListView lv = mProgramListView[dataId];
-		Map<String, Boolean> m = mCheckedPrograms[dataId];
+		Map<String, Boolean> m = mCheckedPrograms.get(dataId);
 		ProgramDataAdapter pda = mProgramDataAdapter[dataId];
 		
 		for (int i = 0; i < lv.getChildCount(); i++) {
@@ -154,11 +154,11 @@ public class ProgramListFragment extends Fragment {
 		pda.notifyDataSetChanged();
 	}
 	
-	private String generatePogramNamesToBeDeleted() {
+	private String generateProgramNamesToBeDeleted() {
 		String separator = ", ";
 		StringBuilder sb = new StringBuilder();
 		for (int dataId = 0; dataId < 2; dataId++) {
-			for (Map.Entry<String, Boolean> e : mCheckedPrograms[dataId].entrySet()) {
+			for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
 				if (!e.getValue()) continue; // won't be deleted
 				
 				// not initial addition
@@ -172,7 +172,7 @@ public class ProgramListFragment extends Fragment {
 	
 	private void deletePrograms() {
 		for (int dataId = 0; dataId < 2; dataId++) {
-			for (Map.Entry<String, Boolean> e : mCheckedPrograms[dataId].entrySet()) {
+			for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
 				if (e.getValue()) {
 					mManager.deleteProgramByName(e.getKey(), true);
 				}
@@ -191,7 +191,7 @@ public class ProgramListFragment extends Fragment {
 			// Use the Builder class for convenient dialog construction
 			AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 			builder.setTitle(R.string.confirmation)
-					.setMessage(getString(R.string.delete, generatePogramNamesToBeDeleted()))
+					.setMessage(getString(R.string.delete, generateProgramNamesToBeDeleted()))
 					.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialog, int which) {
