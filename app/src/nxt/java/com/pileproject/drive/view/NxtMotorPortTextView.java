@@ -24,10 +24,6 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController;
 
-import static com.pileproject.drive.execution.NxtController.MotorKind;
-import static com.pileproject.drive.execution.NxtController.MotorKind.LeftMotor;
-import static com.pileproject.drive.execution.NxtController.MotorKind.RightMotor;
-
 public class NxtMotorPortTextView extends PortTextView {
 
 	public NxtMotorPortTextView(Context context, AttributeSet attrs) {
@@ -41,31 +37,28 @@ public class NxtMotorPortTextView extends PortTextView {
 		this.setBackgroundColor(getMotorColor(attachmentType));
 	}
 
-	public static String getMotorName(Context context, MotorKind attachmentType) {
+	public static String getMotorName(Context context, int attachmentType) {
 		switch (attachmentType) {
-		case LeftMotor:
+		case NxtController.MotorProperty.MOTOR_LEFT:
 			return context.getString(R.string.motors_left);
-		case RightMotor:
+		case NxtController.MotorProperty.MOTOR_RIGHT:
 			return context.getString(R.string.motors_right);
 		}
-		
 		return "";
 	}
-	
-	public static int getMotorColor(MotorKind motorType) {
+
+	public static int getMotorColor(int motorType) {
 		switch (motorType) {
-		case LeftMotor:
+		case NxtController.MotorProperty.MOTOR_LEFT:
 			return Color.rgb(70, 89, 183);
-		case RightMotor:
+		case NxtController.MotorProperty.MOTOR_RIGHT:
 			return Color.rgb(214, 133, 52);
 		}
-		
 		return Color.GRAY;
 	}
-	
+
 	@Override
 	public int getAttachmentType() {
 		return mAttachmentType;
 	}
-
 }

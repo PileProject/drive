@@ -60,10 +60,9 @@ public class ForwardSecBlock extends SequenceBlockHasNumText {
 	
 	@Override
 	public Integer[] getDigit() {
-		Integer[] digit = {
+		return new Integer[]{
 			1, 3
 		};
-		return digit;
 	}
 	
 	@Override

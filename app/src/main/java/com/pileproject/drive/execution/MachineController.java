@@ -21,7 +21,7 @@ public interface MachineController {
 	/***
 	 * e.g. halt motors 
 	 */
-	public abstract void halt();
-	
-	public abstract void finalize() throws RuntimeException;
+	void halt();
+
+	void finalize() throws RuntimeException;
 }

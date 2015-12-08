@@ -68,22 +68,20 @@ public class NxtPortConnectionFragment extends Fragment {
 	
 	private void initializeSensorPorts(Context context, View root) {
 		final int[] sensorPortIds = {
-			R.id.setting_portconfig_sensorPort1,	
-			R.id.setting_portconfig_sensorPort2,	
-			R.id.setting_portconfig_sensorPort3,	
-			R.id.setting_portconfig_sensorPort4,	
+				R.id.setting_portconfig_sensorPort1,
+				R.id.setting_portconfig_sensorPort2,
+				R.id.setting_portconfig_sensorPort3,
+				R.id.setting_portconfig_sensorPort4,
 		};
 		
 		final int[] sensorPlaceIds = {
-			R.id.setting_portconfig_sensor1,
-			R.id.setting_portconfig_sensor2,
-			R.id.setting_portconfig_sensor3,
+				R.id.setting_portconfig_sensor1,
+				R.id.setting_portconfig_sensor2,
+				R.id.setting_portconfig_sensor3,
 		};
-			
-		
+
 		LinkedList<Integer> sensorsInUsed = new LinkedList<Integer>();
 		List<Integer> allSensors = NxtController.SensorProperty.getAllSensors();
-		
 		for (int i = 0; i < NxtController.SensorProperty.NUMBER_OF_SENSOR_PORTS; ++ i) {
 			PortTextView portTextView = (PortTextView) root.findViewById(sensorPortIds[i]);
 			int sensorType = SharedPreferencesWrapper.loadIntPreference(context, portTextView.getPortName(), NxtController.SensorProperty.SENSOR_UNUSED);
@@ -106,20 +104,18 @@ public class NxtPortConnectionFragment extends Fragment {
 
 	private void initializeMotorPorts(Context context, View root) {
 		final int[] motorPortIds = {
-			R.id.setting_portconfig_motorPortA,	
-			R.id.setting_portconfig_motorPortB,	
-			R.id.setting_portconfig_motorPortC,	
+				R.id.setting_portconfig_motorPortA,
+				R.id.setting_portconfig_motorPortB,
+				R.id.setting_portconfig_motorPortC,
 		};
 		
 		final int[] motorPlaceIds = {
-			R.id.setting_portconfig_motor1,
-			R.id.setting_portconfig_motor2,
+				R.id.setting_portconfig_motor1,
+				R.id.setting_portconfig_motor2,
 		};
-			
-		
+
 		LinkedList<Integer> motorsInUsed = new LinkedList<Integer>();
 		List<Integer> allMotors = NxtController.MotorProperty.getAllMotors();
-		
 		for (int i = 0; i < NxtController.MotorProperty.NUMBER_OF_MOTOR_PORTS; ++ i) {
 			PortTextView portTextView = (PortTextView) root.findViewById(motorPortIds[i]);
 			int motorType = SharedPreferencesWrapper.loadIntPreference(context, portTextView.getPortName(), NxtController.MotorProperty.MOTOR_UNUSED);
@@ -129,7 +125,7 @@ public class NxtPortConnectionFragment extends Fragment {
 				motorsInUsed.add(motorType);
 			}
 		}
-		
+
 		int index = 0;
 		for (Iterator<Integer> itr = allMotors.iterator(); itr.hasNext(); ) {
 			Integer motorType = itr.next();

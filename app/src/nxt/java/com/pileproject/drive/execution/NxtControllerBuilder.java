@@ -21,7 +21,6 @@ import android.content.Context;
 import android.util.SparseArray;
 
 import com.pileproject.drive.util.SharedPreferencesWrapper;
-import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
@@ -46,7 +45,7 @@ public class NxtControllerBuilder {
 	}
 
 	private void loadSensorsFromPreferences(Context context) {
-		final int notAssigned = NxtMachine.SensorProperty.SENSOR_UNUSED;
+		final int notAssigned = NxtController.SensorProperty.SENSOR_UNUSED;
 
 		final NxtInputPort[] sensorPorts
 				= { NxtInputPort.PORT_1,
@@ -79,7 +78,7 @@ public class NxtControllerBuilder {
 
 		for (int i = 0; i < motorPortPrefTags.length; ++i) {
 			int key = SharedPreferencesWrapper.loadIntPreference(context, motorPortPrefTags[i], notAssigned);
-
+			mMotorPorts.put(key, motorPorts[i]);
 		}
 	}
 }

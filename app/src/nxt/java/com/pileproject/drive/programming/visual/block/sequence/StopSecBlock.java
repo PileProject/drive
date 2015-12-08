@@ -25,7 +25,6 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.Unit;
 
 import java.util.Locale;
@@ -57,10 +56,9 @@ public class StopSecBlock extends SequenceBlockHasNumText {
 	
 	@Override
 	public Integer[] getDigit() {
-		Integer[] digit = {
+		return new Integer[]{
 			1, 3
 		};
-		return digit;
 	}
 	
 	@Override
@@ -75,7 +73,7 @@ public class StopSecBlock extends SequenceBlockHasNumText {
 	
 	@Override
 	public int action(MachineController controller, ExecutionCondition condition) {
-		((NxtController) controller).halt();
+		controller.halt();
 		return getNum();
 	}
 	

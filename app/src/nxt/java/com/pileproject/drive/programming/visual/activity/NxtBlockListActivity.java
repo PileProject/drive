@@ -32,7 +32,6 @@ import com.pileproject.drive.programming.visual.block.sequence.TurnLeftSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock;
 
 public class NxtBlockListActivity extends BlockListActivityBase {
-	
 	@Override
 	protected BlockClassHolder[][] getBlockIcons() {
 		BlockClassHolder[][] blocks = {
@@ -58,5 +57,4 @@ public class NxtBlockListActivity extends BlockListActivityBase {
 		};
 		return blocks;
 	}
-	
 }

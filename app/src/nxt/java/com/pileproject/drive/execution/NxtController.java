@@ -25,6 +25,9 @@ import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class NxtController implements MachineController {
 	private NxtMachine mMachine = null;
 	private Motor mRightMotor = null;
@@ -50,11 +53,69 @@ public class NxtController implements MachineController {
 
 	public enum MotorDir {
 		Forward, Neutral, Backward
-	};
+	}
 
 	public enum MotorKind {
 		LeftMotor, RightMotor
-	};
+	}
+
+	/***
+	 * internal class to contain sensor properties
+	 * particularly for Android activities
+	 *
+	 */
+	public static final class SensorProperty {
+		public static final int NUMBER_OF_SENSORS = 3;
+		public static final int NUMBER_OF_SENSOR_PORTS = 4;
+		public static final int SENSOR_UNUSED = 0;
+		public static final int SENSOR_TOUCH = 1;
+		public static final int SENSOR_LINE = 2;
+		public static final int SENSOR_SOUND = 3;
+
+		public static final class LineSensor {
+			public static final int PctMin = 0;
+			public static final int PctMax = 100;
+			public static final int DEFAULT = 50;
+		}
+
+		public static final class SoundSensor {
+			public static final int SI_dB_SiMin = 40;
+			public static final int SI_dB_SiMax = 120;
+			public static final int SI_dB_DEFAULT = 70;
+		}
+
+		public static List<Integer> getAllSensors() {
+			List<Integer> sensors = new LinkedList<>();
+
+			sensors.add(SENSOR_TOUCH);
+			sensors.add(SENSOR_LINE);
+			sensors.add(SENSOR_SOUND);
+
+			return sensors;
+		}
+	}
+
+	/***
+	 * internal class to contain motor properties
+	 * particularly for Android activities
+	 *
+	 */
+	public static final class MotorProperty {
+		public static final int NUMBER_OF_MOTORS = 2;
+		public static final int NUMBER_OF_MOTOR_PORTS = 3;
+		public static final int MOTOR_UNUSED = 0;
+		public static final int MOTOR_LEFT = 1;
+		public static final int MOTOR_RIGHT = 2;
+
+		public static List<Integer> getAllMotors() {
+			List<Integer> motors = new LinkedList<>();
+
+			motors.add(MOTOR_LEFT);
+			motors.add(MOTOR_RIGHT);
+
+			return motors;
+		}
+	}
 
 	/**
 	 * Default constructor.
@@ -64,46 +125,46 @@ public class NxtController implements MachineController {
 		mMachine = machine;
 		mRightMotor = machine.createMotor(NxtOutputPort.PORT_B);
 		mLeftMotor = machine.createMotor(NxtOutputPort.PORT_C);
-		
+
 		mTouchSensor = machine.createTouchSensor(NxtInputPort.PORT_1);
 		mSoundSensor = machine.createSoundSensor(NxtInputPort.PORT_2);
 		mLineSensor = machine.createLineSensor(NxtInputPort.PORT_3);
 	}
-	
+
 	public NxtController(NxtMachine machine, NxtControllerBuilder builder) {
 		mMachine = machine;
 		setMotorPort(builder);
 		setSensorPort(builder);
 	}
-	
+
 	private void setMotorPort(NxtControllerBuilder builder) {
 		NxtOutputPort motorPort;
 
-		motorPort = builder.getMotorPort(NxtMachine.MotorProperty.MOTOR_LEFT);
+		motorPort = builder.getMotorPort(MotorProperty.MOTOR_LEFT);
 		if (motorPort != null) {
 			mLeftMotor = mMachine.createMotor(motorPort);
 		}
 
-		motorPort = builder.getMotorPort(NxtMachine.MotorProperty.MOTOR_RIGHT);
+		motorPort = builder.getMotorPort(MotorProperty.MOTOR_RIGHT);
 		if (motorPort != null) {
 			mRightMotor = mMachine.createMotor(motorPort);
 		}
 	}
-	
+
 	private void setSensorPort(NxtControllerBuilder builder) {
 		NxtInputPort sensorPort;
 
-		sensorPort = builder.getSensorPort(NxtMachine.SensorProperty.SENSOR_LINE);
+		sensorPort = builder.getSensorPort(SensorProperty.SENSOR_LINE);
 		if (sensorPort != null) {
 			mLineSensor = mMachine.createLineSensor(sensorPort);
 		}
 
-		sensorPort = builder.getSensorPort(NxtMachine.SensorProperty.SENSOR_SOUND);
-        if (sensorPort != null) {
+		sensorPort = builder.getSensorPort(SensorProperty.SENSOR_SOUND);
+		if (sensorPort != null) {
 			mSoundSensor = mMachine.createSoundSensor(sensorPort);
 		}
 
-		sensorPort = builder.getSensorPort(NxtMachine.SensorProperty.SENSOR_TOUCH);
+		sensorPort = builder.getSensorPort(SensorProperty.SENSOR_TOUCH);
 		if (sensorPort != null) {
 			mTouchSensor = mMachine.createTouchSensor(sensorPort);
 		}
@@ -141,7 +202,7 @@ public class NxtController implements MachineController {
 	public void moveForward() {
 		move(MotorDir.Forward, MotorDir.Forward);
 	}
-	
+
 	/**
 	 * move backward
 	 * public field variables leftMotorPower and rightMotorPower are set as
@@ -150,7 +211,7 @@ public class NxtController implements MachineController {
 	public void moveBackward() {
 		move(MotorDir.Backward, MotorDir.Backward);
 	}
-	
+
 	/**
 	 * turn left
 	 * motor's powers are set to the constant power
@@ -158,7 +219,7 @@ public class NxtController implements MachineController {
 	public void turnLeft() {
 		move(MotorDir.Backward, MotorDir.Forward);
 	}
-	
+
 	/**
 	 * turn right
 	 * motor's powers are set to the constant power
@@ -166,14 +227,15 @@ public class NxtController implements MachineController {
 	public void turnRight() {
 		move(MotorDir.Forward, MotorDir.Backward);
 	}
-	
+
 	/**
 	 * halt motors
 	 */
+	@Override
 	public void halt() {
 		move(MotorDir.Neutral, MotorDir.Neutral);
 	}
-	
+
 	/**
 	 * drive the both motors toward specified direction
 	 * public field variables leftMotorPower and rightMotorPower are set as
@@ -215,7 +277,7 @@ public class NxtController implements MachineController {
 			}
 		}
 	}
-	
+
 	/**
 	 * set motor's power as percent
 	 * 
@@ -235,7 +297,8 @@ public class NxtController implements MachineController {
 				break;
 		}
 	}
-	
+
+	@Override
 	public void finalize() throws RuntimeException {
 		halt();
 		mTouchSensor = null;

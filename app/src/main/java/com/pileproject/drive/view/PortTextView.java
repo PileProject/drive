@@ -28,7 +28,6 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public abstract class PortTextView extends TextView {
-
 	final private boolean mIsAcceptable;
 	final private String mPortName;
 	final private String mPortType;
@@ -36,7 +35,7 @@ public abstract class PortTextView extends TextView {
 	final protected Context mContext;
 	protected int mAttachmentType;
 
-	MediaPlayer mSoundEffectOfMovingBlock;
+	private MediaPlayer mSoundEffectOfMovingBlock;
 	
 	public PortTextView(Context context, AttributeSet attrs) {
 		super(context, attrs);

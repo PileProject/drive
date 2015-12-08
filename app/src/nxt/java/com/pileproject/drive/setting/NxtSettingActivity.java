@@ -24,23 +24,21 @@ import com.pileproject.drive.setting.machine.NxtThresholdFragment;
 
 import java.util.List;
 
-
 public class NxtSettingActivity extends SettingActivity {
-	
 	@Override
 	public void onBuildHeaders(List<Header> target) {
 		loadHeadersFromResource(R.xml.setting_fragmentlist, target);
 		super.onBuildHeaders(target);
 	}
-	
+
 	@Override
 	protected boolean isValidFragment(String fragmentName) {
 		if (DeviceSelectFragment.class.getName().equals(fragmentName)
-                || NxtPortConnectionFragment.class.getName().equals(fragmentName)
-                || NxtThresholdFragment.class.getName().equals(fragmentName)) {
+				|| NxtPortConnectionFragment.class.getName().equals(fragmentName)
+				|| NxtThresholdFragment.class.getName().equals(fragmentName)) {
 			return true;
 		}
-		
+
 		return false;
 	}
 }

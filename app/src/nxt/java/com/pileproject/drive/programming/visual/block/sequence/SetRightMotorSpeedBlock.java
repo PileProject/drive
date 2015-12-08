@@ -54,10 +54,9 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumText {
 	
 	@Override
 	public Integer[] getDigit() {
-		Integer[] digit = {
+		return new Integer[]{
 			3, 0
 		};
-		return digit;
 	}
 	
 	@Override

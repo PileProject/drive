@@ -22,25 +22,26 @@ import android.os.Bundle;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.activity.a.NxtProgrammingActivity;
+import com.pileproject.drive.setting.NxtSettingActivity;
+import com.pileproject.drive.setting.machine.NxtPortConnectionFragment;
 
 public class NxtTitleActivity extends TitleActivityBase {
-	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_title);
 		// Button to move NxtProgrammingActivity
 		findViewById(R.id.title_startButton).setOnClickListener(v -> {
-            Intent intent = new Intent(getApplicationContext(), NxtProgrammingActivity.class);
-            startActivity(intent);
-        });
-		
+			Intent intent = new Intent(getApplicationContext(), NxtProgrammingActivity.class);
+			startActivity(intent);
+		});
+
 		// Button to move DeviceSelectActivity
 		findViewById(R.id.title_settingButton).setOnClickListener(v -> {
-         //   Intent intent = new Intent(getApplicationContext(), NxtSettingActivity.class);
-         //   startActivity(intent);
-        });
-		
-		//NxtPortConnectionFragment.setDefaultValueOnPreferences(getApplicationContext());
+			Intent intent = new Intent(getApplicationContext(), NxtSettingActivity.class);
+			startActivity(intent);
+		});
+
+		NxtPortConnectionFragment.setDefaultValueOnPreferences(getApplicationContext());
 	}
 }
