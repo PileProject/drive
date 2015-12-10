@@ -47,12 +47,12 @@ public enum Unit {
                 return value + " " + context.getResources().getQuantityString(R.plurals.seconds, quantity);
 
             case Percentage:
-                return value + " " +
-                        context.getResources().getString(R.string.percent);
+                return value + " " + context.getResources().getString(R.string.percent);
 
             case NumberOfTimes:
                 return context.getResources()
-                        .getString(R.string.blocks_repeatNum, Integer.parseInt(formattedValue.trim()));
+                        .getString(R.string.blocks_repeatNum,
+                                   Integer.parseInt(formattedValue.trim()));
 
             default:
                 break;
@@ -71,8 +71,7 @@ public enum Unit {
      * @param format
      * @return
      */
-    private static int getQuantityOfValueInStringFormat(
-            String formattedValue, String format) {
+    private static int getQuantityOfValueInStringFormat(String formattedValue, String format) {
         if (formattedValue.equals(String.format(format, 1.0))) {
             return 1;
         }

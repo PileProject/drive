@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+
+<manifest
+    package="com.pileproject.drive"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <uses-permission android:name="android.permission.BLUETOOTH"/>
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/app_theme">
+        <activity
+            android:name=".title.NxtTitleActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".programming.visual.activity.NxtProgrammingActivity"
+            android:label="@string/programming.label"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="setting.NxtSettingActivity"
+            android:label="@string/setting.label"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".programming.visual.activity.NxtBlockListActivity"
+            android:label="@string/blockList.label"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".execution.NxtExecutionActivity"
+            android:label="@string/execute.label"
+            android:screenOrientation="portrait">
+        </activity>
+    </application>
+</manifest>
