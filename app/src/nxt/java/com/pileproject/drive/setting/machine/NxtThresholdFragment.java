@@ -29,7 +29,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
 import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
-import com.pileproject.drive.programming.visual.block.selection.IfNXTIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
 import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
@@ -75,13 +75,13 @@ public class NxtThresholdFragment extends Fragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 SharedPreferencesWrapper.saveIntPreference(activity,
-                                                           IfNXTIsOutOfLineBlock.class.getName(),
+                                                           IfNxtIsOutOfLineBlock.class.getName(),
                                                            seekBar.getProgress());
             }
         });
 
         final int savedLightValue =
-                SharedPreferencesWrapper.loadIntPreference(activity, IfNXTIsOutOfLineBlock.class.getName(), -1);
+                SharedPreferencesWrapper.loadIntPreference(activity, IfNxtIsOutOfLineBlock.class.getName(), -1);
         mLightSensorSeek.setMax(LineSensor.PctMax);
         mLightSensorSeek.setProgress((savedLightValue == -1) ? LineSensor.DEFAULT : savedLightValue);
 

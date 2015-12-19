@@ -39,7 +39,6 @@ public class ChangeNumberEvent extends EventBase {
     public EventBase undo(BlockSpaceLayout layout, int elementCount) {
         BlockBase block = (BlockBase) layout.getChildAt(mIndex);
 
-        // and then repeat undo and redo)
         // Get current number of TextView
         int curNum = ((NumTextHolder) block).getNum();
         ((NumTextHolder) block).setNum(mOldNum); // Set old number to TextView

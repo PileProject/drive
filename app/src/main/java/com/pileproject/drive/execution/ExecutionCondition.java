@@ -40,9 +40,7 @@ public class ExecutionCondition {
 
     public ExecutionCondition() {
         whileStack = new Stack<>();
-        whileStack.clear();
         ifStack = new Stack<>();
-        whileStack.clear();
         beginningOfCurrentWhileLoop = -1;
     }
 

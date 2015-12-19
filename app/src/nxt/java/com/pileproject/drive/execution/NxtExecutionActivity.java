@@ -60,7 +60,7 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
     }
 
     @Override
-    protected MachineController getDeviceController() {
+    protected MachineController getMachineController() {
         return new NxtController(mMachine, new NxtControllerBuilder(this));
     }
 }

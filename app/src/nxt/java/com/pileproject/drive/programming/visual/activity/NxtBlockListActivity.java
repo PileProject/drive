@@ -19,8 +19,8 @@ package com.pileproject.drive.programming.visual.activity;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
 import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
 import com.pileproject.drive.programming.visual.block.repetition.WhileNumBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNXTIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNXTWasTouchedBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfNxtWasTouchedBlock;
 import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
 import com.pileproject.drive.programming.visual.block.sequence.BackwardSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.ForwardSecBlock;
@@ -47,8 +47,8 @@ public class NxtBlockListActivity extends BlockListActivityBase {
                         new BlockClassHolder(WhileNumBlock.class),
                         new BlockClassHolder(RepetitionBreakBlock.class),
                 }, {
-                        new BlockClassHolder(IfNXTIsOutOfLineBlock.class),
-                        new BlockClassHolder(IfNXTWasTouchedBlock.class),
+                        new BlockClassHolder(IfNxtIsOutOfLineBlock.class),
+                        new BlockClassHolder(IfNxtWasTouchedBlock.class),
                         new BlockClassHolder(IfThereWasALargeSoundBlock.class),
                 },
         };

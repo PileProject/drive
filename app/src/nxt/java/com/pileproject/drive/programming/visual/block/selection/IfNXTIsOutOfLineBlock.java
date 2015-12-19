@@ -33,15 +33,15 @@ import com.pileproject.drive.util.SharedPreferencesWrapper;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class IfNXTIsOutOfLineBlock extends SelectionBlock {
+public class IfNxtIsOutOfLineBlock extends SelectionBlock {
 
     private int mThreshold;
 
-    public IfNXTIsOutOfLineBlock(Context context) {
+    public IfNxtIsOutOfLineBlock(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.block_if_nxt_is_out_of_line, this);
 
-        mThreshold = SharedPreferencesWrapper.loadIntPreference(context, IfNXTIsOutOfLineBlock.class.getName(), 50);
+        mThreshold = SharedPreferencesWrapper.loadIntPreference(context, IfNxtIsOutOfLineBlock.class.getName(), 50);
     }
 
     @Override

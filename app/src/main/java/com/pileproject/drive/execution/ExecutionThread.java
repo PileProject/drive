@@ -22,7 +22,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 
-import com.pileproject.drive.database.DBManager;
+import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
@@ -44,7 +44,7 @@ public class ExecutionThread extends Thread {
     private static final String TAG = "ExecutionThread";
     private static int mThreadNum = 0;
     private boolean mHalt = false;
-    private DBManager mManager;
+    private ProgramDataManager mManager;
     private ExecutionCondition mCondition;
     private MachineController mController;
     private Handler mUiHandler;
@@ -59,7 +59,7 @@ public class ExecutionThread extends Thread {
     public ExecutionThread(
             Context context, Handler uiHandler, MachineController controller) {
         super();
-        mManager = new DBManager(context);
+        mManager = new ProgramDataManager(context);
         mCondition = new ExecutionCondition();
         mController = controller;
         mUiHandler = uiHandler;
@@ -168,7 +168,6 @@ public class ExecutionThread extends Thread {
 
     /**
      * Check this block should be through
-     * <p/>
      * TODO current version may not be applied to
      * nests of selection commands (NOT TESTED).
      *

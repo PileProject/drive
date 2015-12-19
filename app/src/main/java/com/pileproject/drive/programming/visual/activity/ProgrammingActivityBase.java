@@ -47,6 +47,7 @@ import com.pileproject.drive.setting.app.SupervisorModeFragment;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Users create programs on this Activity
@@ -61,7 +62,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
     private final int ADD_BLOCK = 1;
     private final int EXECUTE_PROGRAM = 2;
     private final String TAG = "NxtProgrammingActivity";
-    private ArrayList<Button> mAddBlockButtons;
+    private List<Button> mAddBlockButtons;
     private Button mExecButton;
     private UndoAndRedoButtonsManager mButtonsManager;
     private ListView mMenuList;

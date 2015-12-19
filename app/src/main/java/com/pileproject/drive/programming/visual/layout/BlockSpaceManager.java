@@ -19,7 +19,7 @@ package com.pileproject.drive.programming.visual.layout;
 import android.content.Context;
 import android.view.View;
 
-import com.pileproject.drive.database.DBManager;
+import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 import java.util.ArrayList;
@@ -33,13 +33,13 @@ import java.util.ArrayList;
 public abstract class BlockSpaceManager {
     protected BlockSpaceLayout mLayout = null;
     protected Context mContext;
-    private DBManager mManager;
+    private ProgramDataManager mManager;
 
     public BlockSpaceManager(Context context, BlockSpaceLayout layout) {
         mContext = context;
         mLayout = layout;
 
-        mManager = new DBManager(context);
+        mManager = new ProgramDataManager(context);
     }
 
     public void save() {

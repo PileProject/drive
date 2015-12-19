@@ -33,7 +33,7 @@ import android.widget.CheckBox;
 import android.widget.ListView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.database.DBManager;
+import com.pileproject.drive.database.ProgramDataManager;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -41,12 +41,13 @@ import java.util.List;
 import java.util.Map;
 
 public class ProgramListFragment extends Fragment {
-    private DBManager mManager;
+    private ProgramDataManager mManager;
     private Button mDeleteButton;
 
     // 0 : Sample Programs, 1 : User Programs
-    private Button[] mProgramsCheckAllButton = new Button[2];
-    private ListView[] mProgramListView = new ListView[2];
+    private static final int NUM_PROGRAM_KINDS = 2;
+    private Button[] mProgramsCheckAllButton = new Button[NUM_PROGRAM_KINDS];
+    private ListView[] mProgramListView = new ListView[NUM_PROGRAM_KINDS];
     private ProgramDataAdapter[] mProgramDataAdapter = new ProgramDataAdapter[2];
     private ArrayList<Map<String, Boolean>> mCheckedPrograms = new ArrayList<>();
 
@@ -56,8 +57,8 @@ public class ProgramListFragment extends Fragment {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_programlist, container, false);
 
-        // create DBManager to list programs
-        mManager = new DBManager(getActivity());
+        // create ProgramDataManager to list programs
+        mManager = new ProgramDataManager(getActivity());
 
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
@@ -92,7 +93,7 @@ public class ProgramListFragment extends Fragment {
             }
         });
 
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < NUM_PROGRAM_KINDS; i++) {
             final int dataId = i;
             mProgramsCheckAllButton[dataId].setOnClickListener(new OnClickListener() {
                 @Override
@@ -118,7 +119,7 @@ public class ProgramListFragment extends Fragment {
     }
 
     private void initializeProgramDataAdapter() {
-        for (int dataId = 0; dataId < 2; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             mCheckedPrograms.get(dataId).clear();
 
             // items are categorized into 2 parts; samples and user programs.
@@ -157,7 +158,7 @@ public class ProgramListFragment extends Fragment {
     private String generateProgramNamesToBeDeleted() {
         String separator = ", ";
         StringBuilder sb = new StringBuilder();
-        for (int dataId = 0; dataId < 2; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
                 if (!e.getValue()) {
                     continue; // won't be deleted
@@ -175,7 +176,7 @@ public class ProgramListFragment extends Fragment {
     }
 
     private void deletePrograms() {
-        for (int dataId = 0; dataId < 2; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
                 if (e.getValue()) {
                     mManager.deleteProgramByName(e.getKey(), true);
@@ -183,7 +184,7 @@ public class ProgramListFragment extends Fragment {
             }
         }
         initializeProgramDataAdapter(); // reinitialize data
-        for (int dataId = 0; dataId < 2; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             mProgramListView[dataId].setAdapter(mProgramDataAdapter[dataId]);
             mProgramDataAdapter[dataId].notifyDataSetChanged();
         }

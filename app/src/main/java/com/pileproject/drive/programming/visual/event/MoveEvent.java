@@ -28,7 +28,7 @@ import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
  * @version 1.0 4-June-2013
  */
 public class MoveEvent extends EventBase {
-    int mOldX, mOldY;
+    private int mOldX, mOldY;
 
     public MoveEvent(int elementCount, int index, int oldX, int oldY) {
         super(elementCount, index);

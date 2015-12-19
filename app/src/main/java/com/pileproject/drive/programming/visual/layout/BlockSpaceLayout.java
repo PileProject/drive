@@ -32,10 +32,9 @@ import com.pileproject.drive.R;
  * @version 1.0 18-June-2013
  */
 public class BlockSpaceLayout extends FrameLayout {
-    @SuppressWarnings("unused")
-    private static final String TAG = "PlacingBlockSpaceLayout";
     private ImageView mTrashBox;
     private int mDefaultChildrenNum;
+    private static final int MARGINE = 20;
 
     public BlockSpaceLayout(Context context, AttributeSet attr) {
         super(context, attr);
@@ -52,9 +51,9 @@ public class BlockSpaceLayout extends FrameLayout {
      * true - a block is on the trash box, false - otherwise
      */
     public boolean isOnTrash(View view) {
-        return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + 20 &&
+        return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + MARGINE &&
                 view.getLeft() < mTrashBox.getRight() &&
-                view.getTop() > mTrashBox.getTop() - view.getHeight() + 20 &&
+                view.getTop() > mTrashBox.getTop() - view.getHeight() + MARGINE &&
                 view.getTop() < mTrashBox.getBottom();
     }
 

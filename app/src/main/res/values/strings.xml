@@ -103,7 +103,7 @@
     <string name="deviceselect.noDeviceBonded">No Device are Bounded</string>
     <string name="deviceselect.toast.setDefault">Finished Setting the default device</string>
     <string name="deviceselect.toast.cannotConnect">could not establish connection</string>
-    <string name="deviceselect.needBt.title">Alart</string>
+    <string name="deviceselect.needBt.title">Alert</string>
     <string name="deviceselect.needBt.message">Failed to scan: This device doesn\'t have Bluetooth function.</string>
     <string name="deviceselect.didNotSelectDevice">Please choose a device on setting screen.</string>
 

@@ -28,8 +28,7 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public class SupervisorModeFragment extends Fragment {
-
-    CheckBox mEnableDebugModeCheckBox;
+    private CheckBox mEnableDebugModeCheckBox;
 
     @Override
     public View onCreateView(

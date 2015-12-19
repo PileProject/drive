@@ -30,9 +30,9 @@ import com.pileproject.drive.execution.NxtController;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class IfNXTWasTouchedBlock extends SelectionBlock {
+public class IfNxtWasTouchedBlock extends SelectionBlock {
 
-    public IfNXTWasTouchedBlock(Context context) {
+    public IfNxtWasTouchedBlock(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.block_if_nxt_was_touched, this);
     }

@@ -18,7 +18,7 @@ package com.pileproject.drive.view;
 
 import android.content.Context;
 import android.view.Gravity;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
@@ -27,6 +27,7 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.Range;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A layout which has the set of NumberPickers
@@ -35,9 +36,7 @@ import java.util.ArrayList;
  * @version 1.0 5-June-2013
  */
 public class NumberSelectWheelScrollerView extends NumberSelectView {
-
-    private final int WC = LinearLayout.LayoutParams.WRAP_CONTENT;
-    private ArrayList<NumberPicker> mNumbers;
+    private List<NumberPicker> mNumbers;
     private int mIntegralPart, mDecimalPart;
 
     /**
@@ -59,7 +58,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
         mNumbers = new ArrayList<>(mIntegralPart + mDecimalPart);
 
         // Create LayoutParams (width = 0, height = wrap_content, weight = 1.0f)
-        LayoutParams lp = new LayoutParams(0, WC);
+        LayoutParams lp = new LayoutParams(0, FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.weight = 1.0f;
 
         for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
@@ -81,8 +80,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
 
                     // prevent overflow
                     if ((oldVal + 1) % 10 == newVal) {
-                        // Check the new value is larger than the maximum value
-                        // or not
+                        // Check the new value is larger than the maximum value or not
                         if (raw + Math.pow(10, mIntegralPart - (index + 1)) > max) {
                             changeToMax(); // Change value to max.
                             return;
@@ -90,10 +88,9 @@ public class NumberSelectWheelScrollerView extends NumberSelectView {
                     }
                     // prevent underflow
                     else {
-                        // Check the new value is lower than the minimum
-                        // value or not
+                        // Check the new value is lower than the minimum value or not
                         if (raw - Math.pow(10, mIntegralPart - (index + 1)) < min) {
-                            changeToMin(); // Change value to min.
+                            changeToMin(); // Change value to min
                             return;
                         }
                     }

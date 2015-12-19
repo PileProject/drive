@@ -19,7 +19,7 @@ package com.pileproject.drive.title;
 import android.app.Activity;
 import android.os.Bundle;
 
-import com.pileproject.drive.database.DBManager;
+import com.pileproject.drive.database.ProgramDataManager;
 
 /**
  * Title Screen
@@ -30,13 +30,13 @@ import com.pileproject.drive.database.DBManager;
  */
 public abstract class TitleActivityBase extends Activity {
 
-    private DBManager mManager;
+    private ProgramDataManager mManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         // Create new DB Manager
-        mManager = new DBManager(getApplicationContext());
+        mManager = new ProgramDataManager(getApplicationContext());
         mManager.deleteAll(); // Initialize program data
     }
 }

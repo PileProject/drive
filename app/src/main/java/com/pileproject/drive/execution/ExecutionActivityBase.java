@@ -43,9 +43,10 @@ import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
  * @version 1.0 7-July-2013
  */
 public abstract class ExecutionActivityBase extends Activity {
-
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int FAILED_TO_CONNECT = 1;
+    private static final String IS_CONNECTED = "is_connected";
+
     @SuppressWarnings("unused")
     private static final String TAG = "NxtExecutionActivity";
     // Handler for connecting
@@ -159,7 +160,7 @@ public abstract class ExecutionActivityBase extends Activity {
 
         // Check this activity has already connected to the device
         Intent intent = getIntent();
-        if (intent.getBooleanExtra("is_connected", false)) {
+        if (intent.getBooleanExtra(IS_CONNECTED, false)) {
             setResult(Activity.RESULT_OK, intent);
             try {
                 startExecution();
@@ -170,7 +171,8 @@ public abstract class ExecutionActivityBase extends Activity {
         } else {
             if (hasBluetoothFunction()) {
                 if (!mBtAdapter.isEnabled()) {
-                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
+                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
+                                           REQUEST_ENABLE_BT);
                 } else {
                     connectToDevice();
                 }
@@ -284,13 +286,13 @@ public abstract class ExecutionActivityBase extends Activity {
 
     protected void startExecution() {
         if (mThread == null || !mThread.isAlive()) {
-            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getDeviceController());
+            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getMachineController());
             mThread.setPriority(Thread.MAX_PRIORITY);
             mThread.start();
         }
     }
 
-    protected abstract MachineController getDeviceController();
+    protected abstract MachineController getMachineController();
 
     private void showConnectionErrorDialog() {
         AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error)
@@ -308,7 +310,7 @@ public abstract class ExecutionActivityBase extends Activity {
 
         // Inform this activity has been disconnected by the device
         Intent intent = new Intent();
-        intent.putExtra("is_connected", false);
+        intent.putExtra(IS_CONNECTED, false);
         setResult(RESULT_OK, intent);
     }
 

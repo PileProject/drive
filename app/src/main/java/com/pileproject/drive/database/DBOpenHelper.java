@@ -28,28 +28,42 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBOpenHelper extends SQLiteOpenHelper {
 
-    // A program data to be executed
+    // -- program data to be executed --
     public static final String TBL_PROGRAM_DATA = "program_data";
+    // class name of block
     public static final String BLOCK_NAME = "block_name";
+    // left (x) of block
     public static final String BLOCK_LEFT = "block_left";
+    // top (y) of block
     public static final String BLOCK_TOP = "block_top";
+    // right (x) of block
     public static final String BLOCK_RIGHT = "block_right";
+    // bottom (y) of block
     public static final String BLOCK_BOTTOM = "block_bottom";
+    // value of block
+    // e.g. how long the block lasts
     public static final String BLOCK_NUM = "block_num";
-    // list of saved program names
+    // -- list of saved program names --
     public static final String TBL_SAVED_PROGRAMS = "saved_programs";
+    // name of program
     public static final String PROGRAM_NAME = "program_name";
+    // sample (1) or not (0)
     public static final String IS_SAMPLE = "is_sample";
     public static final String CREATED_AT = "created_at";
-    // saved program data
+    // -- saved program data --
+    // use the same columns in TBL_PROGRAM_DATA
     public static final String TBL_SAVED_PROGRAM_DATA = "saved_program_data";
-    // use columns in TBL_PROGRAM_DATA
-    public static final String SAVED_PROGRAM_ID = "saved_program_id";    //
-    // foreign key
+    // foreign key (TBL_SAVED_PROGRAM)
+    public static final String SAVED_PROGRAM_ID = "saved_program_id";
+
+    // database name
     private static final String DB_NAME = "Mity.db";
     private static final int DB_VERSION = 3;
     private static DBOpenHelper mInstance = null;
     private int mWritableDatabaseCount = 0;
+
+    private static final String ID_DEFINITION =
+            "_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ";
 
     /**
      * Constructor
@@ -102,52 +116,30 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA // name
-                           // of table
-                           +
-                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                           " " +
-                           BLOCK_NAME + " TEXT NOT NULL, "
-                           // class name of block
+        db.execSQL("CREATE TABLE IF NOT EXISTS "
+                           + TBL_PROGRAM_DATA
+                           + " (" + ID_DEFINITION
+                           + BLOCK_NAME + " TEXT NOT NULL, "
                            + BLOCK_LEFT + " INTEGER NOT NULL, "
-                           // left (x) of block
                            + BLOCK_TOP + " INTEGER NOT NULL, "
-                           // top (y) of block
                            + BLOCK_RIGHT + " INTEGER NOT NULL, "
-                           // right (x) of block
                            + BLOCK_BOTTOM + " INTEGER NOT NULL, "
-                           // bottom (y) of block
                            + BLOCK_NUM + " INTEGER NOT NULL);");
 
-        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS // name
-                           // of table
-                           +
-                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                           " " +
-                           PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE +
-                           " INTEGER NOT" +
-                           " NULL, " // sample (1) or not (0)
-                           + CREATED_AT +
-                           " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+        db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS
+                           + " (" + ID_DEFINITION
+                           + PROGRAM_NAME + " TEXT NOT NULL, "
+                           + IS_SAMPLE + " INTEGER NOT NULL, "
+                           + CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
 
         db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA
-                           // name of table
-                           +
-                           " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
-                           " " +
-                           SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
-                           // foreign key
-                           // (TBL_SAVED_PROGRAM)
+                           + " (" + ID_DEFINITION
+                           + SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
                            + BLOCK_NAME + " TEXT NOT NULL, "
-                           // class name of block
                            + BLOCK_LEFT + " INTEGER NOT NULL, "
-                           // left (x) of block
                            + BLOCK_TOP + " INTEGER NOT NULL, "
-                           // top (y) of block
                            + BLOCK_RIGHT + " INTEGER NOT NULL, "
-                           // right (x) of block
                            + BLOCK_BOTTOM + " INTEGER NOT NULL, "
-                           // bottom (y) of block
                            + BLOCK_NUM + " INTEGER NOT NULL);");
     }
 
@@ -156,57 +148,31 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      */
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
         if (oldVersion < DB_VERSION) {
             db.execSQL("DROP TABLE " + TBL_PROGRAM_DATA + ";");
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA //
-                               // name of table
-                               +
-                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
-                               "NULL, " +
-                               BLOCK_NAME + " TEXT NOT NULL, "
-                               // class name of block
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_PROGRAM_DATA
+                               + " (" + ID_DEFINITION
+                               + BLOCK_NAME + " TEXT NOT NULL, "
                                + BLOCK_LEFT + " INTEGER NOT NULL, "
-                               // left (x) of block
                                + BLOCK_TOP + " INTEGER NOT NULL, "
-                               // top (y) of block
                                + BLOCK_RIGHT + " INTEGER NOT NULL, "
-                               // right (x) of block
                                + BLOCK_BOTTOM + " INTEGER NOT NULL, "
-                               // bottom (y) of
-                               // block
                                + BLOCK_NUM + " INTEGER NOT NULL);");
 
-            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS //
-                               // name of table
-                               +
-                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
-                               "NULL, " +
-                               PROGRAM_NAME + " TEXT NOT NULL, " + IS_SAMPLE +
-                               " INTEGER" +
-                               " NOT NULL, " // sample (1) or not (0)
-                               + CREATED_AT +
-                               " DATETIME DEFAULT CURRENT_TIMESTAMP);");
+            db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAMS
+                               + " (" + ID_DEFINITION
+                               + PROGRAM_NAME + " TEXT NOT NULL, "
+                               + IS_SAMPLE + " INTEGER NOT NULL, "
+                               + CREATED_AT + " DATETIME DEFAULT CURRENT_TIMESTAMP);");
 
             db.execSQL("CREATE TABLE IF NOT EXISTS " + TBL_SAVED_PROGRAM_DATA
-                               // name of table
-                               +
-                               " (_id INTEGER PRIMARY KEY AUTOINCREMENT NOT " +
-                               "NULL, " +
-                               SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
-                               // foreign key
-                               // (TBL_SAVED_PROGRAM
+                               + " (" + ID_DEFINITION
+                               + SAVED_PROGRAM_ID + " INTEGER NOT NULL, "
                                + BLOCK_NAME + " TEXT NOT NULL, "
-                               // class name of block
                                + BLOCK_LEFT + " INTEGER NOT NULL, "
-                               // left (x) of block
                                + BLOCK_TOP + " INTEGER NOT NULL, "
-                               // top (y) of block
                                + BLOCK_RIGHT + " INTEGER NOT NULL, "
-                               // right (x) of block
                                + BLOCK_BOTTOM + " INTEGER NOT NULL, "
-                               // bottom (y) of
-                               // block
                                + BLOCK_NUM + " INTEGER NOT NULL);");
         }
     }

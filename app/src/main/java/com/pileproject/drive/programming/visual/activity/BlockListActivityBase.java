@@ -43,14 +43,13 @@ import java.util.Locale;
  * @version 1.0 18-June-2013
  */
 public abstract class BlockListActivityBase extends Activity implements OnClickListener, OnItemClickListener {
-    private final int mCategoryText[] = {R.string.sequence, R.string.repetition, R.string.selection,};
-    private final int mHelpImage[] = {
+    private final int mCategoryTexts[] = {R.string.sequence, R.string.repetition, R.string.selection,};
+    private final int mHelpImages[] = {
             R.drawable.help_sequence, R.drawable.help_repetition, R.drawable.help_selection,
     };
     private Button mCancelButton;
     private Button mHelpButton;
     private int mCategory = 0;
-    // Icons
     private BlockClassHolder[][] mBlocks;
 
     @Override
@@ -66,7 +65,7 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
         mCategory = intent.getIntExtra("category", BlockFactory.SEQUENCE);
 
         // Show title
-        setTitle(getString(R.string.blockList_label) + getString(mCategoryText[mCategory]));
+        setTitle(getString(R.string.blockList_label) + getString(mCategoryTexts[mCategory]));
 
         mBlocks = getBlockIcons();
 
@@ -118,14 +117,14 @@ public abstract class BlockListActivityBase extends Activity implements OnClickL
         LayoutInflater inflater = LayoutInflater.from(BlockListActivityBase.this);
         View view = inflater.inflate(R.layout.view_help, null);
         ImageView help = (ImageView) view.findViewById(R.id.help_showHelpImage);
-        help.setImageResource(mHelpImage[mCategory]);
+        help.setImageResource(mHelpImages[mCategory]);
         help.setAdjustViewBounds(true);
         help.setScaleType(ScaleType.FIT_CENTER);
 
         // Create an AlertDialog that shows helps
         new AlertDialog.Builder(BlockListActivityBase.this).setTitle(R.string.blockList_howToUseBlock)
                 .setMessage(
-                        getString(mCategoryText[mCategory]) + getString(R.string.blockList_theseBlocksAreUsedLikeThis))
+                        getString(mCategoryTexts[mCategory]) + getString(R.string.blockList_theseBlocksAreUsedLikeThis))
                 .setView(view)
                 .setPositiveButton(R.string.close, null)
                 .show();

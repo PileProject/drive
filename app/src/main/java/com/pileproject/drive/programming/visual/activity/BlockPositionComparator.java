@@ -34,7 +34,7 @@ public class BlockPositionComparator implements Comparator<BlockBase> {
 
     /**
      * Constructor
-     * <p/>
+     *
      * Default sort order is ascending
      */
     public BlockPositionComparator() {

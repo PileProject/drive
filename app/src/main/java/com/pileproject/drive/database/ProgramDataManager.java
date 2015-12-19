@@ -38,8 +38,8 @@ import java.util.Collections;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 4-June-2013
  */
-public class DBManager {
-    private static final String TAG = "DBManager";
+public class ProgramDataManager {
+    private static final String TAG = "ProgramDataManager";
     private DBOpenHelper mHelper;
     private SQLiteDatabase mDb;
 
@@ -48,7 +48,7 @@ public class DBManager {
      *
      * @param context The context of Activity that calls this manager
      */
-    public DBManager(Context context) {
+    public ProgramDataManager(Context context) {
         // Use Helper class
         mHelper = DBOpenHelper.getInstance(context);
 
@@ -182,7 +182,7 @@ public class DBManager {
             // Check this view is a child of BlockBase or not
             if (!(view instanceof BlockBase)) {
                 Log.d(TAG, "Not BlockBase: " + view.getClass().getSimpleName());
-                continue;
+
             }
 
             BlockBase b = (BlockBase) view;
@@ -213,7 +213,11 @@ public class DBManager {
 
         c.moveToFirst();
         for (int i = 0; i < numRows; i++) {
-            BlockBase b = BlockFactory.createBlocks(BlockFactory.LOAD, c.getString(0)).get(0);
+            BlockBase b =
+                    BlockFactory.createBlocks(
+                            BlockFactory.LOAD,
+                            c.getString(0))
+                    .get(0);
 
             b.left = c.getInt(1);
             b.top = c.getInt(2);
@@ -262,8 +266,7 @@ public class DBManager {
         return loadByName(programName, false);
     }
 
-    public ArrayList<BlockBase> loadByName(
-            String programName, boolean isSample) {
+    public ArrayList<BlockBase> loadByName(String programName, boolean isSample) {
         String selection = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
         String[] selectionArgs = {
                 getProgramIdByName(programName, isSample) + ""

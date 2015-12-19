@@ -16,12 +16,11 @@
 
 package com.pileproject.drive.programming.visual.event;
 
-import android.widget.FrameLayout;
+import android.view.ViewGroup;
 
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
-
 
 /**
  * EventBase for the delete of a block
@@ -30,7 +29,6 @@ import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
  * @version 1.0 4-June-2013
  */
 public class DeleteEvent extends EventBase {
-    protected static final int WC = FrameLayout.LayoutParams.WRAP_CONTENT;
     private String mBlockName;
 
     public DeleteEvent(int elementCount, int index, String name) {
@@ -45,7 +43,10 @@ public class DeleteEvent extends EventBase {
         BlockBase block = BlockFactory.createBlocks(BlockFactory.UNDO, mBlockName).get(0);
 
         // Attach it to layout
-        layout.addView(block, mIndex, new BlockSpaceLayout.LayoutParams(WC, WC));
+        layout.addView(block, mIndex,
+                       new BlockSpaceLayout.LayoutParams(
+                               ViewGroup.LayoutParams.WRAP_CONTENT,
+                               ViewGroup.LayoutParams.WRAP_CONTENT));
 
         // Create a new AddNumDiff for Redo
         EventBase diffForRedo = new AddEvent(elementCount, mIndex);

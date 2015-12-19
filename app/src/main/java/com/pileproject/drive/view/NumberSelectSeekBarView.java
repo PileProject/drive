@@ -47,9 +47,7 @@ public class NumberSelectSeekBarView extends NumberSelectView {
         @Override
         public void onProgressChanged(
                 SeekBar seekbar, int value, boolean fromUser) {
-            // the value should be jacked up by the apparent minimum
-            // value of
-            // SeekBar
+            // the value should be jacked up by the apparent minimum value of SeekBar
             // when the value is displayed
             mValue = toDoubleExpression(value) + mRange.getLowerBound();
 
