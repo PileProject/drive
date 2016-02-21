@@ -45,7 +45,10 @@ import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
 public abstract class ExecutionActivityBase extends Activity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int FAILED_TO_CONNECT = 1;
-    private static final String IS_CONNECTED = "is_connected";
+    public static final String IS_CONNECTED = "is_connected";
+
+    public static final String MESSAGE_IN_EXECUTION = "message";
+    public static final String BLOCK_INDEX = "index";
 
     @SuppressWarnings("unused")
     private static final String TAG = "NxtExecutionActivity";
@@ -81,7 +84,7 @@ public abstract class ExecutionActivityBase extends Activity {
     private final Handler mProgressHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            switch (message.getData().getInt("message")) {
+            switch (message.getData().getInt(MESSAGE_IN_EXECUTION)) {
                 case ExecutionThread.START_THREAD: {
                     Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
                     return true;
@@ -89,7 +92,7 @@ public abstract class ExecutionActivityBase extends Activity {
 
                 case ExecutionThread.EMPHASIZE_BLOCK: {
                     // Emphasize the current executing block
-                    int index = message.getData().getInt("index");
+                    int index = message.getData().getInt(BLOCK_INDEX);
                     mSpaceManager.emphasizeBlock(index);
                     return true;
                 }

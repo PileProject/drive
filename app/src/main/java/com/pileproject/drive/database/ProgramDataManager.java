@@ -40,7 +40,7 @@ import java.util.Collections;
  */
 public class ProgramDataManager {
     private static final String TAG = "ProgramDataManager";
-    private DBOpenHelper mHelper;
+    private DatabaseOpenHelper mHelper;
     private SQLiteDatabase mDb;
 
     /**
@@ -50,7 +50,7 @@ public class ProgramDataManager {
      */
     public ProgramDataManager(Context context) {
         // Use Helper class
-        mHelper = DBOpenHelper.getInstance(context);
+        mHelper = DatabaseOpenHelper.getInstance(context);
 
         if (mHelper != null) {
             mDb = mHelper.getWritableDatabase();
@@ -88,30 +88,30 @@ public class ProgramDataManager {
             BlockBase b = (BlockBase) view;
             Log.d(TAG, "BlockBase: " + view.getClass().getSimpleName());
 
-            val.put(DBOpenHelper.BLOCK_NAME, b.getClass().getName());
-            val.put(DBOpenHelper.BLOCK_LEFT, b.getLeft());
-            val.put(DBOpenHelper.BLOCK_TOP, b.getTop());
-            val.put(DBOpenHelper.BLOCK_RIGHT, b.getRight());
-            val.put(DBOpenHelper.BLOCK_BOTTOM, b.getBottom());
+            val.put(DatabaseOpenHelper.BLOCK_NAME, b.getClass().getName());
+            val.put(DatabaseOpenHelper.BLOCK_LEFT, b.getLeft());
+            val.put(DatabaseOpenHelper.BLOCK_TOP, b.getTop());
+            val.put(DatabaseOpenHelper.BLOCK_RIGHT, b.getRight());
+            val.put(DatabaseOpenHelper.BLOCK_BOTTOM, b.getBottom());
 
             // Get the number of TextView if the block has one
             if (b instanceof NumTextHolder) {
-                val.put(DBOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
+                val.put(DatabaseOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
             } else {
-                val.put(DBOpenHelper.BLOCK_NUM, 0);
+                val.put(DatabaseOpenHelper.BLOCK_NUM, 0);
             }
 
             // Save
-            mDb.insert(DBOpenHelper.TBL_PROGRAM_DATA, null, val);
+            mDb.insert(DatabaseOpenHelper.TBL_PROGRAM_DATA, null, val);
         }
     }
 
     private int getProgramIdByName(String programName, boolean isSample) {
-        String selection = DBOpenHelper.PROGRAM_NAME + " = ? AND " +
-                DBOpenHelper.IS_SAMPLE + " = ? ";
+        String selection = DatabaseOpenHelper.PROGRAM_NAME + " = ? AND " +
+                DatabaseOpenHelper.IS_SAMPLE + " = ? ";
         String[] selectionArgs = {programName, isSample ? "1" : "0"};
 
-        Cursor c = mDb.query(DBOpenHelper.TBL_SAVED_PROGRAMS,
+        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS,
                              new String[]{"_id",},
                              selection,
                              selectionArgs,
@@ -134,18 +134,18 @@ public class ProgramDataManager {
     private int insertProgramName(String programName, boolean isSample) {
         // add new program
         ContentValues val = new ContentValues();
-        val.put(DBOpenHelper.PROGRAM_NAME, programName);
-        val.put(DBOpenHelper.IS_SAMPLE, isSample ? 1 : 0);
-        mDb.insert(DBOpenHelper.TBL_SAVED_PROGRAMS, null, val);
+        val.put(DatabaseOpenHelper.PROGRAM_NAME, programName);
+        val.put(DatabaseOpenHelper.IS_SAMPLE, isSample ? 1 : 0);
+        mDb.insert(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, null, val);
 
         // query again
         return getProgramIdByName(programName, isSample);
     }
 
     public String createNewProgramName() {
-        String selection = DBOpenHelper.IS_SAMPLE + " = ?";
+        String selection = DatabaseOpenHelper.IS_SAMPLE + " = ?";
         String[] selectionArgs = {"0"}; // false = not sample
-        Cursor c = mDb.query(DBOpenHelper.TBL_SAVED_PROGRAMS, new String[]{
+        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, new String[]{
                 // this assumes the name of users'
                 // programs are integer strings
                 "max(cast(program_name as integer))"
@@ -170,9 +170,9 @@ public class ProgramDataManager {
             programId = insertProgramName(programName, isSample);
         } else {
             // delete old data
-            String selection = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
+            String selection = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
             String[] selectionArgs = {programId + ""};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, selection, selectionArgs);
+            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, selection, selectionArgs);
         }
         // Insert all Views attached to the layout
         for (int i = 0; i < layout.getChildCount(); i++) {
@@ -188,22 +188,22 @@ public class ProgramDataManager {
             BlockBase b = (BlockBase) view;
             Log.d(TAG, "BlockBase: " + view.getClass().getSimpleName());
 
-            val.put(DBOpenHelper.SAVED_PROGRAM_ID, programId);
-            val.put(DBOpenHelper.BLOCK_NAME, b.getClass().getName());
-            val.put(DBOpenHelper.BLOCK_LEFT, b.getLeft());
-            val.put(DBOpenHelper.BLOCK_TOP, b.getTop());
-            val.put(DBOpenHelper.BLOCK_RIGHT, b.getRight());
-            val.put(DBOpenHelper.BLOCK_BOTTOM, b.getBottom());
+            val.put(DatabaseOpenHelper.SAVED_PROGRAM_ID, programId);
+            val.put(DatabaseOpenHelper.BLOCK_NAME, b.getClass().getName());
+            val.put(DatabaseOpenHelper.BLOCK_LEFT, b.getLeft());
+            val.put(DatabaseOpenHelper.BLOCK_TOP, b.getTop());
+            val.put(DatabaseOpenHelper.BLOCK_RIGHT, b.getRight());
+            val.put(DatabaseOpenHelper.BLOCK_BOTTOM, b.getBottom());
 
             // Get the number of TextView if the block has one
             if (b instanceof NumTextHolder) {
-                val.put(DBOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
+                val.put(DatabaseOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
             } else {
-                val.put(DBOpenHelper.BLOCK_NUM, 0);
+                val.put(DatabaseOpenHelper.BLOCK_NUM, 0);
             }
 
             // Save
-            mDb.insert(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, null, val);
+            mDb.insert(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, null, val);
         }
     }
 
@@ -244,13 +244,13 @@ public class ProgramDataManager {
         if (mDb == null) {
             return null;
         }
-        Cursor c = mDb.query(DBOpenHelper.TBL_PROGRAM_DATA, new String[]{
-                DBOpenHelper.BLOCK_NAME,
-                DBOpenHelper.BLOCK_LEFT,
-                DBOpenHelper.BLOCK_TOP,
-                DBOpenHelper.BLOCK_RIGHT,
-                DBOpenHelper.BLOCK_BOTTOM,
-                DBOpenHelper.BLOCK_NUM,
+        Cursor c = mDb.query(DatabaseOpenHelper.TBL_PROGRAM_DATA, new String[]{
+                DatabaseOpenHelper.BLOCK_NAME,
+                DatabaseOpenHelper.BLOCK_LEFT,
+                DatabaseOpenHelper.BLOCK_TOP,
+                DatabaseOpenHelper.BLOCK_RIGHT,
+                DatabaseOpenHelper.BLOCK_BOTTOM,
+                DatabaseOpenHelper.BLOCK_NUM,
         }, null, null, null, null, null);
 
         return loadBlocks(c);
@@ -267,7 +267,7 @@ public class ProgramDataManager {
     }
 
     public ArrayList<BlockBase> loadByName(String programName, boolean isSample) {
-        String selection = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
+        String selection = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
         String[] selectionArgs = {
                 getProgramIdByName(programName, isSample) + ""
         };
@@ -275,13 +275,13 @@ public class ProgramDataManager {
             selection = null;
             selectionArgs = null;
         }
-        Cursor c = mDb.query(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, new String[]{
-                DBOpenHelper.BLOCK_NAME,
-                DBOpenHelper.BLOCK_LEFT,
-                DBOpenHelper.BLOCK_TOP,
-                DBOpenHelper.BLOCK_RIGHT,
-                DBOpenHelper.BLOCK_BOTTOM,
-                DBOpenHelper.BLOCK_NUM,
+        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, new String[]{
+                DatabaseOpenHelper.BLOCK_NAME,
+                DatabaseOpenHelper.BLOCK_LEFT,
+                DatabaseOpenHelper.BLOCK_TOP,
+                DatabaseOpenHelper.BLOCK_RIGHT,
+                DatabaseOpenHelper.BLOCK_BOTTOM,
+                DatabaseOpenHelper.BLOCK_NUM,
         }, selection, selectionArgs, null, null, null);
 
         return loadBlocks(c);
@@ -303,11 +303,11 @@ public class ProgramDataManager {
      * @return
      */
     public String[] loadSavedProgramNames(boolean isSample) {
-        String selection = DBOpenHelper.IS_SAMPLE + " = ?";
+        String selection = DatabaseOpenHelper.IS_SAMPLE + " = ?";
         String[] selectionArgs = {isSample ? "1" : "0"};
-        String orderBy = DBOpenHelper.PROGRAM_NAME + " ASC";
-        Cursor c = mDb.query(DBOpenHelper.TBL_SAVED_PROGRAMS,
-                             new String[]{DBOpenHelper.PROGRAM_NAME,},
+        String orderBy = DatabaseOpenHelper.PROGRAM_NAME + " ASC";
+        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS,
+                             new String[]{DatabaseOpenHelper.PROGRAM_NAME,},
                              selection,
                              selectionArgs,
                              null,
@@ -328,7 +328,7 @@ public class ProgramDataManager {
      * Delete all Block data
      */
     public void deleteAll() {
-        mDb.delete(DBOpenHelper.TBL_PROGRAM_DATA, null, null);
+        mDb.delete(DatabaseOpenHelper.TBL_PROGRAM_DATA, null, null);
     }
 
     public void deleteProgramByName(String programName) {
@@ -338,14 +338,14 @@ public class ProgramDataManager {
     public void deleteProgramByName(String programName, boolean isSample) {
         int id = getProgramIdByName(programName, isSample);
         {
-            String whereClause = DBOpenHelper.SAVED_PROGRAM_ID + " = ?";
+            String whereClause = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
             String[] whereClauseConditions = {id + ""};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAM_DATA, whereClause, whereClauseConditions);
+            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, whereClause, whereClauseConditions);
         }
         {
-            String whereClause = DBOpenHelper.PROGRAM_NAME + " = ?";
+            String whereClause = DatabaseOpenHelper.PROGRAM_NAME + " = ?";
             String[] whereClauseConditions = {programName};
-            mDb.delete(DBOpenHelper.TBL_SAVED_PROGRAMS, whereClause, whereClauseConditions);
+            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, whereClause, whereClauseConditions);
         }
     }
 

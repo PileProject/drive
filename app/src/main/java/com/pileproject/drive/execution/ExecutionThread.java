@@ -28,7 +28,7 @@ import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Sub thread to execute program
@@ -49,6 +49,7 @@ public class ExecutionThread extends Thread {
     private MachineController mController;
     private Handler mUiHandler;
     private boolean mStop;
+    public static final String KEY_RESULT = "result";
 
     /**
      * Constructor
@@ -183,11 +184,12 @@ public class ExecutionThread extends Thread {
             return false;
         }
 
-        HashMap<String, Integer> map = mCondition.ifStack.peek();
+        Map<String, Integer> map = mCondition.ifStack.peek();
 
         // True
-        if (map.get("result") == ExecutionCondition.TRUE) {
-            BlockBase nearestSelectionBlock = blocks.get(map.get("index"));
+        if (map.get(KEY_RESULT) == ExecutionCondition.TRUE) {
+            BlockBase nearestSelectionBlock
+                = blocks.get(map.get(ExecutionActivityBase.BLOCK_INDEX));
 
             int max = nearestSelectionBlock.right;
 
@@ -223,14 +225,16 @@ public class ExecutionThread extends Thread {
             }
         }
         // False
-        else if (map.get("result") == ExecutionCondition.FALSE) {
-            BlockBase nearestSelectionBlock = blocks.get(map.get("index"));
+        else if (map.get(KEY_RESULT) == ExecutionCondition.FALSE) {
+            BlockBase nearestSelectionBlock
+                = blocks.get(map.get(ExecutionActivityBase.BLOCK_INDEX));
 
             // Nest
             if (mCondition.ifStack.size() >= 2) {
                 map = mCondition.ifStack.pop();
                 // Get the index of the second nearest selection block
-                int secondIndex = mCondition.ifStack.peek().get("index");
+                int secondIndex
+                    = mCondition.ifStack.peek().get(ExecutionActivityBase.BLOCK_INDEX);
                 BlockBase secondNearestSelectionBlock = blocks.get(secondIndex);
                 mCondition.ifStack.push(map); // Push the popped element
 
@@ -292,7 +296,7 @@ public class ExecutionThread extends Thread {
     // Create a bundle to send the change of state to Activity
     private void sendState(int message) {
         Bundle bundle = new Bundle();
-        bundle.putInt("message", message);
+        bundle.putInt(ExecutionActivityBase.MESSAGE_IN_EXECUTION, message);
         sendBundle(bundle);
     }
 
@@ -300,8 +304,8 @@ public class ExecutionThread extends Thread {
     // Activity
     private void sendIndex(int message, int index) {
         Bundle bundle = new Bundle();
-        bundle.putInt("message", message);
-        bundle.putInt("index", index);
+        bundle.putInt(ExecutionActivityBase.MESSAGE_IN_EXECUTION, message);
+        bundle.putInt(ExecutionActivityBase.BLOCK_INDEX, index);
         sendBundle(bundle);
     }
 

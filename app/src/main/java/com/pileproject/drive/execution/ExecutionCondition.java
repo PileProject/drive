@@ -21,6 +21,7 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Stack;
 
 /**
@@ -33,7 +34,7 @@ public class ExecutionCondition {
     public static final int TRUE = 1;
     public static final int FALSE = 0;
     public Stack<Integer> whileStack;
-    public Stack<HashMap<String, Integer>> ifStack;
+    public Stack<Map<String, Integer>> ifStack;
     public int beginningOfCurrentWhileLoop;
     public int programCount;
     public ArrayList<BlockBase> blocks;
@@ -50,9 +51,9 @@ public class ExecutionCondition {
      * @param result
      */
     public void pushSelectionResult(boolean result) {
-        HashMap<String, Integer> map = new HashMap<>();
-        map.put("index", programCount);    // current index
-        map.put("result", result ? TRUE : FALSE);
+        Map<String, Integer> map = new HashMap<>();
+        map.put(ExecutionActivityBase.BLOCK_INDEX, programCount);    // current index
+        map.put(ExecutionThread.KEY_RESULT, result ? TRUE : FALSE);
         ifStack.push(map);
     }
 }

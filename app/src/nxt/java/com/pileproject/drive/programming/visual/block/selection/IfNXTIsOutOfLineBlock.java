@@ -45,8 +45,7 @@ public class IfNxtIsOutOfLineBlock extends SelectionBlock {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
+    public int action(MachineController controller, ExecutionCondition condition) {
         // comment is weird.
         // getLightPercent returns tenfold value
         condition.pushSelectionResult(((NxtController) controller).getLineSensorValue() > mThreshold * 10);

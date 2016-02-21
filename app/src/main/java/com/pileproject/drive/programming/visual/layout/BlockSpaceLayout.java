@@ -85,7 +85,6 @@ public class BlockSpaceLayout extends FrameLayout {
             View child = getChildAt(i);
 
             if (child.getVisibility() != GONE) { // Haven't been gone
-
                 // a new view
                 if (child.getLeft() == child.getRight() && child.getTop() == child.getBottom()) {
                     child.layout(child.getLeft(),

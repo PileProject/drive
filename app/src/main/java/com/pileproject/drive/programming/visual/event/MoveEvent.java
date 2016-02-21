@@ -32,7 +32,6 @@ public class MoveEvent extends EventBase {
 
     public MoveEvent(int elementCount, int index, int oldX, int oldY) {
         super(elementCount, index);
-
         mOldX = oldX;
         mOldY = oldY;
     }

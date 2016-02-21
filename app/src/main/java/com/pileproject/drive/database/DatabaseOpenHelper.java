@@ -26,7 +26,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 4-June-2013
  */
-public class DBOpenHelper extends SQLiteOpenHelper {
+public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     // -- program data to be executed --
     public static final String TBL_PROGRAM_DATA = "program_data";
@@ -59,7 +59,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
     // database name
     private static final String DB_NAME = "Mity.db";
     private static final int DB_VERSION = 3;
-    private static DBOpenHelper mInstance = null;
+    private static DatabaseOpenHelper mInstance = null;
     private int mWritableDatabaseCount = 0;
 
     private static final String ID_DEFINITION =
@@ -70,7 +70,7 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      *
      * @param context The context of Activity that calls this manager
      */
-    private DBOpenHelper(Context context) {
+    private DatabaseOpenHelper(Context context) {
         // Context, Database Name, Cursor Factory, Database Version
         super(context, DB_NAME, null, DB_VERSION);
     }
@@ -79,11 +79,11 @@ public class DBOpenHelper extends SQLiteOpenHelper {
      * Return Singleton
      *
      * @param context The context of Activity that calls this manager
-     * @return DBOpenHelper The instance of this class
+     * @return DatabaseOpenHelper The instance of this class
      */
-    synchronized static public DBOpenHelper getInstance(Context context) {
+    synchronized static public DatabaseOpenHelper getInstance(Context context) {
         if (mInstance == null) {
-            mInstance = new DBOpenHelper(context.getApplicationContext());
+            mInstance = new DatabaseOpenHelper(context.getApplicationContext());
         }
         return mInstance;
     }

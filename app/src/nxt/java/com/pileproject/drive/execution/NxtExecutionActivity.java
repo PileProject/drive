@@ -29,25 +29,26 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 
     @Override
     protected void connectToDevice() {
-        // Get mac address
+        // get device MAC address
         String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice device = adapter.getRemoteDevice(address);
         mMachine = new NxtMachine(new BluetoothCommunicator(device));
 
-        showConnectionProgressDialog(); // Create a ProgressDialog
+        showConnectionProgressDialog(); // create a ProgressDialog
 
-        // Try to connect
+        // run an execution thread
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    // try to connect
                     mMachine.connect();
 
-                    // Inform this activity has already connected to nxt
+                    // inform this activity has already connected to NXT
                     Intent intent = new Intent();
-                    intent.putExtra("is_connected", true);
+                    intent.putExtra(IS_CONNECTED, true);
                     setResult(RESULT_OK, intent);
 
                     startExecution();
