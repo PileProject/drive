@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="action_settings">Action Settings</string>
+    <string name="app_name">App Name</string>
+
+    <string name="ok">OK</string>
+    <string name="back">Back</string>
+    <string name="cancel">Cancel</string>
+    <string name="close">Close</string>
+    <string name="message">Message</string>
+    <string name="confirmation">Are you sure?</string>
+    <string name="delete">%1$s will be deleted</string>
+    <string name="noImage">No Image</string>
+    <string name="sequence">Sequence</string>
+    <string name="selection">Selection</string>
+    <string name="repetition">Repetition</string>
+    <string name="percent">%</string>
+    <string name="error">Error</string>
+    <string name="turnedOnBluetooth">Turned on Bluetooth</string>
+    <string name="bluetoothFunctionIsOff">Please turn on Bluetooth.</string>
+
+    <!-- Programming -->
+    <string name="programming.label">Programming Screen</string>
+    <string name="programming.sequence">Sequence</string>
+    <string name="programming.selection">Selection</string>
+    <string name="programming.repetition">Repetition</string>
+    <string name="programming.undo">Undo</string>
+    <string name="programming.redo">Redo</string>
+    <string name="programming.execute">Execute</string>
+    <string name="programming.pleaseSelectNumbers">Select the number</string>
+    <string name="programming.deleteAllBlocks">Delete all blocks</string>
+    <string name="programming.goBackToTitle">Go to Title Screen</string>
+    <string name="programming.saveProgram">Save program</string>
+    <string name="programming.loadProgram">Load program</string>
+    <string name="programming.saveProgramAsASample">Save as a sample</string>
+    <string name="programming.loadSampleProgram">Load sample program</string>
+    <string name="programming.inputProgramName">Program Name:</string>
+    <string name="programming.savedAs">Program is saved as %1$s</string>
+    <string name="programming.targetDevice">Target device -> </string>
+    <string name="programming.noTargetDevice">No target</string>
+
+    <!-- BlockList -->
+    <string name="blockList.label">"Block List: "</string>
+    <string name="blockList.howToUse">How to use</string>
+    <string name="blockList.howToUseBlock">How to use blocks</string>
+    <string name="blockList.theseBlocksAreUsedLikeThis">" blocks are used like this."</string>
+
+    <!-- Blocks -->
+    <!-- Repetition -->
+    <string name="blocks.whileForever">Repeat forever</string>
+    <string name="blocks.whileNum">Repeat □times</string>
+    <string name="blocks.repetitionBreak">Exit a loop</string>
+    <string name="blocks.repeatNum">Repeats: %d</string>
+
+    <!-- TextsOnBlock -->
+    <!-- Sequence -->
+    <string name="textOnBlocks.contentDefaultSec">0.0</string>
+    <string name="textOnBlocks.contentDefaultPercent">0</string>
+    <!-- Repetition -->
+    <string name="textOnBlocks.whileForever">Repeat</string>
+    <string name="textOnBlocks.whileNum">times</string>
+    <string name="textOnBlocks.repetitionEnd">/Repeat</string>
+    <string name="textOnBlocks.repetitionBreak">Exit</string>
+    <string name="textOnBlocks.contentDefaultCount">1</string>
+    <!-- Selection -->
+    <string name="textOnBlocks.selectionEnd">/Selection</string>
+    <string name="textOnBlocks.yes">Yes</string>
+    <string name="textOnBlocks.no">No</string>
+
+    <!-- Setting -->
+    <string name="setting.label">Setting Screen</string>
+
+    <!-- DeviceSelect -->
+    <string name="deviceselect.label">Device Select</string>
+    <string name="deviceselect.noDeviceFound">No Device were Found</string>
+    <string name="deviceselect.title.bondedDevice">Bounded Devices</string>
+    <string name="deviceselect.title.newDevice">New Devices</string>
+    <string name="deviceselect.scanning" tools:ignore="TypographyEllipsis">Scanning...</string>
+    <string name="deviceselect.selectDevice">Select a device</string>
+    <string name="deviceselect.progress.scanning.title">Scanning</string>
+    <string name="deviceselect.progress.scanning.message" tools:ignore="TypographyEllipsis">Scanning...</string>
+    <string name="deviceselect.progress.connecting.title">Connecting</string>
+    <string name="deviceselect.progress.connecting.message" tools:ignore="TypographyEllipsis">Connecting...</string>
+    <string name="deviceselect.enableBt.title">Confirmation</string>
+    <string name="deviceselect.enableBt.message">Please turn on Bluetooth.</string>
+    <string name="deviceselect.enableBt.positiveButton">OK</string>
+    <string name="deviceselect.button.discover">Try to scan</string>
+    <string name="deviceselect.noDeviceBonded">No Device are Bounded</string>
+    <string name="deviceselect.toast.setDefault">Finished Setting the default device</string>
+    <string name="deviceselect.toast.cannotConnect">could not establish connection</string>
+    <string name="deviceselect.needBt.title">Alert</string>
+    <string name="deviceselect.needBt.message">Failed to scan: This device doesn\'t have Bluetooth function.</string>
+    <string name="deviceselect.didNotSelectDevice">Please choose a device on setting screen.</string>
+
+    <!-- Execute -->
+    <string name="execute.label">Execute Screen</string>
+    <string name="execute.connecting" tools:ignore="TypographyEllipsis">Connecting...</string>
+    <string name="execute.noBluetoothFunction">This device doesn\'t have Bluetooth function.</string>
+    <string name="execute.pleaseWaitForAWhile">Please wait for a while.</string>
+    <string name="execute.bluetoothConnectionError">Error: Failed to connect the device.</string>
+    <string name="execute.startExecution">Execution starts.</string>
+    <string name="execute.executionIsOver">Execution is over.</string>
+    <string name="execute.showNoteOfPort">If your program didn\'t work properly, please check the port settings on setting screen.</string>
+    <string name="execute.disconnectedByNXT">Disconnected by the device.</string>
+    <string name="execute.stop">Stop</string>
+    <string name="execute.restart">Restart</string>
+    <string name="execute.finish">Finish</string>
+
+    <!-- SelectNumberView -->
+    <string name="select.number.period">●</string>
+    <string name="select.number.finish">OK</string>
+
+    <!-- SettingActivity -->
+    <string name="setting.deviceSelect">Device Select</string>
+
+    <!-- Program List Fragment -->
+    <string name="programlist">Program List</string>
+    <string name="programlist.delete">Delete</string>
+    <string name="programlist.checkAll">Check All</string>
+    <string name="programlist.samplePrograms">Sample Programs</string>
+    <string name="programlist.userPrograms">User Programs</string>
+
+    <!-- Supervisor Mode Setting -->
+    <string name="supervisorMode">Supervisor Mode Setting</string>
+    <string name="supervisorMode.enableSupervisorMode">Enable Supervisor Mode</string>
+</resources>
