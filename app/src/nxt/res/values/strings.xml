@@ -16,10 +16,10 @@
   -->
 <resources>
 
-    <string name="app_name">NXTDrive</string>
+    <string name="app_name">NxtDrive</string>
 
     <!-- Title -->
-    <string name="title">NXTDrive</string>
+    <string name="title">NxtDrive</string>
     <string name="title.start">Start</string>
     <string name="title.setting">Setting</string>
     <string name="title.label">Title</string>
@@ -34,8 +34,8 @@
     <string name="blocks.setLeftMotorSpeed">Set the left tire\'s power</string>
     <string name="blocks.setRightMotorSpeed">Set the right tire\'s power</string>
     <!-- Selection -->
-    <string name="blocks.ifNXTIsOutOfLine">If nxt is out of line</string>
-    <string name="blocks.ifNXTWasTouched">If nxt was touched</string>
+    <string name="blocks.ifNxtIsOutOfLine">If nxt is out of line</string>
+    <string name="blocks.ifNxtWasTouched">If nxt was touched</string>
     <string name="blocks.ifThereWasALargeSound">If there was a large sound</string>
 
     <!-- TextsOnBlock -->
@@ -48,8 +48,8 @@
     <string name="textOnBlocks.rightMotor">Right tire</string>
     <string name="textOnBlocks.leftMotor">Left tire</string>
     <!-- Selection -->
-    <string name="textOnBlocks.ifNXTIsOutOfLine">Out of line?</string>
-    <string name="textOnBlocks.ifNXTWasTouched">Touched?</string>
+    <string name="textOnBlocks.ifNxtIsOutOfLine">Out of line?</string>
+    <string name="textOnBlocks.ifNxtWasTouched">Touched?</string>
     <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
 
     <string name="sensors.touch">Touch Sensor</string>

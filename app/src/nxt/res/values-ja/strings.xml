@@ -16,10 +16,10 @@
   -->
 <resources>
 
-    <string name="app_name">NXTDrive</string>
+    <string name="app_name">NxtDrive</string>
 
     <!-- Title -->
-    <string name="title">NXTDrive</string>
+    <string name="title">NxtDrive</string>
     <string name="title.start">はじめる</string>
     <string name="title.setting">設定画面へ</string>
     <string name="title.label">タイトル画面</string>
@@ -34,8 +34,8 @@
     <string name="blocks.setLeftMotorSpeed">左タイヤ出力設定</string>
     <string name="blocks.setRightMotorSpeed">右タイヤ出力設定</string>
     <!-- Selection -->
-    <string name="blocks.ifNXTIsOutOfLine">ラインから出たら</string>
-    <string name="blocks.ifNXTWasTouched">タッチされたら</string>
+    <string name="blocks.ifNxtIsOutOfLine">ラインから出たら</string>
+    <string name="blocks.ifNxtWasTouched">タッチされたら</string>
     <string name="blocks.ifThereWasALargeSound">大きな音がしたら</string>
 
     <!-- TextsOnBlock -->
@@ -48,8 +48,8 @@
     <string name="textOnBlocks.rightMotor">右タイヤ</string>
     <string name="textOnBlocks.leftMotor">左タイヤ</string>
     <!-- Selection -->
-    <string name="textOnBlocks.ifNXTIsOutOfLine">ラインから出た</string>
-    <string name="textOnBlocks.ifNXTWasTouched">タッチされた</string>
+    <string name="textOnBlocks.ifNxtIsOutOfLine">ラインから出た</string>
+    <string name="textOnBlocks.ifNxtWasTouched">タッチされた</string>
     <string name="textOnBlocks.ifThereWasALargeSound">大きな音がした</string>
 
     <string name="sensors.touch">タッチセンサ</string>
