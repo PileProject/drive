@@ -40,14 +40,13 @@
             android:text="@string/execute.finish"/>
     </LinearLayout>
 
-    <jp.mity.drivecore.component.PlacingBlockSpaceLayout
+    <com.pileproject.drive.programming.visual.layout.BlockSpaceLayout
         android:id="@+id/execute.showingProgressLayout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_above="@+id/execute.controlButtonsLayout"
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true">
-    </jp.mity.drivecore.component.PlacingBlockSpaceLayout>
+        android:layout_alignParentTop="true" />
 
 </RelativeLayout>
