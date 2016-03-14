@@ -21,6 +21,7 @@ import android.util.Log;
 
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
+import com.pileproject.drive.app.DriveApplication;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -39,22 +40,11 @@ public class BlockFactory {
     public static final int SELECTION = 2;
     public static final int UNDO = 3;
     public static final int LOAD = 4;
-    private static Context sContext = null;
 
     /**
      * This class can't be created as an instance
      */
     private BlockFactory() {
-
-    }
-
-    /**
-     * Set context
-     *
-     * @param context The context of Activity that calls this factory
-     */
-    public static void setContext(Context context) {
-        sContext = context;
     }
 
     /**
@@ -98,7 +88,7 @@ public class BlockFactory {
         }
 
         // Create a new instance
-        Object[] args = {sContext};
+        Object[] args = {DriveApplication.getContext()};
         BlockBase b;
         try {
             b = constructor.newInstance(args);
@@ -136,7 +126,7 @@ public class BlockFactory {
     private static ArrayList<BlockBase> createRepetitionBlock(
             String blockName) {
         ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = new RepetitionEndBlock(sContext); // Add
+        BlockBase b = new RepetitionEndBlock(DriveApplication.getContext()); // Add
         // RepetitionEndBlock
         blocks.add(b);
         b = create(blockName);
@@ -152,20 +142,14 @@ public class BlockFactory {
      */
     private static ArrayList<BlockBase> createSelectionBlock(String blockName) {
         ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = new SelectionEndBlock(sContext); // Add RepetitionEndBlock
+        BlockBase b = new SelectionEndBlock(DriveApplication.getContext()); // Add RepetitionEndBlock
         blocks.add(b);
         b = create(blockName);
         blocks.add(b);
         return blocks;
     }
 
-    public static ArrayList<BlockBase> createBlocks(
-            int howToMake, String blockName) {
-        // TODO: Should throw exception
-        if (sContext == null) {
-            return null;
-        }
-
+    public static ArrayList<BlockBase> createBlocks(int howToMake, String blockName) {
         ArrayList<BlockBase> blocks = null;
         if (howToMake == SEQUENCE) {
             blocks = createSequenceBlock(blockName);

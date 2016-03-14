@@ -162,7 +162,7 @@ public class DeviceSelectFragment extends Fragment {
                     AdapterView<?> parent, View view, int position, long id) {
                 ListView listView = (ListView) parent;
                 BluetoothDevice btDev = (BluetoothDevice) listView.getItemAtPosition(position);
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity, btDev.getAddress());
+                SharedPreferencesWrapper.saveDefaultDeviceAddress(btDev.getAddress());
                 Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) +
                                        "\n" + btDev.getName(), Toast.LENGTH_LONG).show();
             }
@@ -287,7 +287,7 @@ public class DeviceSelectFragment extends Fragment {
         sieveDevices(mBondedDevices);
         mBondedDevicesAdapter.notifyDataSetChanged();
 
-        String defaultDevAddr = SharedPreferencesWrapper.loadDefaultDeviceAddress(mActivity);
+        String defaultDevAddr = SharedPreferencesWrapper.loadDefaultDeviceAddress();
         int defaultDevIdx = findIndexOfDevice(mBondedDevices, defaultDevAddr);
         mBondedDevicesListView.setItemChecked(defaultDevIdx, true);
     }
@@ -461,7 +461,7 @@ public class DeviceSelectFragment extends Fragment {
 
                 mNewDevicesAdapter.remove(device);
 
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(mActivity, device.getAddress());
+                SharedPreferencesWrapper.saveDefaultDeviceAddress(device.getAddress());
                 Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) +
                                        "\n" + device.getName(), Toast.LENGTH_LONG).show();
             } else {

@@ -16,10 +16,11 @@
 
 package com.pileproject.drive.util;
 
-import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.preference.PreferenceManager;
+
+import com.pileproject.drive.app.DriveApplication;
 
 /**
  * Wrapper class for preferences
@@ -30,50 +31,44 @@ public class SharedPreferencesWrapper {
 
     private static final String PREF_ADDRESS = "device_address";
 
-    public static boolean saveStringPreference(
-            Context context, String tag, String prf) {
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+    public static boolean saveStringPreference(String tag, String prf) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext());
         Editor editor = shared.edit();
         editor.putString(tag, prf);
         return editor.commit();
     }
 
-    public static String loadStringPreference(
-            Context context, String tag, String def) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(tag, def);
+    public static String loadStringPreference(String tag, String def) {
+        return PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext()).getString(tag, def);
     }
 
-    public static boolean saveIntPreference(
-            Context context, String tag, int prf) {
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+    public static boolean saveIntPreference(String tag, int prf) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext());
         Editor editor = shared.edit();
         editor.putInt(tag, prf);
         return editor.commit();
     }
 
-    public static int loadIntPreference(Context context, String tag, int def) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getInt(tag, def);
+    public static int loadIntPreference(String tag, int def) {
+        return PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext()).getInt(tag, def);
     }
 
-    public static boolean saveBoolPreference(
-            Context context, String tag, boolean prf) {
-        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(context);
+    public static boolean saveBoolPreference(String tag, boolean prf) {
+        SharedPreferences shared = PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext());
         Editor editor = shared.edit();
         editor.putBoolean(tag, prf);
         return editor.commit();
     }
 
-    public static boolean loadBoolPreference(
-            Context context, String tag, boolean def) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getBoolean(tag, def);
+    public static boolean loadBoolPreference(String tag, boolean def) {
+        return PreferenceManager.getDefaultSharedPreferences(DriveApplication.getContext()).getBoolean(tag, def);
     }
 
-    public static boolean saveDefaultDeviceAddress(
-            Context context, String address) {
-        return saveStringPreference(context, PREF_ADDRESS, address);
+    public static boolean saveDefaultDeviceAddress(String address) {
+        return saveStringPreference(PREF_ADDRESS, address);
     }
 
-    public static String loadDefaultDeviceAddress(Context context) {
-        return PreferenceManager.getDefaultSharedPreferences(context).getString(PREF_ADDRESS, null);
+    public static String loadDefaultDeviceAddress() {
+        return loadStringPreference(PREF_ADDRESS, null);
     }
 }

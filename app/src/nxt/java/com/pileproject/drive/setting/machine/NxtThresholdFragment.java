@@ -16,7 +16,6 @@
 
 package com.pileproject.drive.setting.machine;
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -59,12 +58,9 @@ public class NxtThresholdFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        final Activity activity = getActivity();
-
         mLightSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(
-                    SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent, progress));
             }
 
@@ -74,21 +70,19 @@ public class NxtThresholdFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(activity,
-                                                           IfNxtIsOutOfLineBlock.class.getName(),
+                SharedPreferencesWrapper.saveIntPreference(IfNxtIsOutOfLineBlock.class.getName(),
                                                            seekBar.getProgress());
             }
         });
 
         final int savedLightValue =
-                SharedPreferencesWrapper.loadIntPreference(activity, IfNxtIsOutOfLineBlock.class.getName(), -1);
+                SharedPreferencesWrapper.loadIntPreference(IfNxtIsOutOfLineBlock.class.getName(), -1);
         mLightSensorSeek.setMax(LineSensor.PctMax);
         mLightSensorSeek.setProgress((savedLightValue == -1) ? LineSensor.DEFAULT : savedLightValue);
 
         mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
-            public void onProgressChanged(
-                    SeekBar seekBar, int progress, boolean fromUser) {
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mSoundSensorText.setText(getString(R.string.setting_threshold_unit_dB,
                                                    progress + SoundSensor.SI_dB_SiMin));
             }
@@ -99,14 +93,13 @@ public class NxtThresholdFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(activity,
-                                                           IfThereWasALargeSoundBlock.class.getName(),
+                SharedPreferencesWrapper.saveIntPreference(IfThereWasALargeSoundBlock.class.getName(),
                                                            seekBar.getProgress() + SoundSensor.SI_dB_SiMin);
             }
         });
 
         final int savedSoundValue =
-                SharedPreferencesWrapper.loadIntPreference(activity, IfThereWasALargeSoundBlock.class.getName(), -1);
+                SharedPreferencesWrapper.loadIntPreference(IfThereWasALargeSoundBlock.class.getName(), -1);
         mSoundSensorSeek.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
         mSoundSensorSeek.setProgress((savedSoundValue == -1) ?
                                              SoundSensor.SI_dB_DEFAULT - SoundSensor.SI_dB_SiMin :

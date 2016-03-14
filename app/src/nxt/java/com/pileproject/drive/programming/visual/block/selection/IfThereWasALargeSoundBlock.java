@@ -42,7 +42,7 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
         LayoutInflater.from(context).inflate(R.layout.block_if_there_was_a_large_sound, this);
 
         mThreshold =
-                SharedPreferencesWrapper.loadIntPreference(context, IfThereWasALargeSoundBlock.class.getName(), 70);
+                SharedPreferencesWrapper.loadIntPreference(IfThereWasALargeSoundBlock.class.getName(), 70);
     }
 
     @Override

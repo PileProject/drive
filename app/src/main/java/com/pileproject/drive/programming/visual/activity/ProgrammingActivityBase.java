@@ -75,9 +75,6 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programming);
 
-        // Set context to BlockFactory to create blocks
-        BlockFactory.setContext(getApplicationContext());
-
         findViews();
 
         mSpaceManager.load();
@@ -147,7 +144,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
                 }
             }
         });
-        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress(this);
+        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
         if (deviceAddress != null) {
             CharSequence title = getTitle();
             setTitle(title + ": " +
@@ -184,7 +181,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
 
     private void moveToAnotherActivity() {
         mSpaceManager.save();
-        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress(getApplicationContext());
+        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress();
         // TODO this check does not work when dissolves paring
         if (address == null) {
             AlertDialog alertDialog = new AlertDialog.Builder(ProgrammingActivityBase.this).setTitle(R.string.error)
@@ -267,7 +264,7 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
             mMenuHandle.close();
         } else if (item.equals(getString(R.string.programming_saveProgram))) {
             boolean isEnabledSupervisorMode =
-                    SharedPreferencesWrapper.loadBoolPreference(this, SupervisorModeFragment.class.getName(), false);
+                    SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
             if (isEnabledSupervisorMode) {
                 // supervisor
                 // save this program as a new sample one

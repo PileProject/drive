@@ -50,8 +50,8 @@ public class NxtPortConnectionFragment extends Fragment {
         preferences.put("motorPortC", NxtController.MotorProperty.MOTOR_RIGHT);
 
         for (Entry<String, Integer> entry : preferences.entrySet()) {
-            if (SharedPreferencesWrapper.loadIntPreference(context, entry.getKey(), -1) == -1) {
-                SharedPreferencesWrapper.saveIntPreference(context, entry.getKey(), entry.getValue());
+            if (SharedPreferencesWrapper.loadIntPreference(entry.getKey(), -1) == -1) {
+                SharedPreferencesWrapper.saveIntPreference(entry.getKey(), entry.getValue());
             }
         }
     }
@@ -92,8 +92,7 @@ public class NxtPortConnectionFragment extends Fragment {
         LinkedList<Integer> sensorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.SensorProperty.NUMBER_OF_SENSOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(sensorPortIds[i]);
-            int sensorType = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                        portTextView.getPortName(),
+            int sensorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
                                                                         NxtController.SensorProperty.SENSOR_UNUSED);
 
             if (sensorType != NxtController.SensorProperty.SENSOR_UNUSED) {
@@ -125,8 +124,7 @@ public class NxtPortConnectionFragment extends Fragment {
         LinkedList<Integer> motorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.MotorProperty.NUMBER_OF_MOTOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(motorPortIds[i]);
-            int motorType = SharedPreferencesWrapper.loadIntPreference(context,
-                                                                       portTextView.getPortName(),
+            int motorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
                                                                        NxtController.MotorProperty.MOTOR_UNUSED);
 
             if (motorType != NxtController.MotorProperty.MOTOR_UNUSED) {

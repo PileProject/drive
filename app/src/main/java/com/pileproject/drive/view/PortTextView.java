@@ -80,12 +80,11 @@ public abstract class PortTextView extends TextView {
                 mSoundEffectOfMovingBlock.start(); // play sound
 
                 if (mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mContext, mPortName, mAttachmentType);
+                    SharedPreferencesWrapper.saveIntPreference(mPortName, mAttachmentType);
                 }
 
                 if (localState.mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mContext,
-                                                               localState.mPortName,
+                    SharedPreferencesWrapper.saveIntPreference(localState.mPortName,
                                                                localState.mAttachmentType);
                 }
             }
