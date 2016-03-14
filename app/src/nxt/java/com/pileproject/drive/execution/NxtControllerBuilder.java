@@ -59,7 +59,7 @@ public class NxtControllerBuilder {
         for (int i = 0; i < sensorPortPrefTags.length; ++i) {
             int key =
                     SharedPreferencesWrapper
-                            .loadIntPreference(context, sensorPortPrefTags[i], notAssigned);
+                            .loadIntPreference(sensorPortPrefTags[i], notAssigned);
             mSensorPorts.put(key, sensorPorts[i]);
         }
     }
@@ -79,7 +79,7 @@ public class NxtControllerBuilder {
         for (int i = 0; i < motorPortPrefTags.length; ++i) {
             int key =
                     SharedPreferencesWrapper
-                            .loadIntPreference(context, motorPortPrefTags[i], notAssigned);
+                            .loadIntPreference(motorPortPrefTags[i], notAssigned);
             mMotorPorts.put(key, motorPorts[i]);
         }
     }

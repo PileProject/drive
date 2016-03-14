@@ -45,7 +45,7 @@ public class SupervisorModeFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
         boolean isEnabledSupervisorMode =
-                SharedPreferencesWrapper.loadBoolPreference(activity, SupervisorModeFragment.class.getName(), false);
+                SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
 
         mEnableDebugModeCheckBox.setChecked(isEnabledSupervisorMode);
         mEnableDebugModeCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +54,7 @@ public class SupervisorModeFragment extends Fragment {
                 CheckBox checkBox = (CheckBox) v;
                 boolean isChecked = checkBox.isChecked();
 
-                SharedPreferencesWrapper.saveBoolPreference(getActivity(),
-                                                            SupervisorModeFragment.class.getName(),
+                SharedPreferencesWrapper.saveBoolPreference(SupervisorModeFragment.class.getName(),
                                                             isChecked);
             }
         });

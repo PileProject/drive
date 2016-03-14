@@ -41,7 +41,7 @@ public class IfNxtIsOutOfLineBlock extends SelectionBlock {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.block_if_nxt_is_out_of_line, this);
 
-        mThreshold = SharedPreferencesWrapper.loadIntPreference(context, IfNxtIsOutOfLineBlock.class.getName(), 50);
+        mThreshold = SharedPreferencesWrapper.loadIntPreference(IfNxtIsOutOfLineBlock.class.getName(), 50);
     }
 
     @Override

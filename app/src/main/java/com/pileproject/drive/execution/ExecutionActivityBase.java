@@ -32,7 +32,6 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
 
@@ -139,7 +138,6 @@ public abstract class ExecutionActivityBase extends Activity {
 
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        BlockFactory.setContext(getApplicationContext()); // Set context
         mSpaceManager.load();
 
         mStopAndRestartButton.setOnClickListener(new OnClickListener() {
