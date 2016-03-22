@@ -21,7 +21,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.database.ProgramDataManager;
 
 /**
  * Title Screen
@@ -31,15 +30,9 @@ import com.pileproject.drive.database.ProgramDataManager;
  * @version 1.0 4-June-2013
  */
 public abstract class TitleActivityBase extends AppCompatActivity {
-
-    private ProgramDataManager mManager;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        // Create new DB Manager
-        mManager = new ProgramDataManager(getApplicationContext());
-        mManager.deleteAll(); // Initialize program data
     }
 
     protected void setupToolbar() {
@@ -50,5 +43,4 @@ public abstract class TitleActivityBase extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
     }
-
 }

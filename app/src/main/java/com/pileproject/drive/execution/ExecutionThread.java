@@ -60,7 +60,7 @@ public class ExecutionThread extends Thread {
     public ExecutionThread(
             Context context, Handler uiHandler, MachineController controller) {
         super();
-        mManager = new ProgramDataManager(context);
+        mManager = ProgramDataManager.getInstance();
         mCondition = new ExecutionCondition();
         mController = controller;
         mUiHandler = uiHandler;
@@ -85,7 +85,7 @@ public class ExecutionThread extends Thread {
             }
         }
 
-        mCondition.blocks = mManager.loadAll();
+        mCondition.blocks = mManager.loadExecutionProgram();
         boolean isStopped = false;
         try {
             for (mCondition.programCount = 0;
@@ -191,7 +191,7 @@ public class ExecutionThread extends Thread {
             BlockBase nearestSelectionBlock
                 = blocks.get(map.get(ExecutionActivityBase.BLOCK_INDEX));
 
-            int max = nearestSelectionBlock.right;
+            int max = nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth();
 
             // Check the depth of nests
             int count = 1;
@@ -208,8 +208,8 @@ public class ExecutionThread extends Thread {
                     // if count is not 0, this end block is the end of inner
                     // selection. Therefore, this block's right position may
                     // be the rightmost position.
-                    if (count != 0 && max < b.right) {
-                        max = b.right;
+                    if (count != 0 && max < b.getLeft() + b.getMeasuredWidth()) {
+                        max = b.getLeft() + b.getMeasuredWidth();
                         break;
                     }
                 }
@@ -220,7 +220,7 @@ public class ExecutionThread extends Thread {
             }
 
             // If this block is right of max, return true
-            if (max >= block.left + MARGIN) {
+            if (max >= block.getLeft() + MARGIN) {
                 return true;
             }
         }
@@ -238,17 +238,20 @@ public class ExecutionThread extends Thread {
                 BlockBase secondNearestSelectionBlock = blocks.get(secondIndex);
                 mCondition.ifStack.push(map); // Push the popped element
 
-                // Execute only if this block is under the nearest selection
+                // execute only if this block is under the nearest selection
                 // block and the right side of the second nearest selection
-                // block.
-                if (secondNearestSelectionBlock.right >= block.left + MARGIN ||
-                        nearestSelectionBlock.right < block.left + MARGIN) {
+                // block
+                if ((secondNearestSelectionBlock.getLeft() + secondNearestSelectionBlock.getMeasuredWidth() >=
+                        block.getLeft() + MARGIN) ||
+                        (nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth() <
+                                block.getLeft() + MARGIN)) {
                     return true;
                 }
             }
             // Not nest
             else {
-                if (nearestSelectionBlock.right < block.left + MARGIN) {
+                if (nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth() <
+                        block.getLeft() + MARGIN) {
                     return true;
                 }
             }

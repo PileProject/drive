@@ -62,7 +62,7 @@ public class BlockPositionComparator implements Comparator<BlockBase> {
             return -1 * mSort; // a < b
         }
 
-        int result = (a.top * 10000 + a.left) - (b.top * 10000 + b.left);
+        int result = (a.getTop() * 10000 + a.getLeft()) - (b.getTop() * 10000 + b.getLeft());
 
         return result * mSort;
     }

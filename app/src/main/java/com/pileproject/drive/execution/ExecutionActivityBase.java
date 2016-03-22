@@ -144,7 +144,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
 
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        mSpaceManager.load();
+        mSpaceManager.loadExecutionProgram();
 
         mStopAndRestartButton.setOnClickListener(new OnClickListener() {
             @Override

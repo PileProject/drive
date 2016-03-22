@@ -34,73 +34,84 @@ public abstract class BlockSpaceManager {
     protected BlockSpaceLayout mLayout = null;
     protected Context mContext;
     private ProgramDataManager mManager;
+    private static final String USER_PROGRAM_NAME_FORMAT = "%d";
 
     public BlockSpaceManager(Context context, BlockSpaceLayout layout) {
         mContext = context;
         mLayout = layout;
-
-        mManager = new ProgramDataManager(context);
+        mManager = ProgramDataManager.getInstance();
     }
 
-    public void save() {
-        mManager.saveAllBlocks(mLayout);
+    public void saveExecutionProgram() {
+        mManager.saveExecutionProgram(mLayout);
     }
 
-    public void saveWithName(String programName) {
-        saveWithName(programName, false);
+    public void saveSampleProgram(String programName) {
+        mManager.saveSampleProgram(programName, mLayout);
     }
 
-    public void saveWithName(String programName, boolean isSample) {
-        mManager.saveWithName(programName, mLayout, isSample);
+    public String saveUserProgram() {
+        // generate a new program name automatically for a user program
+        String newProgramName;
+
+        // load user program names
+        ArrayList<String> programs = mManager.loadUserProgramNames();
+        if (programs.isEmpty()) {
+            newProgramName = String.format(USER_PROGRAM_NAME_FORMAT, 1); // this is the first data
+        }
+        else {
+            // generate a new program name
+            String lastName = programs.get(programs.size() - 1);
+            int programNumber = Integer.parseInt(lastName); // e.g. 2
+            newProgramName = String.format(USER_PROGRAM_NAME_FORMAT, programNumber + 1);
+        }
+
+        // save a new program with the name
+        mManager.saveUserProgram(newProgramName, mLayout);
+        return newProgramName;
     }
 
-    public String saveAsNew() {
-        String newName = mManager.createNewProgramName();
-        mManager.saveWithName(newName, mLayout);
-        return newName;
+    public void loadExecutionProgram() {
+        placeBlocks(mManager.loadExecutionProgram());
     }
 
-    public void load() {
-        ArrayList<BlockBase> data = mManager.loadAll();
-        placeBlocks(data);
+    public void loadSampleProgram(String programName) {
+        placeBlocks(mManager.loadSampleProgram(programName));
     }
 
-    public void loadByName(String programName) {
-        loadByName(programName, false);
+    public void loadUserProgram(String programName) {
+        placeBlocks(mManager.loadUserProgram(programName));
     }
 
-    public void loadByName(String programName, boolean isSample) {
-        ArrayList<BlockBase> data = mManager.loadByName(programName, isSample);
-        placeBlocks(data);
+    public ArrayList<String> loadSampleProgramNames() {
+        return mManager.loadSampleProgramNames();
     }
 
-    public String[] loadSavedProgramNames() {
-        return mManager.loadSavedProgramNames();
-    }
-
-    public String[] loadSavedSampleProgramNames() {
-        return mManager.loadSavedProgramNames(true);
+    public ArrayList<String> loadUserProgramNames() {
+        return mManager.loadUserProgramNames();
     }
 
     public abstract void addBlocks(ArrayList<BlockBase> blocks);
 
     private void placeBlocks(ArrayList<BlockBase> data) {
-        if (!data.isEmpty()) {
-            addBlocks(data);
+        if (data.isEmpty()) {
+            return;
         }
+
+        addBlocks(data);
 
         // Move all Views to old positions
         for (int i = 0; i < mLayout.getChildCount(); i++) {
             View view = mLayout.getChildAt(i);
             if (view instanceof BlockBase) {
                 BlockBase b = (BlockBase) view;
-                b.layout(b.left, b.top, b.right, b.bottom);
+                b.layout(b.getLeft(), b.getTop(), b.getLeft() + b.getMeasuredWidth(), b.getTop() + b.getMeasuredHeight());
             }
         }
     }
 
     public void deleteAllBlocks() {
         mLayout.removeAllViews();
-        mManager.deleteAll();
+        mManager.deleteExecutionProgram();
     }
 }

@@ -45,6 +45,8 @@ public class ProgramListFragment extends Fragment {
     private Button mDeleteButton;
 
     // 0 : Sample Programs, 1 : User Programs
+    private static final int SAMPLE_PROGRAM = 0;
+    private static final int USER_PROGRAM = 1;
     private static final int NUM_PROGRAM_KINDS = 2;
     private Button[] mProgramsCheckAllButton = new Button[NUM_PROGRAM_KINDS];
     private ListView[] mProgramListView = new ListView[NUM_PROGRAM_KINDS];
@@ -52,13 +54,12 @@ public class ProgramListFragment extends Fragment {
     private ArrayList<Map<String, Boolean>> mCheckedPrograms = new ArrayList<>();
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_programlist, container, false);
 
         // create ProgramDataManager to list programs
-        mManager = new ProgramDataManager(getActivity());
+        mManager = ProgramDataManager.getInstance();
 
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
@@ -123,8 +124,8 @@ public class ProgramListFragment extends Fragment {
             mCheckedPrograms.get(dataId).clear();
 
             // items are categorized into 2 parts; samples and user programs.
-            String[] programNames = mManager.loadSavedProgramNames(dataId == 0);
-
+            ArrayList<String> programNames =
+                    (dataId == SAMPLE_PROGRAM) ? mManager.loadSampleProgramNames() : mManager.loadUserProgramNames();
             // create an adapter for ListView
             List<ProgramData> data = new ArrayList<>();
             for (String programName : programNames) {
@@ -168,7 +169,6 @@ public class ProgramListFragment extends Fragment {
                 if (sb.length() > 0) {
                     sb.append(separator);
                 }
-
                 sb.append(e.getKey());
             }
         }
@@ -176,13 +176,19 @@ public class ProgramListFragment extends Fragment {
     }
 
     private void deletePrograms() {
-        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; ++dataId) {
             for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
                 if (e.getValue()) {
-                    mManager.deleteProgramByName(e.getKey(), true);
+                    if (dataId == SAMPLE_PROGRAM) { // sample programs
+                        mManager.deleteSampleProgram(e.getKey());
+                    }
+                    else { // user programs
+                        mManager.deleteUserProgram(e.getKey());
+                    }
                 }
             }
         }
+
         initializeProgramDataAdapter(); // reinitialize data
         for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             mProgramListView[dataId].setAdapter(mProgramDataAdapter[dataId]);
