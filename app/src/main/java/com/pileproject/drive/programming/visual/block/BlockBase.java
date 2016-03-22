@@ -29,11 +29,6 @@ import com.pileproject.drive.execution.MachineController;
  * @version 1.0 18-June-2013
  */
 public abstract class BlockBase extends RelativeLayout {
-    public int left;
-    public int top;
-    public int right;
-    public int bottom;
-
     public BlockBase(Context context) {
         super(context);
     }

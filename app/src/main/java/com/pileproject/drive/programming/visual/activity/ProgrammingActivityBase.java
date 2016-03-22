@@ -74,7 +74,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
         findViews();
 
-        mSpaceManager.load();
+        mSpaceManager.loadExecutionProgram();
 
         // Set OnClickListeners to buttons that add blocks
         for (int i = 0; i < NKINDS; i++) {
@@ -99,7 +99,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-
         mActionBarDrawerToggle.syncState();
     }
 
@@ -123,20 +122,18 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     }
 
     private void moveToAnotherActivity() {
-        mSpaceManager.save();
+        mSpaceManager.saveExecutionProgram();
         String address = SharedPreferencesWrapper.loadDefaultDeviceAddress();
         // TODO this check does not work when dissolves paring
         if (address == null) {
             AlertDialog alertDialog = new AlertDialog.Builder(ProgrammingActivityBase.this).setTitle(R.string.error)
                     .setMessage(R.string.deviceselect_didNotSelectDevice)
                     .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(
-                                                   DialogInterface dialog, int which) {
-                                               Intent intent = getIntentToDeviceList();
-                                               startActivity(intent);
-                                           }
-                                       })
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(getIntentToDeviceList());
+                        }
+                    })
                     .create();
             alertDialog.setCanceledOnTouchOutside(false);
             alertDialog.show();
@@ -149,7 +146,11 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
     public void onFinishSelectDialog(String selectedText, boolean isSample) {
         mSpaceManager.deleteAllBlocks(); // delete existing blocks
-        mSpaceManager.loadByName(selectedText, isSample); // load programs
+        if (isSample) { // load a sample program
+            mSpaceManager.loadSampleProgram(selectedText);
+        } else { // load a user program
+            mSpaceManager.loadUserProgram(selectedText);
+        }
     }
 
     @Override
@@ -183,16 +184,18 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
         }
 
         String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
-        deviceAddress = (deviceAddress == null) ?
-                getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
+        deviceAddress =
+                (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
         toolbar.setTitle(getTitle() + ": " + deviceAddress);
 
         setSupportActionBar(toolbar);
 
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
-        );
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(this,
+                                                           drawer,
+                                                           toolbar,
+                                                           R.string.navigation_drawer_open,
+                                                           R.string.navigation_drawer_close);
 
         drawer.addDrawerListener(mActionBarDrawerToggle);
 
@@ -202,29 +205,36 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
                 int id = item.getItemId();
 
                 switch (id) {
-                    case R.id.programming_menu_deleteAllBlocks:
+                    case R.id.programming_menu_deleteAllBlocks: {
                         onDeleteAllBlocks();
                         break;
+                    }
 
-                    case R.id.programming_menu_goBackToTitle:
-                        mSpaceManager.save();
+                    case R.id.programming_menu_goBackToTitle: {
+                        mSpaceManager.saveExecutionProgram();
                         break;
+                    }
 
-                    case R.id.programming_menu_loadSampleProgram:
-                        CharSequence[] samplePrograms = mSpaceManager.loadSavedSampleProgramNames();
-                        ProgramListFragment sampleLoadFragment = ProgramListFragment.newInstance(samplePrograms, true);
+                    case R.id.programming_menu_loadSampleProgram: {
+                        ArrayList<String> array = mSpaceManager.loadSampleProgramNames();
+                        CharSequence[] programs = array.toArray(new String[array.size()]);
+                        ProgramListFragment sampleLoadFragment = ProgramListFragment.newInstance(programs, true);
                         sampleLoadFragment.show(getFragmentManager(), "sample_program_list");
                         break;
+                    }
 
-                    case R.id.programming_menu_saveProgram:
+                    case R.id.programming_menu_saveProgram: {
                         onSaveProgram();
                         break;
+                    }
 
-                    case R.id.programming_menu_loadProgram:
-                        CharSequence[] loadPrograms = mSpaceManager.loadSavedProgramNames();
-                        ProgramListFragment loadFragment = ProgramListFragment.newInstance(loadPrograms, false);
+                    case R.id.programming_menu_loadProgram: {
+                        ArrayList<String> array = mSpaceManager.loadUserProgramNames();
+                        CharSequence[] programs = array.toArray(new String[array.size()]);
+                        ProgramListFragment loadFragment = ProgramListFragment.newInstance(programs, false);
                         loadFragment.show(getFragmentManager(), "program_list");
                         break;
+                    }
 
                     default:
                         return false;
@@ -241,20 +251,18 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
         // Create an AlertDialog show confirmation
         new AlertDialog.Builder(this).setTitle(R.string.programming_deleteAllBlocks)
                 .setMessage(R.string.confirmation)
-                .setPositiveButton(R.string.ok,
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                mSpaceManager.deleteAllBlocks();
-                                mButtonsManager.checkButtonsWorkability();
-                            }
-                        })
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                       @Override
+                                       public void onClick(DialogInterface dialog, int which) {
+                                           mSpaceManager.deleteAllBlocks();
+                                           mButtonsManager.checkButtonsWorkability();
+                                       }
+                                   })
                 .setNegativeButton(R.string.cancel, null)
                 .show();
     }
 
     private void onSaveProgram() {
-
         boolean isEnabledSupervisorMode =
                 SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
 
@@ -266,7 +274,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     String programName = fragment.getInputtedProgramName();
-                    mSpaceManager.saveWithName(programName, true);
+                    mSpaceManager.saveSampleProgram(programName);
                     SaveProgramDialogFragment.newInstance(programName).show(getFragmentManager(), "save_program");
                 }
             });
@@ -274,7 +282,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
         } else {
             // not supervisor
             // save this program as a new one
-            String programName = mSpaceManager.saveAsNew();
+            String programName = mSpaceManager.saveUserProgram();
             SaveProgramDialogFragment.newInstance(programName).show(getFragmentManager(), "save_program");
         }
     }
@@ -300,11 +308,13 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
         @Override
         public void onCreate(Bundle savedInstanceState) {
-            mProgramName = savedInstanceState.getString(KEY_PROGRAM_NAME);
+            super.onCreate(savedInstanceState);
+            mProgramName = getArguments().getString(KEY_PROGRAM_NAME);
         }
 
         @Override
         public Dialog onCreateDialog(Bundle savedInstanceState) {
+            super.onCreateDialog(savedInstanceState);
             AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
             builder.setTitle(R.string.programming_saveProgram)
                     .setMessage(getString(R.string.programming_savedAs, mProgramName))
@@ -332,13 +342,11 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
             return builder.create();
         }
 
-        public void setOnOkClickListener(
-                DialogInterface.OnClickListener listener) {
+        public void setOnOkClickListener(DialogInterface.OnClickListener listener) {
             this.mOkClickListener = listener;
         }
 
-        public void setOnCancelClickListener(
-                DialogInterface.OnClickListener listener) {
+        public void setOnCancelClickListener(DialogInterface.OnClickListener listener) {
             this.mCancelClickListener = listener;
         }
 

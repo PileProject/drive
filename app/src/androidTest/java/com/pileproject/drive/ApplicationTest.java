@@ -29,6 +29,5 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
     public void setUp() {
-        Context c = new DelegatedMockContext(getContext());
     }
 }
