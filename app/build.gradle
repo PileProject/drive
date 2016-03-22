@@ -53,6 +53,10 @@ android {
         //     applicationId = "com.pileproject.drive.pile"
         // }
     }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 repositories {
