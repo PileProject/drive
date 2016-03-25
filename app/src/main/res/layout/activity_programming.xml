@@ -14,148 +14,54 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<RelativeLayout
-    android:id="@+id/programming.screen"
+<android.support.v4.widget.DrawerLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:gravity="top"
-    android:orientation="vertical">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:openDrawer="start">
 
-    <!-- blockbuttons -->
-
-    <LinearLayout
-        android:id="@+id/programming.addBlockButtonsLayout"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:fitsSystemWindows="true"
+        tools:context="com.pileproject.drive.programming.visual.activity.ProgrammingActivityBase">
 
-        <Button
-            android:id="@+id/programming.sequenceButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/holo_blue_light"
-            android:text="@string/programming.sequence"
-            android:textColor="@android:color/white"/>
-
-        <!-- android:background="@drawable/bar_sequence" -->
-
-        <Button
-            android:id="@+id/programming.repetitionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/holo_orange_light"
-            android:text="@string/programming.repetition"
-            android:textColor="@android:color/white"/>
-
-        <!-- android:background="@drawable/bar_repetition" -->
-
-        <Button
-            android:id="@+id/programming.selectionButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="2dp"
-            android:layout_weight="1"
-            android:background="@color/holo_green_light"
-            android:text="@string/programming.selection"
-            android:textColor="@android:color/white"/>
-
-        <!-- android:background="@drawable/bar_selection" -->
-    </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/programming.spaceLayout"
-        android:layout_width="match_parent"
-        android:layout_height="fill_parent"
-        android:layout_above="@+id/programming.redoAndUndoButtonsLayout"
-        android:layout_below="@id/programming.addBlockButtonsLayout"
-        android:orientation="horizontal">
-
-        <com.pileproject.drive.programming.visual.layout.BlockSpaceLayout
-            android:id="@+id/programming.placingBlockSpaceLayout"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
-
-        <!-- android:layout_toRightOf="@+id/programming_space_layout" -->
-
-        <SlidingDrawer
-            android:id="@+id/programming.menuDrawer"
-            android:layout_width="240dp"
             android:layout_height="match_parent"
-            android:layout_gravity="end"
-            android:background="#00000000"
-            android:content="@+id/programming.menuDrawerContent"
-            android:handle="@+id/programming.menuDrawerHandle"
-            android:orientation="horizontal">
+            android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@id/programming.menuDrawerHandle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/to_left"
-                android:orientation="horizontal"
-                android:padding="10dip"/>
-
-            <LinearLayout
-                android:id="@+id/programming.menuDrawerContent"
+            <android.support.design.widget.AppBarLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="#00000000"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+                android:layout_height="wrap_content">
 
-                <ListView
-                    android:id="@+id/programming.menuList"
+                <android.support.v7.widget.Toolbar
+                    android:id="@+id/programming.toolbar"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="#AAAAAAAA"
-                    android:cacheColorHint="@android:color/background_dark"/>
+                    android:layout_height="?attr/actionBarSize"
+                    android:background="?attr/colorPrimary" />
 
-            </LinearLayout>
-        </SlidingDrawer>
-    </FrameLayout>
+            </android.support.design.widget.AppBarLayout>
 
-    <!-- Redo, Undo buttons -->
+        <include layout="@layout/content_programming" />
 
-    <LinearLayout
-        android:id="@+id/programming.redoAndUndoButtonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/programming.execButtonLayout">
+        </LinearLayout>
 
-        <Button
-            android:id="@+id/programming.undoButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/programming.undo"/>
+    </android.support.design.widget.CoordinatorLayout>
 
-        <Button
-            android:id="@+id/programming.redoButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/programming.redo"/>
-    </LinearLayout>
+    <android.support.design.widget.NavigationView
+          android:id="@+id/programming.navigationView"
+          android:layout_width="wrap_content"
+          android:layout_height="match_parent"
+          android:layout_gravity="start"
+          android:fitsSystemWindows="true"
+          app:menu="@menu/menu_programming" />
 
-    <!-- button to execution display -->
-
-    <LinearLayout
-        android:id="@+id/programming.execButtonLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
-
-        <Button
-            android:id="@+id/programming.execButton"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/programming.execute"/>
-    </LinearLayout>
-
-</RelativeLayout>
+</android.support.v4.widget.DrawerLayout>

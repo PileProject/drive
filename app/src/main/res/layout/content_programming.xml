@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/programming.screen"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="top"
+    android:orientation="vertical">
+
+    <!-- block buttons -->
+
+    <LinearLayout
+        android:id="@+id/programming.addBlockButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/programming.sequenceButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@color/holo_blue_light"
+            android:text="@string/programming.sequence"
+            android:textColor="@android:color/white" />
+
+        <!-- android:background="@drawable/bar_sequence" -->
+
+        <Button
+            android:id="@+id/programming.repetitionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@color/holo_orange_light"
+            android:text="@string/programming.repetition"
+            android:textColor="@android:color/white" />
+
+        <!-- android:background="@drawable/bar_repetition" -->
+
+        <Button
+            android:id="@+id/programming.selectionButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="2dp"
+            android:layout_weight="1"
+            android:background="@color/holo_green_light"
+            android:text="@string/programming.selection"
+            android:textColor="@android:color/white" />
+
+        <!-- android:background="@drawable/bar_selection" -->
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/programming.spaceLayout"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_above="@+id/programming.redoAndUndoButtonsLayout"
+        android:layout_below="@id/programming.addBlockButtonsLayout"
+        android:orientation="horizontal">
+
+        <com.pileproject.drive.programming.visual.layout.BlockSpaceLayout
+            android:id="@+id/programming.placingBlockSpaceLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <!-- android:layout_toRightOf="@+id/programming_space_layout" -->
+
+    </FrameLayout>
+
+    <!-- Redo, Undo buttons -->
+
+    <LinearLayout
+        android:id="@+id/programming.redoAndUndoButtonsLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/programming.execButtonLayout">
+
+        <Button
+            android:id="@+id/programming.undoButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/programming.undo" />
+
+        <Button
+            android:id="@+id/programming.redoButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/programming.redo" />
+    </LinearLayout>
+
+    <!-- button to execution display -->
+
+    <LinearLayout
+        android:id="@+id/programming.execButtonLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/programming.execButton"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/programming.execute" />
+    </LinearLayout>
+
+</RelativeLayout>

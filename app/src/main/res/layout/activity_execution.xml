@@ -14,39 +14,17 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/execute.controlButtonsLayout"
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/execution.toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary" />
 
-        <Button
-            android:id="@+id/execute.stopAndRestartButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/execute.stop"/>
+    <include layout="@layout/content_execution" />
 
-        <Button
-            android:id="@+id/execute.finishButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/execute.finish"/>
-    </LinearLayout>
-
-    <com.pileproject.drive.programming.visual.layout.BlockSpaceLayout
-        android:id="@+id/execute.showingProgressLayout"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_above="@+id/execute.controlButtonsLayout"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true" />
-
-</RelativeLayout>
+</LinearLayout>

@@ -25,6 +25,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -41,7 +43,7 @@ import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public abstract class ExecutionActivityBase extends Activity {
+public abstract class ExecutionActivityBase extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int FAILED_TO_CONNECT = 1;
     public static final String IS_CONNECTED = "is_connected";
@@ -135,6 +137,10 @@ public abstract class ExecutionActivityBase extends Activity {
         setContentView(R.layout.activity_execution);
 
         findViews();
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.execution_toolbar);
+        toolbar.setLogo(R.drawable.icon_launcher);
+        setSupportActionBar(toolbar);
 
         mBtAdapter = BluetoothAdapter.getDefaultAdapter();
 

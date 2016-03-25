@@ -49,5 +49,7 @@ public class NxtTitleActivity extends TitleActivityBase {
         });
 
         NxtPortConnectionFragment.setDefaultValueOnPreferences(getApplicationContext());
+
+        setupToolbar();
     }
 }

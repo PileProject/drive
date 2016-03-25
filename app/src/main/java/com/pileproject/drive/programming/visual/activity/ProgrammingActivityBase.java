@@ -16,27 +16,24 @@
 
 package com.pileproject.drive.programming.visual.activity;
 
-import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.SlidingDrawer;
-import android.widget.SlidingDrawer.OnDrawerCloseListener;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.block.BlockBase;
@@ -55,9 +52,7 @@ import java.util.List;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 18-June-2013
  */
-@SuppressWarnings("deprecation")
-public abstract class ProgrammingActivityBase extends Activity implements OnItemClickListener {
-
+public abstract class ProgrammingActivityBase extends AppCompatActivity {
     private final int NKINDS = 3;
     private final int ADD_BLOCK = 1;
     private final int EXECUTE_PROGRAM = 2;
@@ -65,15 +60,17 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
     private List<Button> mAddBlockButtons;
     private Button mExecButton;
     private UndoAndRedoButtonsManager mButtonsManager;
-    private ListView mMenuList;
-    private SlidingDrawer mMenuHandle;
     private ProgrammingSpaceManager mSpaceManager;
     private boolean mIsConnected = false;
+
+    private ActionBarDrawerToggle mActionBarDrawerToggle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programming);
+
+        setupNavigationView();
 
         findViews();
 
@@ -98,63 +95,12 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
                 moveToAnotherActivity();
             }
         });
+    }
 
-        // Set ArrayAdapter to ListView
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
-        adapter.add(getString(R.string.programming_deleteAllBlocks));
-        adapter.add(getString(R.string.programming_goBackToTitle));
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
 
-        adapter.add(getString(R.string.programming_loadSampleProgram));
-        adapter.add(getString(R.string.programming_saveProgram));
-        adapter.add(getString(R.string.programming_loadProgram));
-
-        mMenuList.setAdapter(adapter);
-        mMenuList.setOnItemClickListener(this);
-
-        // set listeners for changing handler's image
-        mMenuHandle.setOnDrawerCloseListener(new OnDrawerCloseListener() {
-            @SuppressLint("NewApi")
-            @Override
-            public void onDrawerClosed() {
-                LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
-                int sdk = android.os.Build.VERSION.SDK_INT;
-
-                // check the sdk if older than Jelly bean
-                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_left));
-                } else {
-                    // this code won't work in older version than Jelly bean
-                    ll.setBackground(getResources().getDrawable(R.drawable.to_left));
-                }
-            }
-        });
-        mMenuHandle.setOnDrawerOpenListener(new SlidingDrawer.OnDrawerOpenListener() {
-            @TargetApi(Build.VERSION_CODES.JELLY_BEAN)
-            @Override
-            public void onDrawerOpened() {
-                LinearLayout ll = (LinearLayout) findViewById(R.id.programming_menuDrawerHandle);
-                int sdk = android.os.Build.VERSION.SDK_INT;
-
-                // check the sdk if older than Jelly bean
-                if (sdk < android.os.Build.VERSION_CODES.JELLY_BEAN) {
-                    ll.setBackgroundDrawable(getResources().getDrawable(R.drawable.to_right));
-                } else {
-                    // this code won't work in older version than Jelly bean
-                    ll.setBackground(getResources().getDrawable(R.drawable.to_right));
-                }
-            }
-        });
-        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
-        if (deviceAddress != null) {
-            CharSequence title = getTitle();
-            setTitle(title + ": " +
-                             getResources().getString(R.string.programming_targetDevice) +
-                             deviceAddress);
-        } else {
-            CharSequence title = getTitle();
-            setTitle(title + ": " +
-                             getResources().getString(R.string.programming_noTargetDevice));
-        }
+        mActionBarDrawerToggle.syncState();
     }
 
     protected abstract Intent getIntentToBlockList();
@@ -174,9 +120,6 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
         mAddBlockButtons.add((Button) findViewById(R.id.programming_repetitionButton));
         mAddBlockButtons.add((Button) findViewById(R.id.programming_selectionButton));
         mExecButton = (Button) findViewById(R.id.programming_execButton);
-
-        mMenuList = (ListView) findViewById(R.id.programming_menuList);
-        mMenuHandle = (SlidingDrawer) findViewById(R.id.programming_menuDrawer);
     }
 
     private void moveToAnotherActivity() {
@@ -230,79 +173,134 @@ public abstract class ProgrammingActivityBase extends Activity implements OnItem
         }
     }
 
-    @Override
-    public void onItemClick(
-            AdapterView<?> parent, View view, int position, long id) {
-        ListView list = (ListView) parent;
-        String item = (String) list.getItemAtPosition(position);
+    private void setupNavigationView() {
+        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        final NavigationView navView = (NavigationView) findViewById(R.id.programming_navigationView);
+        final Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
 
-        // Initializing layout
-        if (item.equals(getString(R.string.programming_deleteAllBlocks))) {
-            // Create an AlertDialog show confirmation
-            new AlertDialog.Builder(this).setTitle(R.string.programming_deleteAllBlocks)
-                    .setMessage(R.string.confirmation)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(
-                                                   DialogInterface dialog, int which) {
-                                               mSpaceManager.deleteAllBlocks();
-                                               mButtonsManager.checkButtonsWorkability();
-                                               mMenuHandle.close();
-                                           }
-                                       })
-                    .setNegativeButton(R.string.cancel, null)
-                    .show();
+        if (drawer == null || navView == null || toolbar == null) {
+            return;
         }
-        // Going back to NxtTitleActivity
-        else if (item.equals(getString(R.string.programming_goBackToTitle))) {
-            mSpaceManager.save();
-            finish();
-        } else if (item.equals(getString(R.string.programming_loadSampleProgram))) {
-            CharSequence[] programs = mSpaceManager.loadSavedSampleProgramNames();
-            DialogFragment programListFragment = new ProgramListFragment(programs, true);
-            programListFragment.show(getFragmentManager(), "sample_program_list");
-            mMenuHandle.close();
-        } else if (item.equals(getString(R.string.programming_saveProgram))) {
-            boolean isEnabledSupervisorMode =
-                    SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
-            if (isEnabledSupervisorMode) {
-                // supervisor
-                // save this program as a new sample one
-                final InputSampleProgramNameDialogFragment fragment = new InputSampleProgramNameDialogFragment();
-                fragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String programName = fragment.getInputtedProgramName();
-                        mSpaceManager.saveWithName(programName, true);
-                        showSavedProgramNameDialog(programName);
-                    }
-                });
-                fragment.show(getFragmentManager(), "input_program_name");
-                mMenuHandle.close();
-            } else {
-                // not supervisor
-                // save this program as a new one
-                String programName = mSpaceManager.saveAsNew();
-                showSavedProgramNameDialog(programName);
-                mMenuHandle.close();
+
+        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        deviceAddress = (deviceAddress == null) ?
+                getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
+
+        toolbar.setTitle(getTitle() + ": " + deviceAddress);
+
+        setSupportActionBar(toolbar);
+
+        mActionBarDrawerToggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close
+        );
+
+        drawer.addDrawerListener(mActionBarDrawerToggle);
+
+        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(MenuItem item) {
+                int id = item.getItemId();
+
+                switch (id) {
+                    case R.id.programming_menu_deleteAllBlocks:
+                        onDeleteAllBlocks();
+                        break;
+
+                    case R.id.programming_menu_goBackToTitle:
+                        mSpaceManager.save();
+                        break;
+
+                    case R.id.programming_menu_loadSampleProgram:
+                        CharSequence[] samplePrograms = mSpaceManager.loadSavedSampleProgramNames();
+                        ProgramListFragment sampleLoadFragment = ProgramListFragment.newInstance(samplePrograms, true);
+                        sampleLoadFragment.show(getFragmentManager(), "sample_program_list");
+                        break;
+
+                    case R.id.programming_menu_saveProgram:
+                        onSaveProgram();
+                        break;
+
+                    case R.id.programming_menu_loadProgram:
+                        CharSequence[] loadPrograms = mSpaceManager.loadSavedProgramNames();
+                        ProgramListFragment loadFragment = ProgramListFragment.newInstance(loadPrograms, false);
+                        loadFragment.show(getFragmentManager(), "program_list");
+                        break;
+
+                    default:
+                        return false;
+                }
+
+                drawer.closeDrawer(GravityCompat.START);
+
+                return true;
             }
-        } else if (item.equals(getString(R.string.programming_loadProgram))) {
-            CharSequence[] programs = mSpaceManager.loadSavedProgramNames();
-            DialogFragment programListFragment = new ProgramListFragment(programs);
-            programListFragment.show(getFragmentManager(), "program_list");
-            mMenuHandle.close();
-        }
+        });
     }
 
-    public void showSavedProgramNameDialog(String programName) {
-        new SaveProgramDialogFragment(programName).show(getFragmentManager(), "save_program");
+    private void onDeleteAllBlocks() {
+        // Create an AlertDialog show confirmation
+        new AlertDialog.Builder(this).setTitle(R.string.programming_deleteAllBlocks)
+                .setMessage(R.string.confirmation)
+                .setPositiveButton(R.string.ok,
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                mSpaceManager.deleteAllBlocks();
+                                mButtonsManager.checkButtonsWorkability();
+                            }
+                        })
+                .setNegativeButton(R.string.cancel, null)
+                .show();
+    }
+
+    private void onSaveProgram() {
+
+        boolean isEnabledSupervisorMode =
+                SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
+
+        if (isEnabledSupervisorMode) {
+            // supervisor
+            // save this program as a new sample one
+            final InputSampleProgramNameDialogFragment fragment = new InputSampleProgramNameDialogFragment();
+            fragment.setOnOkClickListener(new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String programName = fragment.getInputtedProgramName();
+                    mSpaceManager.saveWithName(programName, true);
+                    SaveProgramDialogFragment.newInstance(programName).show(getFragmentManager(), "save_program");
+                }
+            });
+            fragment.show(getFragmentManager(), "input_program_name");
+        } else {
+            // not supervisor
+            // save this program as a new one
+            String programName = mSpaceManager.saveAsNew();
+            SaveProgramDialogFragment.newInstance(programName).show(getFragmentManager(), "save_program");
+        }
     }
 
     public static class SaveProgramDialogFragment extends DialogFragment {
+        private final static String KEY_PROGRAM_NAME = "program_name";
+
         private String mProgramName;
 
-        public SaveProgramDialogFragment(String programName) {
-            mProgramName = programName;
+        public SaveProgramDialogFragment() {
+            super();
+        }
+
+        public static SaveProgramDialogFragment newInstance(String programName) {
+            Bundle bundle = new Bundle();
+            bundle.putString(KEY_PROGRAM_NAME, programName);
+
+            SaveProgramDialogFragment f = new SaveProgramDialogFragment();
+            f.setArguments(bundle);
+
+            return f;
+        }
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            mProgramName = savedInstanceState.getString(KEY_PROGRAM_NAME);
         }
 
         @Override

@@ -25,17 +25,35 @@ import android.os.Bundle;
 import com.pileproject.drive.R;
 
 public class ProgramListFragment extends DialogFragment {
+    private final static String KEY_PROGRAMS = "sample_programs";
+    private final static String KEY_IS_SAMPLE = "is_sample";
+
     private CharSequence[] mItems;
     private boolean mIsSample;
 
-    public ProgramListFragment(CharSequence[] items) {
-        mItems = items;
-        mIsSample = false;
+    public ProgramListFragment() {
+        super();
     }
 
-    public ProgramListFragment(CharSequence[] items, boolean isSample) {
-        mItems = items;
-        mIsSample = isSample;
+    public static ProgramListFragment newInstance(CharSequence[] items, boolean isSample) {
+        Bundle bundle = new Bundle();
+        bundle.putCharSequenceArray(KEY_PROGRAMS, items);
+        bundle.putBoolean(KEY_IS_SAMPLE, isSample);
+
+        ProgramListFragment programListFragment = new ProgramListFragment();
+        programListFragment.setArguments(bundle);
+
+        return programListFragment;
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        Bundle bundle = getArguments();
+
+        mItems = bundle.getCharSequenceArray(KEY_PROGRAMS);
+        mIsSample = bundle.getBoolean(KEY_IS_SAMPLE);
     }
 
     @Override

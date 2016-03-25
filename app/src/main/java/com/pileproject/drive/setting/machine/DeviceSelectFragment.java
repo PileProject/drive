@@ -34,6 +34,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,7 +62,7 @@ import java.util.UUID;
  * @author yusaku
  * @version 1.0 11-Oct-2013
  */
-public class DeviceSelectFragment extends Fragment {
+public class DeviceSelectFragment extends PreferenceFragment {
 
     @SuppressWarnings("unused")
     private static final String DEVICE_ADDRESS_PREFIX = "00:16:53";

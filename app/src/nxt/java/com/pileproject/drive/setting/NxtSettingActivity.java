@@ -16,25 +16,16 @@
 
 package com.pileproject.drive.setting;
 
-import com.pileproject.drive.R;
 import com.pileproject.drive.setting.machine.DeviceSelectFragment;
 import com.pileproject.drive.setting.machine.NxtPortConnectionFragment;
 import com.pileproject.drive.setting.machine.NxtThresholdFragment;
 
-import java.util.List;
-
 public class NxtSettingActivity extends SettingActivity {
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.setting_fragmentlist, target);
-        super.onBuildHeaders(target);
-    }
 
     @Override
     protected boolean isValidFragment(String fragmentName) {
         return DeviceSelectFragment.class.getName().equals(fragmentName) ||
                 NxtPortConnectionFragment.class.getName().equals(fragmentName) ||
                 NxtThresholdFragment.class.getName().equals(fragmentName);
-
     }
 }

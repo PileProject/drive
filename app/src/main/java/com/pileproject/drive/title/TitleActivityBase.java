@@ -16,9 +16,11 @@
 
 package com.pileproject.drive.title;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 
+import com.pileproject.drive.R;
 import com.pileproject.drive.database.ProgramDataManager;
 
 /**
@@ -28,7 +30,7 @@ import com.pileproject.drive.database.ProgramDataManager;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 4-June-2013
  */
-public abstract class TitleActivityBase extends Activity {
+public abstract class TitleActivityBase extends AppCompatActivity {
 
     private ProgramDataManager mManager;
 
@@ -39,4 +41,14 @@ public abstract class TitleActivityBase extends Activity {
         mManager = new ProgramDataManager(getApplicationContext());
         mManager.deleteAll(); // Initialize program data
     }
+
+    protected void setupToolbar() {
+        Toolbar toolbar = (Toolbar) findViewById(R.id.title_toolbar);
+
+        toolbar.setLogo(R.drawable.icon_launcher);
+        toolbar.setTitle(R.string.app_name);
+
+        setSupportActionBar(toolbar);
+    }
+
 }

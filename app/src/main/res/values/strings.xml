@@ -138,4 +138,7 @@
     <!-- Supervisor Mode Setting -->
     <string name="supervisorMode">Supervisor Mode Setting</string>
     <string name="supervisorMode.enableSupervisorMode">Enable Supervisor Mode</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

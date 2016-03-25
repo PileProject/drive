@@ -17,9 +17,9 @@
 package com.pileproject.drive.setting.machine;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.Context;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 
-public class NxtPortConnectionFragment extends Fragment {
+public class NxtPortConnectionFragment extends PreferenceFragment {
     private Activity mParentActivity;
     private View mRootView;
 
