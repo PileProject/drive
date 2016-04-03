@@ -23,7 +23,6 @@
         android:name=".app.DriveApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/app_theme"></application>
+        android:label="@string/app_name" />
 
 </manifest>

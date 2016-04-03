@@ -16,8 +16,8 @@
 
 package com.pileproject.drive.setting.machine;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +32,7 @@ import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLine
 import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
 import com.pileproject.drive.util.SharedPreferencesWrapper;
 
-public class NxtThresholdFragment extends Fragment {
+public class NxtThresholdFragment extends PreferenceFragment {
     private SeekBar mLightSensorSeek = null;
     private TextView mLightSensorText = null;
 

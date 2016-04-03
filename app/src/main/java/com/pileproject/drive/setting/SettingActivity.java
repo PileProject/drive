@@ -16,7 +16,13 @@
 
 package com.pileproject.drive.setting;
 
-import android.preference.PreferenceActivity;
+import android.os.Bundle;
+import android.support.v7.app.ActionBar;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
 import com.pileproject.drive.R;
 
@@ -30,26 +36,46 @@ import java.util.List;
  * @author yusaku
  * @version 1.0 4-June-2013
  */
-public class SettingActivity extends PreferenceActivity {
+public class SettingActivity extends AppCompatPreferenceActivity {
 
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        super.onBuildHeaders(target);
-        // add back button to header list
-        Header backHeader = new Header();
-        backHeader.id = R.string.back;
-        backHeader.titleRes = R.string.back;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
 
-        target.add(backHeader);
+        ViewGroup contentRoot = (ViewGroup) findViewById(android.R.id.content);
+        LinearLayout content = (LinearLayout) contentRoot.getChildAt(0);
+        LinearLayout settingLayout = (LinearLayout) View.inflate(this, R.layout.activity_setting, null);
+
+        contentRoot.removeAllViews();
+        settingLayout.addView(content);
+        contentRoot.addView(settingLayout);
+
+        Toolbar toolbar = (Toolbar) settingLayout.findViewById(R.id.setting_toolbar);
+        setSupportActionBar(toolbar);
+
+        ActionBar actionBar = getSupportActionBar();
+
+        actionBar.setTitle(R.string.setting_label);
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
     }
 
     @Override
-    public void onHeaderClick(Header header, int position) {
-        if (header.id == R.string.back) {
-            finish();
+    public void onBuildHeaders(List<Header> target) {
+        loadHeadersFromResource(R.xml.setting_fragmentlist, target);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
 
-        super.onHeaderClick(header, position);
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
