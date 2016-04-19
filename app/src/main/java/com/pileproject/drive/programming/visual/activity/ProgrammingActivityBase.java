@@ -59,6 +59,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     private final String TAG = "NxtProgrammingActivity";
     private List<Button> mAddBlockButtons;
     private Button mExecButton;
+    private UndoAndRedoButtonsManager mButtonsManager;
     private ProgrammingSpaceManager mSpaceManager;
     private boolean mIsConnected = false;
 
@@ -108,8 +109,11 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     protected abstract Intent getIntentToExecute();
 
     private void findViews() {
+        mButtonsManager = new UndoAndRedoButtonsManager((Button) findViewById(R.id.programming_undoButton),
+                                                        (Button) findViewById(R.id.programming_redoButton));
         mSpaceManager = new ProgrammingSpaceManager(this,
-                                                    (BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout));
+                                                    (BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout),
+                                                    mButtonsManager);
         mAddBlockButtons = new ArrayList<>(NKINDS);
         mAddBlockButtons.add((Button) findViewById(R.id.programming_sequenceButton));
         mAddBlockButtons.add((Button) findViewById(R.id.programming_repetitionButton));
@@ -160,6 +164,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
                     String blockName = data.getStringExtra("block_name");
                     ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
+                    mButtonsManager.checkButtonsWorkability();
                 }
                 break;
 
@@ -250,6 +255,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
                                        @Override
                                        public void onClick(DialogInterface dialog, int which) {
                                            mSpaceManager.deleteAllBlocks();
+                                           mButtonsManager.checkButtonsWorkability();
                                        }
                                    })
                 .setNegativeButton(R.string.cancel, null)
@@ -346,6 +352,46 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
         public String getInputtedProgramName() {
             return mEditText.getText().toString();
+        }
+    }
+
+    /**
+     * The manager of Undo and Redo buttons.
+     * This check the workability of buttons and
+     * enable or disable them.
+     *
+     * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
+     */
+    public class UndoAndRedoButtonsManager {
+        private Button mUndoButton;
+        private Button mRedoButton;
+
+        public UndoAndRedoButtonsManager(Button undoButton, Button redoButton) {
+            mUndoButton = undoButton;
+            mRedoButton = redoButton;
+
+            mUndoButton.setEnabled(false);
+            mUndoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSpaceManager.undo();
+                    checkButtonsWorkability();
+                }
+            });
+
+            mRedoButton.setEnabled(false);
+            mRedoButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mSpaceManager.redo();
+                    checkButtonsWorkability();
+                }
+            });
+        }
+
+        public void checkButtonsWorkability() {
+            mUndoButton.setEnabled(mSpaceManager.canUndo());
+            mRedoButton.setEnabled(mSpaceManager.canRedo());
         }
     }
 }
