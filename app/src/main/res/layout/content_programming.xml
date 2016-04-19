@@ -72,7 +72,7 @@
         android:id="@+id/programming.spaceLayout"
         android:layout_width="match_parent"
         android:layout_height="fill_parent"
-        android:layout_above="@+id/programming.redoAndUndoButtonsLayout"
+        android:layout_above="@+id/programming.execButtonLayout"
         android:layout_below="@id/programming.addBlockButtonsLayout"
         android:orientation="horizontal">
 
@@ -84,29 +84,6 @@
         <!-- android:layout_toRightOf="@+id/programming_space_layout" -->
 
     </FrameLayout>
-
-    <!-- Redo, Undo buttons -->
-
-    <LinearLayout
-        android:id="@+id/programming.redoAndUndoButtonsLayout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/programming.execButtonLayout">
-
-        <Button
-            android:id="@+id/programming.undoButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/programming.undo" />
-
-        <Button
-            android:id="@+id/programming.redoButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="@string/programming.redo" />
-    </LinearLayout>
 
     <!-- button to execution display -->
 

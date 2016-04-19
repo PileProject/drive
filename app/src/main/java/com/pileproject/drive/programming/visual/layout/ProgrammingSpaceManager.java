@@ -20,7 +20,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnLongClickListener;
@@ -32,21 +31,14 @@ import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.programming.visual.activity.ProgrammingActivityBase;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.NumTextHolder;
-import com.pileproject.drive.programming.visual.event.AddEvent;
-import com.pileproject.drive.programming.visual.event.ChangeNumberEvent;
-import com.pileproject.drive.programming.visual.event.DeleteEvent;
-import com.pileproject.drive.programming.visual.event.EventBase;
-import com.pileproject.drive.programming.visual.event.MoveEvent;
 import com.pileproject.drive.util.Range;
 import com.pileproject.drive.util.Unit;
 import com.pileproject.drive.view.NumberSelectSeekBarView;
 import com.pileproject.drive.view.NumberSelectView;
 
 import java.util.ArrayList;
-import java.util.Stack;
 
 /**
  * Manager of BlockSpaceLayout This helps users make programs.
@@ -57,9 +49,6 @@ import java.util.Stack;
 public class ProgrammingSpaceManager extends BlockSpaceManager {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
     private final String TAG = "ProgrammingSpaceManger";
-    private Stack<EventBase> mLogForUndo = null;
-    private Stack<EventBase> mLogForRedo = null;
-    private ProgrammingActivityBase.UndoAndRedoButtonsManager mButtonsManager;
     public final OnTouchListener mMoveBlock = new OnTouchListener() {
         int currentX; // The left position of this view (x coordinate)
         int currentY; // The top position of this view (y coordinate)
@@ -104,28 +93,10 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 
                 // Finished Moving
                 case MotionEvent.ACTION_UP:
-                    int elementCount = 1;
-
-                    EventBase diff = new MoveEvent(elementCount++, mLayout.indexOfChild(view), originX, originY);
-                    mLogForUndo.push(diff);
-
                     // This view will be removed if it is on the trash box
                     if (mLayout.isOnTrash(view)) {
-                        if (view instanceof NumTextHolder) {
-                            // Get old value
-                            int oldNum = ((NumTextHolder) view).getNum();
-
-                            diff = new ChangeNumberEvent(elementCount++, mLayout.indexOfChild(view), oldNum);
-                            mLogForUndo.push(diff);
-                        }
-                        diff = new DeleteEvent(elementCount++, mLayout.indexOfChild(view), view.getClass().getName());
-                        mLogForUndo.push(diff);
                         mLayout.removeView(view);
                     }
-                    mLogForRedo.clear();
-
-                    // Check Undo/Redo buttons' workability
-                    mButtonsManager.checkButtonsWorkability();
                     break;
             }
             return true;
@@ -154,66 +125,8 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
         }
     };
 
-    public ProgrammingSpaceManager(
-            Context context,
-            BlockSpaceLayout layout,
-            ProgrammingActivityBase.UndoAndRedoButtonsManager buttonsManager) {
+    public ProgrammingSpaceManager(Context context, BlockSpaceLayout layout) {
         super(context, layout);
-        mButtonsManager = buttonsManager;
-
-        mLogForUndo = new Stack<>();
-        mLogForRedo = new Stack<>();
-    }
-
-    public boolean canUndo() {
-        return !mLogForUndo.empty();
-    }
-
-    public boolean undo() {
-        if (mLogForUndo.empty()) {
-            return false;
-        }
-
-        int elementCount = mLogForUndo.peek().getElementCount();
-
-        // Undo for elementCount times
-        for (int i = 0; i < elementCount; i++) {
-            EventBase diff = mLogForUndo.pop();
-
-            Log.d(TAG, diff.getClass().getSimpleName());
-
-            EventBase forRedo = diff.undo(mLayout, elementCount);
-            if (diff instanceof DeleteEvent) {
-                BlockBase block = (BlockBase) mLayout.getChildAt(forRedo.getIndex());
-                setListeners(block);
-            }
-            mLogForRedo.push(forRedo);
-        }
-        return true;
-    }
-
-    public boolean canRedo() {
-        return !mLogForRedo.empty();
-    }
-
-    public boolean redo() {
-        if (mLogForRedo.empty()) {
-            return false;
-        }
-
-        int elementCount = mLogForRedo.peek().getElementCount();
-
-        // Undo for elementCount times
-        for (int i = 0; i < elementCount; i++) {
-            EventBase diff = mLogForRedo.pop();
-            EventBase forUndo = diff.undo(mLayout, elementCount);
-            if (diff instanceof DeleteEvent) {
-                BlockBase block = (BlockBase) mLayout.getChildAt(forUndo.getIndex());
-                setListeners(block);
-            }
-            mLogForUndo.push(forUndo);
-        }
-        return true;
     }
 
     private void setListeners(BlockBase block) {
@@ -238,19 +151,12 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             mLayout.addView(block, new LayoutParams(WC, WC));
 
             block.setAnimation(alpha);
-
-            // Create new AddEventBase
-            EventBase diff = new AddEvent(blocks.size(), mLayout.indexOfChild(block));
-            mLogForUndo.push(diff);
         }
-        mLogForRedo.clear();
     }
 
     @Override
     public void deleteAllBlocks() {
         super.deleteAllBlocks();
-        mLogForUndo.clear();
-        mLogForRedo.clear();
     }
 
     class OnTouchNumTextListener implements OnLongClickListener {
@@ -293,15 +199,6 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 
                     // Set new value
                     mParent.setNum(newNum);
-
-                    // Create ChangeNumberEvent
-                    EventBase diff = new ChangeNumberEvent(1, mLayout.indexOfChild((View) mParent), oldNum);
-
-                    mLogForUndo.push(diff);
-                    mLogForRedo.clear();
-
-                    // Check Undo/Redo buttons' workability
-                    mButtonsManager.checkButtonsWorkability();
                 }
             });
             dialog.show();
