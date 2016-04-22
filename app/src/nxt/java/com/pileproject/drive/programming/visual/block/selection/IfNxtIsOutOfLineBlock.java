@@ -23,7 +23,7 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.BlockPreferences;
 
 /**
  * This block check the light sensor's value
@@ -41,7 +41,7 @@ public class IfNxtIsOutOfLineBlock extends SelectionBlock {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.block_if_nxt_is_out_of_line, this);
 
-        mThreshold = SharedPreferencesWrapper.loadIntPreference(IfNxtIsOutOfLineBlock.class.getName(), 50);
+        mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
     }
 
     @Override

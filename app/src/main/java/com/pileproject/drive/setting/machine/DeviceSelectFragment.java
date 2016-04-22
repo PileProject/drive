@@ -21,7 +21,6 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.app.Dialog;
 import android.app.DialogFragment;
-import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
@@ -48,7 +47,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.MachinePreferences;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
@@ -163,7 +162,7 @@ public class DeviceSelectFragment extends PreferenceFragment {
                     AdapterView<?> parent, View view, int position, long id) {
                 ListView listView = (ListView) parent;
                 BluetoothDevice btDev = (BluetoothDevice) listView.getItemAtPosition(position);
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(btDev.getAddress());
+                MachinePreferences.get(getActivity()).setMacAddress(btDev.getAddress());
                 Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) +
                                        "\n" + btDev.getName(), Toast.LENGTH_LONG).show();
             }
@@ -288,7 +287,7 @@ public class DeviceSelectFragment extends PreferenceFragment {
         sieveDevices(mBondedDevices);
         mBondedDevicesAdapter.notifyDataSetChanged();
 
-        String defaultDevAddr = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String defaultDevAddr = MachinePreferences.get(getActivity()).getMacAddress();
         int defaultDevIdx = findIndexOfDevice(mBondedDevices, defaultDevAddr);
         mBondedDevicesListView.setItemChecked(defaultDevIdx, true);
     }
@@ -462,7 +461,7 @@ public class DeviceSelectFragment extends PreferenceFragment {
 
                 mNewDevicesAdapter.remove(device);
 
-                SharedPreferencesWrapper.saveDefaultDeviceAddress(device.getAddress());
+                MachinePreferences.get(getActivity()).setMacAddress(device.getAddress());
                 Toast.makeText(mActivity, getString(R.string.deviceselect_toast_setDefault) +
                                        "\n" + device.getName(), Toast.LENGTH_LONG).show();
             } else {

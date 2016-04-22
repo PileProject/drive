@@ -21,7 +21,7 @@ import android.bluetooth.BluetoothDevice;
 import android.content.Intent;
 
 import com.pileproject.drive.comm.BluetoothCommunicator;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 
 public class NxtExecutionActivity extends ExecutionActivityBase {
@@ -30,7 +30,7 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
     @Override
     protected void connectToDevice() {
         // get device MAC address
-        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice device = adapter.getRemoteDevice(address);

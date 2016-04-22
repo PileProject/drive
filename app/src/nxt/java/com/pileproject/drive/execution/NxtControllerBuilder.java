@@ -19,7 +19,7 @@ package com.pileproject.drive.execution;
 import android.content.Context;
 import android.util.SparseArray;
 
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+// import com.pileproject.drive.util.SharedPreferencesWrapper;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
@@ -57,10 +57,10 @@ public class NxtControllerBuilder {
         };
 
         for (int i = 0; i < sensorPortPrefTags.length; ++i) {
-            int key =
-                    SharedPreferencesWrapper
-                            .loadIntPreference(sensorPortPrefTags[i], notAssigned);
-            mSensorPorts.put(key, sensorPorts[i]);
+            // int key =
+            //         SharedPreferencesWrapper
+            //                 .loadIntPreference(sensorPortPrefTags[i], notAssigned);
+            // mSensorPorts.put(key, sensorPorts[i]);
         }
     }
 
@@ -77,10 +77,10 @@ public class NxtControllerBuilder {
         };
 
         for (int i = 0; i < motorPortPrefTags.length; ++i) {
-            int key =
-                    SharedPreferencesWrapper
-                            .loadIntPreference(motorPortPrefTags[i], notAssigned);
-            mMotorPorts.put(key, motorPorts[i]);
+            // int key =
+            //         SharedPreferencesWrapper
+            //                 .loadIntPreference(motorPortPrefTags[i], notAssigned);
+            // mMotorPorts.put(key, motorPorts[i]);
         }
     }
 }
