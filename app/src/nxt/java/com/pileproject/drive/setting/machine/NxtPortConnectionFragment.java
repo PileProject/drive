@@ -26,7 +26,7 @@ import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+// import com.pileproject.drive.util.SharedPreferencesWrapper;
 import com.pileproject.drive.view.PortTextView;
 
 import java.util.HashMap;
@@ -50,9 +50,9 @@ public class NxtPortConnectionFragment extends PreferenceFragment {
         preferences.put("motorPortC", NxtController.MotorProperty.MOTOR_RIGHT);
 
         for (Entry<String, Integer> entry : preferences.entrySet()) {
-            if (SharedPreferencesWrapper.loadIntPreference(entry.getKey(), -1) == -1) {
-                SharedPreferencesWrapper.saveIntPreference(entry.getKey(), entry.getValue());
-            }
+            // if (SharedPreferencesWrapper.loadIntPreference(entry.getKey(), -1) == -1) {
+            //     SharedPreferencesWrapper.saveIntPreference(entry.getKey(), entry.getValue());
+            // }
         }
     }
 
@@ -92,13 +92,13 @@ public class NxtPortConnectionFragment extends PreferenceFragment {
         LinkedList<Integer> sensorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.SensorProperty.NUMBER_OF_SENSOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(sensorPortIds[i]);
-            int sensorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
-                                                                        NxtController.SensorProperty.SENSOR_UNUSED);
+            // int sensorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
+            //                                                             NxtController.SensorProperty.SENSOR_UNUSED);
 
-            if (sensorType != NxtController.SensorProperty.SENSOR_UNUSED) {
-                portTextView.setAttachmentType(sensorType);
-                sensorsInUsed.add(sensorType);
-            }
+            // if (sensorType != NxtController.SensorProperty.SENSOR_UNUSED) {
+            //     portTextView.setAttachmentType(sensorType);
+            //     sensorsInUsed.add(sensorType);
+            // }
         }
 
         List<Integer> allSensors = NxtController.SensorProperty.getAllSensors();
@@ -124,13 +124,13 @@ public class NxtPortConnectionFragment extends PreferenceFragment {
         LinkedList<Integer> motorsInUsed = new LinkedList<>();
         for (int i = 0; i < NxtController.MotorProperty.NUMBER_OF_MOTOR_PORTS; ++i) {
             PortTextView portTextView = (PortTextView) root.findViewById(motorPortIds[i]);
-            int motorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
-                                                                       NxtController.MotorProperty.MOTOR_UNUSED);
+            // int motorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
+            //                                                            NxtController.MotorProperty.MOTOR_UNUSED);
 
-            if (motorType != NxtController.MotorProperty.MOTOR_UNUSED) {
-                portTextView.setAttachmentType(motorType);
-                motorsInUsed.add(motorType);
-            }
+            // if (motorType != NxtController.MotorProperty.MOTOR_UNUSED) {
+            //     portTextView.setAttachmentType(motorType);
+            //     motorsInUsed.add(motorType);
+            // }
         }
 
         List<Integer> allMotors = NxtController.MotorProperty.getAllMotors();

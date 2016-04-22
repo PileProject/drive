@@ -76,9 +76,7 @@ public class NxtThresholdFragment extends PreferenceFragment {
 
         final int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold();
         mLightSensorSeek.setMax(LineSensor.PctMax - LineSensor.PctMin);
-        mLightSensorSeek.setProgress((savedLightValue == -1) ?
-                                             LineSensor.DEFAULT - LineSensor.PctMin:
-                                             savedLightValue - LineSensor.PctMin);
+        mLightSensorSeek.setProgress(savedLightValue - LineSensor.PctMin);
 
         mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -100,8 +98,6 @@ public class NxtThresholdFragment extends PreferenceFragment {
 
         final int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
         mSoundSensorSeek.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
-        mSoundSensorSeek.setProgress((savedSoundValue == -1) ?
-                                             SoundSensor.SI_dB_DEFAULT - SoundSensor.SI_dB_SiMin :
-                                             savedSoundValue - SoundSensor.SI_dB_SiMin);
+        mSoundSensorSeek.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
     }
 }

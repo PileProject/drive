@@ -26,7 +26,6 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public abstract class PortTextView extends TextView {
     final protected Context mContext;
@@ -73,19 +72,21 @@ public abstract class PortTextView extends TextView {
 
         if (action == DragEvent.ACTION_DRAG_STARTED) {
             return true;
-        } else if (action == DragEvent.ACTION_DROP) {
+        }
+        else if (action == DragEvent.ACTION_DROP) {
             if (localState.mPortType.equals(this.mPortType)) {
                 swap(localState, this);
 
                 mSoundEffectOfMovingBlock.start(); // play sound
 
                 if (mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mPortName, mAttachmentType);
+
+                    // SharedPreferencesWrapper.saveIntPreference(mPortName, mAttachmentType);
                 }
 
                 if (localState.mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(localState.mPortName,
-                                                               localState.mAttachmentType);
+                    // SharedPreferencesWrapper.saveIntPreference(localState.mPortName,
+                    //                                            localState.mAttachmentType);
                 }
             }
             return true;
