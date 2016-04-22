@@ -16,8 +16,6 @@
 
 package com.pileproject.drive.setting.machine;
 
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.view.LayoutInflater;
@@ -26,41 +24,21 @@ import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.MachinePreferences;
+import com.pileproject.drive.preferences.MachinePreferencesSchema;
 import com.pileproject.drive.view.PortTextView;
 
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
+import java.util.Set;
 
 
 public class NxtPortConnectionFragment extends PreferenceFragment {
-    private Activity mParentActivity;
     private View mRootView;
 
-    public static void setDefaultValueOnPreferences(Context context) {
-        Map<String, Integer> preferences = new HashMap<>();
-
-        preferences.put("sensorPort1", NxtController.SensorProperty.SENSOR_TOUCH);
-        preferences.put("sensorPort2", NxtController.SensorProperty.SENSOR_SOUND);
-        preferences.put("sensorPort3", NxtController.SensorProperty.SENSOR_LINE);
-        preferences.put("motorPortB", NxtController.MotorProperty.MOTOR_LEFT);
-        preferences.put("motorPortC", NxtController.MotorProperty.MOTOR_RIGHT);
-
-        for (Entry<String, Integer> entry : preferences.entrySet()) {
-            if (SharedPreferencesWrapper.loadIntPreference(entry.getKey(), -1) == -1) {
-                SharedPreferencesWrapper.saveIntPreference(entry.getKey(), entry.getValue());
-            }
-        }
-    }
-
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-
         mRootView = inflater.inflate(R.layout.fragment_nxtportconfig, container, false);
         return mRootView;
     }
@@ -68,77 +46,64 @@ public class NxtPortConnectionFragment extends PreferenceFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
-        mParentActivity = getActivity();
-        Context context = mParentActivity.getApplicationContext();
-
-        setDefaultValueOnPreferences(context);
-        initializeSensorPorts(context, mRootView);
-        initializeMotorPorts(context, mRootView);
+        initializeSensorPorts();
+        initializeMotorPorts();
     }
 
-    private void initializeSensorPorts(Context context, View root) {
-        final int[] sensorPortIds = {
-                R.id.setting_portconfig_sensorPort1,
-                R.id.setting_portconfig_sensorPort2,
-                R.id.setting_portconfig_sensorPort3,
-                R.id.setting_portconfig_sensorPort4,
-        };
+    private String loadSensor(int port, String sensor) {
+        if (sensor.equals(MachinePreferencesSchema.SENSOR.NONE)) return sensor;
 
+        PortTextView portTextView = (PortTextView) mRootView.findViewById(port);
+        portTextView.setDeviceType(sensor);
+        return sensor;
+    }
+
+    private void initializeSensorPorts() {
+        MachinePreferences preferences = MachinePreferences.get(getActivity());
+
+        Set<String> sensorsInUsed = new HashSet<>();
+        sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort1, preferences.getInputPort1()));
+        sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort2, preferences.getInputPort2()));
+        sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort3, preferences.getInputPort3()));
+        sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort4, preferences.getInputPort4()));
+
+        List<String> allSensors = NxtController.SensorProperty.getAllSensors();
+        int index = 0;
         final int[] sensorPlaceIds = {
                 R.id.setting_portconfig_sensor1, R.id.setting_portconfig_sensor2, R.id.setting_portconfig_sensor3,
         };
-
-        LinkedList<Integer> sensorsInUsed = new LinkedList<>();
-        for (int i = 0; i < NxtController.SensorProperty.NUMBER_OF_SENSOR_PORTS; ++i) {
-            PortTextView portTextView = (PortTextView) root.findViewById(sensorPortIds[i]);
-            int sensorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
-                                                                        NxtController.SensorProperty.SENSOR_UNUSED);
-
-            if (sensorType != NxtController.SensorProperty.SENSOR_UNUSED) {
-                portTextView.setAttachmentType(sensorType);
-                sensorsInUsed.add(sensorType);
-            }
-        }
-
-        List<Integer> allSensors = NxtController.SensorProperty.getAllSensors();
-        int index = 0;
-        for (Integer sensorType : allSensors) {
-            if (sensorsInUsed.indexOf(sensorType) == -1) {
-                ((PortTextView) root.findViewById(sensorPlaceIds[index++])).setAttachmentType(sensorType);
-            }
+        for (String sensorType : allSensors) {
+            if (sensorsInUsed.contains(sensorType)) continue;
+            // set an unconnected sensor into a open space
+            ((PortTextView) mRootView.findViewById(sensorPlaceIds[index++])).setDeviceType(sensorType);
         }
     }
 
-    private void initializeMotorPorts(Context context, View root) {
-        final int[] motorPortIds = {
-                R.id.setting_portconfig_motorPortA,
-                R.id.setting_portconfig_motorPortB,
-                R.id.setting_portconfig_motorPortC,
-        };
+    private String loadMotor(int port, String motor) {
+        if (motor.equals(MachinePreferencesSchema.MOTOR.NONE)) return motor;
 
+        PortTextView portTextView = (PortTextView) mRootView.findViewById(port);
+        portTextView.setDeviceType(motor);
+        return motor;
+    }
+
+    private void initializeMotorPorts() {
+        MachinePreferences preferences = MachinePreferences.get(getActivity());
+
+        Set<String> motorsInUsed = new HashSet<>();
+        motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortA, preferences.getOutputPortA()));
+        motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortB, preferences.getOutputPortB()));
+        motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortC, preferences.getOutputPortC()));
+
+        List<String> allMotors = NxtController.MotorProperty.getAllMotors();
+        int index = 0;
         final int[] motorPlaceIds = {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,
         };
-
-        LinkedList<Integer> motorsInUsed = new LinkedList<>();
-        for (int i = 0; i < NxtController.MotorProperty.NUMBER_OF_MOTOR_PORTS; ++i) {
-            PortTextView portTextView = (PortTextView) root.findViewById(motorPortIds[i]);
-            int motorType = SharedPreferencesWrapper.loadIntPreference(portTextView.getPortName(),
-                                                                       NxtController.MotorProperty.MOTOR_UNUSED);
-
-            if (motorType != NxtController.MotorProperty.MOTOR_UNUSED) {
-                portTextView.setAttachmentType(motorType);
-                motorsInUsed.add(motorType);
-            }
-        }
-
-        List<Integer> allMotors = NxtController.MotorProperty.getAllMotors();
-        int index = 0;
-        for (Integer motorType : allMotors) {
-            if (motorsInUsed.indexOf(motorType) == -1) {
-                ((PortTextView) root.findViewById(motorPlaceIds[index++])).setAttachmentType(motorType);
-            }
+        for (String motorType : allMotors) {
+            if (motorsInUsed.contains(motorType)) continue;;
+            // set an unconnected motor into an open space
+            ((PortTextView) mRootView.findViewById(motorPlaceIds[index++])).setDeviceType(motorType);
         }
     }
 }

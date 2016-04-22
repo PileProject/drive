@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.CommonPreferences;
 
 public class SupervisorModeFragment extends Fragment {
     private CheckBox mEnableDebugModeCheckBox;
@@ -44,8 +44,7 @@ public class SupervisorModeFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         Activity activity = getActivity();
-        boolean isEnabledSupervisorMode =
-                SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
+        boolean isEnabledSupervisorMode = CommonPreferences.get(getActivity()).getSupervisorMode();
 
         mEnableDebugModeCheckBox.setChecked(isEnabledSupervisorMode);
         mEnableDebugModeCheckBox.setOnClickListener(new View.OnClickListener() {
@@ -54,8 +53,7 @@ public class SupervisorModeFragment extends Fragment {
                 CheckBox checkBox = (CheckBox) v;
                 boolean isChecked = checkBox.isChecked();
 
-                SharedPreferencesWrapper.saveBoolPreference(SupervisorModeFragment.class.getName(),
-                                                            isChecked);
+                CommonPreferences.get(getActivity()).setSupervisorMode(isChecked);
             }
         });
     }

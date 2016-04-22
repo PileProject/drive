@@ -26,28 +26,23 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 public abstract class PortTextView extends TextView {
-    final protected Context mContext;
     final private boolean mIsAcceptable;
     final private String mPortName;
     final private String mPortType;
-    protected int mAttachmentType;
+    protected String mDeviceType;
 
     private MediaPlayer mSoundEffectOfMovingBlock;
 
     public PortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mContext = context;
-        mSoundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
+        mSoundEffectOfMovingBlock = MediaPlayer.create(context, R.raw.pon);
 
         TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
-        String port;
         mPortName = tar.getString(R.styleable.PortTextView_portName);
-        port = tar.getString(R.styleable.PortTextView_portType);
-        mPortType = (port != null) ? port : "";
+        mPortType = tar.getString(R.styleable.PortTextView_portType);
         mIsAcceptable = (mPortName != null);
         tar.recycle();
 
@@ -61,9 +56,9 @@ public abstract class PortTextView extends TextView {
     }
 
     public static void swap(PortTextView lhs, PortTextView rhs) {
-        int lhsAttachmentType = lhs.getAttachmentType();
-        lhs.setAttachmentType(rhs.getAttachmentType());
-        rhs.setAttachmentType(lhsAttachmentType);
+        String lhsAttachmentType = lhs.getDeviceType();
+        lhs.setDeviceType(rhs.getDeviceType());
+        rhs.setDeviceType(lhsAttachmentType);
     }
 
     @Override
@@ -73,19 +68,20 @@ public abstract class PortTextView extends TextView {
 
         if (action == DragEvent.ACTION_DRAG_STARTED) {
             return true;
-        } else if (action == DragEvent.ACTION_DROP) {
+        }
+        else if (action == DragEvent.ACTION_DROP) {
+            // match the port type (e.g. "motor" and "motor", "sensor" and "sensor")
             if (localState.mPortType.equals(this.mPortType)) {
                 swap(localState, this);
 
                 mSoundEffectOfMovingBlock.start(); // play sound
 
                 if (mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(mPortName, mAttachmentType);
+                    savePortConnection(mPortName, mDeviceType);
                 }
 
                 if (localState.mIsAcceptable) {
-                    SharedPreferencesWrapper.saveIntPreference(localState.mPortName,
-                                                               localState.mAttachmentType);
+                    savePortConnection(mPortName, mDeviceType);
                 }
             }
             return true;
@@ -93,9 +89,11 @@ public abstract class PortTextView extends TextView {
         return false;
     }
 
-    public abstract int getAttachmentType();
+    protected abstract void savePortConnection(String port, String device);
 
-    public abstract void setAttachmentType(int attachmentType);
+    public abstract String getDeviceType();
+
+    public abstract void setDeviceType(String deviceType);
 
     public String getPortName() {
         return mPortName;

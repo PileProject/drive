@@ -21,7 +21,8 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.preferences.MachinePreferences;
+import com.pileproject.drive.preferences.MachinePreferencesSchema;
 
 public class NxtMotorPortTextView extends PortTextView {
 
@@ -29,35 +30,41 @@ public class NxtMotorPortTextView extends PortTextView {
         super(context, attrs);
     }
 
-    public static String getMotorName(Context context, int attachmentType) {
-        switch (attachmentType) {
-            case NxtController.MotorProperty.MOTOR_LEFT:
-                return context.getString(R.string.motors_left);
-            case NxtController.MotorProperty.MOTOR_RIGHT:
-                return context.getString(R.string.motors_right);
-        }
+    public static String getMotorName(Context context, String motorType) {
+        if (motorType.equals(MachinePreferencesSchema.MOTOR.LEFT))
+            return context.getString(R.string.motors_left);
+        if (motorType.equals(MachinePreferencesSchema.MOTOR.RIGHT))
+            return context.getString(R.string.motors_right);
         return "";
     }
 
-    public static int getMotorColor(int motorType) {
-        switch (motorType) {
-            case NxtController.MotorProperty.MOTOR_LEFT:
-                return Color.rgb(70, 89, 183);
-            case NxtController.MotorProperty.MOTOR_RIGHT:
-                return Color.rgb(214, 133, 52);
-        }
+    public static int getMotorColor(String motorType) {
+        if (motorType.equals(MachinePreferencesSchema.MOTOR.LEFT))
+            return Color.rgb(70, 89, 183);
+        if (motorType.equals(MachinePreferencesSchema.MOTOR.RIGHT))
+            return Color.rgb(214, 133, 52);
         return Color.GRAY;
     }
 
     @Override
-    public int getAttachmentType() {
-        return mAttachmentType;
+    protected void savePortConnection(String port, String device) {
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortA)))
+            MachinePreferences.get(getContext()).setOutputPortA(device);
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortB)))
+            MachinePreferences.get(getContext()).setOutputPortB(device);
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortC)))
+            MachinePreferences.get(getContext()).setOutputPortC(device);
     }
 
     @Override
-    public void setAttachmentType(int attachmentType) {
-        mAttachmentType = attachmentType;
-        this.setText(getMotorName(mContext, attachmentType));
-        this.setBackgroundColor(getMotorColor(attachmentType));
+    public String getDeviceType() {
+        return mDeviceType;
+    }
+
+    @Override
+    public void setDeviceType(String deviceType) {
+        mDeviceType = deviceType;
+        this.setText(getMotorName(getContext(), deviceType));
+        this.setBackgroundColor(getMotorColor(deviceType));
     }
 }

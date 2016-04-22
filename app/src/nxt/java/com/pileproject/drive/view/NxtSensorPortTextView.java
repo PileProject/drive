@@ -21,7 +21,8 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.preferences.MachinePreferences;
+import com.pileproject.drive.preferences.MachinePreferencesSchema;
 
 
 public class NxtSensorPortTextView extends PortTextView {
@@ -30,42 +31,47 @@ public class NxtSensorPortTextView extends PortTextView {
         super(context, attrs);
     }
 
-    public static String getSensorName(Context context, int sensorType) {
-        switch (sensorType) {
-            case NxtController.SensorProperty.SENSOR_LINE:
-                return context.getString(R.string.sensors_light);
-            case NxtController.SensorProperty.SENSOR_SOUND:
-                return context.getString(R.string.sensors_sound);
-            case NxtController.SensorProperty.SENSOR_TOUCH:
-                return context.getString(R.string.sensors_touch);
-        }
-
+    public static String getSensorName(Context context, String sensorType) {
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.TOUCH))
+            return context.getString(R.string.sensors_touch);
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.SOUND))
+            return context.getString(R.string.sensors_sound);
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.LINE))
+            return context.getString(R.string.sensors_light);
         return "";
     }
 
-    public static int getSensorColor(int sensorType) {
-        switch (sensorType) {
-            case NxtController.SensorProperty.SENSOR_LINE:
-                return Color.rgb(50, 142, 183);
-            case NxtController.SensorProperty.SENSOR_TOUCH:
-                return Color.rgb(65, 163, 86);
-            case NxtController.SensorProperty.SENSOR_SOUND:
-                return Color.rgb(221, 86, 82);
-        }
-
+    public static int getSensorColor(String sensorType) {
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.TOUCH))
+            return Color.rgb(50, 142, 183);
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.SOUND))
+            return Color.rgb(65, 163, 86);
+        if (sensorType.equals(MachinePreferencesSchema.SENSOR.LINE))
+            return Color.rgb(221, 86, 82);
         return Color.GRAY;
     }
 
     @Override
-    public int getAttachmentType() {
-        return mAttachmentType;
+    protected void savePortConnection(String port, String device) {
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort1)))
+            MachinePreferences.get(getContext()).setInputPort1(device);
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort2)))
+            MachinePreferences.get(getContext()).setInputPort2(device);
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort3)))
+            MachinePreferences.get(getContext()).setInputPort3(device);
+        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort4)))
+            MachinePreferences.get(getContext()).setInputPort4(device);
     }
 
     @Override
-    public void setAttachmentType(int attachmentType) {
-        mAttachmentType = attachmentType;
+    public String getDeviceType() {
+        return mDeviceType;
+    }
 
-        this.setText(getSensorName(mContext, attachmentType));
-        this.setBackgroundColor(getSensorColor(attachmentType));
+    @Override
+    public void setDeviceType(String deviceType) {
+        mDeviceType = deviceType;
+        this.setText(getSensorName(getContext(), deviceType));
+        this.setBackgroundColor(getSensorColor(deviceType));
     }
 }

@@ -23,7 +23,6 @@ import android.view.View;
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.activity.NxtProgrammingActivity;
 import com.pileproject.drive.setting.NxtSettingActivity;
-import com.pileproject.drive.setting.machine.NxtPortConnectionFragment;
 
 public class NxtTitleActivity extends TitleActivityBase {
     @Override
@@ -47,8 +46,6 @@ public class NxtTitleActivity extends TitleActivityBase {
                 startActivity(intent);
             }
         });
-
-        NxtPortConnectionFragment.setDefaultValueOnPreferences(getApplicationContext());
 
         setupToolbar();
     }
