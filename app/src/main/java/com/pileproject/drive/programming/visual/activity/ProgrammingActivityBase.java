@@ -36,12 +36,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.preferences.CommonPreferences;
+import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
-import com.pileproject.drive.setting.app.SupervisorModeFragment;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -123,7 +123,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
     private void moveToAnotherActivity() {
         mSpaceManager.saveExecutionProgram();
-        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String address = MachinePreferences.get(this).getMacAddress();
         // TODO this check does not work when dissolves paring
         if (address == null) {
             AlertDialog alertDialog = new AlertDialog.Builder(ProgrammingActivityBase.this).setTitle(R.string.error)
@@ -183,7 +183,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
             return;
         }
 
-        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String deviceAddress = MachinePreferences.get(this).getMacAddress();
         deviceAddress =
                 (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
@@ -263,8 +263,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     }
 
     private void onSaveProgram() {
-        boolean isEnabledSupervisorMode =
-                SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
+        boolean isEnabledSupervisorMode = CommonPreferences.get(this).getSupervisorMode();
 
         if (isEnabledSupervisorMode) {
             // supervisor
