@@ -28,22 +28,19 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 
 public abstract class PortTextView extends TextView {
-    final private boolean mIsAcceptable;
+    final private boolean mIsFreePort;
     final private String mPortName;
     final private String mPortType;
     protected String mDeviceType;
 
-    private MediaPlayer mSoundEffectOfMovingBlock;
 
     public PortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mSoundEffectOfMovingBlock = MediaPlayer.create(context, R.raw.pon);
-
         TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
         mPortName = tar.getString(R.styleable.PortTextView_portName);
         mPortType = tar.getString(R.styleable.PortTextView_portType);
-        mIsAcceptable = (mPortName != null);
+        mIsFreePort = (mPortName == null); // a free port has no name
         tar.recycle();
 
         setOnTouchListener(new OnTouchListener() {
@@ -74,15 +71,21 @@ public abstract class PortTextView extends TextView {
             if (localState.mPortType.equals(this.mPortType)) {
                 swap(localState, this);
 
-                mSoundEffectOfMovingBlock.start(); // play sound
+                MediaPlayer soundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
+                soundEffectOfMovingBlock.start(); // play sound
+                soundEffectOfMovingBlock.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        mediaPlayer.stop();
+                        mediaPlayer.release();
+                    }
+                });
 
-                if (mIsAcceptable) {
-                    savePortConnection(mPortName, mDeviceType);
-                }
+                if (mIsFreePort) removePortConnection(mPortName);
+                else savePortConnection(mPortName, mDeviceType);
 
-                if (localState.mIsAcceptable) {
-                    savePortConnection(mPortName, mDeviceType);
-                }
+                if (localState.mIsFreePort) removePortConnection(localState.mPortName);
+                else savePortConnection(localState.mPortName, localState.mDeviceType);
             }
             return true;
         }
@@ -90,6 +93,8 @@ public abstract class PortTextView extends TextView {
     }
 
     protected abstract void savePortConnection(String port, String device);
+
+    protected abstract void removePortConnection(String port);
 
     public abstract String getDeviceType();
 

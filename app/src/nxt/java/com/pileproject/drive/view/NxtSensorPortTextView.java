@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.NONE;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.TOUCH;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
@@ -55,6 +56,16 @@ public class NxtSensorPortTextView extends PortTextView {
         if (c.getString(R.string.setting_portconfig_deviceSensorPort2).equals(port)) p.setInputPort2(device);
         if (c.getString(R.string.setting_portconfig_deviceSensorPort3).equals(port)) p.setInputPort3(device);
         if (c.getString(R.string.setting_portconfig_deviceSensorPort4).equals(port)) p.setInputPort4(device);
+    }
+
+    @Override
+    protected void removePortConnection(String port) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort1).equals(port)) p.setInputPort1(NONE);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort2).equals(port)) p.setInputPort2(NONE);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort3).equals(port)) p.setInputPort3(NONE);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort4).equals(port)) p.setInputPort4(NONE);
     }
 
     @Override

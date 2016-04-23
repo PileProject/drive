@@ -23,6 +23,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.NONE;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.LEFT;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.RIGHT;
 
@@ -51,6 +52,15 @@ public class NxtMotorPortTextView extends PortTextView {
         if (c.getString(R.string.setting_portconfig_deviceMotorPortA).equals(port)) p.setOutputPortA(device);
         if (c.getString(R.string.setting_portconfig_deviceMotorPortB).equals(port)) p.setOutputPortB(device);
         if (c.getString(R.string.setting_portconfig_deviceMotorPortC).equals(port)) p.setOutputPortC(device);
+    }
+
+    @Override
+    protected void removePortConnection(String port) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortA).equals(port)) p.setOutputPortA(NONE);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortB).equals(port)) p.setOutputPortB(NONE);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortC).equals(port)) p.setOutputPortC(NONE);
     }
 
     @Override
