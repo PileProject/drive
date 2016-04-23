@@ -49,7 +49,7 @@ public class MachinePreferencesSchema {
     String macAddress;
 
     @Key("firmware")
-    String firmware = FIRMWARE.LEJOS;
+    String firmware = FIRMWARE.STANDARD;
 
     @Key("input_port_1")
     String inputPort1 = SENSOR.TOUCH;

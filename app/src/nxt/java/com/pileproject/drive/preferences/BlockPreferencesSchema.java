@@ -27,13 +27,21 @@ import com.rejasupotaro.android.kvs.annotations.Table;
  */
 @Table(name = "block_preferences")
 public class BlockPreferencesSchema {
+    public class THRESHOLD {
+        public static final int SOUND_DEFAULT = 70;
+        public static final int LINE_DEFAULT = 50;
+    }
+    public class REPETITION {
+        public static final int COUNT_MAX = 5;
+    }
+
     @Key("sound_sensor_threshold")
-    int soundSensorThreshold = 70;
+    int soundSensorThreshold = THRESHOLD.SOUND_DEFAULT;
 
     @Key("line_sensor_threshold")
-    int lineSensorThreshold = 50;
+    int lineSensorThreshold = THRESHOLD.LINE_DEFAULT;
 
     @Key("max_repetition_counts")
-    int maxRepetitionCounts = 5;
+    int maxRepetitionCounts = REPETITION.COUNT_MAX;
 }
 
