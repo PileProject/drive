@@ -22,7 +22,9 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.preferences.MachinePreferencesSchema;
+
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.LEFT;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.RIGHT;
 
 public class NxtMotorPortTextView extends PortTextView {
 
@@ -31,29 +33,24 @@ public class NxtMotorPortTextView extends PortTextView {
     }
 
     public static String getMotorName(Context context, String motorType) {
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.LEFT))
-            return context.getString(R.string.motors_left);
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.RIGHT))
-            return context.getString(R.string.motors_right);
+        if (LEFT.equals(motorType)) return context.getString(R.string.motors_left);
+        if (RIGHT.equals(motorType)) return context.getString(R.string.motors_right);
         return "";
     }
 
     public static int getMotorColor(String motorType) {
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.LEFT))
-            return Color.rgb(70, 89, 183);
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.RIGHT))
-            return Color.rgb(214, 133, 52);
+        if (LEFT.equals(motorType)) return Color.rgb(70, 89, 183);
+        if (RIGHT.equals(motorType)) return Color.rgb(214, 133, 52);
         return Color.GRAY;
     }
 
     @Override
     protected void savePortConnection(String port, String device) {
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortA)))
-            MachinePreferences.get(getContext()).setOutputPortA(device);
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortB)))
-            MachinePreferences.get(getContext()).setOutputPortB(device);
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceMotorPortC)))
-            MachinePreferences.get(getContext()).setOutputPortC(device);
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortA).equals(port)) p.setOutputPortA(device);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortB).equals(port)) p.setOutputPortB(device);
+        if (c.getString(R.string.setting_portconfig_deviceMotorPortC).equals(port)) p.setOutputPortC(device);
     }
 
     @Override

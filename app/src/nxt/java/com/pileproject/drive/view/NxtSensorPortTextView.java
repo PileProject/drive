@@ -22,8 +22,10 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.preferences.MachinePreferencesSchema;
 
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.TOUCH;
 
 public class NxtSensorPortTextView extends PortTextView {
 
@@ -32,35 +34,27 @@ public class NxtSensorPortTextView extends PortTextView {
     }
 
     public static String getSensorName(Context context, String sensorType) {
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.TOUCH))
-            return context.getString(R.string.sensors_touch);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.SOUND))
-            return context.getString(R.string.sensors_sound);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.LINE))
-            return context.getString(R.string.sensors_light);
+        if (TOUCH.equals(sensorType)) return context.getString(R.string.sensors_touch);
+        if (SOUND.equals(sensorType)) return context.getString(R.string.sensors_sound);
+        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_light);
         return "";
     }
 
     public static int getSensorColor(String sensorType) {
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.TOUCH))
-            return Color.rgb(50, 142, 183);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.SOUND))
-            return Color.rgb(65, 163, 86);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.LINE))
-            return Color.rgb(221, 86, 82);
+        if (TOUCH.equals(sensorType)) return Color.rgb(50, 142, 183);
+        if (SOUND.equals(sensorType)) return Color.rgb(65, 163, 86);
+        if (LINE.equals(sensorType)) return Color.rgb(221, 86, 82);
         return Color.GRAY;
     }
 
     @Override
     protected void savePortConnection(String port, String device) {
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort1)))
-            MachinePreferences.get(getContext()).setInputPort1(device);
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort2)))
-            MachinePreferences.get(getContext()).setInputPort2(device);
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort3)))
-            MachinePreferences.get(getContext()).setInputPort3(device);
-        if (port.equals(getContext().getString(R.string.setting_portconfig_deviceSensorPort4)))
-            MachinePreferences.get(getContext()).setInputPort4(device);
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort1).equals(port)) p.setInputPort1(device);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort2).equals(port)) p.setInputPort2(device);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort3).equals(port)) p.setInputPort3(device);
+        if (c.getString(R.string.setting_portconfig_deviceSensorPort4).equals(port)) p.setInputPort4(device);
     }
 
     @Override
