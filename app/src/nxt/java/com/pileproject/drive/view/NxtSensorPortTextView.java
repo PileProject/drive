@@ -23,9 +23,9 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.TOUCH;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
 
 public class NxtSensorPortTextView extends PortTextView {
 

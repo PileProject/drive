@@ -30,6 +30,13 @@ import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.LEFT;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.RIGHT;
+
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.TOUCH;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
+
 public class NxtController implements MachineController {
     public static final int MAX_MOTOR_POWER = 900;
     public static final int INIT_MOTOR_POWER = 500;
@@ -63,16 +70,16 @@ public class NxtController implements MachineController {
     }
 
     private void connectMotor(String motorType, NxtOutputPort port) {
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.NONE)) return ;
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.LEFT)) mLeftMotor = mMachine.createMotor(port);
-        if (motorType.equals(MachinePreferencesSchema.MOTOR.RIGHT)) mRightMotor = mMachine.createMotor(port);
+        if (MachinePreferencesSchema.MOTOR.NONE.equals(motorType)) return ;
+        if (LEFT.equals(motorType)) mLeftMotor = mMachine.createMotor(port);
+        if (RIGHT.equals(motorType)) mRightMotor = mMachine.createMotor(port);
     }
 
     private void connectSensor(String sensorType, NxtInputPort port) {
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.NONE)) return ;
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.TOUCH)) mTouchSensor = mMachine.createTouchSensor(port);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.SOUND)) mSoundSensor = mMachine.createSoundSensor(port);
-        if (sensorType.equals(MachinePreferencesSchema.SENSOR.LINE)) mLineSensor = mMachine.createLineSensor(port);
+        if (MachinePreferencesSchema.SENSOR.NONE.equals(sensorType)) return ;
+        if (TOUCH.equals(sensorType)) mTouchSensor = mMachine.createTouchSensor(port);
+        if (SOUND.equals(sensorType)) mSoundSensor = mMachine.createSoundSensor(port);
+        if (LINE.equals(sensorType)) mLineSensor = mMachine.createLineSensor(port);
     }
 
     /**
@@ -232,9 +239,9 @@ public class NxtController implements MachineController {
     public static final class SensorProperty {
         public static List<String> getAllSensors() {
             List<String> sensors = new LinkedList<>();
-            sensors.add(MachinePreferencesSchema.SENSOR.TOUCH);
-            sensors.add(MachinePreferencesSchema.SENSOR.SOUND);
-            sensors.add(MachinePreferencesSchema.SENSOR.LINE);
+            sensors.add(TOUCH);
+            sensors.add(SOUND);
+            sensors.add(LINE);
             return sensors;
         }
 
@@ -256,8 +263,8 @@ public class NxtController implements MachineController {
     public static final class MotorProperty {
         public static List<String> getAllMotors() {
             List<String> motors = new LinkedList<>();
-            motors.add(MachinePreferencesSchema.MOTOR.LEFT);
-            motors.add(MachinePreferencesSchema.MOTOR.RIGHT);
+            motors.add(LEFT);
+            motors.add(RIGHT);
             return motors;
         }
     }
