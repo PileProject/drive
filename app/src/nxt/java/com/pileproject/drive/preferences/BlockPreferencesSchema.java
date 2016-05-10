@@ -31,17 +31,11 @@ public class BlockPreferencesSchema {
         public static final int SOUND_DEFAULT = 70;
         public static final int LINE_DEFAULT = 50;
     }
-    public class REPETITION {
-        public static final int COUNT_MAX = 5;
-    }
 
-    @Key("sound_sensor_threshold")
-    int soundSensorThreshold = THRESHOLD.SOUND_DEFAULT;
+    @Key(name = "sound_sensor_threshold")
+    final int soundSensorThreshold = THRESHOLD.SOUND_DEFAULT;
 
-    @Key("line_sensor_threshold")
-    int lineSensorThreshold = THRESHOLD.LINE_DEFAULT;
-
-    @Key("max_repetition_counts")
-    int maxRepetitionCounts = REPETITION.COUNT_MAX;
+    @Key(name = "line_sensor_threshold")
+    final int lineSensorThreshold = THRESHOLD.LINE_DEFAULT;
 }
 

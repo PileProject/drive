@@ -27,6 +27,6 @@ import com.rejasupotaro.android.kvs.annotations.Table;
  */
 @Table(name = "common_preferences")
 public class CommonPreferencesSchema {
-    @Key("supervisor_mode")
-    boolean supervisorMode = false;
+    @Key(name = "supervisor_mode")
+    final boolean supervisorMode = false;
 }

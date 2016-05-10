@@ -45,30 +45,30 @@ public class MachinePreferencesSchema {
         public static final String NONE = "none";
     }
 
-    @Key("bluetooth_address")
+    @Key(name = "bluetooth_address")
     String macAddress;
 
-    @Key("firmware")
-    String firmware = FIRMWARE.STANDARD;
+    @Key(name = "firmware")
+    final String firmware = FIRMWARE.STANDARD;
 
-    @Key("input_port_1")
-    String inputPort1 = SENSOR.TOUCH;
+    @Key(name = "input_port_1")
+    final String inputPort1 = SENSOR.TOUCH;
 
-    @Key("input_port_2")
-    String inputPort2 = SENSOR.SOUND;
+    @Key(name = "input_port_2")
+    final String inputPort2 = SENSOR.SOUND;
 
-    @Key("input_port_3")
-    String inputPort3 = SENSOR.LINE;
+    @Key(name = "input_port_3")
+    final String inputPort3 = SENSOR.LINE;
 
-    @Key("input_port_4")
-    String inputPort4 = SENSOR.NONE;
+    @Key(name = "input_port_4")
+    final String inputPort4 = SENSOR.NONE;
 
-    @Key("output_port_A")
-    String outputPortA = MOTOR.NONE;
+    @Key(name = "output_port_A")
+    final String outputPortA = MOTOR.NONE;
 
-    @Key("output_port_B")
-    String outputPortB = MOTOR.RIGHT;
+    @Key(name = "output_port_B")
+    final String outputPortB = MOTOR.RIGHT;
 
-    @Key("output_port_C")
-    String outputPortC = MOTOR.LEFT;
+    @Key(name = "output_port_C")
+    final String outputPortC = MOTOR.LEFT;
 }

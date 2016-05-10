@@ -72,6 +72,6 @@ dependencies {
     compile 'com.yahoo.squidb:squidb:2.0.2'
     compile 'com.yahoo.squidb:squidb-annotations:2.0.2'
 
-    apt 'com.github.rejasupotaro.kvs-schema:compiler:3.1.0'
-    compile 'com.github.rejasupotaro.kvs-schema:library:3.1.0'
+    apt 'com.rejasupotaro:kvs-schema-compiler:5.0.0'
+    compile 'com.rejasupotaro:kvs-schema:5.0.0'
 }
