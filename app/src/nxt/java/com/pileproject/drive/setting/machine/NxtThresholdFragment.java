@@ -28,9 +28,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
 import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
-import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.preferences.BlockPreferences;
 
 public class NxtThresholdFragment extends PreferenceFragment {
     private SeekBar mLightSensorSeek = null;
@@ -40,8 +38,7 @@ public class NxtThresholdFragment extends PreferenceFragment {
     private TextView mSoundSensorText = null;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_nxtthreshold, container, false);
 
@@ -61,7 +58,8 @@ public class NxtThresholdFragment extends PreferenceFragment {
         mLightSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent, progress));
+                mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent,
+                                                   progress + LineSensor.PctMin));
             }
 
             @Override
@@ -70,15 +68,14 @@ public class NxtThresholdFragment extends PreferenceFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(IfNxtIsOutOfLineBlock.class.getName(),
-                                                           seekBar.getProgress());
+                BlockPreferences.get(getActivity())
+                        .setLineSensorThreshold(seekBar.getProgress() + LineSensor.PctMin);
             }
         });
 
-        final int savedLightValue =
-                SharedPreferencesWrapper.loadIntPreference(IfNxtIsOutOfLineBlock.class.getName(), -1);
-        mLightSensorSeek.setMax(LineSensor.PctMax);
-        mLightSensorSeek.setProgress((savedLightValue == -1) ? LineSensor.DEFAULT : savedLightValue);
+        final int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold();
+        mLightSensorSeek.setMax(LineSensor.PctMax - LineSensor.PctMin);
+        mLightSensorSeek.setProgress(savedLightValue - LineSensor.PctMin);
 
         mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -93,16 +90,13 @@ public class NxtThresholdFragment extends PreferenceFragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(IfThereWasALargeSoundBlock.class.getName(),
-                                                           seekBar.getProgress() + SoundSensor.SI_dB_SiMin);
+                BlockPreferences.get(getActivity())
+                        .setSoundSensorThreshold(seekBar.getProgress() + SoundSensor.SI_dB_SiMin);
             }
         });
 
-        final int savedSoundValue =
-                SharedPreferencesWrapper.loadIntPreference(IfThereWasALargeSoundBlock.class.getName(), -1);
+        final int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
         mSoundSensorSeek.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
-        mSoundSensorSeek.setProgress((savedSoundValue == -1) ?
-                                             SoundSensor.SI_dB_DEFAULT - SoundSensor.SI_dB_SiMin :
-                                             savedSoundValue - SoundSensor.SI_dB_SiMin);
+        mSoundSensorSeek.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
     }
 }

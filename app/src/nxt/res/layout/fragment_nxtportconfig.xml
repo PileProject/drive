@@ -66,7 +66,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="sensorPort1"
+                        port:portName="@string/setting.portconfig.deviceSensorPort1"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -86,7 +86,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="sensorPort2"
+                        port:portName="@string/setting.portconfig.deviceSensorPort2"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -106,7 +106,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="sensorPort3"
+                        port:portName="@string/setting.portconfig.deviceSensorPort3"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -126,7 +126,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="sensorPort4"
+                        port:portName="@string/setting.portconfig.deviceSensorPort4"
                         port:portType="sensor"/>
                 </TableRow>
             </TableLayout>
@@ -227,7 +227,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="motorPortA"
+                        port:portName="@string/setting.portconfig.deviceMotorPortA"
                         port:portType="motor"/>
                 </TableRow>
 
@@ -247,7 +247,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="motorPortB"
+                        port:portName="@string/setting.portconfig.deviceMotorPortB"
                         port:portType="motor"/>
                 </TableRow>
 
@@ -267,7 +267,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="motorPortC"
+                        port:portName="@string/setting.portconfig.deviceMotorPortC"
                         port:portType="motor"/>
                 </TableRow>
             </TableLayout>

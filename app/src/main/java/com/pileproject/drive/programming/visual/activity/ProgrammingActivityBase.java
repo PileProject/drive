@@ -36,12 +36,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.preferences.CommonPreferences;
+import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
-import com.pileproject.drive.setting.app.SupervisorModeFragment;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -108,8 +108,9 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     protected abstract Intent getIntentToExecute();
 
     private void findViews() {
-        mSpaceManager = new ProgrammingSpaceManager(this,
-                                                    (BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout));
+        mSpaceManager
+                = new ProgrammingSpaceManager(this,
+                                              (BlockSpaceLayout) findViewById(R.id.programming_placingBlockSpaceLayout));
         mAddBlockButtons = new ArrayList<>(NKINDS);
         mAddBlockButtons.add((Button) findViewById(R.id.programming_sequenceButton));
         mAddBlockButtons.add((Button) findViewById(R.id.programming_repetitionButton));
@@ -119,7 +120,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
 
     private void moveToAnotherActivity() {
         mSpaceManager.saveExecutionProgram();
-        String address = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
         // TODO this check does not work when dissolves paring
         if (address == null) {
             AlertDialog alertDialog = new AlertDialog.Builder(ProgrammingActivityBase.this).setTitle(R.string.error)
@@ -178,7 +179,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
             return;
         }
 
-        String deviceAddress = SharedPreferencesWrapper.loadDefaultDeviceAddress();
+        String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress();
         deviceAddress =
                 (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
@@ -257,8 +258,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     }
 
     private void onSaveProgram() {
-        boolean isEnabledSupervisorMode =
-                SharedPreferencesWrapper.loadBoolPreference(SupervisorModeFragment.class.getName(), false);
+        boolean isEnabledSupervisorMode = CommonPreferences.get(getApplicationContext()).getSupervisorMode();
 
         if (isEnabledSupervisorMode) {
             // supervisor
