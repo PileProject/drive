@@ -34,7 +34,6 @@ import android.content.IntentFilter;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -54,6 +53,8 @@ import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.LinkedList;
 import java.util.UUID;
+
+import trikita.log.Log;
 
 /**
  * Fragment for selecting device
@@ -394,7 +395,6 @@ public class DeviceSelectFragment extends PreferenceFragment {
     }
 
     class BluetoothTask extends AsyncTask<BluetoothDevice, Void, Boolean> {
-        private static final String BT_TAG = "BluetoothTask";
 
         private final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
@@ -427,7 +427,7 @@ public class DeviceSelectFragment extends PreferenceFragment {
                 socket.connect();
                 socket.close();
             } catch (IOException e) {
-                Log.d(BT_TAG, e.getMessage());
+                Log.d(e.getMessage());
 
                 try {
                     // try another method
@@ -436,12 +436,12 @@ public class DeviceSelectFragment extends PreferenceFragment {
                     socket.connect();
                     socket.close();
                 } catch (IOException e2) {
-                    Log.d(BT_TAG, e2.getMessage());
+                    Log.d(e2.getMessage());
                     return false;
                 }
                 // method invocation failed
                 catch (Exception e2) {
-                    Log.d(BT_TAG, e2.getMessage());
+                    Log.d(e2.getMessage());
                     return false;
                 }
             }

@@ -29,7 +29,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +45,8 @@ import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
 import java.util.ArrayList;
 import java.util.List;
 
+import trikita.log.Log;
+
 /**
  * Users create programs on this Activity
  *
@@ -56,7 +57,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
     private final int NKINDS = 3;
     private final int ADD_BLOCK = 1;
     private final int EXECUTE_PROGRAM = 2;
-    private final String TAG = "NxtProgrammingActivity";
     private List<Button> mAddBlockButtons;
     private Button mExecButton;
     private ProgrammingSpaceManager mSpaceManager;
@@ -82,7 +82,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity {
                 public void onClick(View v) {
                     Intent intent = getIntentToBlockList();
                     intent.putExtra("category", mAddBlockButtons.indexOf(v));
-                    Log.d(TAG, "category: " + mAddBlockButtons.indexOf(v));
+                    Log.d("category: " + mAddBlockButtons.indexOf(v));
                     startActivityForResult(intent, ADD_BLOCK);
                 }
             });
