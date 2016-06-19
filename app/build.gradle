@@ -74,4 +74,6 @@ dependencies {
 
     apt 'com.rejasupotaro:kvs-schema-compiler:5.0.0'
     compile 'com.rejasupotaro:kvs-schema:5.0.0'
+
+    compile 'co.trikita:log:1.1.5'
 }

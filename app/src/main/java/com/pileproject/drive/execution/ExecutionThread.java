@@ -20,7 +20,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 
 import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
@@ -29,6 +28,8 @@ import com.pileproject.drive.programming.visual.block.selection.SelectionEndBloc
 
 import java.util.ArrayList;
 import java.util.Map;
+
+import trikita.log.Log;
 
 /**
  * Sub thread to execute program
@@ -41,7 +42,6 @@ public class ExecutionThread extends Thread {
     public static final int EMPHASIZE_BLOCK = 1001;
     public static final int END_THREAD = 1002;
     public static final int CONNECTION_ERROR = 1003;
-    private static final String TAG = "ExecutionThread";
     private static int mThreadNum = 0;
     private boolean mHalt = false;
     private ProgramDataManager mManager;
@@ -120,7 +120,7 @@ public class ExecutionThread extends Thread {
 
                 // Get block to be executed
                 BlockBase block = mCondition.blocks.get(mCondition.programCount);
-                Log.d(TAG, "Current Block: " + block.getClass().getSimpleName());
+                Log.d("Current Block: " + block.getClass().getSimpleName());
 
                 // Emphasize the current executing block
                 sendIndex(EMPHASIZE_BLOCK, mCondition.programCount);
@@ -129,14 +129,14 @@ public class ExecutionThread extends Thread {
                 int delay = block.action(mController, mCondition);
                 waitMillSec(delay); // Wait for some
 
-                Log.d(TAG, "Current Index: " + mCondition.programCount);
+                Log.d("Current Index: " + mCondition.programCount);
 
                 if (mStop) {
                     mCondition.programCount--;
                 }
                 waitMillSec(1); // adjustment
             }
-            Log.d(TAG, "Thread has just finished");
+            Log.d("Thread has just finished");
             sendState(END_THREAD);
         } catch (RuntimeException e) {
             sendState(CONNECTION_ERROR);

@@ -17,15 +17,16 @@
 package com.pileproject.drive.programming.visual.block;
 
 import android.content.Context;
-import android.util.Log;
 
+import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
-import com.pileproject.drive.app.DriveApplication;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+
+import trikita.log.Log;
 
 /**
  * Factory that creates blocks
@@ -34,7 +35,6 @@ import java.util.ArrayList;
  * @version 1.0 18-June-2013
  */
 public class BlockFactory {
-    private static final String TAG = "BlockFactory";
     public static final int SEQUENCE = 0;
     public static final int REPETITION = 1;
     public static final int SELECTION = 2;
@@ -75,7 +75,7 @@ public class BlockFactory {
         try {
             blockClass = getClassForName(blockName);
         } catch (RuntimeException e) {
-            Log.e(TAG, e.getMessage());
+            Log.e(e.getMessage());
         }
 
         // Get constructor

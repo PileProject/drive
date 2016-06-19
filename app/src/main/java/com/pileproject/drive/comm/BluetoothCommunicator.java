@@ -18,7 +18,6 @@ package com.pileproject.drive.comm;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.util.Log;
 
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
@@ -28,10 +27,11 @@ import java.io.OutputStream;
 import java.lang.reflect.Method;
 import java.util.UUID;
 
+import trikita.log.Log;
+
 
 public class BluetoothCommunicator implements ICommunicator {
 
-    private final static String TAG = "BluetoothCommunicator";
     private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
 
     private BluetoothDevice mDevice;
@@ -57,7 +57,7 @@ public class BluetoothCommunicator implements ICommunicator {
         try {
             mSocket.connect();
         } catch (IOException firstIOException) {
-            Log.d(TAG, "Failed to connect by orthodox method");
+            Log.d("Failed to connect by orthodox method");
             try {
                 // Redundancy check
                 Method method = mDevice.getClass().getMethod("createRfcommSocket", int.class);
@@ -69,12 +69,12 @@ public class BluetoothCommunicator implements ICommunicator {
                     mSocket.close();
                 } catch (IOException closeException) {
                     closeException.printStackTrace();
-                    Log.d(TAG, "it seems unable to recover");
+                    Log.d("it seems unable to recover");
                 }
                 throw secondIOException;
             } catch (Exception exception) {
                 exception.printStackTrace();
-                Log.d(TAG, "this exception should not be occurred in release " + "version");
+                Log.d("this exception should not be occurred in release " + "version");
             }
         }
 
@@ -88,7 +88,7 @@ public class BluetoothCommunicator implements ICommunicator {
             try {
                 mSocket.close();
             } catch (IOException e) {
-                Log.e(TAG, "Failed to close connection.", e);
+                Log.e("Failed to close connection.", e);
             }
         }
         mSocket = null;
@@ -100,13 +100,13 @@ public class BluetoothCommunicator implements ICommunicator {
         try {
             mOutputStream.write(request);
         } catch (IOException e) {
-            Log.e(TAG, "Write failed.", e);
+            Log.e("Write failed.", e);
             throw new RuntimeException(e);
         }
 
-        Log.d(TAG, "Write");
+        Log.d("Write");
         for (int i = 0; i < request.length; i++) {
-            Log.d(TAG, "[" + i + "]" + request[i]);
+            Log.d("[" + i + "]" + request[i]);
         }
     }
 
@@ -118,15 +118,15 @@ public class BluetoothCommunicator implements ICommunicator {
         try {
             numBytes = mInputStream.read(buffer);
         } catch (IOException e) {
-            Log.e(TAG, "Read failed.", e);
+            Log.e("Read failed.", e);
             throw new RuntimeException(e);
         }
         byte[] result = new byte[numBytes];
         System.arraycopy(buffer, 0, result, 0, numBytes);
 
-        Log.d(TAG, "Read ");
+        Log.d("Read ");
         for (int i = 0; i < result.length; i++) {
-            Log.d(TAG, "[" + i + "]" + result[i]);
+            Log.d("[" + i + "]" + result[i]);
         }
         return result;
     }
