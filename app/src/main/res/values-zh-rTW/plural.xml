@@ -16,8 +16,8 @@
   -->
 
 <resources>
-    <plurals name ="seconds">
-        <item quantity="one">びょう</item>
-        <item quantity="other">びょう</item>
+    <plurals name="seconds">
+        <item quantity="one">Translate Me!: second</item>
+        <item quantity="other">Translate Me!: seconds</item>
     </plurals>
 </resources>

@@ -40,7 +40,7 @@
     <!-- TextsOnBlock -->
     <!-- Sequence -->
     <string name="textOnBlocks.forwardSec">びょうすすむ</string>
-    <string name="textOnBlocks.backwardSec">秒後進</string>
+    <string name="textOnBlocks.backwardSec">びょうバック</string>
     <string name="textOnBlocks.turnLeftSec">びょうひだりまわり</string>
     <string name="textOnBlocks.turnRightSec">びょうみぎまわり</string>
     <string name="textOnBlocks.stopSec">びょうとまる</string>
