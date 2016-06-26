@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~      http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  -->
+<resources>
+    <string name="action_settings">Action Settings</string>
+    <string name="app_name">App Name</string>
+
+    <string name="ok">OK</string>
+    <string name="back">もどる</string>
+    <string name="cancel">キャンセル</string>
+    <string name="close">とじる</string>
+    <string name="message">メッセージ</string>
+    <string name="confirmation">ほんとうによろしいですか？</string>
+    <string name="delete">%1$s をけします</string>
+    <string name="noImage">がぞうがありません</string>
+    <string name="sequence">じゅんじ</string>
+    <string name="selection">ぶんき</string>
+    <string name="repetition">くりかえし</string>
+    <string name="percent">%</string>
+    <string name="error">エラー</string>
+    <string name="turnedOnBluetooth">Bluetoothきのうをオンにしました</string>
+    <string name="bluetoothFunctionIsOff">Bluetooth きのうがオンになっていません</string>
+
+    <!-- Programming -->
+    <string name="programming.label">プログラミングがめん</string>
+    <string name="programming.sequence">じゅんじ</string>
+    <string name="programming.repetition">くりかえし</string>
+    <string name="programming.selection">ぶんき</string>
+    <string name="programming.undo">もとにもどす</string>
+    <string name="programming.redo">やりなおす</string>
+    <string name="programming.execute">じっこうする</string>
+    <string name="programming.pleaseSelectNumbers">すうちをえらんでください</string>
+    <string name="programming.deleteAllBlocks">はじめからつくりなおす</string>
+    <string name="programming.goBackToTitle">タイトルがめんへもどる</string>
+    <string name="programming.saveProgram">プログラムをほぞんする</string>
+    <string name="programming.loadProgram">プログラムをよみだす</string>
+    <string name="programming.saveProgramAsASample">サンプルとしてほぞんする</string>
+    <string name="programming.loadSampleProgram">サンプルプログラムをよみだす</string>
+    <string name="programming.inputProgramName">プログラム名:</string>
+    <string name="programming.savedAs">%1$s というなまえでほぞんしました</string>
+    <string name="programming.targetDevice">そうさするデバイス -> </string>
+    <string name="programming.noTargetDevice">デバイスみせってい</string>
+
+    <!-- BlockList -->
+    <string name="blockList.label">"ブロックリスト: "</string>
+    <string name="blockList.howToUse">つかいかた</string>
+    <string name="blockList.howToUseBlock">ブロックのつかいかた</string>
+    <string name="blockList.theseBlocksAreUsedLikeThis">はいかのようにつかいます</string>
+
+    <!-- Blocks -->
+    <!-- Repetition -->
+    <string name="blocks.whileForever">ずっとくりかえす</string>
+    <string name="blocks.whileNum">□かいくりかえす</string>
+    <string name="blocks.repetitionBreak">くりかえしをぬける</string>
+    <string name="blocks.repeatNum">%d かい</string>
+
+    <!-- TextsOnBlock -->
+    <!-- Sequence -->
+    <string name="textOnBlocks.contentDefaultSec">0.0</string>
+    <string name="textOnBlocks.contentDefaultPercent">0</string>
+    <!-- Repetition -->
+    <string name="textOnBlocks.whileForever">くりかえし</string>
+    <string name="textOnBlocks.whileNum">かいくりかえし</string>
+    <string name="textOnBlocks.repetitionEnd">くりかえしおわり</string>
+    <string name="textOnBlocks.repetitionBreak">くりかえしをぬける</string>
+    <string name="textOnBlocks.contentDefaultCount">1</string>
+    <!-- Selection -->
+    <string name="textOnBlocks.selectionEnd">ぶんきおわり</string>
+    <string name="textOnBlocks.yes">はい</string>
+    <string name="textOnBlocks.no">いいえ</string>
+
+    <!-- Execute -->
+    <string name="execute.label">じっこうがめん</string>
+    <string name="execute.connecting">せつぞくちゅう…</string>
+    <string name="execute.noBluetoothFunction">このデバイスにはBluetoothきのうがありません</string>
+    <string name="execute.pleaseWaitForAWhile">しばらくおまちください</string>
+    <string name="execute.bluetoothConnectionError">Bluetooth デバイスとのせつぞくにしっぱいしました</string>
+    <string name="execute.startExecution">じっこうかいし</string>
+    <string name="execute.executionIsOver">じっこうがしゅうりょうしました</string>
+    <string name="execute.showNoteOfPort">プログラムがただしくどうさしないばあいは，せっていがめんからポートのせっていをたしかめてください</string>
+    <string name="execute.disconnectedByNXT">せつぞくがきられました</string>
+    <string name="execute.stop">いちじていし</string>
+    <string name="execute.restart">さいかい</string>
+    <string name="execute.finish">しゅうりょう</string>
+
+    <!-- SelectNumberView -->
+    <string name="select.number.period">●</string>
+    <string name="select.number.finish">かんりょう</string>
+
+    <!--  SettingActivity -->
+    <string name="setting.label">せっていがめん</string>
+
+    <!-- DeviceSelect -->
+    <string name="deviceselect.label">デバイスをえらんでください</string>
+    <string name="deviceselect.noDeviceFound">デバイスが見つかりません</string>
+    <string name="deviceselect.title.bondedDevice">ペアリング済みデバイス</string>
+    <string name="deviceselect.title.newDevice">見つけたデバイス</string>
+    <string name="deviceselect.scanning">スキャン中…</string>
+    <string name="deviceselect.selectDevice">デバイスを選択してください</string>
+    <string name="deviceselect.progress.scanning.title">スキャン中</string>
+    <string name="deviceselect.progress.scanning.message">スキャンしています…</string>
+    <string name="deviceselect.progress.connecting.title">接続中</string>
+    <string name="deviceselect.progress.connecting.message">接続しています…</string>
+    <string name="deviceselect.enableBt.title">確認</string>
+    <string name="deviceselect.enableBt.message">Bluetooth 機能を ON にしてください</string>
+    <string name="deviceselect.enableBt.positiveButton">OK</string>
+    <string name="deviceselect.button.discover">スキャンする</string>
+    <string name="deviceselect.noDeviceBonded">ペアリング済みデバイスはありません</string>
+    <string name="deviceselect.toast.setDefault">デフォルトデバイスを設定しました</string>
+    <string name="deviceselect.toast.cannotConnect">デバイスと接続できませんでした</string>
+    <string name="deviceselect.needBt.title">警告</string>
+    <string name="deviceselect.needBt.message">Bluetooth きのうがありません。スキャンできません。</string>
+    <string name="deviceselect.didNotSelectDevice">設定画面でデバイスをえらんでください</string>
+
+    <!-- SettingActivity -->
+    <string name="setting.deviceSelect">デバイス選択</string>
+
+    <!-- Program List Pragment -->
+    <string name="programlist">プログラムリスト</string>
+    <string name="programlist.delete">消去</string>
+    <string name="programlist.checkAll">全て選択</string>
+    <string name="programlist.samplePrograms">サンプルプログラム</string>
+    <string name="programlist.userPrograms">ユーザプログラム</string>
+
+    <!--  Supervisor Mode Setting -->
+    <string name="supervisorMode">管理者モードの設定</string>
+    <string name="supervisorMode.enableSupervisorMode">管理者モードを有効にする</string>
+
+    <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
+    <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+</resources>
