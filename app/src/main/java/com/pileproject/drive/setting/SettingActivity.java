@@ -18,15 +18,20 @@ package com.pileproject.drive.setting;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.DialogPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 
 import com.pileproject.drive.R;
-
-import java.util.List;
+import com.pileproject.drive.preferences.CommonPreferences;
 
 /**
  * Setting activity
@@ -36,11 +41,12 @@ import java.util.List;
  * @author yusaku
  * @version 1.0 4-June-2013
  */
-public class SettingActivity extends AppCompatPreferenceActivity {
+public class SettingActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
 
         ViewGroup contentRoot = (ViewGroup) findViewById(android.R.id.content);
         LinearLayout content = (LinearLayout) contentRoot.getChildAt(0);
@@ -60,11 +66,11 @@ public class SettingActivity extends AppCompatPreferenceActivity {
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
-    }
 
-    @Override
-    public void onBuildHeaders(List<Header> target) {
-        loadHeadersFromResource(R.xml.setting_fragmentlist, target);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.setting_content, new SettingFragment())
+                .commit();
     }
 
     @Override
@@ -78,8 +84,55 @@ public class SettingActivity extends AppCompatPreferenceActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return false;
+    public static class SettingFragment extends PreferenceFragmentCompat {
+
+        private CheckBoxPreference mSupervisorPreference;
+
+        @Override
+        public void onCreatePreferences(Bundle bundle, String s) {
+            addPreferencesFromResource(R.xml.preferences);
+        }
+
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            if (preference instanceof DialogPreferenceInterface) {
+                ((DialogPreferenceInterface) preference).startDialog(this);
+                return;
+            }
+
+            super.onDisplayPreferenceDialog(preference);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            mSupervisorPreference = (CheckBoxPreference) getPreferenceManager().findPreference("supervisor_preference");
+            mSupervisorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    CommonPreferences.get(getActivity()).setSupervisorMode((boolean) newValue);
+
+                    // newValue is not set to the component (e.g., checkbox) if return false
+                    return true;
+                }
+            });
+
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+    }
+
+    /**
+     * Interface for dialog-based preferences which extends {@link DialogPreference}.
+     * DialogPreference used in {@link SettingFragment} should implement this interface.
+     */
+    public interface DialogPreferenceInterface {
+
+        /**
+         * Called in {@link SettingFragment#onDisplayPreferenceDialog(Preference)}
+         * The function should show a fragment which represents the preference of this class.
+         *
+         * @param parent parent fragment, which should be {@link SettingFragment}
+         */
+        void startDialog(PreferenceFragmentCompat parent);
     }
 }

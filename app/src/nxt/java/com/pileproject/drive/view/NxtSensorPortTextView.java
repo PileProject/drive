@@ -52,20 +52,20 @@ public class NxtSensorPortTextView extends PortTextView {
     protected void savePortConnection(String port, String device) {
         final Context c = getContext();
         final MachinePreferences p = MachinePreferences.get(c);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort1).equals(port)) p.setInputPort1(device);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort2).equals(port)) p.setInputPort2(device);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort3).equals(port)) p.setInputPort3(device);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort4).equals(port)) p.setInputPort4(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort1).equals(port)) p.setInputPort1(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort2).equals(port)) p.setInputPort2(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort3).equals(port)) p.setInputPort3(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort4).equals(port)) p.setInputPort4(device);
     }
 
     @Override
     protected void removePortConnection(String port) {
         final Context c = getContext();
         final MachinePreferences p = MachinePreferences.get(c);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort1).equals(port)) p.setInputPort1(NONE);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort2).equals(port)) p.setInputPort2(NONE);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort3).equals(port)) p.setInputPort3(NONE);
-        if (c.getString(R.string.setting_portconfig_deviceSensorPort4).equals(port)) p.setInputPort4(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort1).equals(port)) p.setInputPort1(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort2).equals(port)) p.setInputPort2(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort3).equals(port)) p.setInputPort3(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort4).equals(port)) p.setInputPort4(NONE);
     }
 
     @Override

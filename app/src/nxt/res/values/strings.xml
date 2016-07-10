@@ -51,24 +51,25 @@
     <string name="textOnBlocks.ifNxtWasTouched">Touched?</string>
     <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
 
+    <!-- Machine's Sensors -->
     <string name="sensors.touch">Touch Sensor</string>
     <string name="sensors.light">Light Sensor</string>
     <string name="sensors.sound">Sound Sensor</string>
     <string name="motors.left">Left Motor</string>
     <string name="motors.right">Right Motor</string>
 
-    <string name="setting.portconfig">Port Setting</string>
-    <string name="setting.portconfig.sensors">Sensors</string>
-    <string name="setting.portconfig.motors">Motors</string>
-    <string name="setting.portconfig.deviceSensorPorts">Sensor Ports on Device</string>
-    <string name="setting.portconfig.deviceSensorPort1">Port1</string>
-    <string name="setting.portconfig.deviceSensorPort2">Port2</string>
-    <string name="setting.portconfig.deviceSensorPort3">Port3</string>
-    <string name="setting.portconfig.deviceSensorPort4">Port4</string>
-    <string name="setting.portconfig.deviceMotorPorts">Motor Ports on Device</string>
-    <string name="setting.portconfig.deviceMotorPortA">PortA</string>
-    <string name="setting.portconfig.deviceMotorPortB">PortB</string>
-    <string name="setting.portconfig.deviceMotorPortC">PortC</string>
+    <string name="setting.portConnection">Port Setting</string>
+    <string name="setting.portConnection.sensors">Sensors</string>
+    <string name="setting.portConnection.motors">Motors</string>
+    <string name="setting.portConnection.deviceSensorPorts">Sensor Ports on Device</string>
+    <string name="setting.portConnection.deviceSensorPort1">Port1</string>
+    <string name="setting.portConnection.deviceSensorPort2">Port2</string>
+    <string name="setting.portConnection.deviceSensorPort3">Port3</string>
+    <string name="setting.portConnection.deviceSensorPort4">Port4</string>
+    <string name="setting.portConnection.deviceMotorPorts">Motor Ports on Device</string>
+    <string name="setting.portConnection.deviceMotorPortA">PortA</string>
+    <string name="setting.portConnection.deviceMotorPortB">PortB</string>
+    <string name="setting.portConnection.deviceMotorPortC">PortC</string>
 
     <string name="setting.threshold">Sensor Threshold Setting</string>
     <string name="setting.threshold.lightSensor">Light Sensor</string>

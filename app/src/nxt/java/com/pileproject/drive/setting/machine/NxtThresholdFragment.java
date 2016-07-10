@@ -16,8 +16,10 @@
 
 package com.pileproject.drive.setting.machine;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,22 +32,30 @@ import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
 import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
 import com.pileproject.drive.preferences.BlockPreferences;
 
-public class NxtThresholdFragment extends PreferenceFragment {
-    private SeekBar mLightSensorSeek = null;
+public class NxtThresholdFragment extends DialogFragment {
+    private SeekBar mLightSensorSeekBar = null;
     private TextView mLightSensorText = null;
 
-    private SeekBar mSoundSensorSeek = null;
+    private SeekBar mSoundSensorSeekBar = null;
     private TextView mSoundSensorText = null;
+
+    @Override
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setTitle(R.string.setting_threshold);
+        return dialog;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_nxtthreshold, container, false);
+        View v = inflater.inflate(R.layout.fragment_nxt_threshold, container, false);
 
-        mLightSensorSeek = (SeekBar) v.findViewById(R.id.setting_threshold_lightSensor);
+        mLightSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_lightSensor);
         mLightSensorText = (TextView) v.findViewById(R.id.setting_threshold_lightSensorValueText);
 
-        mSoundSensorSeek = (SeekBar) v.findViewById(R.id.setting_threshold_soundSensor);
+        mSoundSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_soundSensor);
         mSoundSensorText = (TextView) v.findViewById(R.id.setting_threshold_soundSensorValueText);
 
         return v;
@@ -55,7 +65,7 @@ public class NxtThresholdFragment extends PreferenceFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mLightSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mLightSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent,
@@ -73,11 +83,11 @@ public class NxtThresholdFragment extends PreferenceFragment {
             }
         });
 
-        final int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold();
-        mLightSensorSeek.setMax(LineSensor.PctMax - LineSensor.PctMin);
-        mLightSensorSeek.setProgress(savedLightValue - LineSensor.PctMin);
+        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold();
+        mLightSensorSeekBar.setMax(LineSensor.PctMax - LineSensor.PctMin);
+        mLightSensorSeekBar.setProgress(savedLightValue - LineSensor.PctMin);
 
-        mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mSoundSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mSoundSensorText.setText(getString(R.string.setting_threshold_unit_dB,
@@ -95,8 +105,8 @@ public class NxtThresholdFragment extends PreferenceFragment {
             }
         });
 
-        final int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
-        mSoundSensorSeek.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
-        mSoundSensorSeek.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
+        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
+        mSoundSensorSeekBar.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
+        mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
     }
 }
