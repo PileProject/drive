@@ -32,6 +32,8 @@ android {
         targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -58,6 +60,11 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        test {
+            manifest.srcFile 'src/androidTest/AndroidManifest.xml'
+        }
+    }
 }
 
 dependencies {
@@ -65,6 +72,15 @@ dependencies {
 
     testCompile 'junit:junit:4.12'
 
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+
+    // specify the version of this library
+    // (without this line gradle sync fails due to the version conflict)
+    androidTestCompile 'com.android.support:support-annotations:23.4.0'
+
+    // mockito
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
 
     // our library
     compile 'com.pileproject:drivecommand:2.1.0'
