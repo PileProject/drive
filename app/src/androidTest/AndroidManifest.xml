@@ -14,9 +14,11 @@
   ~ limitations under the License.
   -->
 
-<resources>
-    <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-    </style>
-</resources>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.pileproject.drive">
+
+    <application>
+        <activity android:name=".util.fragment.TestActivity" />
+    </application>
+
+</manifest>

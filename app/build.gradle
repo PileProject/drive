@@ -29,9 +29,11 @@ android {
     defaultConfig {
         applicationId "com.pileproject.drive"
         minSdkVersion 15
-        targetSdkVersion 22
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
+
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
@@ -58,22 +60,46 @@ android {
     lintOptions {
         abortOnError false
     }
+    sourceSets {
+        test {
+            manifest.srcFile 'src/androidTest/AndroidManifest.xml'
+        }
+    }
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.2.1'
-    compile 'com.android.support:design:23.2.1'
 
+    testCompile 'junit:junit:4.12'
+
+    androidTestCompile 'com.android.support.test:runner:0.5'
+    androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.2'
+
+    // specify the version of this library
+    // (without this line gradle sync fails due to the version conflict)
+    androidTestCompile 'com.android.support:support-annotations:23.4.0'
+
+    // mockito
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+
+    // our library
     compile 'com.pileproject:drivecommand:2.1.0'
 
+    // support libraries
+    compile 'com.android.support:support-v4:23.2.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
+    compile 'com.android.support:design:23.2.1'
+    compile 'com.android.support:preference-v7:23.0.1'
+
+    // libraries for database
     apt 'com.yahoo.squidb:squidb-processor:2.0.2'
     compile 'com.yahoo.squidb:squidb:2.0.2'
     compile 'com.yahoo.squidb:squidb-annotations:2.0.2'
 
+    // library for preference
     apt 'com.rejasupotaro:kvs-schema-compiler:5.0.0'
     compile 'com.rejasupotaro:kvs-schema:5.0.0'
 
+    // library for logging
     compile 'co.trikita:log:1.1.5'
 }
