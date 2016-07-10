@@ -17,8 +17,6 @@
 package com.pileproject.drive.execution;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,6 +32,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.util.fragment.AlertDialogFragment;
+import com.pileproject.drive.util.fragment.ProgressDialogFragment;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
 
@@ -43,44 +43,40 @@ import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public abstract class ExecutionActivityBase extends AppCompatActivity {
+public abstract class ExecutionActivityBase extends AppCompatActivity implements AlertDialogFragment.EventListener {
+
+    private static final int DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED = 1;
+    private static final int DIALOG_REQUEST_CODE_THREAD_ENDED              = 2;
+    private static final int DIALOG_REQUEST_CODE_CONNECTION_ERROR          = 3;
+    private static final int DIALOG_REQUEST_CODE_BLUETOOTH                 = 4;
+
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int FAILED_TO_CONNECT = 1;
-    public static final String IS_CONNECTED = "is_connected";
 
+    public static final String IS_CONNECTED = "is_connected";
     public static final String MESSAGE_IN_EXECUTION = "message";
     public static final String BLOCK_INDEX = "index";
 
-    @SuppressWarnings("unused")
-    private static final String TAG = "NxtExecutionActivity";
+    private BluetoothAdapter mBtAdapter = null;
+    private ProgressSpaceManager mSpaceManager;
+
+    private Button mStopAndRestartButton;
+    private Button mFinishButton;
+    private ExecutionThread mThread = null;
+
     // Handler for connecting
     private final Handler mConnectingHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
             switch (message.what) {
                 case FAILED_TO_CONNECT:
-                    // Show error and finish
-                    AlertDialog alertDialog =
-                            new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error)
-                                    .setMessage(R.string.execute_bluetoothConnectionError)
-                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                           @Override
-                                                           public void onClick(
-                                                                   DialogInterface dialog, int which) {
-                                                               finish();
-                                                           }
-                                                       })
-                                    .create();
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.show();
+                    onConnectionAttemptFailed();
                     return true;
             }
             return false;
         }
     });
-    private BluetoothAdapter mBtAdapter = null;
-    private ProgressDialog mProgressDialog;
-    private ProgressSpaceManager mSpaceManager;
+
     // Handler for showing the progress of executions
     private final Handler mProgressHandler = new Handler(new Handler.Callback() {
         @Override
@@ -99,37 +95,19 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
                 }
 
                 case ExecutionThread.END_THREAD: {
-                    // Inform the end of the thread
-                    AlertDialog alertDialog =
-                            new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.execute_executionIsOver)
-                                    .setMessage(R.string.execute_showNoteOfPort)
-                                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                                           @Override
-                                                           public void onClick(
-                                                                   DialogInterface dialog, int which) {
-                                                               finish();
-                                                           }
-                                                       })
-                                    .create();
-                    // Move to bottom
-                    alertDialog.getWindow().getAttributes().gravity = Gravity.BOTTOM;
-                    alertDialog.setCanceledOnTouchOutside(false);
-                    alertDialog.show();
+                    onThreadEnded();
                     return true;
                 }
 
                 case ExecutionThread.CONNECTION_ERROR: {
                     // Inform the error of the thread
-                    showConnectionErrorDialog();
+                    onConnectionError();
                     return true;
                 }
             }
             return false;
         }
     });
-    private Button mStopAndRestartButton;
-    private Button mFinishButton;
-    private ExecutionThread mThread = null;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -173,7 +151,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
                 startExecution();
             } catch (RuntimeException e) {
                 e.printStackTrace();
-                showConnectionErrorDialog();
+                onConnectionError();
             }
         } else {
             if (hasBluetoothFunction()) {
@@ -198,18 +176,12 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
-        // Check the thread is clearly dead
-        if (mThread != null && mThread.isAlive()) {
-            finishExecution();
-        }
+        finishExecution();
     }
 
     @Override
     public void onBackPressed() {
-        if (mThread != null && mThread.isAlive()) {
-            finishExecution();
-        }
+        finishExecution();
     }
 
     private void findViews() {
@@ -217,6 +189,14 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
                 new ProgressSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.execute_showingProgressLayout));
         mStopAndRestartButton = (Button) findViewById(R.id.execute_stopAndRestartButton);
         mFinishButton = (Button) findViewById(R.id.execute_finishButton);
+    }
+
+    protected void startExecution() {
+        if (mThread == null || !mThread.isAlive()) {
+            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getMachineController());
+            mThread.setPriority(Thread.MAX_PRIORITY);
+            mThread.start();
+        }
     }
 
     private void stopExecution() {
@@ -242,6 +222,11 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
     }
 
     private void finishExecution() {
+        // Check the thread is clearly dead
+        if (mThread == null || !mThread.isAlive()) {
+            return;
+        }
+
         mThread.haltExecution();
         waitForThreadToBeOver();
     }
@@ -257,63 +242,77 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
     private boolean hasBluetoothFunction() {
         // check the tablet has bluetooth connecting
         if (mBtAdapter == null) {
-            AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error)
+            new AlertDialogFragment.Builder(this)
+                    .setRequestCode(DIALOG_REQUEST_CODE_BLUETOOTH)
+                    .setTitle(R.string.error)
                     .setMessage(R.string.execute_noBluetoothFunction)
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(
-                                                   DialogInterface dialog, int which) {
-                                               finish();
-                                           }
-                                       })
-                    .create();
-            alertDialog.setCanceledOnTouchOutside(false);
-            alertDialog.show();
+                    .setPositiveButtonLabel(android.R.string.ok)
+                    .setCancelable(false)
+                    .show();
             return false;
         }
         return true;
     }
 
     protected void showConnectionProgressDialog() {
-        mProgressDialog = new ProgressDialog(this);
-        mProgressDialog.setTitle(R.string.execute_connecting);
-        mProgressDialog.setMessage(getString(R.string.execute_pleaseWaitForAWhile));
-        mProgressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        mProgressDialog.setCanceledOnTouchOutside(false);
-        mProgressDialog.show();
+        ProgressDialogFragment.showDialog(getSupportFragmentManager(),
+                getString(R.string.execute_connecting), getString(R.string.execute_pleaseWaitForAWhile), "tag");
     }
 
     protected void dismissConnectionProgressDialog() {
-        mProgressDialog.dismiss();
+        ProgressDialogFragment.dismissDialog();
     }
 
     protected void showConnectionFailedDialog() {
         mConnectingHandler.sendEmptyMessage(FAILED_TO_CONNECT);
     }
 
-    protected void startExecution() {
-        if (mThread == null || !mThread.isAlive()) {
-            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getMachineController());
-            mThread.setPriority(Thread.MAX_PRIORITY);
-            mThread.start();
+    protected abstract MachineController getMachineController();
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case REQUEST_ENABLE_BT:
+                if (resultCode == Activity.RESULT_OK) {
+                    Toast.makeText(getBaseContext(), R.string.turnedOnBluetooth, Toast.LENGTH_SHORT).show();
+                    connectToDevice();
+                    break;
+                }
+
+                new AlertDialogFragment.Builder(this)
+                        .setTitle(R.string.error)
+                        .setMessage(R.string.bluetoothFunctionIsOff)
+                        .setPositiveButtonLabel(android.R.string.ok)
+                        .show();
+                break;
         }
     }
 
-    protected abstract MachineController getMachineController();
+    private void onConnectionAttemptFailed() {
+         new AlertDialogFragment.Builder(this)
+                .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED)
+                .setMessage(R.string.execute_bluetoothConnectionError)
+                .setPositiveButtonLabel(android.R.string.ok)
+                .show();
+    }
 
-    private void showConnectionErrorDialog() {
-        AlertDialog alertDialog = new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error)
+    private void onThreadEnded() {
+        new AlertDialogFragment.Builder(this)
+                .setMessage(R.string.execute_showNoteOfPort)
+                .setPositiveButtonLabel(android.R.string.ok)
+                .setCancelable(false)
+                .setWindowGravity(Gravity.BOTTOM)
+                .show();
+    }
+
+    private void onConnectionError() {
+        new AlertDialogFragment.Builder(this)
+                .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ERROR)
+                .setTitle(R.string.error)
                 .setMessage(R.string.execute_disconnectedByNXT)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                       @Override
-                                       public void onClick(
-                                               DialogInterface dialog, int which) {
-                                           finish();
-                                       }
-                                   })
-                .create();
-        alertDialog.setCanceledOnTouchOutside(false);
-        alertDialog.show();
+                .setPositiveButtonLabel(android.R.string.ok)
+                .setCancelable(false)
+                .show();
 
         // Inform this activity has been disconnected by the device
         Intent intent = new Intent();
@@ -322,20 +321,19 @@ public abstract class ExecutionActivityBase extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(
-            int requestCode, int resultCode, Intent data) {
+    public void onDialogEventHandled(int requestCode, DialogInterface dialog, int which, Bundle params) {
         switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(getBaseContext(), R.string.turnedOnBluetooth, Toast.LENGTH_SHORT).show();
-                    connectToDevice();
-                } else {
-                    new AlertDialog.Builder(ExecutionActivityBase.this).setTitle(R.string.error)
-                            .setMessage(R.string.bluetoothFunctionIsOff)
-                            .setPositiveButton(R.string.ok, null)
-                            .show();
-                }
+            case DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED:
+            case DIALOG_REQUEST_CODE_THREAD_ENDED:
+            case DIALOG_REQUEST_CODE_CONNECTION_ERROR:
+            case DIALOG_REQUEST_CODE_BLUETOOTH:
+                finish();
                 break;
         }
+    }
+
+    @Override
+    public void onDialogEventCancelled(int requestCode, DialogInterface dialog, Bundle params) {
+
     }
 }

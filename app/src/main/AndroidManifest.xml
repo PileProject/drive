@@ -19,6 +19,7 @@
     package="com.pileproject.drive"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
+    <uses-permission android:name="android.permission.BLUETOOTH" />
     <application
         android:name=".app.DriveApplication"
         android:allowBackup="true"
