@@ -41,7 +41,7 @@ http://schemas.android.com/apk/res-auto"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting.portconfig.deviceSensorPorts"/>
+                android:text="@string/setting.portConnection.deviceSensorPorts"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -57,7 +57,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceSensorPort1"/>
+                        android:text="@string/setting.portConnection.deviceSensorPort1"/>
 
                     <com.pileproject.drive.view.NxtSensorPortTextView
                         android:id="@+id/setting.portconfig.sensorPort1"
@@ -66,7 +66,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceSensorPort1"
+                        port:portName="@string/setting.portConnection.deviceSensorPort1"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -77,7 +77,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceSensorPort2"/>
+                        android:text="@string/setting.portConnection.deviceSensorPort2"/>
 
                     <com.pileproject.drive.view.NxtSensorPortTextView
                         android:id="@+id/setting.portconfig.sensorPort2"
@@ -86,7 +86,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceSensorPort2"
+                        port:portName="@string/setting.portConnection.deviceSensorPort2"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -97,7 +97,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceSensorPort3"/>
+                        android:text="@string/setting.portConnection.deviceSensorPort3"/>
 
                     <com.pileproject.drive.view.NxtSensorPortTextView
                         android:id="@+id/setting.portconfig.sensorPort3"
@@ -106,7 +106,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceSensorPort3"
+                        port:portName="@string/setting.portConnection.deviceSensorPort3"
                         port:portType="sensor"/>
                 </TableRow>
 
@@ -117,7 +117,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceSensorPort4"/>
+                        android:text="@string/setting.portConnection.deviceSensorPort4"/>
 
                     <com.pileproject.drive.view.NxtSensorPortTextView
                         android:id="@+id/setting.portconfig.sensorPort4"
@@ -126,7 +126,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceSensorPort4"
+                        port:portName="@string/setting.portConnection.deviceSensorPort4"
                         port:portType="sensor"/>
                 </TableRow>
             </TableLayout>
@@ -141,7 +141,7 @@ http://schemas.android.com/apk/res-auto"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting.portconfig.sensors"/>
+                android:text="@string/setting.portConnection.sensors"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -202,7 +202,7 @@ http://schemas.android.com/apk/res-auto"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting.portconfig.deviceMotorPorts"/>
+                android:text="@string/setting.portConnection.deviceMotorPorts"/>
 
             <TableLayout
                 android:layout_width="match_parent"
@@ -218,7 +218,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceMotorPortA"/>
+                        android:text="@string/setting.portConnection.deviceMotorPortA"/>
 
                     <com.pileproject.drive.view.NxtMotorPortTextView
                         android:id="@+id/setting.portconfig.motorPortA"
@@ -227,7 +227,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceMotorPortA"
+                        port:portName="@string/setting.portConnection.deviceMotorPortA"
                         port:portType="motor"/>
                 </TableRow>
 
@@ -238,7 +238,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceMotorPortB"/>
+                        android:text="@string/setting.portConnection.deviceMotorPortB"/>
 
                     <com.pileproject.drive.view.NxtMotorPortTextView
                         android:id="@+id/setting.portconfig.motorPortB"
@@ -247,7 +247,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceMotorPortB"
+                        port:portName="@string/setting.portConnection.deviceMotorPortB"
                         port:portType="motor"/>
                 </TableRow>
 
@@ -258,7 +258,7 @@ http://schemas.android.com/apk/res-auto"
                         android:layout_height="wrap_content"
                         android:gravity="center_horizontal"
                         android:padding="10dp"
-                        android:text="@string/setting.portconfig.deviceMotorPortC"/>
+                        android:text="@string/setting.portConnection.deviceMotorPortC"/>
 
                     <com.pileproject.drive.view.NxtMotorPortTextView
                         android:id="@+id/setting.portconfig.motorPortC"
@@ -267,7 +267,7 @@ http://schemas.android.com/apk/res-auto"
                         android:background="#888"
                         android:gravity="center_horizontal"
                         android:textSize="20sp"
-                        port:portName="@string/setting.portconfig.deviceMotorPortC"
+                        port:portName="@string/setting.portConnection.deviceMotorPortC"
                         port:portType="motor"/>
                 </TableRow>
             </TableLayout>
@@ -282,7 +282,7 @@ http://schemas.android.com/apk/res-auto"
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/setting.portconfig.motors"/>
+                android:text="@string/setting.portConnection.motors"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

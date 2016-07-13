@@ -16,8 +16,10 @@
 
 package com.pileproject.drive.setting.machine;
 
+import android.app.Dialog;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -33,13 +35,21 @@ import java.util.List;
 import java.util.Set;
 
 
-public class NxtPortConnectionFragment extends PreferenceFragment {
+public class NxtPortConnectionFragment extends DialogFragment {
     private View mRootView;
+
+    @Override
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setTitle(R.string.setting_portConnection);
+        return dialog;
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mRootView = inflater.inflate(R.layout.fragment_nxtportconfig, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_nxt_port_config, container, false);
         return mRootView;
     }
 

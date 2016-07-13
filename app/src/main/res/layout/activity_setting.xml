@@ -26,8 +26,12 @@
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize" />
 
-    <ListView
-        android:id="@android:id/list"
+    <FrameLayout
+        android:id="@+id/setting_content"
+        android:paddingBottom="20dp"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:paddingTop="40dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

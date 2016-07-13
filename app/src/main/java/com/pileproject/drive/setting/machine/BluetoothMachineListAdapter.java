@@ -34,14 +34,14 @@ import java.util.List;
  * @author yusaku
  * @version 1.0 4-June-2013
  */
-public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
+public class BluetoothMachineListAdapter extends ArrayAdapter<BluetoothDevice> {
 
     private Context mContext = null;
     private int mTextViewResourceId = 0;
     private List<BluetoothDevice> mDevices;
     private LayoutInflater mInflater;
 
-    public DeviceListAdapter(
+    public BluetoothMachineListAdapter(
             Context context, int textViewResourceId, List<BluetoothDevice> devices) {
         super(context, textViewResourceId, devices);
 
@@ -68,6 +68,10 @@ public class DeviceListAdapter extends ArrayAdapter<BluetoothDevice> {
         ((TextView) view.findViewById(R.id.deviceListItemView_deviceAddressText)).setText(device.getAddress());
 
         return view;
+    }
+
+    public boolean contains(BluetoothDevice device) {
+        return mDevices.contains(device);
     }
 
 }

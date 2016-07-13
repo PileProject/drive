@@ -104,41 +104,44 @@
     <string name="setting.label">せっていがめん</string>
 
     <!-- DeviceSelect -->
-    <string name="deviceselect.label">デバイスをえらんでください</string>
-    <string name="deviceselect.noDeviceFound">デバイスが見つかりません</string>
-    <string name="deviceselect.title.bondedDevice">ペアリング済みデバイス</string>
-    <string name="deviceselect.title.newDevice">見つけたデバイス</string>
-    <string name="deviceselect.scanning">スキャン中…</string>
-    <string name="deviceselect.selectDevice">デバイスを選択してください</string>
-    <string name="deviceselect.progress.scanning.title">スキャン中</string>
-    <string name="deviceselect.progress.scanning.message">スキャンしています…</string>
-    <string name="deviceselect.progress.connecting.title">接続中</string>
-    <string name="deviceselect.progress.connecting.message">接続しています…</string>
-    <string name="deviceselect.enableBt.title">確認</string>
-    <string name="deviceselect.enableBt.message">Bluetooth 機能を ON にしてください</string>
-    <string name="deviceselect.enableBt.positiveButton">OK</string>
-    <string name="deviceselect.button.discover">スキャンする</string>
-    <string name="deviceselect.noDeviceBonded">ペアリング済みデバイスはありません</string>
-    <string name="deviceselect.toast.setDefault">デフォルトデバイスを設定しました</string>
-    <string name="deviceselect.toast.cannotConnect">デバイスと接続できませんでした</string>
-    <string name="deviceselect.needBt.title">警告</string>
-    <string name="deviceselect.needBt.message">Bluetooth きのうがありません。スキャンできません。</string>
-    <string name="deviceselect.didNotSelectDevice">設定画面でデバイスをえらんでください</string>
+    <string name="bluetoothMachineSelect">Bluetooth ロボット設定</string>
+
+    <string name="setting.bluetoothMachineSelect.label.pairedMachines">ペアリング済みロボット</string>
+    <string name="setting.bluetoothMachineSelect.label.foundMachines">見つけたロボット</string>
+    <string name="setting.bluetoothMachineSelect.noMachinesPaired">ペアリング済みロボットはありません</string>
+    <string name="setting.bluetoothMachineSelect.noMachinesFound">ロボットが見つかりません</string>
+
+    <string name="setting.bluetoothMachineSelect.progress.connecting.title">接続中</string>
+    <string name="setting.bluetoothMachineSelect.progress.connecting.message">接続しています…</string>
+    <string name="setting.bluetoothMachineSelect.toast.setDefault">デフォルトロボットを設定しました</string>
+    <string name="setting.bluetoothMachineSelect.toast.cannotConnect">ロボットと接続できませんでした</string>
+    <string name="setting.bluetoothMachineSelect.alert.enableBt.title">確認</string>
+    <string name="setting.bluetoothMachineSelect.alert.enableBt.message">Bluetooth 機能を ON にしてください.</string>
+    <string name="setting.bluetoothMachineSelect.alert.noBt.title">警告</string>
+    <string name="setting.bluetoothMachineSelect.alert.noBt.message">Bluetooth きのうがありません。スキャンできません。</string>
+
+    <string name="setting.bluetoothMachineSelect.didNotSelectDevice">設定画面でロボットをえらんでください</string>
 
     <!-- SettingActivity -->
-    <string name="setting.deviceSelect">デバイス選択</string>
+    <string name="setting.category.machine">ロボット設定</string>
+    <string name="setting.category.app">アプリケーション設定</string>
+    <string name="setting.category.others">その他</string>
+    <string name="setting.bluetoothMachineSelect">Bluetooth ロボット選択</string>
+    <string name="setting.supervisorMode">管理者モード</string>
+    <string name="setting.programList">プログラムリスト</string>
+    <string name="setting.visitWebsite">Web サイト</string>
+    <string name="setting.legalNotice">免責事項</string>
 
     <!-- Program List Pragment -->
-    <string name="programlist">プログラムリスト</string>
-    <string name="programlist.delete">消去</string>
-    <string name="programlist.checkAll">全て選択</string>
-    <string name="programlist.samplePrograms">サンプルプログラム</string>
-    <string name="programlist.userPrograms">ユーザプログラム</string>
-
-    <!--  Supervisor Mode Setting -->
-    <string name="supervisorMode">管理者モードの設定</string>
-    <string name="supervisorMode.enableSupervisorMode">管理者モードを有効にする</string>
+    <string name="programList">プログラムリスト</string>
+    <string name="setting.programList.delete">消去</string>
+    <string name="setting.programList.checkAll">全て選択</string>
+    <string name="setting.programList.samplePrograms">サンプルプログラム</string>
+    <string name="setting.programList.userPrograms">ユーザプログラム</string>
 
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
+    <string name="setting.copyrightNotice">著作権情報</string>
+    <string name="setting.visitWebsite.summary">ブラウザが開きます</string>
+    <string name="setting.programList.summary">保存したプログラムを見る</string>
 </resources>

@@ -49,18 +49,18 @@ public class NxtMotorPortTextView extends PortTextView {
     protected void savePortConnection(String port, String device) {
         final Context c = getContext();
         final MachinePreferences p = MachinePreferences.get(c);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortA).equals(port)) p.setOutputPortA(device);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortB).equals(port)) p.setOutputPortB(device);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortC).equals(port)) p.setOutputPortC(device);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortA).equals(port)) p.setOutputPortA(device);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortB).equals(port)) p.setOutputPortB(device);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortC).equals(port)) p.setOutputPortC(device);
     }
 
     @Override
     protected void removePortConnection(String port) {
         final Context c = getContext();
         final MachinePreferences p = MachinePreferences.get(c);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortA).equals(port)) p.setOutputPortA(NONE);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortB).equals(port)) p.setOutputPortB(NONE);
-        if (c.getString(R.string.setting_portconfig_deviceMotorPortC).equals(port)) p.setOutputPortC(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortA).equals(port)) p.setOutputPortA(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortB).equals(port)) p.setOutputPortB(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortC).equals(port)) p.setOutputPortC(NONE);
     }
 
     @Override

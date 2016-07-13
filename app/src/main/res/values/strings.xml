@@ -82,31 +82,6 @@
     <string name="textOnBlocks.yes">Yes</string>
     <string name="textOnBlocks.no">No</string>
 
-    <!-- Setting -->
-    <string name="setting.label">Setting Screen</string>
-
-    <!-- DeviceSelect -->
-    <string name="deviceselect.label">Device Select</string>
-    <string name="deviceselect.noDeviceFound">No Device were Found</string>
-    <string name="deviceselect.title.bondedDevice">Bounded Devices</string>
-    <string name="deviceselect.title.newDevice">New Devices</string>
-    <string name="deviceselect.scanning" tools:ignore="TypographyEllipsis">Scanning...</string>
-    <string name="deviceselect.selectDevice">Select a device</string>
-    <string name="deviceselect.progress.scanning.title">Scanning</string>
-    <string name="deviceselect.progress.scanning.message" tools:ignore="TypographyEllipsis">Scanning...</string>
-    <string name="deviceselect.progress.connecting.title">Connecting</string>
-    <string name="deviceselect.progress.connecting.message" tools:ignore="TypographyEllipsis">Connecting...</string>
-    <string name="deviceselect.enableBt.title">Confirmation</string>
-    <string name="deviceselect.enableBt.message">Please turn on Bluetooth.</string>
-    <string name="deviceselect.enableBt.positiveButton">OK</string>
-    <string name="deviceselect.button.discover">Try to scan</string>
-    <string name="deviceselect.noDeviceBonded">No Device are Bounded</string>
-    <string name="deviceselect.toast.setDefault">Finished Setting the default device</string>
-    <string name="deviceselect.toast.cannotConnect">could not establish connection</string>
-    <string name="deviceselect.needBt.title">Alert</string>
-    <string name="deviceselect.needBt.message">Failed to scan: This device doesn\'t have Bluetooth function.</string>
-    <string name="deviceselect.didNotSelectDevice">Please choose a device on setting screen.</string>
-
     <!-- Execute -->
     <string name="execute.label">Execute Screen</string>
     <string name="execute.connecting" tools:ignore="TypographyEllipsis">Connecting...</string>
@@ -126,18 +101,46 @@
     <string name="select.number.finish">OK</string>
 
     <!-- SettingActivity -->
-    <string name="setting.deviceSelect">Device Select</string>
+    <string name="setting.label">Setting Screen</string>
+
+    <string name="setting.category.machine">Machine Setting</string>
+    <string name="setting.bluetoothMachineSelect">Bluetooth Machine Select</string>
+
+    <string name="setting.category.app">Application Setting</string>
+    <string name="setting.programList">Program List</string>
+    <string name="setting.programList.summary">View saved programs</string>
+    <string name="setting.supervisorMode">Supervisor Mode</string>
+
+    <string name="setting.category.others">Others</string>
+    <string name="setting.visitWebsite">Visit our website</string>
+    <string name="setting.visitWebsite.summary">Open in browser</string>
+    <string name="setting.copyrightNotice">Copyright Notice</string>
+    <string name="setting.legalNotice">Legal Notice</string>
+
+
+    <!-- DeviceSelect -->
+    <string name="setting.bluetoothMachineSelect.label.pairedMachines">Paired Bluetooth Machines</string>
+    <string name="setting.bluetoothMachineSelect.label.foundMachines">New Bluetooth Machines</string>
+    <string name="setting.bluetoothMachineSelect.noMachinesPaired">No Paired Bluetooth Machines</string>
+    <string name="setting.bluetoothMachineSelect.noMachinesFound">No New Bluetooth Machines</string>
+
+    <string name="setting.bluetoothMachineSelect.progress.connecting.title">Connecting</string>
+    <string name="setting.bluetoothMachineSelect.progress.connecting.message" tools:ignore="TypographyEllipsis">Connecting...</string>
+    <string name="setting.bluetoothMachineSelect.toast.setDefault">Set %1$s as default</string>
+    <string name="setting.bluetoothMachineSelect.toast.cannotConnect">Could not establish
+        connection with %1$s</string>
+    <string name="setting.bluetoothMachineSelect.alert.enableBt.title">Bluetooth needed</string>
+    <string name="setting.bluetoothMachineSelect.alert.enableBt.message">Please turn Bluetooth on.</string>
+    <string name="setting.bluetoothMachineSelect.alert.noBt.title">Alert</string>
+    <string name="setting.bluetoothMachineSelect.alert.noBt.message">Failed to scan: No Bluetooth function.</string>
+
+    <string name="setting.bluetoothMachineSelect.didNotSelectDevice">Please choose a machine on setting screen.</string>
 
     <!-- Program List Fragment -->
-    <string name="programlist">Program List</string>
-    <string name="programlist.delete">Delete</string>
-    <string name="programlist.checkAll">Check All</string>
-    <string name="programlist.samplePrograms">Sample Programs</string>
-    <string name="programlist.userPrograms">User Programs</string>
-
-    <!-- Supervisor Mode Setting -->
-    <string name="supervisorMode">Supervisor Mode Setting</string>
-    <string name="supervisorMode.enableSupervisorMode">Enable Supervisor Mode</string>
+    <string name="setting.programList.delete">Delete</string>
+    <string name="setting.programList.checkAll">Check All</string>
+    <string name="setting.programList.samplePrograms">Sample Programs</string>
+    <string name="setting.programList.userPrograms">User Programs</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

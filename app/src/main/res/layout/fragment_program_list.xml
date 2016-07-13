@@ -24,7 +24,7 @@
         android:id="@+id/programList.deleteButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/programlist.delete"/>
+        android:text="@string/setting.programList.delete"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -41,12 +41,12 @@
                 android:id="@+id/programList.samplePrograms.checkAllButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/programlist.checkAll"/>
+                android:text="@string/setting.programList.checkAll"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/programlist.samplePrograms"/>
+                android:text="@string/setting.programList.samplePrograms"/>
 
             <ListView
                 android:id="@+id/programList.sampleProgramListView"
@@ -64,12 +64,12 @@
                 android:id="@+id/programList.userPrograms.checkAllButton"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/programlist.checkAll"/>
+                android:text="@string/setting.programList.checkAll"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/programlist.userPrograms"/>
+                android:text="@string/setting.programList.userPrograms"/>
 
             <ListView
                 android:id="@+id/programList.userProgramListView"

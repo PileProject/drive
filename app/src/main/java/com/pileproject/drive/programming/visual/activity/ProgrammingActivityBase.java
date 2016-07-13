@@ -143,7 +143,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
 
         new AlertDialogFragment.Builder(this)
                 .setRequestCode(DIALOG_REQUEST_CODE_DID_NOT_SELECT_DEVICE)
-                .setMessage(R.string.deviceselect_didNotSelectDevice)
+                .setMessage(R.string.setting_bluetoothMachineSelect_didNotSelectDevice)
                 .setPositiveButtonLabel(android.R.string.ok)
                 .setCancelable(false)
                 .show();

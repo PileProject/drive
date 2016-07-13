@@ -31,28 +31,28 @@ import com.pileproject.drive.R;
  * @author yusaku
  * @version 1.0 4-June-2013
  */
-public class DeviceListItemView extends LinearLayout implements Checkable {
+public class BluetoothMachineListItemView extends LinearLayout implements Checkable {
 
     private RadioButton mRadioButton;
 
-    public DeviceListItemView(Context context) {
+    public BluetoothMachineListItemView(Context context) {
         super(context);
         initialize();
     }
 
-    public DeviceListItemView(Context context, AttributeSet attrs) {
+    public BluetoothMachineListItemView(Context context, AttributeSet attrs) {
         super(context, attrs);
         initialize();
     }
 
-    public DeviceListItemView(
+    public BluetoothMachineListItemView(
             Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
     }
 
     private void initialize() {
-        addView(inflate(getContext(), R.layout.view_devicelistitem, null));
+        addView(inflate(getContext(), R.layout.view_bluetooth_machine_list_item, null));
         mRadioButton = (RadioButton) findViewById(R.id.deviceListItemView_radioButton);
     }
 

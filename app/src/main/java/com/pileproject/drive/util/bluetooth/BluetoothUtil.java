@@ -14,8 +14,17 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.setting;
+package com.pileproject.drive.util.bluetooth;
 
-public class NxtSettingActivity extends SettingActivity {
+import android.bluetooth.BluetoothAdapter;
 
+public class BluetoothUtil {
+    public static boolean hasBluetoothFunction() {
+        return BluetoothAdapter.getDefaultAdapter() != null;
+    }
+
+    public static boolean isBluetoothEnabled() {
+        BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
+        return adapter != null && adapter.isEnabled();
+    }
 }
