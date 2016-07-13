@@ -19,7 +19,7 @@ package com.pileproject.drive.view;
 import android.content.Context;
 import android.widget.LinearLayout;
 
-import com.pileproject.drive.util.Range;
+import com.pileproject.drive.util.math.Range;
 
 public abstract class NumberSelectView extends LinearLayout {
 
