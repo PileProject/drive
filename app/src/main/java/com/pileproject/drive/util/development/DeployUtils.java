@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.util;
+package com.pileproject.drive.util.development;
 
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
@@ -22,11 +22,21 @@ import android.content.pm.PackageManager;
 import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 
+/**
+ * A class for checking building environments, devices, etc.
+ */
 public class DeployUtils {
+    /**
+     * Return true if the device is emulator.
+     */
     public static boolean isOnEmulator() {
+        // from http://stackoverflow.com/questions/2799097/how-can-i-detect-when-an-android-application-is-running-in-the-emulator
         return Build.HARDWARE.contains("goldfish");
     }
 
+    /**
+     * Return true if the building configuration is Debug.
+     */
     public static boolean isDebugMode(Context context) {
         PackageManager manager = context.getPackageManager();
         ApplicationInfo info = null;
@@ -41,6 +51,9 @@ public class DeployUtils {
 
     }
 
+    /**
+     * Return true if the building configuration is Release.
+     */
     public static boolean isReleaseMode(Context context) {
         return !isDebugMode(context);
     }

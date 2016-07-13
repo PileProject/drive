@@ -14,26 +14,20 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.view;
+package com.pileproject.drive.util.development;
 
-import android.content.Context;
-import android.widget.LinearLayout;
+import org.junit.Test;
 
-import com.pileproject.drive.util.math.Range;
+import java.util.Locale;
 
-public abstract class NumberSelectView extends LinearLayout {
+import static org.junit.Assert.*;
 
-    final protected Range<Double> mRange;
-    protected Context mContext;
+public class MeasurementUnitTest {
+    @Test
+    public void getFromLocaleTest() throws Exception {
+        assertEquals(MeasurementUnit.getFromLocale(Locale.US), MeasurementUnit.Imperial);
 
-    public NumberSelectView(Context context, Range<Double> range) {
-        super(context);
-
-        mContext = context;
-        mRange = range;
+        assertEquals(MeasurementUnit.getFromLocale(Locale.JAPAN), MeasurementUnit.Metric);
+        assertEquals(MeasurementUnit.getFromLocale(Locale.FRANCE), MeasurementUnit.Metric);
     }
-
-    public abstract void setNum(int num);
-
-    public abstract double getSelectedNum();
 }

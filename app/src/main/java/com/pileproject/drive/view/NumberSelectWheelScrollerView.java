@@ -24,7 +24,7 @@ import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.Range;
+import com.pileproject.drive.util.math.Range;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.util;
+package com.pileproject.drive.util.development;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Locale;
 
 /**
- * A class which detects which measurement unit is used in specified country
+ * A class which detects which measurement unit is used in specified country.
  * <p/>
  * Now, however, this class is only for the United States of America,
- * the only major country where people use Imperial units
- *
- * @author Yusaku
+ * the only major country where people use Imperial units.
  */
 public class MeasurementUnit {
     public static MeasurementUnit Imperial = new MeasurementUnit();
@@ -36,7 +36,11 @@ public class MeasurementUnit {
 
     public static MeasurementUnit getFromLocale(Locale locale) {
         String countryCode = locale.getCountry();
-        if ("US".equals(countryCode)) {
+
+        ArrayList<String> countriesUsingImperial
+                = new ArrayList<>(Arrays.asList(Locale.US.getCountry()));
+
+        if (countriesUsingImperial.contains(countryCode)) {
             return Imperial;
         }
 

@@ -14,8 +14,12 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.util;
+package com.pileproject.drive.util.math;
 
+/**
+ * Simple class representing mathematical interval.
+ * @param <T> numerical type which this class base on
+ */
 public class Range<T extends Comparable<T>> {
     final private T lower;
     final private T upper;
@@ -31,24 +35,49 @@ public class Range<T extends Comparable<T>> {
         this.includesUpper = includesUpper;
     }
 
+    /**
+     * Return an object representing an open interval (exclusive)
+     * @param lower lower bound (exclusive)
+     * @param upper upper bound (exclusive)
+     */
     public static <T extends Comparable<T>> Range<T> open(T lower, T upper) {
         return new Range<>(lower, false, upper, false);
     }
 
+    /**
+     * Return an object representing a close interval.
+     * @param lower lower bound (inclusive)
+     * @param upper upper bound (inclusive)
+     */
     public static <T extends Comparable<T>> Range<T> closed(T lower, T upper) {
         return new Range<>(lower, true, upper, true);
     }
 
+    /**
+     * Return an object representing a open-closed interval.
+     * @param lower lower bound (exclusive)
+     * @param upper upper bound (inclusive)
+     */
     public static <T extends Comparable<T>> Range<T> openClosed(
             T lower, T upper) {
         return new Range<>(lower, false, upper, true);
     }
 
+    /**
+     * Return an object representing a closed-open interval.
+     * @param lower lower bound (inclusive)
+     * @param upper upper bound (exclusive)
+     */
     public static <T extends Comparable<T>> Range<T> closedOpen(
             T lower, T upper) {
         return new Range<>(lower, true, upper, false);
     }
 
+    /**
+     * Check the given value is in the interval.
+     * @param value the value to be checked
+     * @return true if the value is in the interval
+     */
     public boolean contains(T value) {
         boolean aboveLower = (includesLower) ? lower.compareTo(value) <= 0 : lower.compareTo(value) < 0;
         boolean belowUpper = (includesUpper) ? value.compareTo(upper) <= 0 : value.compareTo(upper) < 0;

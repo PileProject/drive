@@ -37,7 +37,7 @@ import android.widget.EditText;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.CommonPreferences;
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.util.DeployUtils;
+import com.pileproject.drive.util.development.DeployUtils;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;

@@ -23,8 +23,8 @@ import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.Range;
-import com.pileproject.drive.util.Unit;
+import com.pileproject.drive.util.math.Range;
+import com.pileproject.drive.util.development.Unit;
 
 /**
  * A view class which is used for number selecting on blocks
