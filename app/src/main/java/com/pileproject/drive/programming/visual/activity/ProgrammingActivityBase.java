@@ -21,14 +21,11 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.NavigationView;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -37,12 +34,12 @@ import android.widget.EditText;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.CommonPreferences;
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.util.development.DeployUtils;
-import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
+import com.pileproject.drive.util.development.DeployUtils;
+import com.pileproject.drive.util.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -72,14 +69,12 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
     private ProgrammingSpaceManager mSpaceManager;
     private boolean mIsConnected = false;
 
-    private ActionBarDrawerToggle mActionBarDrawerToggle;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_programming);
 
-        setupNavigationView();
+        setupToolbar();
 
         findViews();
 
@@ -104,12 +99,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                 moveToExecutionActivity();
             }
         });
-    }
-
-    @Override
-    protected void onPostCreate(Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        mActionBarDrawerToggle.syncState();
     }
 
     protected abstract Intent getIntentToBlockList();
@@ -149,10 +138,9 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                 .show();
     }
 
-    private void moveToTitleActivity() {
+    protected void moveToTitleActivity() {
         mSpaceManager.saveExecutionProgram();
-
-        // TODO: go to title activity
+        finish();
     }
 
     @Override
@@ -175,31 +163,26 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
         }
     }
 
-    private void setupNavigationView() {
-        final DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-
-        NavigationView navView = (NavigationView) findViewById(R.id.programming_navigationView);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
-
+    private void setupToolbar() {
+        // get device address to show it on toolbar
         String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress();
         deviceAddress =
                 (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
+        Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
+        toolbar.inflateMenu(R.menu.menu_programming);
         toolbar.setTitle(getTitle() + ": " + deviceAddress);
-
-        setSupportActionBar(toolbar);
-
-        mActionBarDrawerToggle = new ActionBarDrawerToggle(this,
-                                                           drawer,
-                                                           toolbar,
-                                                           R.string.navigation_drawer_open,
-                                                           R.string.navigation_drawer_close);
-
-        drawer.addDrawerListener(mActionBarDrawerToggle);
-
-        navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onNavigationItemSelected(MenuItem item) {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
                 int id = item.getItemId();
 
                 switch (id) {
@@ -231,8 +214,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                     default:
                         return false;
                 }
-
-                drawer.closeDrawer(GravityCompat.START);
 
                 return true;
             }
