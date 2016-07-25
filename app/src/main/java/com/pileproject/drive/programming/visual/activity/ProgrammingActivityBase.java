@@ -101,12 +101,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
         });
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_programming, menu);
-        return true;
-    }
-
     protected abstract Intent getIntentToBlockList();
 
     protected abstract Intent getIntentToDeviceList();
@@ -176,8 +170,15 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                 (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
+        toolbar.inflateMenu(R.menu.menu_programming);
         toolbar.setTitle(getTitle() + ": " + deviceAddress);
-        setSupportActionBar(toolbar);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override

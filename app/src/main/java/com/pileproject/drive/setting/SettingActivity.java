@@ -48,24 +48,15 @@ public class SettingActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setting);
 
-        ViewGroup contentRoot = (ViewGroup) findViewById(android.R.id.content);
-        LinearLayout content = (LinearLayout) contentRoot.getChildAt(0);
-        LinearLayout settingLayout = (LinearLayout) View.inflate(this, R.layout.activity_setting, null);
-
-        contentRoot.removeAllViews();
-        settingLayout.addView(content);
-        contentRoot.addView(settingLayout);
-
-        Toolbar toolbar = (Toolbar) settingLayout.findViewById(R.id.setting_toolbar);
-        setSupportActionBar(toolbar);
-
-        ActionBar actionBar = getSupportActionBar();
-
-        actionBar.setTitle(R.string.setting_label);
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
+        toolbar.setTitle(R.string.setting_label);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 
         getSupportFragmentManager()
                 .beginTransaction()
