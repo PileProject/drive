@@ -14,24 +14,28 @@
   ~ See the License for the specific language governing permissions and
   ~ limitations under the License.
   -->
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <group android:checkableBehavior="single">
         <item
             android:id="@+id/programming.menu.deleteAllBlocks"
-            android:title="@string/programming.deleteAllBlocks" />
+            android:title="@string/programming.deleteAllBlocks"
+            app:showAsAction="never"/>
         <item
             android:id="@+id/programming.menu.goBackToTitle"
-            android:title="@string/programming.goBackToTitle" />
+            android:title="@string/programming.goBackToTitle"
+            app:showAsAction="never"/>
         <item
             android:id="@+id/programming.menu.loadSampleProgram"
-            android:title="@string/programming.loadSampleProgram" />
+            android:title="@string/programming.loadSampleProgram"
+            app:showAsAction="never"/>
         <item
             android:id="@+id/programming.menu.saveProgram"
-            android:title="@string/programming.saveProgram" />
+            android:title="@string/programming.saveProgram"
+            app:showAsAction="never"/>
         <item
             android:id="@+id/programming.menu.loadProgram"
-            android:title="@string/programming.loadProgram" />
-    </group>
+            android:title="@string/programming.loadProgram"
+            app:showAsAction="never"/>
 
 </menu>
