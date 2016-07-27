@@ -36,7 +36,7 @@ import com.pileproject.drive.programming.visual.block.NumTextHolder;
 import com.pileproject.drive.util.math.Range;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.view.NumberSelectSeekBarView;
-import com.pileproject.drive.view.NumberSelectView;
+import com.pileproject.drive.view.NumberSelectViewBase;
 
 import java.util.ArrayList;
 
@@ -180,7 +180,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             final Range<Double> range = Range.closed(mParent.getMin(), mParent.getMax());
             final Unit unit = mParent.getUnit();
 
-            final NumberSelectView numberSelectView =
+            final NumberSelectViewBase numberSelectView =
                     new NumberSelectSeekBarView(mContext, range, unit, numOfIntegralDigits, numOfDecimalDigits);
 
             numberSelectView.setNum(oldNum);

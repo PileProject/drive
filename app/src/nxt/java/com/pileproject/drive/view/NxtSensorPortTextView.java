@@ -28,7 +28,7 @@ import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
 
-public class NxtSensorPortTextView extends PortTextView {
+public class NxtSensorPortTextView extends PortTextViewBase {
 
     public NxtSensorPortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

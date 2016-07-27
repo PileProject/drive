@@ -32,7 +32,7 @@ import com.pileproject.drive.util.development.Unit;
  *
  * @author yusaku
  */
-public class NumberSelectSeekBarView extends NumberSelectView {
+public class NumberSelectSeekBarView extends NumberSelectViewBase {
 
     private final int mNumberOfIntegralDigits;
     private final int mNumberOfDecimalDigits;
@@ -43,16 +43,16 @@ public class NumberSelectSeekBarView extends NumberSelectView {
 
     private SeekBar mSeekBar;
     private TextView mTextView;
+
     private final SeekBar.OnSeekBarChangeListener mListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
-        public void onProgressChanged(
-                SeekBar seekbar, int value, boolean fromUser) {
+        public void onProgressChanged(SeekBar seekbar, int value, boolean fromUser) {
             // the value should be jacked up by the apparent minimum value of SeekBar
             // when the value is displayed
             mValue = toDoubleExpression(value) + mRange.getLowerBound();
 
-            final String fmt = "%" + mNumberOfIntegralDigits + "." +
-                    mNumberOfDecimalDigits + "f";
+            final String fmt =
+                    "%" + mNumberOfIntegralDigits + "." + mNumberOfDecimalDigits + "f";
 
             // use the proper unit based on the value
             mTextView.setText(Unit.getUnitString(mContext, mUnit, fmt, mValue));
@@ -76,8 +76,8 @@ public class NumberSelectSeekBarView extends NumberSelectView {
      * @param numOfIntegralDigits - number of integral digits
      * @param numOfDecimalDigits   - number of decimal digits
      */
-    public NumberSelectSeekBarView(
-            Context context, Range<Double> range, Unit unit, int numOfIntegralDigits, int numOfDecimalDigits) {
+    public NumberSelectSeekBarView(Context context, Range<Double> range,
+                                   Unit unit, int numOfIntegralDigits, int numOfDecimalDigits) {
         super(context, range);
 
         mUnit = unit;
@@ -103,15 +103,12 @@ public class NumberSelectSeekBarView extends NumberSelectView {
         double value = toDoubleExpression(num);
 
         if (!mRange.contains(value)) {
-            throw new RuntimeException("The value to set SeekBar is out of " +
-                                               "range " +
-                                               "(range: " + mRange +
-                                               ", value: " + value + ")");
+            throw new RuntimeException("The value to set SeekBar is out of range " +
+                                               "(range: " + mRange + ", value: " + value + ")");
         }
 
         // because minimum value of SeekBar is always 0,
-        // the value to set SeekBar should be subtracted by its "apparent"
-        // minimum
+        // the value to set SeekBar should be subtracted by its "apparent" minimum
         mValue = value - mRange.getLowerBound();
 
         mSeekBar.setProgress(toIntegerExpression(mValue));
@@ -124,14 +121,22 @@ public class NumberSelectSeekBarView extends NumberSelectView {
 
     /**
      * get rid of the decimal part
+     * e.g., 1.15 -> 115
      *
-     * @param value
-     * @return
+     * @param value a value in double
+     * @return a value in integer
      */
     private int toIntegerExpression(double value) {
         return (int) (value * Math.pow(10.0, mNumberOfDecimalDigits));
     }
 
+    /**
+     * convert an integer value to double value
+     * e.g., 115 -> 1.15
+     *
+     * @param value a value in integer
+     * @return a value in double
+     */
     private double toDoubleExpression(int value) {
         return value / Math.pow(10.0, mNumberOfDecimalDigits);
     }
