@@ -28,7 +28,7 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.preferences.MachinePreferencesSchema;
-import com.pileproject.drive.view.PortTextView;
+import com.pileproject.drive.view.PortTextViewBase;
 
 import java.util.HashSet;
 import java.util.List;
@@ -63,7 +63,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     private String loadSensor(int port, String sensor) {
         if (sensor.equals(MachinePreferencesSchema.SENSOR.NONE)) return sensor;
 
-        PortTextView portTextView = (PortTextView) mRootView.findViewById(port);
+        PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(sensor);
         return sensor;
     }
@@ -85,14 +85,14 @@ public class NxtPortConnectionFragment extends DialogFragment {
         for (String sensorType : allSensors) {
             if (sensorsInUsed.contains(sensorType)) continue;
             // set an unconnected sensor into a open space
-            ((PortTextView) mRootView.findViewById(sensorPlaceIds[index++])).setDeviceType(sensorType);
+            ((PortTextViewBase) mRootView.findViewById(sensorPlaceIds[index++])).setDeviceType(sensorType);
         }
     }
 
     private String loadMotor(int port, String motor) {
         if (motor.equals(MachinePreferencesSchema.MOTOR.NONE)) return motor;
 
-        PortTextView portTextView = (PortTextView) mRootView.findViewById(port);
+        PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(motor);
         return motor;
     }
@@ -113,7 +113,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         for (String motorType : allMotors) {
             if (motorsInUsed.contains(motorType)) continue;;
             // set an unconnected motor into an open space
-            ((PortTextView) mRootView.findViewById(motorPlaceIds[index++])).setDeviceType(motorType);
+            ((PortTextViewBase) mRootView.findViewById(motorPlaceIds[index++])).setDeviceType(motorType);
         }
     }
 }
