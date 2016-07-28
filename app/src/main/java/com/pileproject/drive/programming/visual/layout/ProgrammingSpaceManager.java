@@ -33,29 +33,29 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.NumTextHolder;
-import com.pileproject.drive.util.math.Range;
 import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
 import com.pileproject.drive.view.NumberSelectSeekBarView;
 import com.pileproject.drive.view.NumberSelectView;
 
 import java.util.ArrayList;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
 /**
- * Manager of BlockSpaceLayout This helps users make programs.
+ * a manager of BlockSpaceLayout that helps users to make programs
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 5-June-2013
  */
-public class ProgrammingSpaceManager extends BlockSpaceManager {
-    private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
-    private final String TAG = "ProgrammingSpaceManger";
+public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
     public final OnTouchListener mMoveBlock = new OnTouchListener() {
-        int currentX; // The left position of this view (x coordinate)
-        int currentY; // The top position of this view (y coordinate)
-        int offsetX; // The x position of user's finger
-        int offsetY; // The y position of user's finger
-        int originX; // The original x position
-        int originY; // The original y position
+        int currentX; // the left position of this view (x coordinate)
+        int currentY; // the top position of this view (y coordinate)
+        int offsetX; // the x position of user's finger
+        int offsetY; // the y position of user's finger
+        int originX; // the original x position
+        int originY; // the original y position
 
         @Override
         public boolean onTouch(View view, MotionEvent event) {
@@ -64,21 +64,19 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             int y = (int) event.getRawY();
 
             switch (event.getActionMasked()) {
-                // Touched
                 case MotionEvent.ACTION_DOWN:
-                    // Bring the view touched to the front
-                    // NOT USED this method changes the index of views
+                    // bring the view touched to the front
+                    // NOTE: this method changes the index of views
                     // therefore undo and redo cannot be done properly.
-                    // view.bringToFront();
+                    view.bringToFront();
 
-                    // Update variables
+                    // update variables
                     originX = currentX = view.getLeft();
                     originY = currentY = view.getTop();
                     offsetX = x;
                     offsetY = y;
                     break;
 
-                // Moving
                 case MotionEvent.ACTION_MOVE:
                     int diffX = offsetX - x;
                     int diffY = offsetY - y;
@@ -91,9 +89,8 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                     offsetY = y;
                     break;
 
-                // Finished Moving
                 case MotionEvent.ACTION_UP:
-                    // This view will be removed if it is on the trash box
+                    // this view will be removed if it is on the trash box
                     if (mLayout.isOnTrash(view)) {
                         mLayout.removeView(view);
                     }
@@ -102,8 +99,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
             return true;
         }
 
-        private void moveViewWithinItsParent(
-                View view, int currentX, int currentY) {
+        private void moveViewWithinItsParent(View view, int currentX, int currentY) {
             ViewGroup parent = (ViewGroup) view.getParent();
             int parentWidth = parent.getWidth();
             int parentHeight = parent.getHeight();
@@ -139,17 +135,16 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
         }
     }
 
+    @Override
     public void addBlocks(ArrayList<BlockBase> blocks) {
-        // Emphasize block animation
+        // emphasize block animation
         AlphaAnimation alpha = new AlphaAnimation(1, 0);
         alpha.setDuration(1000);
         alpha.setInterpolator(new CycleInterpolator(3));
 
         for (BlockBase block : blocks) {
             setListeners(block);
-
-            mLayout.addView(block, new LayoutParams(WC, WC));
-
+            mLayout.addView(block, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
             block.setAnimation(alpha);
         }
     }
@@ -159,6 +154,9 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
         super.deleteAllBlocks();
     }
 
+    /**
+     * a listener to pick a value
+     */
     class OnTouchNumTextListener implements OnLongClickListener {
         NumTextHolder mParent;
 
@@ -168,10 +166,10 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 
         @Override
         public boolean onLongClick(View v) {
-            // Get old value
+            // get the old value
             final int oldNum = mParent.getNum();
 
-            // Create a new NumberPicker View and set the old number
+            // create a new NumberPicker and set the old value
             Integer[] digit = mParent.getDigit();
 
             final int numOfIntegralDigits = digit[0];
@@ -185,19 +183,17 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
 
             numberSelectView.setNum(oldNum);
 
-            // Create a new AlertDialog to pick the number
+            // create a new AlertDialog to pick the number
             AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-
             dialog.setTitle(R.string.programming_pleaseSelectNumbers);
             dialog.setView(numberSelectView);
             dialog.setPositiveButton(R.string.ok, new OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     double rawNum = numberSelectView.getSelectedNum();
-
                     int newNum = (int) (rawNum * Math.pow(10, numOfDecimalDigits));
 
-                    // Set new value
+                    // set new value
                     mParent.setNum(newNum);
                 }
             });

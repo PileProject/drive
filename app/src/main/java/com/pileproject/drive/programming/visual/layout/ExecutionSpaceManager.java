@@ -17,7 +17,6 @@ package com.pileproject.drive.programming.visual.layout;
 
 import android.content.Context;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.LinearLayout.LayoutParams;
 import android.widget.TextView;
 
@@ -27,50 +26,51 @@ import com.pileproject.drive.view.FrameView;
 
 import java.util.ArrayList;
 
+import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+
+
 /**
- * Manager of PlacingBlockSpaceLayout
- * This manages it to show the progression of execution.
+ * a manager of BlockSpaceLayout that manages it to show the progress of execution
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 5-June-2013
  */
-public class ProgressSpaceManager extends BlockSpaceManager {
-    private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
+public class ExecutionSpaceManager extends BlockSpaceManagerBase {
     private FrameView mFrame = null;
 
-    public ProgressSpaceManager(Context context, BlockSpaceLayout layout) {
+    public ExecutionSpaceManager(Context context, BlockSpaceLayout layout) {
         super(context, layout);
     }
 
+    @Override
     public void addBlocks(ArrayList<BlockBase> blocks) {
         for (BlockBase block : blocks) {
             if (block instanceof NumTextHolder) {
-                // set OnTouchListener to TextView
+                // set views not editable
                 TextView numText = ((NumTextHolder) block).getTextView();
                 numText.setFocusable(false);
                 numText.setFocusableInTouchMode(false);
                 numText.setEnabled(false);
             }
-            mLayout.addView(block, new LayoutParams(WC, WC));
+            mLayout.addView(block, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         }
     }
 
     /**
-     * Emphasize the selected block
+     * emphasize the current block
      *
      * @param index
      */
     public void emphasizeBlock(int index) {
-        // Get the target block
-        // Add the number of default children count of PlacingSpaceLayout
+        // get the target block
+        // add the number of default children count of BlockSpaceLayout
         View view = mLayout.getChildAt(index + mLayout.getDefaultChildrenCount());
         if (view instanceof BlockBase) {
-            if (mFrame != null) {
+            if (mFrame != null)
                 mLayout.removeView(mFrame);
-            }
-            // Create frame for emphasizing
+            // create frame for emphasizing the current block
             mFrame = new FrameView(mContext, view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
-            mLayout.addView(mFrame, new BlockSpaceLayout.LayoutParams(WC, WC));
+            mLayout.addView(mFrame, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         }
     }
 }

@@ -25,33 +25,45 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 import java.util.ArrayList;
 
 /**
- * Manager of BlockSpaceLayout
+ * a manager of BlockSpaceLayout
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 5-June-2013
  */
-public abstract class BlockSpaceManager {
+public abstract class BlockSpaceManagerBase {
     protected BlockSpaceLayout mLayout = null;
     protected Context mContext;
     private ProgramDataManager mManager;
     private static final String USER_PROGRAM_NAME_FORMAT = "%d";
 
-    public BlockSpaceManager(Context context, BlockSpaceLayout layout) {
+    public BlockSpaceManagerBase(Context context, BlockSpaceLayout layout) {
         mContext = context;
         mLayout = layout;
         mManager = ProgramDataManager.getInstance();
     }
 
+    /**
+     * save the current program for execution
+     */
     public void saveExecutionProgram() {
         mManager.saveExecutionProgram(mLayout);
     }
 
+    /**
+     * save the current program as a sample progmra
+     * NOTE: if a name which is already saved is selected, it will be overwritten
+     * @param programName
+     */
     public void saveSampleProgram(String programName) {
         mManager.saveSampleProgram(programName, mLayout);
     }
 
+    /**
+     * save the current program as a user program
+     * NOTE: the name of new program will be automatically generated
+     * @return
+     */
     public String saveUserProgram() {
-        // generate a new program name automatically for a user program
         String newProgramName;
 
         // load user program names
@@ -61,6 +73,7 @@ public abstract class BlockSpaceManager {
         }
         else {
             // generate a new program name
+            // NOTE: this assumes the last program should have the largest number
             String lastName = programs.get(programs.size() - 1);
             int programNumber = Integer.parseInt(lastName); // e.g. 2
             newProgramName = String.format(USER_PROGRAM_NAME_FORMAT, programNumber + 1);
@@ -71,26 +84,51 @@ public abstract class BlockSpaceManager {
         return newProgramName;
     }
 
+    /**
+     * load a program for execution
+     */
     public void loadExecutionProgram() {
         placeBlocks(mManager.loadExecutionProgram());
     }
 
+    /**
+     * load a sample program
+     * @param programName
+     */
     public void loadSampleProgram(String programName) {
         placeBlocks(mManager.loadSampleProgram(programName));
     }
 
+    /**
+     * load a user program
+     * @param programName
+     */
     public void loadUserProgram(String programName) {
         placeBlocks(mManager.loadUserProgram(programName));
     }
 
+    /**
+     * load sample progmam names
+     * @return a list of names
+     */
     public ArrayList<String> loadSampleProgramNames() {
         return mManager.loadSampleProgramNames();
     }
 
+    /**
+     * load user program names
+     * @return a list of names
+     */
     public ArrayList<String> loadUserProgramNames() {
         return mManager.loadUserProgramNames();
     }
 
+    /**
+     * add all blocks in this layout
+     * please override this method to add specific attributes for blocks
+     * e.g., can move or not
+     * @param blocks
+     */
     public abstract void addBlocks(ArrayList<BlockBase> blocks);
 
     private void placeBlocks(ArrayList<BlockBase> data) {
@@ -100,7 +138,7 @@ public abstract class BlockSpaceManager {
 
         addBlocks(data);
 
-        // Move all Views to old positions
+        // move all views to the old positions
         for (int i = 0; i < mLayout.getChildCount(); i++) {
             View view = mLayout.getChildAt(i);
             if (view instanceof BlockBase) {
@@ -110,8 +148,13 @@ public abstract class BlockSpaceManager {
         }
     }
 
+    /**
+     * delete all blocks
+     */
     public void deleteAllBlocks() {
         mLayout.removeAllViews();
+        // remove the saved execution program
+        // TODO(tatsuya): is this necessary?
         mManager.deleteExecutionProgram();
     }
 }
