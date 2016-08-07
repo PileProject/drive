@@ -18,35 +18,26 @@ package com.pileproject.drive.title;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
-import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.activity.NxtProgrammingActivity;
 import com.pileproject.drive.setting.NxtSettingActivity;
 
+/**
+ * The title page of NxtDrive.
+ */
 public class NxtTitleActivity extends TitleActivityBase {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_title);
-        // Button to move NxtProgrammingActivity
-        findViewById(R.id.title_startButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NxtProgrammingActivity.class);
-                startActivity(intent);
-            }
-        });
+    }
 
-        // Button to move DeviceSelectActivity
-        findViewById(R.id.title_settingButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getApplicationContext(), NxtSettingActivity.class);
-                startActivity(intent);
-            }
-        });
+    @Override
+    protected Intent getIntentToProgrammingPage() {
+        return new Intent(getApplicationContext(), NxtProgrammingActivity.class);
+    }
 
-        setupToolbar();
+    @Override
+    protected Intent getIntentToSetttingPage() {
+        return new Intent(getApplicationContext(), NxtSettingActivity.class);
     }
 }
