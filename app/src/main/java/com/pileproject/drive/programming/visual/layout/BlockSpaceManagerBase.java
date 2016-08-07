@@ -25,10 +25,7 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 import java.util.ArrayList;
 
 /**
- * a manager of BlockSpaceLayout
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 5-June-2013
+ * A manager of BlockSpaceLayout.
  */
 public abstract class BlockSpaceManagerBase {
     protected BlockSpaceLayout mLayout = null;
@@ -43,25 +40,25 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * save the current program for execution
+     * Save the current program for execution.
      */
     public void saveExecutionProgram() {
         mManager.saveExecutionProgram(mLayout);
     }
 
     /**
-     * save the current program as a sample progmra
-     * NOTE: if a name which is already saved is selected, it will be overwritten
-     * @param programName
+     * Save the current program as a sample program.
+     * NOTE: if a name which is already saved is selected, it will be overwritten.
+     * @param String a program name
      */
     public void saveSampleProgram(String programName) {
         mManager.saveSampleProgram(programName, mLayout);
     }
 
     /**
-     * save the current program as a user program
-     * NOTE: the name of new program will be automatically generated
-     * @return
+     * Save the current program as a user program.
+     * NOTE: the name of new program will be automatically generated.
+     * @return the new program name
      */
     public String saveUserProgram() {
         String newProgramName;
@@ -85,30 +82,30 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * load a program for execution
+     * Load a program for execution.
      */
     public void loadExecutionProgram() {
         placeBlocks(mManager.loadExecutionProgram());
     }
 
     /**
-     * load a sample program
-     * @param programName
+     * Load a sample program.
+     * @param String a program name
      */
     public void loadSampleProgram(String programName) {
         placeBlocks(mManager.loadSampleProgram(programName));
     }
 
     /**
-     * load a user program
-     * @param programName
+     * Load a user program.
+     * @param String a program name
      */
     public void loadUserProgram(String programName) {
         placeBlocks(mManager.loadUserProgram(programName));
     }
 
     /**
-     * load sample progmam names
+     * Load sample program names.
      * @return a list of names
      */
     public ArrayList<String> loadSampleProgramNames() {
@@ -116,7 +113,7 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * load user program names
+     * Load user program names.
      * @return a list of names
      */
     public ArrayList<String> loadUserProgramNames() {
@@ -124,8 +121,8 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * add all blocks in this layout
-     * please override this method to add specific attributes for blocks
+     * Add all blocks in this layout.
+     * Please override this method to add specific attributes for blocks.
      * e.g., can move or not
      * @param blocks
      */
@@ -149,12 +146,11 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * delete all blocks
+     * Delete all blocks.
      */
     public void deleteAllBlocks() {
         mLayout.removeAllViews();
         // remove the saved execution program
-        // TODO(tatsuya): is this necessary?
         mManager.deleteExecutionProgram();
     }
 }

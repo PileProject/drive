@@ -26,10 +26,7 @@ import android.widget.ImageView;
 import com.pileproject.drive.R;
 
 /**
- * a layout for placing blocks
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * A layout for placing blocks.
  */
 public class BlockSpaceLayout extends FrameLayout {
     private ImageView mTrashBox;
@@ -46,9 +43,9 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * check a block is on the trash box or not
+     * Check a block is on the trash box or not.
      *
-     * @param view a block
+     * @param View a block
      * @return boolean
      * true - a block is on the trash box, false - otherwise
      */
@@ -60,7 +57,7 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * remove all views attached to this layout, then add default views (a trash box)
+     * Remove all views attached to this layout, then add default views (a trash box).
      */
     @Override
     public void removeAllViews() {
@@ -71,9 +68,7 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * return the number of default children
-     *
-     * @return
+     * Return the number of default children.
      */
     public int getDefaultChildrenCount() {
         return mDefaultChildrenNum;

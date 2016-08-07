@@ -43,10 +43,7 @@ import java.util.ArrayList;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * a manager of BlockSpaceLayout that helps users to make programs
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 5-June-2013
+ * A manager of BlockSpaceLayout that helps users to make programs.
  */
 public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
     public final OnTouchListener mMoveBlock = new OnTouchListener() {
@@ -155,7 +152,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
     }
 
     /**
-     * a listener to pick a value
+     * A listener to pick a value.
      */
     class OnTouchNumTextListener implements OnLongClickListener {
         NumTextHolder mParent;
