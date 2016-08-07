@@ -42,9 +42,6 @@ import java.util.ArrayList;
 
 /**
  * Manager of BlockSpaceLayout This helps users make programs.
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 5-June-2013
  */
 public class ProgrammingSpaceManager extends BlockSpaceManager {
     private final int WC = ViewGroup.LayoutParams.WRAP_CONTENT;
@@ -67,7 +64,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManager {
                 // Touched
                 case MotionEvent.ACTION_DOWN:
                     // Bring the view touched to the front
-                    // NOT USED this method changes the index of views
+                    // NOT USED: this method changes the index of views
                     // therefore undo and redo cannot be done properly.
                     // view.bringToFront();
 

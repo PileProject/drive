@@ -27,10 +27,8 @@ import com.pileproject.drive.util.math.Range;
 import com.pileproject.drive.util.development.Unit;
 
 /**
- * A view class which is used for number selecting on blocks
- * this class consists of one SeekBar and one TextView
- *
- * @author yusaku
+ * A view class which is used for number selecting on blocks.
+ * This class consists of one SeekBar and one TextView.
  */
 public class NumberSelectSeekBarView extends NumberSelectViewBase {
 
@@ -120,9 +118,8 @@ public class NumberSelectSeekBarView extends NumberSelectViewBase {
     }
 
     /**
-     * get rid of the decimal part
+     * Get rid of the decimal part.
      * e.g., 1.15 -> 115
-     *
      * @param value a value in double
      * @return a value in integer
      */
@@ -131,15 +128,12 @@ public class NumberSelectSeekBarView extends NumberSelectViewBase {
     }
 
     /**
-     * convert an integer value to double value
+     * Convert an integer value to double value.
      * e.g., 115 -> 1.15
-     *
      * @param value a value in integer
      * @return a value in double
      */
     private double toDoubleExpression(int value) {
         return value / Math.pow(10.0, mNumberOfDecimalDigits);
     }
-
-
 }

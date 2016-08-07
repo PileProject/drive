@@ -28,10 +28,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 
 /**
- * a TextView which expresses a port
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 5-June-2013
+ * A TextView which expresses a port.
  */
 public abstract class PortTextViewBase extends TextView {
     final private boolean mIsFreePort;
@@ -58,7 +55,7 @@ public abstract class PortTextViewBase extends TextView {
     }
 
     /**
-     * swap ports
+     * Swap ports.
      * @param lhs a port
      * @param rhs another port
      */
@@ -104,37 +101,32 @@ public abstract class PortTextViewBase extends TextView {
     }
 
     /**
-     * save a connection setting
-     *
+     * Save a connection setting.
      * @param port
      * @param device
      */
     protected abstract void savePortConnection(String port, String device);
 
     /**
-     * remove a port connection setting
-     *
+     * Remove a port connection setting.
      * @param port
      */
     protected abstract void removePortConnection(String port);
 
     /**
-     * a getter for the type of device
-     *
+     * A getter for the type of device.
      * @return the type of device in string
      */
     public abstract String getDeviceType();
 
     /**
-     * a setter for the type of device
-     *
+     * A setter for the type of device.
      * @param deviceType
      */
     public abstract void setDeviceType(String deviceType);
 
     /**
-     * a getter for the name of port
-     *
+     * A getter for the name of port.
      * @return the name of port in string
      */
     public String getPortName() {

@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import com.pileproject.drive.util.math.Range;
 
 /**
- * an abstract view class which provides an interface of a view for selecting values
+ * An abstract view class which provides an interface of a view for selecting values.
  */
 public abstract class NumberSelectViewBase extends LinearLayout {
     final protected Range<Double> mRange;
@@ -35,15 +35,14 @@ public abstract class NumberSelectViewBase extends LinearLayout {
     }
 
     /**
-     * a setter of a value
+     * A setter of a value.
      * @param num a value to be set
      */
     public abstract void setNum(int num);
 
     /**
-     * a getter of a value
-     * this is used to get the real value in double
-     *
+     * A getter of a value.
+     * This is used to get the real value in double.
      * @return the selected value
      */
     public abstract double getSelectedNum();
