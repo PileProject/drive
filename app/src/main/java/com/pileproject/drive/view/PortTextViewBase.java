@@ -27,20 +27,22 @@ import android.widget.TextView;
 
 import com.pileproject.drive.R;
 
-public abstract class PortTextView extends TextView {
+/**
+ * A TextView which expresses a port.
+ */
+public abstract class PortTextViewBase extends TextView {
     final private boolean mIsFreePort;
     final private String mPortName;
     final private String mPortType;
     protected String mDeviceType;
 
-
-    public PortTextView(Context context, AttributeSet attrs) {
+    public PortTextViewBase(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextView);
-        mPortName = tar.getString(R.styleable.PortTextView_portName);
-        mPortType = tar.getString(R.styleable.PortTextView_portType);
-        mIsFreePort = (mPortName == null); // a free port has no name
+        TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextViewBase);
+        mPortName = tar.getString(R.styleable.PortTextViewBase_portName);
+        mPortType = tar.getString(R.styleable.PortTextViewBase_portType);
+        mIsFreePort = (mPortName == null); // NOTE: a free port has no name
         tar.recycle();
 
         setOnTouchListener(new OnTouchListener() {
@@ -52,7 +54,12 @@ public abstract class PortTextView extends TextView {
         });
     }
 
-    public static void swap(PortTextView lhs, PortTextView rhs) {
+    /**
+     * Swap ports.
+     * @param lhs a port
+     * @param rhs another port
+     */
+    public static void swap(PortTextViewBase lhs, PortTextViewBase rhs) {
         String lhsAttachmentType = lhs.getDeviceType();
         lhs.setDeviceType(rhs.getDeviceType());
         rhs.setDeviceType(lhsAttachmentType);
@@ -61,7 +68,7 @@ public abstract class PortTextView extends TextView {
     @Override
     public boolean onDragEvent(DragEvent event) {
         final int action = event.getAction();
-        final PortTextView localState = (PortTextView) event.getLocalState();
+        final PortTextViewBase localState = (PortTextViewBase) event.getLocalState();
 
         if (action == DragEvent.ACTION_DRAG_STARTED) {
             return true;
@@ -81,6 +88,7 @@ public abstract class PortTextView extends TextView {
                     }
                 });
 
+                // swap port the connection status
                 if (mIsFreePort) removePortConnection(mPortName);
                 else savePortConnection(mPortName, mDeviceType);
 
@@ -92,14 +100,35 @@ public abstract class PortTextView extends TextView {
         return false;
     }
 
+    /**
+     * Save a connection setting.
+     * @param port
+     * @param device
+     */
     protected abstract void savePortConnection(String port, String device);
 
+    /**
+     * Remove a port connection setting.
+     * @param port
+     */
     protected abstract void removePortConnection(String port);
 
+    /**
+     * A getter for the type of device.
+     * @return the type of device in string
+     */
     public abstract String getDeviceType();
 
+    /**
+     * A setter for the type of device.
+     * @param deviceType
+     */
     public abstract void setDeviceType(String deviceType);
 
+    /**
+     * A getter for the name of port.
+     * @return the name of port in string
+     */
     public String getPortName() {
         return mPortName;
     }

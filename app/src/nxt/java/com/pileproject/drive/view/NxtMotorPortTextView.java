@@ -27,7 +27,7 @@ import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.N
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.LEFT;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.MOTOR.RIGHT;
 
-public class NxtMotorPortTextView extends PortTextView {
+public class NxtMotorPortTextView extends PortTextViewBase {
 
     public NxtMotorPortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);

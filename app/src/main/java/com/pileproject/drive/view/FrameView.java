@@ -16,7 +16,6 @@
 
 package com.pileproject.drive.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -25,30 +24,26 @@ import android.graphics.Rect;
 import android.view.View;
 
 /**
- * Frame to emphasize blocks while executing
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A frame view to emphasize blocks during program executions.
  */
-@SuppressLint("ViewConstructor")
 public class FrameView extends View {
     private Paint mPaint;
     private Rect mRect;
 
     /**
-     * Constructor
-     *
      * @param context
-     * @param l
-     * @param t
-     * @param r
-     * @param b
+     * @param l the left of a block
+     * @param t the top of a block
+     * @param r the right of a block
+     * @param b the bottom of a block
      */
     public FrameView(Context context, int l, int t, int r, int b) {
         super(context);
+
+        // make a paint object and a rectangle
         setFocusable(true);
         mPaint = new Paint();
-        mPaint.setStrokeWidth(3);
+        mPaint.setStrokeWidth(10);
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setColor(Color.RED);
@@ -59,7 +54,7 @@ public class FrameView extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
-        // Draw rectangle
+        // draw a rectangle around a block
         canvas.drawRect(mRect, mPaint);
     }
 }

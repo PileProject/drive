@@ -16,7 +16,7 @@
   -->
 
 <resources>
-    <declare-styleable name="PortTextView">
+    <declare-styleable name="PortTextViewBase">
         <attr name="portName" format="string"/>
         <attr name="portType">
             <enum name="sensor" value="1"/>
