@@ -35,7 +35,7 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import com.pileproject.drive.util.fragment.ProgressDialogFragment;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
-import com.pileproject.drive.programming.visual.layout.ProgressSpaceManager;
+import com.pileproject.drive.programming.visual.layout.ExecutionSpaceManager;
 
 /**
  * this Activity shows the execution of program
@@ -58,7 +58,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     public static final String BLOCK_INDEX = "index";
 
     private BluetoothAdapter mBtAdapter = null;
-    private ProgressSpaceManager mSpaceManager;
+    private ExecutionSpaceManager mSpaceManager;
 
     private Button mStopAndRestartButton;
     private Button mFinishButton;
@@ -186,7 +186,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
     private void findViews() {
         mSpaceManager =
-                new ProgressSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.execute_showingProgressLayout));
+                new ExecutionSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.execute_showingProgressLayout));
         mStopAndRestartButton = (Button) findViewById(R.id.execute_stopAndRestartButton);
         mFinishButton = (Button) findViewById(R.id.execute_finishButton);
     }
