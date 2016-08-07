@@ -41,10 +41,7 @@ import com.pileproject.drive.programming.visual.block.BlockFactory;
 import java.util.Locale;
 
 /**
- * An Activity that shows a list of blocks as a dialog interface
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * An Activity that shows a list of blocks as a dialog interface.
  */
 public abstract class BlockListActivityBase extends Activity {
     private final int mCategoryTexts[] = {R.string.sequence, R.string.repetition, R.string.selection,};
@@ -131,7 +128,7 @@ public abstract class BlockListActivityBase extends Activity {
     protected abstract BlockClassHolder[][] getBlockIcons();
 
     /**
-     * A holder class that has a block data as a class
+     * A holder class that has a block data as a class.
      */
     protected class BlockClassHolder {
         private Class<? extends BlockBase> mClass;
@@ -194,15 +191,13 @@ public abstract class BlockListActivityBase extends Activity {
     }
 
     /**
-     * An adapter class that has icons
+     * An adapter class that has icons.
      */
     protected class BlockIconAdapter extends ArrayAdapter<BlockClassHolder> {
         private LayoutInflater mInflater;
         private int mLayoutId;
 
         /**
-         * Constructor
-         *
          * @param context  the context of the Activity that calls this adapter
          * @param layoutId the resource id of the icon view
          * @param objects  sets of Icon data
@@ -233,7 +228,9 @@ public abstract class BlockListActivityBase extends Activity {
             return convertView;
         }
 
-        // an icon holder that has a TextView and an ImageView
+        /**
+         * An icon holder that has a TextView and an ImageView.
+         */
         class IconHolder {
             TextView description;
             ImageView image;
