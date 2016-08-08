@@ -37,7 +37,6 @@ import java.util.Collections;
  * @version 2.0 2-April-2016
  */
 public class ProgramDataManager {
-    private static final String TAG = "ProgramDataManager";
     private static ProgramDataManager mInstance = new ProgramDataManager();
     private DriveDatabase mDriveDatabase = null;
 

@@ -64,8 +64,9 @@ public class RepetitionBreakBlock extends BlockBase {
                 condition.beginningOfCurrentWhileLoop = -1;
             }
 
-            // Exclude if commands that this loop contains
-            while (!condition.ifStack.isEmpty() && condition.ifStack.peek().get("index") >= index) {
+            // exclude if commands that this loop contains
+            while (!condition.ifStack.isEmpty()
+                    && condition.ifStack.peek().get(getContext().getString(R.string.key_execution_index)) >= index) {
                 condition.ifStack.pop();    // delete
             }
 

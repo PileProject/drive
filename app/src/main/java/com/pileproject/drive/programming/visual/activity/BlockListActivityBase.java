@@ -37,6 +37,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
 
 import java.util.Locale;
 
@@ -59,7 +60,7 @@ public abstract class BlockListActivityBase extends Activity {
         setResult(Activity.RESULT_CANCELED); // set the default result as "canceled"
 
         Intent intent = getIntent();
-        mCategory = intent.getIntExtra("category", BlockFactory.SEQUENCE);
+        mCategory = intent.getIntExtra(getString(R.string.key_block_category), BlockFactory.SEQUENCE);
 
         // show title based on the category
         setTitle(getString(R.string.blockList_label) + getString(mCategoryTexts[mCategory]));
@@ -78,11 +79,11 @@ public abstract class BlockListActivityBase extends Activity {
                 Intent data = new Intent();
                 // repetitionBreakBlock should be created in the same way in which a SequenceBlock is created
                 if (mBlocks[mCategory][position].isRepetitionBreakBlock()) {
-                    data.putExtra("how_to_make", BlockFactory.SEQUENCE);
+                    data.putExtra(getString(R.string.key_block_how_to_make), BlockFactory.SEQUENCE);
                 } else {
-                    data.putExtra("how_to_make", mCategory);
+                    data.putExtra(getString(R.string.key_block_how_to_make), mCategory);
                 }
-                data.putExtra("block_name", mBlocks[mCategory][position].getBlockName());
+                data.putExtra(getString(R.string.key_block_block_name), mBlocks[mCategory][position].getBlockName());
 
                 // set the result as "ok" and return the data
                 setResult(Activity.RESULT_OK, data);
@@ -164,7 +165,7 @@ public abstract class BlockListActivityBase extends Activity {
         }
 
         public boolean isRepetitionBreakBlock() {
-            return mClass.getSimpleName().equals("RepetitionBreakBlock");
+            return mClass.getSimpleName().equals(RepetitionBreakBlock.class.getSimpleName());
         }
 
         public int getIconResourceId() {

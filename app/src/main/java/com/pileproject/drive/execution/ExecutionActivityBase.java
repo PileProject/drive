@@ -53,10 +53,6 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     private static final int REQUEST_ENABLE_BT = 1;
     private static final int FAILED_TO_CONNECT = 1;
 
-    public static final String IS_CONNECTED = "is_connected";
-    public static final String MESSAGE_IN_EXECUTION = "message";
-    public static final String BLOCK_INDEX = "index";
-
     private BluetoothAdapter mBtAdapter = null;
     private ExecutionSpaceManager mSpaceManager;
 
@@ -81,7 +77,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     private final Handler mProgressHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
-            switch (message.getData().getInt(MESSAGE_IN_EXECUTION)) {
+            switch (message.getData().getInt(getString(R.string.key_execution_message))) {
                 case ExecutionThread.START_THREAD: {
                     Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
                     return true;
@@ -89,7 +85,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
                 case ExecutionThread.EMPHASIZE_BLOCK: {
                     // Emphasize the current executing block
-                    int index = message.getData().getInt(BLOCK_INDEX);
+                    int index = message.getData().getInt(getString(R.string.key_execution_index));
                     mSpaceManager.emphasizeBlock(index);
                     return true;
                 }
@@ -145,7 +141,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
         // Check this activity has already connected to the device
         Intent intent = getIntent();
-        if (intent.getBooleanExtra(IS_CONNECTED, false)) {
+        if (intent.getBooleanExtra(getString(R.string.key_execution_isConnected), false)) {
             setResult(Activity.RESULT_OK, intent);
             try {
                 startExecution();
@@ -316,7 +312,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
         // Inform this activity has been disconnected by the device
         Intent intent = new Intent();
-        intent.putExtra(IS_CONNECTED, false);
+        intent.putExtra(getString(R.string.key_execution_isConnected), false);
         setResult(RESULT_OK, intent);
     }
 

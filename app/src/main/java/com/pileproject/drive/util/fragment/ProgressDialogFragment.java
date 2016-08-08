@@ -25,17 +25,16 @@ import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
 import android.text.TextUtils;
 
+import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
+
 /**
  * A simple dialog with a progress bar (intermediate style).
  * With simply calling {@link ProgressDialogFragment#showDialog(FragmentManager, String, String, String)},
- * a ProgressDialog will appears.
+ * a ProgressDialog will appear.
  * When no longer needed, call {@link ProgressDialogFragment#dismissDialog()}.
  */
 public class ProgressDialogFragment extends DialogFragment {
-
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_MESSAGE = "message";
-
     private static ProgressDialog sProgressDialog;
 
     public ProgressDialogFragment() {
@@ -52,7 +51,6 @@ public class ProgressDialogFragment extends DialogFragment {
      */
     public static void showDialog(FragmentManager manager, String title, String message, String tag) {
         ProgressDialogFragment f = newInstance(title, message);
-
         f.show(manager, tag);
     }
 
@@ -86,10 +84,10 @@ public class ProgressDialogFragment extends DialogFragment {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
 
         Bundle args = new Bundle();
-
-        args.putString(ARG_TITLE, title);
-        args.putString(ARG_MESSAGE, message);
-
+        // NOTE: because this method is static, we cannot call getActivity()
+        Context context = DriveApplication.getContext();
+        args.putString(context.getString(R.string.key_fragment_title), title);
+        args.putString(context.getString(R.string.key_fragment_message), message);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,8 +102,8 @@ public class ProgressDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
 
-        String title = args.getString(ARG_TITLE);
-        String message = args.getString(ARG_MESSAGE);
+        String title = args.getString(getActivity().getString(R.string.key_fragment_title));
+        String message = args.getString(getActivity().getString(R.string.key_fragment_message));
 
         if (! TextUtils.isEmpty(title)) {
             sProgressDialog.setTitle(title);

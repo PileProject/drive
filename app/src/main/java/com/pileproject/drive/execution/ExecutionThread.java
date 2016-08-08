@@ -21,6 +21,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 
+import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
@@ -49,7 +51,6 @@ public class ExecutionThread extends Thread {
     private MachineController mController;
     private Handler mUiHandler;
     private boolean mStop;
-    public static final String KEY_RESULT = "result";
 
     /**
      * Constructor
@@ -57,8 +58,7 @@ public class ExecutionThread extends Thread {
      * @param context   The context of Activity that calls this thread
      * @param uiHandler Handler for controlling the showing progress layout
      */
-    public ExecutionThread(
-            Context context, Handler uiHandler, MachineController controller) {
+    public ExecutionThread(Context context, Handler uiHandler, MachineController controller) {
         super();
         mManager = ProgramDataManager.getInstance();
         mCondition = new ExecutionCondition();
@@ -179,6 +179,7 @@ public class ExecutionThread extends Thread {
         final int MARGIN = 80;
         ArrayList<BlockBase> blocks = mCondition.blocks;
         BlockBase block = blocks.get(index);
+        Context context = DriveApplication.getContext();
 
         if (block instanceof SelectionEndBlock) {
             return false;
@@ -187,9 +188,9 @@ public class ExecutionThread extends Thread {
         Map<String, Integer> map = mCondition.ifStack.peek();
 
         // True
-        if (map.get(KEY_RESULT) == ExecutionCondition.TRUE) {
+        if (map.get(context.getString(R.string.key_execution_result)) == ExecutionCondition.TRUE) {
             BlockBase nearestSelectionBlock
-                = blocks.get(map.get(ExecutionActivityBase.BLOCK_INDEX));
+                = blocks.get(map.get(context.getString(R.string.key_execution_index)));
 
             int max = nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth();
 
@@ -225,16 +226,16 @@ public class ExecutionThread extends Thread {
             }
         }
         // False
-        else if (map.get(KEY_RESULT) == ExecutionCondition.FALSE) {
+        else if (map.get(context.getString(R.string.key_execution_result)) == ExecutionCondition.FALSE) {
             BlockBase nearestSelectionBlock
-                = blocks.get(map.get(ExecutionActivityBase.BLOCK_INDEX));
+                = blocks.get(map.get(context.getString(R.string.key_execution_index)));
 
             // Nest
             if (mCondition.ifStack.size() >= 2) {
                 map = mCondition.ifStack.pop();
                 // Get the index of the second nearest selection block
                 int secondIndex
-                    = mCondition.ifStack.peek().get(ExecutionActivityBase.BLOCK_INDEX);
+                    = mCondition.ifStack.peek().get(context.getString(R.string.key_execution_index));
                 BlockBase secondNearestSelectionBlock = blocks.get(secondIndex);
                 mCondition.ifStack.push(map); // Push the popped element
 
@@ -299,7 +300,8 @@ public class ExecutionThread extends Thread {
     // Create a bundle to send the change of state to Activity
     private void sendState(int message) {
         Bundle bundle = new Bundle();
-        bundle.putInt(ExecutionActivityBase.MESSAGE_IN_EXECUTION, message);
+        Context context = DriveApplication.getContext();
+        bundle.putInt(context.getString(R.string.key_execution_message), message);
         sendBundle(bundle);
     }
 
@@ -307,8 +309,9 @@ public class ExecutionThread extends Thread {
     // Activity
     private void sendIndex(int message, int index) {
         Bundle bundle = new Bundle();
-        bundle.putInt(ExecutionActivityBase.MESSAGE_IN_EXECUTION, message);
-        bundle.putInt(ExecutionActivityBase.BLOCK_INDEX, index);
+        Context context = DriveApplication.getContext();
+        bundle.putInt(context.getString(R.string.key_execution_message), message);
+        bundle.putInt(context.getString(R.string.key_execution_index), index);
         sendBundle(bundle);
     }
 

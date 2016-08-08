@@ -25,7 +25,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -44,8 +43,6 @@ import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import java.util.ArrayList;
 import java.util.List;
 
-import trikita.log.Log;
-
 /**
  * Users create programs on this Activity
  *
@@ -56,9 +53,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
     private static final int DIALOG_REQUEST_CODE_DID_NOT_SELECT_DEVICE = 10000;
     private static final int DIALOG_REQUEST_CODE_DELETE_ALL_BLOCK      = 20000;
     private static final int DIALOG_REQUEST_CODE_PROGRAM_LIST          = 30000;
-
-    private static final String KEY_IS_SAMPLE       = "is_sample";
-    private static final String KEY_SAMPLE_PROGRAMS = "samples_programs";
 
     private static final int ACTIVITY_RESULT_ADD_BLOCK       = 1;
     private static final int ACTIVITY_RESULT_EXECUTE_PROGRAM = 2;
@@ -86,8 +80,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                 @Override
                 public void onClick(View v) {
                     Intent intent = getIntentToBlockList();
-                    intent.putExtra("category", mAddBlockButtons.indexOf(v));
-                    Log.d("category: " + mAddBlockButtons.indexOf(v));
+                    intent.putExtra(getString(R.string.key_block_category), mAddBlockButtons.indexOf(v));
                     startActivityForResult(intent, ACTIVITY_RESULT_ADD_BLOCK);
                 }
             });
@@ -122,10 +115,10 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
         mSpaceManager.saveExecutionProgram();
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
-        // TODO this check does not work when dissolves paring
+        // TODO: this check does not work when dissolves paring
         if (address != null || DeployUtils.isOnEmulator()) {
             Intent intent = getIntentToExecute();
-            intent.putExtra("is_connected", mIsConnected);
+            intent.putExtra(getString(R.string.key_execution_isConnected), mIsConnected);
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;
         }
@@ -150,15 +143,15 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
             case ACTIVITY_RESULT_ADD_BLOCK:
                 if (resultCode == Activity.RESULT_OK) {
                     // Get results
-                    int howToMake = data.getIntExtra("how_to_make", BlockFactory.SEQUENCE);
-                    String blockName = data.getStringExtra("block_name");
+                    int howToMake = data.getIntExtra(getString(R.string.key_block_how_to_make), BlockFactory.SEQUENCE);
+                    String blockName = data.getStringExtra(getString(R.string.key_block_block_name));
                     ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
                 }
                 break;
 
             case ACTIVITY_RESULT_EXECUTE_PROGRAM:
-                mIsConnected = !(data == null || !data.getBooleanExtra("is_connected", false));
+                mIsConnected = !(data == null || !data.getBooleanExtra(getString(R.string.key_execution_isConnected), false));
                 break;
         }
     }
@@ -171,7 +164,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
         toolbar.inflateMenu(R.menu.menu_programming);
-        toolbar.setTitle(getTitle() + ": " + deviceAddress);
+        toolbar.setTitle(deviceAddress);
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -243,8 +236,8 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
 
     private void showLoadProgramDialog(ArrayList<String> programs, boolean isSample) {
         Bundle args = new Bundle();
-        args.putBoolean(KEY_IS_SAMPLE, isSample);
-        args.putStringArrayList(KEY_SAMPLE_PROGRAMS, programs);
+        args.putBoolean(getString(R.string.key_program_isSample), isSample);
+        args.putStringArrayList(getString(R.string.key_program_samplePrograms), programs);
 
         new AlertDialogFragment.Builder(this)
                     .setRequestCode(DIALOG_REQUEST_CODE_PROGRAM_LIST)
@@ -288,8 +281,8 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                     break;
                 }
 
-                boolean isSample = params.getBoolean(KEY_IS_SAMPLE);
-                ArrayList<String> programs = params.getStringArrayList(KEY_SAMPLE_PROGRAMS);
+                boolean isSample = params.getBoolean(getString(R.string.key_program_isSample));
+                ArrayList<String> programs = params.getStringArrayList(getString(R.string.key_program_samplePrograms));
                 String programName = programs.get(which);
 
                 mSpaceManager.deleteAllBlocks(); // delete existing blocks
