@@ -27,11 +27,6 @@ import com.pileproject.drive.setting.NxtSettingActivity;
  */
 public class NxtTitleActivity extends TitleActivityBase {
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
     protected Intent getIntentToProgrammingPage() {
         return new Intent(getApplicationContext(), NxtProgrammingActivity.class);
     }
