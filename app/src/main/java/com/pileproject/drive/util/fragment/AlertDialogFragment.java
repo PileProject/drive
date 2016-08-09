@@ -30,8 +30,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.view.Gravity;
 
-import com.pileproject.drive.R;
-
 /**
  * A simple {@link DialogFragment} subclass.
  * Activities that contain this fragment must implement the
@@ -41,6 +39,16 @@ import com.pileproject.drive.R;
  * show a dialog.
  */
 public class AlertDialogFragment extends DialogFragment {
+    private static final String KEY_TITLE          = "title";
+    private static final String KEY_MESSAGE        = "message";
+    private static final String KEY_POSITIVE_LABEL = "positive_label";
+    private static final String KEY_NEGATIVE_LABEL = "negative_label";
+    private static final String KEY_ITEMS          = "items";
+    private static final String KEY_PARAMS         = "params";
+    private static final String KEY_REQUEST_CODE   = "request_code";
+    private static final String KEY_CANCELABLE     = "cancelable";
+    private static final String KEY_GRAVITY        = "gravity";
+
     /**
      * Builder class for {@link AlertDialogFragment}
      * Using this class enables to create an AlertDialogFragment instance by method chains
@@ -240,19 +248,18 @@ public class AlertDialogFragment extends DialogFragment {
         public void show() {
             Bundle args = new Bundle();
 
-            Context context = getContext();
-            args.putString(context.getString(R.string.key_fragment_title), mTitle);
-            args.putString(context.getString(R.string.key_fragment_message), mMessage);
-            args.putString(context.getString(R.string.key_fragment_positiveLabel), mPositiveLabel);
-            args.putString(context.getString(R.string.key_fragment_negativeLable), mNegativeLabel);
-            args.putStringArray(context.getString(R.string.key_fragment_items), mItems);
+            args.putString(KEY_TITLE, mTitle);
+            args.putString(KEY_MESSAGE, mMessage);
+            args.putString(KEY_POSITIVE_LABEL, mPositiveLabel);
+            args.putString(KEY_NEGATIVE_LABEL, mNegativeLabel);
+            args.putStringArray(KEY_ITEMS, mItems);
 
-            args.putBoolean(context.getString(R.string.key_fragment_cancelable), mCancelable);
+            args.putBoolean(KEY_CANCELABLE, mCancelable);
 
-            args.putInt(context.getString(R.string.key_fragment_gravity), mGravity);
+            args.putInt(KEY_GRAVITY, mGravity);
 
             if (mParams != null) {
-                args.putBundle(context.getString(R.string.key_fragment_params), mParams);
+                args.putBundle(KEY_PARAMS, mParams);
             }
 
             final AlertDialogFragment f = new AlertDialogFragment();
@@ -261,7 +268,7 @@ public class AlertDialogFragment extends DialogFragment {
                 f.setTargetFragment(mParentFragment, mRequestCode);
             }
             else {
-                args.putInt(context.getString(R.string.key_fragment_requestCode), mRequestCode);
+                args.putInt(KEY_REQUEST_CODE, mRequestCode);
             }
 
             f.setArguments(args);
@@ -316,21 +323,20 @@ public class AlertDialogFragment extends DialogFragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dismiss();
-                mListener.onDialogEventHandled(getRequestCode(), dialog, which,
-                                               getArguments().getBundle(getString(R.string.key_fragment_params)));
+                mListener.onDialogEventHandled(getRequestCode(), dialog, which, getArguments().getBundle(KEY_PARAMS));
             }
         };
 
         Bundle args = getArguments();
 
-        setCancelable(args.getBoolean(getString(R.string.key_fragment_cancelable)));
+        setCancelable(args.getBoolean(KEY_CANCELABLE));
 
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
 
-        String title = args.getString(getString(R.string.key_fragment_title));
-        String message = args.getString(getString(R.string.key_fragment_message));
-        String positiveLabel = args.getString(getString(R.string.key_fragment_positiveLabel));
-        String negativeLabel = args.getString(getString(R.string.key_fragment_negativeLable));
+        String title = args.getString(KEY_TITLE);
+        String message = args.getString(KEY_MESSAGE);
+        String positiveLabel = args.getString(KEY_POSITIVE_LABEL);
+        String negativeLabel = args.getString(KEY_NEGATIVE_LABEL);
 
         // set strings if not empty
         if (! TextUtils.isEmpty(title)) {
@@ -347,27 +353,27 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         // if there is a list, set it as list view
-        String[] items = args.getStringArray(getString(R.string.key_fragment_items));
+        String[] items = args.getStringArray(KEY_ITEMS);
 
         if (items != null && items.length > 0) {
             builder.setItems(items, listener);
         }
 
         AlertDialog dialog = builder.create();
-        dialog.getWindow().setGravity(args.getInt(getString(R.string.key_fragment_gravity)));
+
+        dialog.getWindow().setGravity(args.getInt(KEY_GRAVITY));
+
         return dialog;
     }
 
     @Override
     public void onCancel(DialogInterface dialog) {
-        mListener.onDialogEventCancelled(getRequestCode(), dialog,
-                                         getArguments().getBundle(getString(R.string.key_fragment_params)));
+        mListener.onDialogEventCancelled(getRequestCode(), dialog, getArguments().getBundle(KEY_PARAMS));
     }
 
     private int getRequestCode() {
-        final String keyRequestCode = getString(R.string.key_fragment_requestCode);
-        return getArguments().containsKey(keyRequestCode) ?
-                getArguments().getInt(keyRequestCode) : getTargetRequestCode();
+        return getArguments().containsKey(KEY_REQUEST_CODE) ?
+                getArguments().getInt(KEY_REQUEST_CODE) : getTargetRequestCode();
     }
 
     /**

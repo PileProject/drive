@@ -18,23 +18,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
 
-    <string name="key.program.isSample">is_sample</string>
-    <string name="key.program.samplePrograms">sample_programs</string>
-
     <string name="key.execution.isConnected">is_connected</string>
     <string name="key.execution.index">index</string>
     <string name="key.execution.message">message</string>
     <string name="key.execution.result">result</string>
-
-    <string name="key.fragment.title">title</string>
-    <string name="key.fragment.message">message</string>
-    <string name="key.fragment.positiveLabel">positive_label</string>
-    <string name="key.fragment.negativeLable">negative_lable</string>
-    <string name="key.fragment.items">items</string>
-    <string name="key.fragment.params">params</string>
-    <string name="key.fragment.requestCode">request_code</string>
-    <string name="key.fragment.cancelable">cancelable</string>
-    <string name="key.fragment.gravity">gravity</string>
 
     <string name="key.block.category">category</string>
     <string name="key.block.how_to_make">how_to_make</string>

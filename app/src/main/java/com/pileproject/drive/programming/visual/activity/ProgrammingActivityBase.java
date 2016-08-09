@@ -54,6 +54,9 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
     private static final int DIALOG_REQUEST_CODE_DELETE_ALL_BLOCK      = 20000;
     private static final int DIALOG_REQUEST_CODE_PROGRAM_LIST          = 30000;
 
+    private static final String KEY_IS_SAMPLE       = "is_sample";
+    private static final String KEY_SAMPLE_PROGRAMS = "samples_programs";
+
     private static final int ACTIVITY_RESULT_ADD_BLOCK       = 1;
     private static final int ACTIVITY_RESULT_EXECUTE_PROGRAM = 2;
 
@@ -236,8 +239,8 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
 
     private void showLoadProgramDialog(ArrayList<String> programs, boolean isSample) {
         Bundle args = new Bundle();
-        args.putBoolean(getString(R.string.key_program_isSample), isSample);
-        args.putStringArrayList(getString(R.string.key_program_samplePrograms), programs);
+        args.putBoolean(KEY_IS_SAMPLE, isSample);
+        args.putStringArrayList(KEY_SAMPLE_PROGRAMS, programs);
 
         new AlertDialogFragment.Builder(this)
                     .setRequestCode(DIALOG_REQUEST_CODE_PROGRAM_LIST)
@@ -281,8 +284,8 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                     break;
                 }
 
-                boolean isSample = params.getBoolean(getString(R.string.key_program_isSample));
-                ArrayList<String> programs = params.getStringArrayList(getString(R.string.key_program_samplePrograms));
+                boolean isSample = params.getBoolean(KEY_IS_SAMPLE);
+                ArrayList<String> programs = params.getStringArrayList(KEY_SAMPLE_PROGRAMS);
                 String programName = programs.get(which);
 
                 mSpaceManager.deleteAllBlocks(); // delete existing blocks
