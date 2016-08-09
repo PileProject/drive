@@ -17,10 +17,9 @@
 package com.pileproject.drive.title;
 
 import android.content.Intent;
-import android.os.Bundle;
 
 import com.pileproject.drive.programming.visual.activity.NxtProgrammingActivity;
-import com.pileproject.drive.setting.NxtSettingActivity;
+import com.pileproject.drive.setting.SettingActivity;
 
 /**
  * The title page of NxtDrive.
@@ -32,7 +31,7 @@ public class NxtTitleActivity extends TitleActivityBase {
     }
 
     @Override
-    protected Intent getIntentToSetttingPage() {
-        return new Intent(getApplicationContext(), NxtSettingActivity.class);
+    protected Intent getIntentToSettingPage() {
+        return new Intent(getApplicationContext(), SettingActivity.class);
     }
 }

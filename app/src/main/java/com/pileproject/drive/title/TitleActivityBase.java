@@ -46,7 +46,7 @@ public abstract class TitleActivityBase extends AppCompatActivity {
         findViewById(R.id.title_settingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(getIntentToSetttingPage());
+                startActivity(getIntentToSettingPage());
             }
         });
 
@@ -68,5 +68,5 @@ public abstract class TitleActivityBase extends AppCompatActivity {
     /**
      * A method to get an intent to preference page.
      */
-    protected abstract Intent getIntentToSetttingPage();
+    protected abstract Intent getIntentToSettingPage();
 }
