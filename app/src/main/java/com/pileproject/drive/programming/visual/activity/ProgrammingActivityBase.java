@@ -25,7 +25,6 @@ import android.support.v4.app.DialogFragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -43,8 +42,6 @@ import com.pileproject.drive.util.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import trikita.log.Log;
 
 /**
  * Users create programs on this Activity
@@ -86,8 +83,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                 @Override
                 public void onClick(View v) {
                     Intent intent = getIntentToBlockList();
-                    intent.putExtra("category", mAddBlockButtons.indexOf(v));
-                    Log.d("category: " + mAddBlockButtons.indexOf(v));
+                    intent.putExtra(getString(R.string.key_block_category), mAddBlockButtons.indexOf(v));
                     startActivityForResult(intent, ACTIVITY_RESULT_ADD_BLOCK);
                 }
             });
@@ -122,10 +118,10 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
         mSpaceManager.saveExecutionProgram();
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
-        // TODO this check does not work when dissolves paring
+        // TODO: this check does not work when dissolves paring
         if (address != null || DeployUtils.isOnEmulator()) {
             Intent intent = getIntentToExecute();
-            intent.putExtra("is_connected", mIsConnected);
+            intent.putExtra(getString(R.string.key_execution_isConnected), mIsConnected);
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;
         }
@@ -150,15 +146,15 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
             case ACTIVITY_RESULT_ADD_BLOCK:
                 if (resultCode == Activity.RESULT_OK) {
                     // Get results
-                    int howToMake = data.getIntExtra("how_to_make", BlockFactory.SEQUENCE);
-                    String blockName = data.getStringExtra("block_name");
+                    int howToMake = data.getIntExtra(getString(R.string.key_block_how_to_make), BlockFactory.SEQUENCE);
+                    String blockName = data.getStringExtra(getString(R.string.key_block_block_name));
                     ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
                 }
                 break;
 
             case ACTIVITY_RESULT_EXECUTE_PROGRAM:
-                mIsConnected = !(data == null || !data.getBooleanExtra("is_connected", false));
+                mIsConnected = !(data == null || !data.getBooleanExtra(getString(R.string.key_execution_isConnected), false));
                 break;
         }
     }
@@ -171,7 +167,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
         toolbar.inflateMenu(R.menu.menu_programming);
-        toolbar.setTitle(getTitle() + ": " + deviceAddress);
+        toolbar.setTitle(deviceAddress);
         toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override

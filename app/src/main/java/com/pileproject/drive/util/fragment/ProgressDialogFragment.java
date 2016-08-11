@@ -28,14 +28,12 @@ import android.text.TextUtils;
 /**
  * A simple dialog with a progress bar (intermediate style).
  * With simply calling {@link ProgressDialogFragment#showDialog(FragmentManager, String, String, String)},
- * a ProgressDialog will appears.
+ * a ProgressDialog will appear.
  * When no longer needed, call {@link ProgressDialogFragment#dismissDialog()}.
  */
 public class ProgressDialogFragment extends DialogFragment {
-
-    private static final String ARG_TITLE = "title";
-    private static final String ARG_MESSAGE = "message";
-
+    private static final String KEY_TITLE          = "title";
+    private static final String KEY_MESSAGE        = "message";
     private static ProgressDialog sProgressDialog;
 
     public ProgressDialogFragment() {
@@ -52,7 +50,6 @@ public class ProgressDialogFragment extends DialogFragment {
      */
     public static void showDialog(FragmentManager manager, String title, String message, String tag) {
         ProgressDialogFragment f = newInstance(title, message);
-
         f.show(manager, tag);
     }
 
@@ -86,10 +83,8 @@ public class ProgressDialogFragment extends DialogFragment {
         ProgressDialogFragment fragment = new ProgressDialogFragment();
 
         Bundle args = new Bundle();
-
-        args.putString(ARG_TITLE, title);
-        args.putString(ARG_MESSAGE, message);
-
+        args.putString(KEY_TITLE, title);
+        args.putString(KEY_MESSAGE, message);
         fragment.setArguments(args);
         return fragment;
     }
@@ -104,8 +99,8 @@ public class ProgressDialogFragment extends DialogFragment {
 
         Bundle args = getArguments();
 
-        String title = args.getString(ARG_TITLE);
-        String message = args.getString(ARG_MESSAGE);
+        String title = args.getString(KEY_TITLE);
+        String message = args.getString(KEY_MESSAGE);
 
         if (! TextUtils.isEmpty(title)) {
             sProgressDialog.setTitle(title);
