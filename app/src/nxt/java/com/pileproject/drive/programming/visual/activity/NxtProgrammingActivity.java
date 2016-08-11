@@ -19,7 +19,7 @@ package com.pileproject.drive.programming.visual.activity;
 import android.content.Intent;
 
 import com.pileproject.drive.execution.NxtExecutionActivity;
-import com.pileproject.drive.setting.NxtSettingActivity;
+import com.pileproject.drive.setting.SettingActivity;
 
 public class NxtProgrammingActivity extends ProgrammingActivityBase {
 
@@ -30,7 +30,7 @@ public class NxtProgrammingActivity extends ProgrammingActivityBase {
 
     @Override
     protected Intent getIntentToDeviceList() {
-        return new Intent(getApplicationContext(), NxtSettingActivity.class);
+        return new Intent(getApplicationContext(), SettingActivity.class);
     }
 
     @Override
