@@ -17,6 +17,10 @@
 package com.pileproject.drive.execution;
 
 
+import android.content.Context;
+
+import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 import java.util.ArrayList;
@@ -52,8 +56,9 @@ public class ExecutionCondition {
      */
     public void pushSelectionResult(boolean result) {
         Map<String, Integer> map = new HashMap<>();
-        map.put(ExecutionActivityBase.BLOCK_INDEX, programCount);    // current index
-        map.put(ExecutionThread.KEY_RESULT, result ? TRUE : FALSE);
+        Context context = DriveApplication.getContext();
+        map.put(context.getString(R.string.key_execution_index), programCount);    // current index
+        map.put(context.getString(R.string.key_execution_result), result ? TRUE : FALSE);
         ifStack.push(map);
     }
 }
