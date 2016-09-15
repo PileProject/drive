@@ -29,15 +29,9 @@ import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
-import java.util.Map;
-
-import trikita.log.Log;
 
 /**
- * Sub thread to execute program
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A Thread class to execute program.
  */
 public class ExecutionThread extends Thread {
     public static final int START_THREAD = 1000;
@@ -55,10 +49,10 @@ public class ExecutionThread extends Thread {
     /**
      * Constructor
      *
-     * @param context   The context of Activity that calls this thread
-     * @param uiHandler Handler for controlling the showing progress layout
+     * @param uiHandler a handler for communicating the execution activity
+     * @param controller a controller to control machines (e.g., NXT/EV3)
      */
-    public ExecutionThread(Context context, Handler uiHandler, MachineController controller) {
+    public ExecutionThread(Handler uiHandler, MachineController controller) {
         super();
         mManager = ProgramDataManager.getInstance();
         mCondition = new ExecutionCondition();
@@ -76,7 +70,7 @@ public class ExecutionThread extends Thread {
     public void run() {
         sendState(START_THREAD);
 
-        // Only one thread can be executed
+        // just one thread can be executed
         synchronized (this) {
             if (isExecutable()) {
                 mThreadNum = 1;
@@ -91,52 +85,46 @@ public class ExecutionThread extends Thread {
             for (mCondition.programCount = 0;
                  mCondition.programCount < mCondition.blocks.size();
                  mCondition.programCount++) {
-                // Halt execution
+                // halt execution
                 if (mHalt) {
                     break;
                 }
 
-                // Stop temporarily
+                // stop temporarily
                 if (mStop) {
-                    // Check already stopped
                     if (!isStopped) {
-                        // Halt motors
                         mController.halt();
                         isStopped = !isStopped;
                     }
-                    mCondition.programCount--; // Loop
+                    mCondition.programCount--; // loop
                     continue;
                 } else {
                     isStopped = false;
                 }
 
-                // Check ifStack is empty
+                // check whether ifStack is empty
                 if (!mCondition.ifStack.isEmpty()) {
-                    // Check this block is to be through
+                    // check this block is to be through
                     if (isThrough(mCondition.programCount)) {
                         continue;
                     }
                 }
 
-                // Get block to be executed
+                // get block to be executed
                 BlockBase block = mCondition.blocks.get(mCondition.programCount);
-                Log.d("Current Block: " + block.getClass().getSimpleName());
 
-                // Emphasize the current executing block
+                // emphasize the current executing block
                 sendIndex(EMPHASIZE_BLOCK, mCondition.programCount);
 
-                // Do action and return delay
+                // do action and return delay
                 int delay = block.action(mController, mCondition);
-                waitMillSec(delay); // Wait for some
-
-                Log.d("Current Index: " + mCondition.programCount);
+                waitMillSec(delay);
 
                 if (mStop) {
                     mCondition.programCount--;
                 }
                 waitMillSec(1); // adjustment
             }
-            Log.d("Thread has just finished");
             sendState(END_THREAD);
         } catch (RuntimeException e) {
             sendState(CONNECTION_ERROR);
@@ -158,10 +146,10 @@ public class ExecutionThread extends Thread {
         }
     }
 
-    // Wait on the millisecond time scale
+    // wait in milliseconds
     private void waitMillSec(int milli) {
         try {
-            Thread.sleep(milli); // Sleep for milli sec
+            Thread.sleep(milli); // sleep for milli sec
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -169,7 +157,7 @@ public class ExecutionThread extends Thread {
 
     /**
      * Check this block should be through
-     * TODO current version may not be applied to
+     * NOTE: current version may not be applied to
      * nests of selection commands (NOT TESTED).
      *
      * @param index the index of the block that will be checked in this method
@@ -185,25 +173,24 @@ public class ExecutionThread extends Thread {
             return false;
         }
 
-        Map<String, Integer> map = mCondition.ifStack.peek();
+        ExecutionCondition.IfStatus ifStatus = mCondition.ifStack.peek();
 
-        // True
-        if (map.get(context.getString(R.string.key_execution_result)) == ExecutionCondition.TRUE) {
-            BlockBase nearestSelectionBlock
-                = blocks.get(map.get(context.getString(R.string.key_execution_index)));
+        // true
+        if (ifStatus.result) {
+            BlockBase nearestSelectionBlock = blocks.get(ifStatus.index);
 
             int max = nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth();
 
-            // Check the depth of nests
+            // check the depth of nests
             int count = 1;
             for (int i = index; i < blocks.size(); i++) {
                 BlockBase b = blocks.get(i);
 
-                // Beginning of selection commands
+                // beginning of selection commands
                 if (b.getKind() == SelectionBlock.class) {
                     count++;
                 }
-                // End of selection commands
+                // end of selection commands
                 if (b.getKind() == SelectionEndBlock.class) {
                     count--;
                     // if count is not 0, this end block is the end of inner
@@ -220,28 +207,26 @@ public class ExecutionThread extends Thread {
                 }
             }
 
-            // If this block is right of max, return true
+            // if this block is right of max, return true
             if (max >= block.getLeft() + MARGIN) {
                 return true;
             }
         }
-        // False
-        else if (map.get(context.getString(R.string.key_execution_result)) == ExecutionCondition.FALSE) {
-            BlockBase nearestSelectionBlock
-                = blocks.get(map.get(context.getString(R.string.key_execution_index)));
+        // false
+        else if (ifStatus.result) {
+            BlockBase nearestSelectionBlock = blocks.get(ifStatus.index);
 
-            // Nest
+            // nest
             if (mCondition.ifStack.size() >= 2) {
-                map = mCondition.ifStack.pop();
-                // Get the index of the second nearest selection block
+                ifStatus = mCondition.ifStack.pop();
+                // get the index of the second nearest selection block
                 int secondIndex
-                    = mCondition.ifStack.peek().get(context.getString(R.string.key_execution_index));
+                    = mCondition.ifStack.peek().index;
                 BlockBase secondNearestSelectionBlock = blocks.get(secondIndex);
-                mCondition.ifStack.push(map); // Push the popped element
+                mCondition.ifStack.push(ifStatus); // push the popped element
 
-                // execute only if this block is under the nearest selection
-                // block and the right side of the second nearest selection
-                // block
+                // execute this block only if it is under the nearest selection block
+                // and the right side of the second nearest selection block
                 if ((secondNearestSelectionBlock.getLeft() + secondNearestSelectionBlock.getMeasuredWidth() >=
                         block.getLeft() + MARGIN) ||
                         (nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth() <
@@ -249,7 +234,7 @@ public class ExecutionThread extends Thread {
                     return true;
                 }
             }
-            // Not nest
+            // not nest
             else {
                 if (nearestSelectionBlock.getLeft() + nearestSelectionBlock.getMeasuredWidth() <
                         block.getLeft() + MARGIN) {
@@ -262,34 +247,30 @@ public class ExecutionThread extends Thread {
     }
 
     /**
-     * Stop this thread temporarily
+     * Stop this thread temporarily.
      */
     public void stopExecution() {
         mStop = true;
-        try {
-            this.interrupt();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
+        notifyStatusChange();
     }
 
     /**
-     * Restart this thread
+     * Restart this thread.
      */
     public void restartExecution() {
         mStop = false;
-        try {
-            this.interrupt();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-        }
+        notifyStatusChange();
     }
 
     /**
-     * Halt this thread
+     * Halt this thread.
      */
     public void haltExecution() {
         mHalt = true;
+        notifyStatusChange();
+    }
+
+    private void notifyStatusChange() {
         try {
             this.interrupt();
         } catch (SecurityException e) {
@@ -297,7 +278,7 @@ public class ExecutionThread extends Thread {
         }
     }
 
-    // Create a bundle to send the change of state to Activity
+    // create a bundle to send the change of state to activity
     private void sendState(int message) {
         Bundle bundle = new Bundle();
         Context context = DriveApplication.getContext();
@@ -305,8 +286,7 @@ public class ExecutionThread extends Thread {
         sendBundle(bundle);
     }
 
-    // Create a bundle to send the index of the current executing block to
-    // Activity
+    // create a bundle to send the index of the current executing block to activity
     private void sendIndex(int message, int index) {
         Bundle bundle = new Bundle();
         Context context = DriveApplication.getContext();
@@ -315,7 +295,7 @@ public class ExecutionThread extends Thread {
         sendBundle(bundle);
     }
 
-    // Throw a bundle to Activity to inform changes
+    // throw a bundle to activity to inform changes
     private void sendBundle(Bundle bundle) {
         Message message = Message.obtain();
         message.setData(bundle);

@@ -17,28 +17,19 @@
 package com.pileproject.drive.execution;
 
 
-import android.content.Context;
-
-import com.pileproject.drive.R;
-import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Stack;
 
 /**
- * This class has the condition of execution
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A container class that has the condition of program execution.
  */
 public class ExecutionCondition {
     public static final int TRUE = 1;
     public static final int FALSE = 0;
     public Stack<Integer> whileStack;
-    public Stack<Map<String, Integer>> ifStack;
+    public Stack<IfStatus> ifStack;
     public int beginningOfCurrentWhileLoop;
     public int programCount;
     public ArrayList<BlockBase> blocks;
@@ -49,16 +40,23 @@ public class ExecutionCondition {
         beginningOfCurrentWhileLoop = -1;
     }
 
+    public class IfStatus {
+        public final int index;
+        public final boolean result;
+
+        public IfStatus(int index, boolean result) {
+            this.index = index;
+            this.result = result;
+        }
+    }
+
     /**
-     * Push the index of the selection block and the result to ifStack
+     * Push the pair of (the index of the selection block, the result: true or false) to ifStack
      *
-     * @param result
+     * @param result true or false
      */
     public void pushSelectionResult(boolean result) {
-        Map<String, Integer> map = new HashMap<>();
-        Context context = DriveApplication.getContext();
-        map.put(context.getString(R.string.key_execution_index), programCount);    // current index
-        map.put(context.getString(R.string.key_execution_result), result ? TRUE : FALSE);
-        ifStack.push(map);
+        IfStatus status = new IfStatus(programCount, result);
+        ifStack.push(status);
     }
 }

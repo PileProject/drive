@@ -30,7 +30,7 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 
     @Override
     protected void connectToDevice() {
-        // get device MAC address
+        // get the device's MAC address
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
