@@ -16,66 +16,46 @@
 
 package com.pileproject.drive.util.development;
 
-import android.content.Context;
+import android.content.res.Resources;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
+
+import java.math.BigDecimal;
+import java.util.Locale;
 
 /**
  * enumeration of unit for number selecting on blocks
  *
  * @author yusaku
  */
-public enum Unit {
-    Second,
-    Percentage,
-    NumberOfTimes,
-    Dimensionless;
+public class Unit {
 
-    /**
-     * get the unit string based on the value and selected unit
-     *
-     * @return string which contains the value and its unit
-     */
-    public static String getUnitString(
-            Context context, Unit unit, String format, double value) {
-        final String formattedValue = String.format(format, value);
+    public static final Unit Second = new Unit();
+    public static final Unit Percentage = new Unit();
+    public static final Unit NumberOfTimes = new Unit();
 
-        final int quantity = getQuantityOfValueInStringFormat(formattedValue, format);
+    private static final Resources RESOURCES = DriveApplication.getContext().getResources();
 
-        switch (unit) {
-            case Second:
-                return value + " " + context.getResources().getQuantityString(R.plurals.seconds, quantity);
+    private Unit() {
 
-            case Percentage:
-                return value + " " + context.getResources().getString(R.string.percent);
-
-            case NumberOfTimes:
-                return context.getResources()
-                        .getString(R.string.blocks_repeatNum,
-                                   Integer.parseInt(formattedValue.trim()));
-
-            default:
-                break;
-        }
-
-        return "";
     }
 
-    /**
-     * returns a quantity of formattedValue
-     * TODO: apply this for other locale than English
-     * See also: http://www.unicode
-     * .org/cldr/charts/latest/supplemental/language_plural_rules.html
-     *
-     * @param formattedValue
-     * @param format
-     * @return
-     */
-    private static int getQuantityOfValueInStringFormat(String formattedValue, String format) {
-        if (formattedValue.equals(String.format(format, 1.0))) {
-            return 1;
+    public String getUnitString(BigDecimal value, int precision) {
+
+        if (this == Second) {
+            String format = "%." + precision + "f";
+
+            return String.format(Locale.getDefault(), format, value) + RESOURCES.getString(R.string.second);
         }
 
-        return 2;
+        if (this == Percentage) {
+            String format = "%." + precision + "f";
+
+            return String.format(Locale.getDefault(), format, value) + RESOURCES.getString(R.string.percent);
+        }
+
+        // if this == NumberOfTimes
+        return RESOURCES.getString(R.string.blocks_repeatNum, value.intValue());
     }
 }

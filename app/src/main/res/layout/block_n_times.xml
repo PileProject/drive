@@ -47,6 +47,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/noImage"
-        android:src="@drawable/icon_while_num"/>
+        android:src="@drawable/icon_n_times"/>
 
 </RelativeLayout>

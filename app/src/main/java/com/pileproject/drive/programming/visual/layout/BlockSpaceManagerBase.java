@@ -23,6 +23,7 @@ import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A manager of BlockSpaceLayout.
@@ -126,7 +127,7 @@ public abstract class BlockSpaceManagerBase {
      * e.g., can move or not
      * @param blocks
      */
-    public abstract void addBlocks(ArrayList<BlockBase> blocks);
+    public abstract void addBlocks(List<BlockBase> blocks);
 
     private void placeBlocks(ArrayList<BlockBase> data) {
         if (data.isEmpty()) {

@@ -30,6 +30,7 @@
     <string name="selection">Selection</string>
     <string name="repetition">Repetition</string>
     <string name="percent">%</string>
+    <string name="second">s</string>
     <string name="error">Error</string>
     <string name="turnedOnBluetooth">Turned on Bluetooth</string>
     <string name="bluetoothFunctionIsOff">Please turn on Bluetooth.</string>
@@ -62,14 +63,14 @@
 
     <!-- Blocks -->
     <!-- Repetition -->
-    <string name="blocks.whileForever">Repeat forever</string>
-    <string name="blocks.whileNum">Repeat □times</string>
+    <string name="blocks.loop">Repeat forever</string>
+    <string name="blocks.nTimes">Repeat □times</string>
     <string name="blocks.repetitionBreak">Exit a loop</string>
     <string name="blocks.repeatNum">Repeats: %d</string>
 
     <!-- TextsOnBlock -->
     <!-- Sequence -->
-    <string name="textOnBlocks.contentDefaultSec">0.0</string>
+    <string name="textOnBlocks.contentDefaultSec">0</string>
     <string name="textOnBlocks.contentDefaultPercent">0</string>
     <!-- Repetition -->
     <string name="textOnBlocks.whileForever">Repeat</string>
@@ -85,7 +86,7 @@
     <!-- Execute -->
     <string name="execute.label">Execute Screen</string>
     <string name="execute.connecting" tools:ignore="TypographyEllipsis">Connecting...</string>
-    <string name="execute.noBluetoothFunction">This device doesn\'t have Bluetooth function.</string>
+    <string name="execute.noBluetoothFunction">This device does not have Bluetooth function.</string>
     <string name="execute.pleaseWaitForAWhile">Please wait for a while.</string>
     <string name="execute.bluetoothConnectionError">Error: Failed to connect the device.</string>
     <string name="execute.startExecution">Execution starts.</string>

@@ -17,10 +17,8 @@
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.preferences.BlockPreferences;
@@ -38,17 +36,15 @@ public class IfThereWasALargeSoundBlock extends SelectionBlock {
     private int mThreshold;
 
     public IfThereWasALargeSoundBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_if_there_was_a_large_sound, this);
+        super(context, R.layout.block_if_there_was_a_large_sound);
 
         mThreshold = BlockPreferences.get(context).getSoundSensorThreshold();
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    protected boolean evaluateCondition(MachineController controller) {
         // need multiply 10 because getdB returns 10 times value
         // the comment is messed up
-        condition.pushSelectionResult(((NxtController) controller).getSoundSensorValue() > mThreshold * 10);
-        return 0;
+        return ((NxtController) controller).getSoundSensorValue() > mThreshold * 10;
     }
 }

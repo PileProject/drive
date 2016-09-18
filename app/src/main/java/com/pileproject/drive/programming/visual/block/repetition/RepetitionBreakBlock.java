@@ -17,7 +17,6 @@
 package com.pileproject.drive.programming.visual.block.repetition;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
@@ -29,13 +28,12 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
  */
 public class RepetitionBreakBlock extends BlockBase {
     public RepetitionBreakBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_repetition_break, this);
+        super(context, R.layout.block_repetition_break);
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return RepetitionBreakBlock.class;
+    public final BlockKind getKind() {
+        return BlockKind.REPETITION_BREAK;
     }
 
     @Override

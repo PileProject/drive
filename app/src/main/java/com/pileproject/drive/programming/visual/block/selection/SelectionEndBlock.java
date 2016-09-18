@@ -17,7 +17,6 @@
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
@@ -31,13 +30,12 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 public class SelectionEndBlock extends BlockBase {
 
     public SelectionEndBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_selection_end, this);
+        super(context, R.layout.block_selection_end);
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return SelectionEndBlock.class;
+    public BlockKind getKind() {
+        return BlockKind.SELECTION_END;
     }
 
     @Override

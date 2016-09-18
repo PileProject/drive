@@ -17,17 +17,15 @@
 package com.pileproject.drive.programming.visual.block.sequence;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
 
-import java.util.Locale;
+import java.math.BigDecimal;
 
 /**
  * Backward for a while
@@ -35,47 +33,32 @@ import java.util.Locale;
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class BackwardSecBlock extends SequenceBlockHasNumText {
+public class BackwardSecBlock extends SequenceBlockHasNumberText {
+
+    // TODO: set from preference
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
+
+    // TODO: set from preference
+    private static final int PRECISION = 3;
 
     public BackwardSecBlock(Context context) {
-        super(context);
-
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_backward_sec, this);
-        numText = (TextView) layout.findViewById(R.id.block_numText);
+        super(context, R.layout.block_backward_sec, R.id.block_numText);
     }
 
     @Override
-    public int getNum() {
-        double raw = Double.parseDouble(numText.getText().toString());
-        return (int) (raw * 1000);
+    public int getPrecision() {
+        return PRECISION;
     }
 
     @Override
-    public void setNum(int num) {
-        double raw = num / 1000.0;
-        numText.setText(String.format(Locale.ENGLISH, "%.3f", raw));
+    public Range<BigDecimal> getRange() {
+        return range;
     }
 
     @Override
-    public Integer[] getDigit() {
-        return new Integer[]{1, 3};
-    }
-
-    @Override
-    public double getMax() {
-        return 3.0;
-    }
-
-    @Override
-    public double getMin() {
-        return 0.0;
-    }
-
-    @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
+    public int action(MachineController controller, ExecutionCondition condition) {
         ((NxtController) controller).moveBackward();
-        return getNum();
+        return getActionValue();
     }
 
     @Override

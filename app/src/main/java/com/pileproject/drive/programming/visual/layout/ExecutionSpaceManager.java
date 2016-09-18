@@ -18,13 +18,12 @@ package com.pileproject.drive.programming.visual.layout;
 import android.content.Context;
 import android.view.View;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.pileproject.drive.programming.visual.block.BlockBase;
-import com.pileproject.drive.programming.visual.block.NumTextHolder;
+import com.pileproject.drive.programming.visual.block.NumberTextHolder;
 import com.pileproject.drive.view.FrameView;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -40,15 +39,14 @@ public class ExecutionSpaceManager extends BlockSpaceManagerBase {
     }
 
     @Override
-    public void addBlocks(ArrayList<BlockBase> blocks) {
+    public void addBlocks(List<BlockBase> blocks) {
+
         for (BlockBase block : blocks) {
-            if (block instanceof NumTextHolder) {
-                // set views not editable
-                TextView numText = ((NumTextHolder) block).getTextView();
-                numText.setFocusable(false);
-                numText.setFocusableInTouchMode(false);
-                numText.setEnabled(false);
+
+            if (block instanceof NumberTextHolder) {
+                ((NumberTextHolder) block).enableTextView(false);
             }
+
             mLayout.addView(block, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         }
     }
