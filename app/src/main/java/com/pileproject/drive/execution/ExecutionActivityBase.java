@@ -56,7 +56,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     private Button mFinishButton;
     private ExecutionThread mThread = null;
 
-    // Handler for connecting to a device
+    // a handler for connecting to a device
     private final Handler mConnectingHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -69,7 +69,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
         }
     });
 
-    // Handler for showing the progress of executions
+    // a handler for showing the progress of executions
     private final Handler mProgressHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -92,7 +92,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 }
 
                 case ExecutionThread.CONNECTION_ERROR: {
-                    // inform the error of the thread
+                    // handle connection errors
                     onConnectionError();
                     return true;
                 }
@@ -305,7 +305,8 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 .setCancelable(false)
                 .show();
 
-        // inform this device has been disconnected by the device
+        // inform the status of the connection between an Android device and a robot to other Activities
+        // to avoid wasting time for useless reconnection
         Intent intent = new Intent();
         intent.putExtra(getString(R.string.key_execution_isConnected), false);
         setResult(RESULT_OK, intent);
