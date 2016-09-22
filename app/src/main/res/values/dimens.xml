@@ -16,24 +16,31 @@
   -->
 <resources>
     <dimen name="period">20sp</dimen>
+
     <dimen name="block_sequence_width">150dp</dimen>
     <dimen name="block_sequence_height">50dp</dimen>
 
-    <dimen name="block_selection_width">150dp</dimen>
+    <dimen name="block_selection_width">300dp</dimen>
     <dimen name="block_selection_height">100dp</dimen>
-    <dimen name="block_selection_end_width">250dp</dimen>
-    <dimen name="block_selection_end_height">30dp</dimen>
+    <dimen name="block_selection_end_width">300dp</dimen>
+    <dimen name="block_selection_end_height">50dp</dimen>
+    <dimen name="block_selection_yes_no_bottom_margin">30dp</dimen>
+    <dimen name="block_selection_yes_right_margin">60dp</dimen>
+    <dimen name="block_selection_no_left_margin">70dp</dimen>
+
     <dimen name="block_repetition_width">150dp</dimen>
     <dimen name="block_repetition_height">30dp</dimen>
+
     <dimen name="block_repetition_break_width">150dp</dimen>
     <dimen name="block_repetition_break_height">50dp</dimen>
+
+    <dimen name="block_content_height">20dp</dimen>
     <dimen name="block_content_sec_width">40dp</dimen>
     <dimen name="block_content_percent_width">30dp</dimen>
     <dimen name="block_content_count_width">20dp</dimen>
 
-    <dimen name="block_content_height">20dp</dimen>
-    <dimen name="block_icon_width">25dp</dimen>
-    <dimen name="block_icon_height">25dp</dimen>
+    <dimen name="block_icon_width">30dp</dimen>
+    <dimen name="block_icon_height">30dp</dimen>
 
     <dimen name="block_content_character_size">14sp</dimen>
 </resources>
