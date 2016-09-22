@@ -67,13 +67,12 @@ public class WhileNumBlock extends RepetitionHasNumText {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-        int index = condition.programCount;
+    public int action(MachineController controller, ExecutionCondition condition) {
+        int index = condition.getProgramCount();
         for (int i = 1; i < getNum(); i++) {
-            condition.whileStack.push(index);
+            condition.pushBeginningOfLoop(index);
         }
-        condition.beginningOfCurrentWhileLoop = index;
+        condition.setBeginningOfCurrentLoop(index);
         return 0;
     }
 

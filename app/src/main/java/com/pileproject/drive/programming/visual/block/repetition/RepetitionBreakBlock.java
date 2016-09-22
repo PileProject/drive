@@ -40,37 +40,7 @@ public class RepetitionBreakBlock extends BlockBase {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        if (!condition.whileStack.isEmpty()) {
-            // abandon the indices of current while loop
-            int index = condition.whileStack.peek();    // target index
-            while (!condition.whileStack.isEmpty() && index == condition.whileStack.peek()) {
-                condition.whileStack.pop();
-            }
-
-            // update index
-            if (!condition.whileStack.isEmpty()) {
-                if (condition.whileStack.peek() >= 0) {
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek();
-                } else {
-                    condition.beginningOfCurrentWhileLoop =
-                            condition.whileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
-                }
-            } else {
-                condition.beginningOfCurrentWhileLoop = -1;
-            }
-
-            // exclude if commands that this loop contains
-            while (!condition.ifStack.isEmpty() && condition.ifStack.peek().index >= index) {
-                condition.ifStack.pop();    // delete
-            }
-
-            // move to the end of current while loop
-            while (condition.blocks.size() >= condition.programCount) {
-                if (condition.blocks.get(++condition.programCount).getKind() == RepetitionEndBlock.class) {
-                    break;
-                }
-            }
-        }
+        condition.breakLoop();
         return 0;
     }
 }

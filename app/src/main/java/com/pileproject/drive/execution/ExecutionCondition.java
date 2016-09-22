@@ -18,6 +18,9 @@ package com.pileproject.drive.execution;
 
 
 import com.pileproject.drive.programming.visual.block.BlockBase;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
+import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
+import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -26,21 +29,25 @@ import java.util.Stack;
  * A container class that has the condition of program execution.
  */
 public class ExecutionCondition {
-    public static final int TRUE = 1;
-    public static final int FALSE = 0;
-    public Stack<Integer> whileStack;
-    public Stack<IfStatus> ifStack;
-    public int beginningOfCurrentWhileLoop;
-    public int programCount;
-    public ArrayList<BlockBase> blocks;
+    private Stack<Integer> mWhileStack;
+    private Stack<IfStatus> mIfStack;
+    private int mBeginningOfCurrentLoop;
+    private int mProgramCount;
+    private ArrayList<BlockBase> mBlocks;
 
-    public ExecutionCondition() {
-        whileStack = new Stack<>();
-        ifStack = new Stack<>();
-        beginningOfCurrentWhileLoop = -1;
+    public ExecutionCondition(ArrayList<BlockBase> blocks) {
+        mBlocks = blocks;
+        mWhileStack = new Stack<>();
+        mIfStack = new Stack<>();
+        mBeginningOfCurrentLoop = -1;
     }
 
-    public class IfStatus {
+    public void setBeginningOfCurrentLoop(int beginningOfCurrentLoop) {
+        mBeginningOfCurrentLoop = beginningOfCurrentLoop;
+    }
+
+
+    private class IfStatus {
         public final int index;
         public final boolean result;
 
@@ -51,12 +58,145 @@ public class ExecutionCondition {
     }
 
     /**
+     * Check the program count is over than the program size or not.
+     * @return finished (true) or not (false)
+     */
+    public boolean hasProgramFinished() {
+        return mProgramCount < mBlocks.size();
+    }
+
+    /**
+     * Get the current block.
+     * @return
+     */
+    public BlockBase getCurrentBlock() {
+        return mBlocks.get(mProgramCount);
+    }
+
+    /**
+     * Increment the program count.
+     */
+    public void incrementProgramCount() {
+        mProgramCount++;
+    }
+
+    /**
+     * Decrement the program count.
+     */
+    public void decrementProgramCount() {
+        mProgramCount--;
+    }
+
+    /**
+     * Set the program count.
+     * @param pc
+     */
+    public void setProgramCount(int pc) {
+        if (pc < 0 || pc >= mBlocks.size())
+            throw new IndexOutOfBoundsException("The program count is invalid.");
+    }
+
+    /**
+     * Get the current program count.
+     * @return program count
+     */
+    public int getProgramCount() {
+        return mProgramCount;
+    }
+
+    /**
      * Push the pair of (the index of the selection block, the result: true or false) to ifStack
-     *
-     * @param result true or false
+     * @param result the result of a selection command
      */
     public void pushSelectionResult(boolean result) {
-        IfStatus status = new IfStatus(programCount, result);
-        ifStack.push(status);
+        IfStatus status = new IfStatus(mProgramCount, result);
+        mIfStack.push(status);
+    }
+
+    /**
+     * Pop and throw away the latest selection result.
+     */
+    public void popSelectionResult() {
+        mIfStack.pop();
+    }
+
+    /**
+     * Push the index of the beginning block of the current loop to a stack.
+     * @param index the index of the beginning block
+     */
+    public void pushBeginningOfLoop(int index) {
+        mWhileStack.push(index);
+    }
+
+    /**
+     * Check the current block should be through or not.
+     *
+     * @return through (true) or not (false)
+     */
+    public boolean isThrough() {
+        if (mIfStack.isEmpty()) return false;
+
+        BlockBase block = mBlocks.get(mProgramCount);
+        if (block instanceof SelectionEndBlock) return false;
+
+        IfStatus ifStatus = mIfStack.peek();
+        BlockBase nearestSelectionBlock = mBlocks.get(ifStatus.index);
+
+        int middleIf = (nearestSelectionBlock.getRight() + nearestSelectionBlock.getLeft()) / 2;
+        int middle = (block.getRight() + block.getLeft()) / 2;
+
+        // go through this block if (true && left) || (!false && right)
+        return (ifStatus.result && middle <= middleIf) || (!ifStatus.result && middleIf < middle);
+    }
+
+
+    /**
+     * Reach the end of loop.
+     */
+    public void reachEndOfLoop() {
+        if (mWhileStack.isEmpty()) return ;
+
+        int index = mWhileStack.peek() >= 0 ?
+                    mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+
+        // the loop has already finished
+        if (mBeginningOfCurrentLoop != index) {
+            mBeginningOfCurrentLoop = mWhileStack.peek();
+        }
+        // the loop has not finished yet
+        else {
+            // go back to the beginning of the current loop
+           mProgramCount = index;
+        }
+
+        // if the loop is not 'forever while', pop one
+        if (mWhileStack.peek() >= 0) mProgramCount = mWhileStack.pop();
+    }
+
+    /**
+     * Break the current loop.
+     */
+    public void breakLoop() {
+        if (mWhileStack.isEmpty()) return;
+
+        // remove the indices of current while loop
+        int index = mWhileStack.peek(); // target index
+        while (!mWhileStack.isEmpty() && index == mWhileStack.peek()) mWhileStack.pop();
+
+        // update index
+        if (!mWhileStack.isEmpty()) {
+            mBeginningOfCurrentLoop = mWhileStack.peek() >= 0 ?
+                mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+        } else {
+            mBeginningOfCurrentLoop = -1;
+        }
+
+        // remove selection commands that this loop contains
+        while (!mIfStack.isEmpty() && mIfStack.peek().index >= index) mIfStack.pop();
+
+        // move to the end of the current loop
+        for (; mBlocks.size() >= mProgramCount; ++mProgramCount) {
+            if (mBlocks.get(mProgramCount).getKind() == RepetitionEndBlock.class) break;
+        }
     }
 }
