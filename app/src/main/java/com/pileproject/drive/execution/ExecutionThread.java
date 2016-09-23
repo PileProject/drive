@@ -61,9 +61,7 @@ public class ExecutionThread extends Thread {
         mCondition = new ExecutionCondition(mManager.loadExecutionProgram());
         boolean isStopped = false;
         try {
-            for (mCondition.setProgramCount(0);
-                 mCondition.hasProgramFinished();
-                 mCondition.incrementProgramCount()) {
+            while (!mCondition.hasProgramFinished()) {
 
                 // halt execution
                 if (mHalt) {
@@ -98,6 +96,9 @@ public class ExecutionThread extends Thread {
                 waitMillSec(delay);
             }
             sendState(END_THREAD);
+
+            // update the program count
+            mCondition.incrementProgramCount();
         } catch (RuntimeException e) {
             sendState(CONNECTION_ERROR);
             e.printStackTrace();
@@ -106,7 +107,7 @@ public class ExecutionThread extends Thread {
         }
     }
 
-    private void finalizeExecution() {
+    private void finalizeExecution() throws RuntimeException {
         mHalt = true;
         mStop = false;
 
@@ -114,6 +115,7 @@ public class ExecutionThread extends Thread {
             mController.finalize();
         } catch (RuntimeException e) {
             e.printStackTrace();
+            throw e;
         }
     }
 
@@ -123,6 +125,7 @@ public class ExecutionThread extends Thread {
             Thread.sleep(milli); // sleep for milli sec
         } catch (InterruptedException e) {
             e.printStackTrace();
+            // this often occurs while a program execution to stop it immediately
         }
     }
 
@@ -150,11 +153,13 @@ public class ExecutionThread extends Thread {
         notifyStatusChange();
     }
 
-    private void notifyStatusChange() {
+    // interrupt
+    private void notifyStatusChange() throws SecurityException {
         try {
             this.interrupt();
         } catch (SecurityException e) {
             e.printStackTrace();
+            throw e;
         }
     }
 

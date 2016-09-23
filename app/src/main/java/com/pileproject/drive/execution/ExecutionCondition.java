@@ -23,6 +23,8 @@ import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlo
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Stack;
 
 /**
@@ -33,19 +35,18 @@ public class ExecutionCondition {
     private Stack<IfStatus> mIfStack;
     private int mBeginningOfCurrentLoop;
     private int mProgramCount;
-    private ArrayList<BlockBase> mBlocks;
+    private final List<BlockBase> mBlocks;
 
     public ExecutionCondition(ArrayList<BlockBase> blocks) {
         mBlocks = blocks;
+        Collections.unmodifiableList(mBlocks);
+
         mWhileStack = new Stack<>();
         mIfStack = new Stack<>();
+
         mBeginningOfCurrentLoop = -1;
+        mProgramCount = 0;
     }
-
-    public void setBeginningOfCurrentLoop(int beginningOfCurrentLoop) {
-        mBeginningOfCurrentLoop = beginningOfCurrentLoop;
-    }
-
 
     private class IfStatus {
         public final int index;
@@ -62,14 +63,14 @@ public class ExecutionCondition {
      * @return finished (true) or not (false)
      */
     public boolean hasProgramFinished() {
-        return mProgramCount < mBlocks.size();
+        return mProgramCount >= mBlocks.size();
     }
 
     /**
      * Get the current block.
      * @return
      */
-    public BlockBase getCurrentBlock() {
+    public BlockBase getCurrentBlock() throws IndexOutOfBoundsException {
         return mBlocks.get(mProgramCount);
     }
 
@@ -89,11 +90,12 @@ public class ExecutionCondition {
 
     /**
      * Set the program count.
-     * @param pc
+     * @param pc program count
      */
-    public void setProgramCount(int pc) {
+    public void setProgramCount(int pc) throws IndexOutOfBoundsException {
         if (pc < 0 || pc >= mBlocks.size())
             throw new IndexOutOfBoundsException("The program count is invalid.");
+        mProgramCount = pc;
     }
 
     /**
@@ -126,6 +128,7 @@ public class ExecutionCondition {
      */
     public void pushBeginningOfLoop(int index) {
         mWhileStack.push(index);
+        mBeginningOfCurrentLoop = index >= 0 ? index : index - WhileForeverBlock.FOREVER_WHILE_OFFSET;
     }
 
     /**
