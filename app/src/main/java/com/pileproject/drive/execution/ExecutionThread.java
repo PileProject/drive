@@ -59,7 +59,7 @@ public class ExecutionThread extends Thread {
         sendState(START_THREAD);
 
         mCondition = new ExecutionCondition(mManager.loadExecutionProgram());
-        boolean isStopped = false;
+        boolean hasStopped = false;
         try {
             while (!mCondition.hasProgramFinished()) {
 
@@ -70,20 +70,18 @@ public class ExecutionThread extends Thread {
 
                 // stop temporarily
                 if (mStop) {
-                    if (!isStopped) {
+                    if (!hasStopped) {
                         mController.halt();
-                        isStopped = !isStopped;
+                        hasStopped = !hasStopped;
                     }
                     mCondition.decrementProgramCount(); // retry this iteration
                     continue;
                 } else {
-                    isStopped = false;
+                    hasStopped = false;
                 }
 
-                // check this block is to be through or not
-                if (mCondition.isThrough()) {
-                    continue;
-                }
+                // check the current block is to be executed or not
+                if (!BlockProgramLogic.willCurrentBlockBeExecuted(mCondition)) continue;;
 
                 // get block to be executed
                 BlockBase block = mCondition.getCurrentBlock();
@@ -93,7 +91,7 @@ public class ExecutionThread extends Thread {
 
                 // do action and return delay
                 int delay = block.action(mController, mCondition);
-                waitMillSec(delay);
+                waitMilliSec(delay); // wait for a while and then go to the next block
             }
             sendState(END_THREAD);
 
@@ -120,12 +118,13 @@ public class ExecutionThread extends Thread {
     }
 
     // wait in milliseconds
-    private void waitMillSec(int milli) {
+    private void waitMilliSec(int milli) {
         try {
             Thread.sleep(milli); // sleep for milli sec
         } catch (InterruptedException e) {
             e.printStackTrace();
             // this often occurs while a program execution to stop it immediately
+            // just ignore
         }
     }
 
@@ -134,7 +133,7 @@ public class ExecutionThread extends Thread {
      */
     public void stopExecution() {
         mStop = true;
-        notifyStatusChange();
+        this.interrupt();
     }
 
     /**
@@ -142,7 +141,7 @@ public class ExecutionThread extends Thread {
      */
     public void restartExecution() {
         mStop = false;
-        notifyStatusChange();
+        this.interrupt();
     }
 
     /**
@@ -150,17 +149,7 @@ public class ExecutionThread extends Thread {
      */
     public void haltExecution() {
         mHalt = true;
-        notifyStatusChange();
-    }
-
-    // interrupt
-    private void notifyStatusChange() throws SecurityException {
-        try {
-            this.interrupt();
-        } catch (SecurityException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        this.interrupt();
     }
 
     // create a bundle to send the change of state to activity

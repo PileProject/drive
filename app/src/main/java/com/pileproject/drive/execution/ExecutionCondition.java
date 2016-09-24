@@ -20,7 +20,6 @@ package com.pileproject.drive.execution;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
 import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
-import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -32,10 +31,20 @@ import java.util.Stack;
  */
 public class ExecutionCondition {
     private Stack<Integer> mWhileStack;
-    private Stack<IfStatus> mIfStack;
+    private Stack<SelectionResult> mIfStack;
     private int mBeginningOfCurrentLoop;
     private int mProgramCount;
     private final List<BlockBase> mBlocks;
+
+    public class SelectionResult {
+        public final int index;
+        public final boolean result;
+
+        public SelectionResult(int index, boolean result) {
+            this.index = index;
+            this.result = result;
+        }
+    }
 
     public ExecutionCondition(ArrayList<BlockBase> blocks) {
         mBlocks = blocks;
@@ -48,16 +57,6 @@ public class ExecutionCondition {
         mProgramCount = 0;
     }
 
-    private class IfStatus {
-        public final int index;
-        public final boolean result;
-
-        public IfStatus(int index, boolean result) {
-            this.index = index;
-            this.result = result;
-        }
-    }
-
     /**
      * Check the program count is over than the program size or not.
      * @return finished (true) or not (false)
@@ -67,11 +66,22 @@ public class ExecutionCondition {
     }
 
     /**
+     * Get the specified block with an index.
+     * @param index
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
+    public BlockBase getBlock(int index) throws IndexOutOfBoundsException {
+        return mBlocks.get(index);
+    }
+
+    /**
      * Get the current block.
      * @return
+     * @throws IndexOutOfBoundsException
      */
     public BlockBase getCurrentBlock() throws IndexOutOfBoundsException {
-        return mBlocks.get(mProgramCount);
+        return getBlock(mProgramCount);
     }
 
     /**
@@ -91,6 +101,7 @@ public class ExecutionCondition {
     /**
      * Set the program count.
      * @param pc program count
+     * @throws IndexOutOfBoundsException
      */
     public void setProgramCount(int pc) throws IndexOutOfBoundsException {
         if (pc < 0 || pc >= mBlocks.size())
@@ -111,15 +122,32 @@ public class ExecutionCondition {
      * @param result the result of a selection command
      */
     public void pushSelectionResult(boolean result) {
-        IfStatus status = new IfStatus(mProgramCount, result);
+        SelectionResult status = new SelectionResult(mProgramCount, result);
         mIfStack.push(status);
     }
 
     /**
      * Pop and throw away the latest selection result.
+     * @return
      */
-    public void popSelectionResult() {
-        mIfStack.pop();
+    public SelectionResult popSelectionResult() {
+        return mIfStack.pop();
+    }
+
+    /**
+     * Peek the latest selection result.
+     * @return
+     */
+    public SelectionResult peekSelectionResult() {
+        return mIfStack.peek();
+    }
+
+    /**
+     * Get the size of selection results.
+     * @return
+     */
+    public int sizeOfSelectionResult() {
+        return mIfStack.size();
     }
 
     /**
@@ -128,30 +156,9 @@ public class ExecutionCondition {
      */
     public void pushBeginningOfLoop(int index) {
         mWhileStack.push(index);
-        mBeginningOfCurrentLoop = index >= 0 ? index : index - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+        mBeginningOfCurrentLoop = index >= 0 ?
+                index : index - WhileForeverBlock.FOREVER_WHILE_OFFSET;
     }
-
-    /**
-     * Check the current block should be through or not.
-     *
-     * @return through (true) or not (false)
-     */
-    public boolean isThrough() {
-        if (mIfStack.isEmpty()) return false;
-
-        BlockBase block = mBlocks.get(mProgramCount);
-        if (block instanceof SelectionEndBlock) return false;
-
-        IfStatus ifStatus = mIfStack.peek();
-        BlockBase nearestSelectionBlock = mBlocks.get(ifStatus.index);
-
-        int middleIf = (nearestSelectionBlock.getRight() + nearestSelectionBlock.getLeft()) / 2;
-        int middle = (block.getRight() + block.getLeft()) / 2;
-
-        // go through this block if (true && left) || (!false && right)
-        return (ifStatus.result && middle <= middleIf) || (!ifStatus.result && middleIf < middle);
-    }
-
 
     /**
      * Reach the end of loop.
