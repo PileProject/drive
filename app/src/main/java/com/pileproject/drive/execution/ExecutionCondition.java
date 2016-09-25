@@ -48,9 +48,6 @@ public class ExecutionCondition {
     }
 
     public ExecutionCondition(ArrayList<BlockBase> blocks) {
-        // convert a list with random access support
-        if (!(blocks instanceof RandomAccess)) blocks = new ArrayList<>(blocks);
-
         mBlocks = blocks;
         Collections.unmodifiableList(mBlocks);
 
