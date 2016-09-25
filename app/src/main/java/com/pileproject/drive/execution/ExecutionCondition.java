@@ -17,48 +17,189 @@
 package com.pileproject.drive.execution;
 
 
-import android.content.Context;
-
-import com.pileproject.drive.R;
-import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.block.BlockBase;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
+import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Collections;
+import java.util.List;
+import java.util.RandomAccess;
 import java.util.Stack;
 
 /**
- * This class has the condition of execution
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A container class that has the condition of program execution.
  */
 public class ExecutionCondition {
-    public static final int TRUE = 1;
-    public static final int FALSE = 0;
-    public Stack<Integer> whileStack;
-    public Stack<Map<String, Integer>> ifStack;
-    public int beginningOfCurrentWhileLoop;
-    public int programCount;
-    public ArrayList<BlockBase> blocks;
+    private Stack<Integer> mWhileStack;
+    private Stack<SelectionResult> mIfStack;
+    private int mBeginningOfCurrentLoop;
+    private int mProgramCount;
+    private final List<BlockBase> mBlocks;
 
-    public ExecutionCondition() {
-        whileStack = new Stack<>();
-        ifStack = new Stack<>();
-        beginningOfCurrentWhileLoop = -1;
+    public class SelectionResult {
+        public final int index;
+        public final boolean result;
+
+        public SelectionResult(int index, boolean result) {
+            this.index = index;
+            this.result = result;
+        }
+    }
+
+    public ExecutionCondition(ArrayList<BlockBase> blocks) {
+        // convert a list with random access support
+        if (!(blocks instanceof RandomAccess)) blocks = new ArrayList<>(blocks);
+
+        mBlocks = blocks;
+        Collections.unmodifiableList(mBlocks);
+
+        mWhileStack = new Stack<>();
+        mIfStack = new Stack<>();
+
+        mBeginningOfCurrentLoop = -1;
+        mProgramCount = 0;
     }
 
     /**
-     * Push the index of the selection block and the result to ifStack
-     *
-     * @param result
+     * Check the program count is over than the program size or not.
+     * @return finished (true) or not (false)
+     */
+    public boolean hasProgramFinished() {
+        return mProgramCount >= mBlocks.size();
+    }
+
+    /**
+     * Get the specified block with a selection result (it has index as a member).
+     * @param result SelectionResult instance that has the index of an if-block
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
+    public BlockBase getNearestSelectionBlock(SelectionResult result) throws IndexOutOfBoundsException {
+        return mBlocks.get(result.index);
+    }
+
+    /**
+     * Get the current block.
+     * @return
+     * @throws IndexOutOfBoundsException
+     */
+    public BlockBase getCurrentBlock() throws IndexOutOfBoundsException {
+        return mBlocks.get(mProgramCount);
+    }
+
+    /**
+     * Increment the program count.
+     */
+    public void incrementProgramCount() {
+        mProgramCount++;
+    }
+
+    /**
+     * Decrement the program count.
+     */
+    public void decrementProgramCount() {
+        mProgramCount--;
+    }
+
+    /**
+     * Get the current program count.
+     * @return program count
+     */
+    public int getProgramCount() {
+        return mProgramCount;
+    }
+
+    /**
+     * Push the pair of (the index of the selection block, the result: true or false) to ifStack
+     * @param result the result of a selection command
      */
     public void pushSelectionResult(boolean result) {
-        Map<String, Integer> map = new HashMap<>();
-        Context context = DriveApplication.getContext();
-        map.put(context.getString(R.string.key_execution_index), programCount);    // current index
-        map.put(context.getString(R.string.key_execution_result), result ? TRUE : FALSE);
-        ifStack.push(map);
+        SelectionResult status = new SelectionResult(mProgramCount, result);
+        mIfStack.push(status);
+    }
+
+    /**
+     * Pop and throw away the latest selection result.
+     * @return
+     */
+    public SelectionResult popSelectionResult() {
+        return mIfStack.pop();
+    }
+
+    /**
+     * Peek the latest selection result.
+     * @return
+     */
+    public SelectionResult peekSelectionResult() {
+        return mIfStack.peek();
+    }
+
+    /**
+     * Get the size of selection results.
+     * @return
+     */
+    public int sizeOfSelectionResult() {
+        return mIfStack.size();
+    }
+
+    /**
+     * Push the index of the beginning block of the current loop to a stack.
+     * @param index the index of the beginning block
+     */
+    public void pushBeginningOfLoop(int index) {
+        mWhileStack.push(index);
+        mBeginningOfCurrentLoop = index >= 0 ?
+                index : index - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+    }
+
+    /**
+     * Reach the end of loop.
+     */
+    public void reachEndOfLoop() {
+        if (mWhileStack.isEmpty()) return ;
+
+        int index = mWhileStack.peek() >= 0 ?
+                    mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+
+        // the loop has already finished
+        if (mBeginningOfCurrentLoop != index) {
+            mBeginningOfCurrentLoop = mWhileStack.peek();
+        }
+        // the loop has not finished yet
+        else {
+            // go back to the beginning of the current loop
+           mProgramCount = index;
+        }
+
+        // if the loop is not 'forever while', pop one
+        if (mWhileStack.peek() >= 0) mProgramCount = mWhileStack.pop();
+    }
+
+    /**
+     * Break the current loop.
+     */
+    public void breakLoop() {
+        if (mWhileStack.isEmpty()) return;
+
+        // remove the indices of current while loop
+        int index = mWhileStack.peek(); // target index
+        while (!mWhileStack.isEmpty() && index == mWhileStack.peek()) mWhileStack.pop();
+
+        // update index
+        if (!mWhileStack.isEmpty()) {
+            mBeginningOfCurrentLoop = mWhileStack.peek() >= 0 ?
+                mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+        } else {
+            mBeginningOfCurrentLoop = -1;
+        }
+
+        // remove selection commands that this loop contains
+        while (!mIfStack.isEmpty() && mIfStack.peek().index >= index) mIfStack.pop();
+
+        // move to the end of the current loop
+        for (; mBlocks.size() >= mProgramCount; ++mProgramCount) {
+            if (mBlocks.get(mProgramCount).getKind() == RepetitionEndBlock.class) break;
+        }
     }
 }

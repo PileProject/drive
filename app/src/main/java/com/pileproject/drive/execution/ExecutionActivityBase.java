@@ -38,13 +38,9 @@ import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ExecutionSpaceManager;
 
 /**
- * this Activity shows the execution of program
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * An Activity that deals with executions of programs.
  */
 public abstract class ExecutionActivityBase extends AppCompatActivity implements AlertDialogFragment.EventListener {
-
     private static final int DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED = 1;
     private static final int DIALOG_REQUEST_CODE_THREAD_ENDED              = 2;
     private static final int DIALOG_REQUEST_CODE_CONNECTION_ERROR          = 3;
@@ -60,7 +56,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     private Button mFinishButton;
     private ExecutionThread mThread = null;
 
-    // Handler for connecting
+    // a handler for connecting to a device
     private final Handler mConnectingHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -73,7 +69,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
         }
     });
 
-    // Handler for showing the progress of executions
+    // a handler for showing the progress of executions
     private final Handler mProgressHandler = new Handler(new Handler.Callback() {
         @Override
         public boolean handleMessage(Message message) {
@@ -84,7 +80,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 }
 
                 case ExecutionThread.EMPHASIZE_BLOCK: {
-                    // Emphasize the current executing block
+                    // emphasize the current executing block
                     int index = message.getData().getInt(getString(R.string.key_execution_index));
                     mSpaceManager.emphasizeBlock(index);
                     return true;
@@ -96,7 +92,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 }
 
                 case ExecutionThread.CONNECTION_ERROR: {
-                    // Inform the error of the thread
+                    // handle connection errors
                     onConnectionError();
                     return true;
                 }
@@ -139,7 +135,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
 
-        // Check this activity has already connected to the device
+        // check this activity has already connected to the device
         Intent intent = getIntent();
         if (intent.getBooleanExtra(getString(R.string.key_execution_isConnected), false)) {
             setResult(Activity.RESULT_OK, intent);
@@ -188,14 +184,16 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     }
 
     protected void startExecution() {
-        if (mThread == null || !mThread.isAlive()) {
-            mThread = new ExecutionThread(getApplicationContext(), mProgressHandler, getMachineController());
-            mThread.setPriority(Thread.MAX_PRIORITY);
-            mThread.start();
-        }
+        if (mThread != null && mThread.isAlive()) return;
+
+        mThread = new ExecutionThread(mProgressHandler, getMachineController());
+        mThread.setPriority(Thread.MAX_PRIORITY);
+        mThread.start();
     }
 
     private void stopExecution() {
+        if (mThread == null || !mThread.isAlive()) return ;
+
         mThread.stopExecution();
         mStopAndRestartButton.setText(R.string.execute_restart);
         mStopAndRestartButton.setOnClickListener(new OnClickListener() {
@@ -218,10 +216,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     }
 
     private void finishExecution() {
-        // Check the thread is clearly dead
-        if (mThread == null || !mThread.isAlive()) {
-            return;
-        }
+        if (mThread == null || !mThread.isAlive()) return ;
 
         mThread.haltExecution();
         waitForThreadToBeOver();
@@ -236,7 +231,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     }
 
     private boolean hasBluetoothFunction() {
-        // check the tablet has bluetooth connecting
+        // check this device has bluetooth connecting
         if (mBtAdapter == null) {
             new AlertDialogFragment.Builder(this)
                     .setRequestCode(DIALOG_REQUEST_CODE_BLUETOOTH)
@@ -310,7 +305,8 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 .setCancelable(false)
                 .show();
 
-        // Inform this activity has been disconnected by the device
+        // inform the status of the connection between an Android device and a robot to other Activities
+        // to avoid wasting time for useless reconnection
         Intent intent = new Intent();
         intent.putExtra(getString(R.string.key_execution_isConnected), false);
         setResult(RESULT_OK, intent);
