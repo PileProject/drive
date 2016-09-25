@@ -47,7 +47,7 @@ public class ExecutionCondition {
         }
     }
 
-    public ExecutionCondition(ArrayList<BlockBase> blocks) {
+    public ExecutionCondition(List<BlockBase> blocks) {
         // convert a list with random access support
         if (!(blocks instanceof RandomAccess)) blocks = new ArrayList<>(blocks);
 
