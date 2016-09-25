@@ -17,11 +17,14 @@
 package com.pileproject.drive.util.development;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 
 import java.util.Locale;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
+@RunWith(JUnit4.class)
 public class MeasurementUnitTest {
     @Test
     public void getFromLocaleTest() throws Exception {
