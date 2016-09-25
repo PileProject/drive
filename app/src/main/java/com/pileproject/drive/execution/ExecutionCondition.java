@@ -66,13 +66,13 @@ public class ExecutionCondition {
     }
 
     /**
-     * Get the specified block with an index.
-     * @param index
+     * Get the specified block with a selection result (it has index as a member).
+     * @param result SelectionResult instance that has the index of an if-block
      * @return
      * @throws IndexOutOfBoundsException
      */
-    public BlockBase getBlock(int index) throws IndexOutOfBoundsException {
-        return mBlocks.get(index);
+    public BlockBase getNearestSelectionBlock(SelectionResult result) throws IndexOutOfBoundsException {
+        return mBlocks.get(result.index);
     }
 
     /**
@@ -81,7 +81,7 @@ public class ExecutionCondition {
      * @throws IndexOutOfBoundsException
      */
     public BlockBase getCurrentBlock() throws IndexOutOfBoundsException {
-        return getBlock(mProgramCount);
+        return mBlocks.get(mProgramCount);
     }
 
     /**
@@ -96,17 +96,6 @@ public class ExecutionCondition {
      */
     public void decrementProgramCount() {
         mProgramCount--;
-    }
-
-    /**
-     * Set the program count.
-     * @param pc program count
-     * @throws IndexOutOfBoundsException
-     */
-    public void setProgramCount(int pc) throws IndexOutOfBoundsException {
-        if (pc < 0 || pc >= mBlocks.size())
-            throw new IndexOutOfBoundsException("The program count is invalid.");
-        mProgramCount = pc;
     }
 
     /**

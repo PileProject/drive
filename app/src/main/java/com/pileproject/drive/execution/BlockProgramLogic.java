@@ -36,7 +36,7 @@ public class BlockProgramLogic {
         if (block instanceof SelectionEndBlock) return false;
 
         ExecutionCondition.SelectionResult selectionResult = condition.peekSelectionResult();
-        BlockBase nearestSelectionBlock = condition.getBlock(selectionResult.index);
+        BlockBase nearestSelectionBlock = condition.getNearestSelectionBlock(selectionResult);
 
         int middleIf = (nearestSelectionBlock.getRight() + nearestSelectionBlock.getLeft()) / 2;
         int middle = (block.getRight() + block.getLeft()) / 2;

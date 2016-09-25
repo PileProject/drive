@@ -38,8 +38,8 @@ public class ExecutionThread extends Thread {
     private ExecutionCondition mCondition;
     private MachineController mController;
     private Handler mUiHandler;
-    private boolean mStop = false;
-    private boolean mHalt = false;
+    private boolean mShouldStopTemporary = false;
+    private boolean mShouldHalt = false;
 
     /**
      * Constructor
@@ -64,24 +64,21 @@ public class ExecutionThread extends Thread {
             while (!mCondition.hasProgramFinished()) {
 
                 // halt execution
-                if (mHalt) {
+                if (mShouldHalt) {
                     break;
                 }
 
                 // stop temporarily
-                if (mStop) {
-                    if (!hasStopped) {
-                        mController.halt();
-                        hasStopped = !hasStopped;
-                    }
+                if (mShouldStopTemporary) {
+                    if (!hasStopped) mController.halt();
+                    hasStopped = true;
                     mCondition.decrementProgramCount(); // retry this iteration
                     continue;
-                } else {
-                    hasStopped = false;
                 }
+                hasStopped = false;
 
                 // check the current block is to be executed or not
-                if (!BlockProgramLogic.willCurrentBlockBeExecuted(mCondition)) continue;;
+                if (!BlockProgramLogic.willCurrentBlockBeExecuted(mCondition)) continue;
 
                 // get block to be executed
                 BlockBase block = mCondition.getCurrentBlock();
@@ -99,22 +96,15 @@ public class ExecutionThread extends Thread {
             mCondition.incrementProgramCount();
         } catch (RuntimeException e) {
             sendState(CONNECTION_ERROR);
-            e.printStackTrace();
         } finally {
             finalizeExecution();
         }
     }
 
     private void finalizeExecution() throws RuntimeException {
-        mHalt = true;
-        mStop = false;
-
-        try {
-            mController.finalize();
-        } catch (RuntimeException e) {
-            e.printStackTrace();
-            throw e;
-        }
+        mShouldHalt = true;
+        mShouldStopTemporary = false;
+        mController.finalize();
     }
 
     // wait in milliseconds
@@ -122,7 +112,6 @@ public class ExecutionThread extends Thread {
         try {
             Thread.sleep(milli); // sleep for milli sec
         } catch (InterruptedException e) {
-            e.printStackTrace();
             // this often occurs while a program execution to stop it immediately
             // just ignore
         }
@@ -132,7 +121,7 @@ public class ExecutionThread extends Thread {
      * Stop this thread temporarily.
      */
     public void stopExecution() {
-        mStop = true;
+        mShouldStopTemporary = true;
         this.interrupt();
     }
 
@@ -140,7 +129,7 @@ public class ExecutionThread extends Thread {
      * Restart this thread.
      */
     public void restartExecution() {
-        mStop = false;
+        mShouldStopTemporary = false;
         this.interrupt();
     }
 
@@ -148,7 +137,7 @@ public class ExecutionThread extends Thread {
      * Halt this thread.
      */
     public void haltExecution() {
-        mHalt = true;
+        mShouldHalt = true;
         this.interrupt();
     }
 
