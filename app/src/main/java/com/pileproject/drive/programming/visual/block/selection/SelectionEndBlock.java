@@ -27,8 +27,6 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 /**
  * This block is the end of if commands
  *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
  */
 public class SelectionEndBlock extends BlockBase {
 
@@ -43,12 +41,9 @@ public class SelectionEndBlock extends BlockBase {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
+    public int action(MachineController controller, ExecutionCondition condition) {
         // just pop one
-        if (!condition.ifStack.isEmpty()) {
-            condition.ifStack.pop();
-        }
+        condition.popSelectionResult();
         return 0;
     }
 }

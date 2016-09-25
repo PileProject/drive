@@ -37,11 +37,9 @@ public class WhileForeverBlock extends RepetitionBlock {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-        int index = condition.programCount;
-        condition.whileStack.push(index + FOREVER_WHILE_OFFSET); // push with offset
-        condition.beginningOfCurrentWhileLoop = index;    // update previous index
+    public int action(MachineController controller, ExecutionCondition condition) {
+        int index = condition.getProgramCount();
+        condition.pushBeginningOfLoop(index + FOREVER_WHILE_OFFSET); // push with offset
         return 1;
     }
 }

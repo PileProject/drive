@@ -25,13 +25,9 @@ import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * This block is a break of while loop
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A block that expresses a break of while loop.
  */
 public class RepetitionBreakBlock extends BlockBase {
-
     public RepetitionBreakBlock(Context context) {
         super(context);
         LayoutInflater.from(context).inflate(R.layout.block_repetition_break, this);
@@ -43,40 +39,8 @@ public class RepetitionBreakBlock extends BlockBase {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-        if (!condition.whileStack.isEmpty()) {
-            // Abandon the indices of current while loop
-            int index = condition.whileStack.peek();    // target index
-            while (!condition.whileStack.isEmpty() && index == condition.whileStack.peek()) {
-                condition.whileStack.pop();
-            }
-
-            // Update index
-            if (!condition.whileStack.isEmpty()) {
-                if (condition.whileStack.peek() >= 0) {
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek();
-                } else {
-                    condition.beginningOfCurrentWhileLoop =
-                            condition.whileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
-                }
-            } else {
-                condition.beginningOfCurrentWhileLoop = -1;
-            }
-
-            // exclude if commands that this loop contains
-            while (!condition.ifStack.isEmpty()
-                    && condition.ifStack.peek().get(getContext().getString(R.string.key_execution_index)) >= index) {
-                condition.ifStack.pop();    // delete
-            }
-
-            // Move to the end of current while loop
-            while (condition.blocks.size() >= condition.programCount) {
-                if (condition.blocks.get(++condition.programCount).getKind() == RepetitionEndBlock.class) {
-                    break;
-                }
-            }
-        }
+    public int action(MachineController controller, ExecutionCondition condition) {
+        condition.breakLoop();
         return 0;
     }
 }
