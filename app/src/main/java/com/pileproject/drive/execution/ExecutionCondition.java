@@ -24,6 +24,7 @@ import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlo
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.RandomAccess;
 import java.util.Stack;
 
 /**
@@ -47,6 +48,9 @@ public class ExecutionCondition {
     }
 
     public ExecutionCondition(ArrayList<BlockBase> blocks) {
+        // convert a list with random access support
+        if (!(blocks instanceof RandomAccess)) blocks = new ArrayList<>(blocks);
+
         mBlocks = blocks;
         Collections.unmodifiableList(mBlocks);
 
