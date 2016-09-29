@@ -81,7 +81,7 @@ public class BlockFactory {
      *
      * @param howToMake type of block. must be one of {@link BlockFactory#SEQUENCE},
      *                  {@link BlockFactory#REPETITION}, {@link BlockFactory#SELECTION},
-     *                  , and {@link BlockFactory#LOAD}
+     *                  and {@link BlockFactory#LOAD}
      * @param blockName class name of block to be created
      * @return list of blocks. the first element of the list is end block
      *                  if block type is {@link BlockFactory#SELECTION} or
