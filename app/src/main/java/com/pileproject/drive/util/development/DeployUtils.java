@@ -26,6 +26,11 @@ import android.os.Build;
  * A class for checking building environments, devices, etc.
  */
 public class DeployUtils {
+
+    private DeployUtils() {
+        throw new AssertionError("This class cannot be instantiated");
+    }
+
     /**
      * Return true if the device is emulator.
      */

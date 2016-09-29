@@ -22,6 +22,10 @@ import java.util.Locale;
 
 public class NumberUtil {
 
+    private NumberUtil() {
+        throw new AssertionError("This class cannot be instantiated");
+    }
+
     /**
      * Converts numerical value to string expression. This function takes locales into account and
      * uses default locale by calling {@link Locale#getDefault()}.

@@ -24,6 +24,10 @@ import java.util.Locale;
 
 public class ParseUtil {
 
+    private ParseUtil() {
+        throw new AssertionError("This class cannot be instantiated");
+    }
+
     /**
      * Parse a string as double in the context of default locale
      * (e.g., "1,234" means 1234E-3 in France).
