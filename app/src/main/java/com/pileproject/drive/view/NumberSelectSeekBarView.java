@@ -45,7 +45,7 @@ public class NumberSelectSeekBarView extends NumberSelectViewBase {
         public void onProgressChanged(SeekBar seekbar, int value, boolean fromUser) {
             mValue = fromSeekBarExpression(value, mRange, mPrecision);
 
-            mTextView.setText(mUnit.getUnitString(mValue, mPrecision));
+            mTextView.setText(mUnit.decorateValue(mValue, mPrecision));
         }
 
         @Override

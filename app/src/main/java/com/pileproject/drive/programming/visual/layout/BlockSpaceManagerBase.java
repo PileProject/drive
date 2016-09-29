@@ -129,7 +129,7 @@ public abstract class BlockSpaceManagerBase {
      */
     public abstract void addBlocks(List<BlockBase> blocks);
 
-    private void placeBlocks(ArrayList<BlockBase> data) {
+    private void placeBlocks(List<BlockBase> data) {
         if (data.isEmpty()) {
             return;
         }

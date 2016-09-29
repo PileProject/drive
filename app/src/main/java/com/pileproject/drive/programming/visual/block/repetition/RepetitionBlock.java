@@ -30,7 +30,6 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
  */
 public abstract class RepetitionBlock extends BlockBase {
 
-    static final int FOREVER_WHILE_OFFSET = -1000;
 
     public RepetitionBlock(Context context, @LayoutRes int layoutRes) {
         super(context, layoutRes);

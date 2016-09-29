@@ -36,8 +36,7 @@ public class LoopBlock extends RepetitionBlock {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        int index = condition.getProgramCount();
-        condition.pushBeginningOfLoop(index + FOREVER_WHILE_OFFSET); // push with offset
+        condition.enterInfiniteLoop();
         return 1;
     }
 }

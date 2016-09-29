@@ -20,8 +20,8 @@ import android.content.res.Resources;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.app.DriveApplication;
+import com.pileproject.drive.util.string.NumberUtil;
 
-import java.math.BigDecimal;
 import java.util.Locale;
 
 /**
@@ -41,21 +41,41 @@ public class Unit {
 
     }
 
-    public String getUnitString(BigDecimal value, int precision) {
+    /**
+     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * This method takes locales into account and uses default locale by calling
+     * {@link Locale#getDefault()}.
+     *
+     * @param value value to be decorated
+     * @param precision precision of the value in the return string.
+     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
+     * @return decorated string in default locale and with given precision.
+     */
+    public <T extends Number> String decorateValue(T value, int precision) {
+        return decorateValue(Locale.getDefault(), value, precision);
+    }
+
+    /**
+     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * This method takes locales into account.
+     *
+     * @param locale the locale in which the value decorated
+     * @param value value to be decorated
+     * @param precision precision of the value in the return string.
+     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
+     * @return decorated string in default locale and with given precision.
+     */
+    public <T extends Number> String decorateValue(Locale locale, T value, int precision) {
 
         if (this == Second) {
-            String format = "%." + precision + "f";
-
-            return String.format(Locale.getDefault(), format, value) + RESOURCES.getString(R.string.second);
+            return NumberUtil.toString(locale, value, precision) + RESOURCES.getString(R.string.second);
         }
 
         if (this == Percentage) {
-            String format = "%." + precision + "f";
-
-            return String.format(Locale.getDefault(), format, value) + RESOURCES.getString(R.string.percent);
+            return NumberUtil.toString(locale, value, precision) + RESOURCES.getString(R.string.percent);
         }
 
         // if this == NumberOfTimes
-        return RESOURCES.getString(R.string.blocks_repeatNum, value.intValue());
+        return RESOURCES.getString(R.string.blocks_repeatNum, (Integer) value);
     }
 }

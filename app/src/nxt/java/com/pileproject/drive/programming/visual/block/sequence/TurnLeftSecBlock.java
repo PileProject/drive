@@ -56,8 +56,7 @@ public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
+    public int action(MachineController controller, ExecutionCondition condition) {
         ((NxtController) controller).turnLeft();
         return getActionValue();
     }

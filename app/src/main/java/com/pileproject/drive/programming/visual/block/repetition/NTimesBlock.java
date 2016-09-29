@@ -46,10 +46,8 @@ public class NTimesBlock extends RepetitionBlockHasNumberText {
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
         int n = getValue().intValue();
-        int index = condition.getProgramCount();
-        for (int i = 1; i < n; i++) {
-            condition.pushBeginningOfLoop(index);
-        }
+        condition.enterNTimesLoop(n);
+
         return 0;
     }
 

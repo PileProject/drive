@@ -38,8 +38,6 @@ public class BlockFactory {
     public static final int SEQUENCE = 0;
     public static final int REPETITION = 1;
     public static final int SELECTION = 2;
-    @Deprecated
-    public static final int UNDO = 3;
     public static final int LOAD = 4;
 
     private BlockFactory() {
@@ -92,7 +90,7 @@ public class BlockFactory {
      *
      * @param howToMake type of block. must be one of {@link BlockFactory#SEQUENCE},
      *                  {@link BlockFactory#REPETITION}, {@link BlockFactory#SELECTION},
-     *                  {@link BlockFactory#UNDO}, {@link BlockFactory#LOAD}
+     *                  , and {@link BlockFactory#LOAD}
      * @param blockName class name of block to be created
      * @return list of blocks. the first element of the list is end block
      *                  if block type is {@link BlockFactory#SELECTION} or
@@ -107,7 +105,6 @@ public class BlockFactory {
 
         switch (howToMake) {
             case SEQUENCE:
-            case UNDO:
             case LOAD: {
                 return createSequenceBlock(blockClass);
             }
@@ -124,7 +121,7 @@ public class BlockFactory {
         throw new RuntimeException("Do not know how to make a block of " + blockName);
     }
 
-    @IntDef({SEQUENCE, REPETITION, SELECTION, UNDO, LOAD})
+    @IntDef({SEQUENCE, REPETITION, SELECTION, LOAD})
     public @interface HowToMake {
     }
 }

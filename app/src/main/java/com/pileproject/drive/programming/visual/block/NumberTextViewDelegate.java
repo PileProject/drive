@@ -18,15 +18,28 @@ package com.pileproject.drive.programming.visual.block;
 import android.view.View;
 import android.widget.TextView;
 
+import com.pileproject.drive.util.string.NumberUtil;
 import com.pileproject.drive.util.string.ParseUtil;
 
 import java.math.BigDecimal;
 import java.util.Locale;
 
+/**
+ * This class represents a delegate for classes with a TextView.
+ * Most of the methods in {@link NumberTextHolder} are implemented in this class.
+ *
+ * The list of methods in {@link NumberTextHolder} which are not implemented is:
+ * <ul>
+ *     <li>{@link NumberTextHolder#getPrecision()}</li>
+ *     <li>{@link NumberTextHolder#getRange()}</li>
+ *     <li>{@link NumberTextHolder#getUnit()}</li>
+ * </ul>
+ *
+ * These methods should be implemented in concrete classes.
+ */
 public class NumberTextViewDelegate {
 
     private final TextView textView;
-    private final String textFormat;
     private final int precision;
 
     private BigDecimal valueCache;
@@ -34,7 +47,6 @@ public class NumberTextViewDelegate {
     public NumberTextViewDelegate(TextView textView, NumberTextHolder holder) {
         this.precision = holder.getPrecision();
         this.textView = textView;
-        this.textFormat = "%." + precision + "f";
     }
 
     public int getActionValue() {
@@ -52,7 +64,7 @@ public class NumberTextViewDelegate {
 
     public void setValue(BigDecimal value) {
         valueCache = value;
-        textView.setText(String.format(Locale.getDefault(), textFormat, value));
+        textView.setText(NumberUtil.toString(value, precision));
     }
 
     public String getValueAsString() {

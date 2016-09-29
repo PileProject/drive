@@ -39,7 +39,7 @@ public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumberText {
     private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(100));
 
     // TODO: set from preference
-    private static final int PRECISION = 1;
+    private static final int PRECISION = 0;
 
     public SetLeftMotorSpeedBlock(Context context) {
         super(context, R.layout.block_set_left_motor_speed, R.id.block_numText);

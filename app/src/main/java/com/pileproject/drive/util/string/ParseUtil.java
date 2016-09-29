@@ -25,7 +25,8 @@ import java.util.Locale;
 public class ParseUtil {
 
     /**
-     * Parse a string as double in default locale (e.g., "1,234" means 1234E-3 in France).
+     * Parse a string as double in the context of default locale
+     * (e.g., "1,234" means 1234E-3 in France).
      *
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
@@ -43,11 +44,11 @@ public class ParseUtil {
     public static double doubleValueOf(String value, Locale locale) throws NumberFormatException {
 
         try {
-
             NumberFormat format = NumberFormat.getNumberInstance(locale);
             Number number = format.parse(value);
 
             return number.doubleValue();
+
         } catch (ParseException e) {
 
             throw new NumberFormatException("String '" + value + "' cannot be parsed as double value" +
@@ -55,11 +56,23 @@ public class ParseUtil {
         }
     }
 
+    /**
+     * Parse a string as {@link BigDecimal} in the context of default locale
+     * (e.g., "1,234" means 1234E-3 in France).
+     *
+     * @throws NumberFormatException throw if the string makes no sense as number.
+     */
     public static BigDecimal bigDecimalValueOf(String value) throws NumberFormatException {
 
         return bigDecimalValueOf(value, Locale.getDefault());
     }
 
+    /**
+     * Parse a string as {@link BigDecimal}.
+     * This function takes locale into account (e.g., "1,234" means 1234E-3 in France).
+     *
+     * @throws NumberFormatException throw if the string makes no sense as number.
+     */
     public static BigDecimal bigDecimalValueOf(String value, Locale locale) throws NumberFormatException {
 
         try {
@@ -69,6 +82,7 @@ public class ParseUtil {
             Number number = decimalFormat.parse(value);
 
             return (BigDecimal) number;
+
         } catch (ParseException e) {
 
             throw new NumberFormatException("String '" + value + "' cannot be parsed as double value" +

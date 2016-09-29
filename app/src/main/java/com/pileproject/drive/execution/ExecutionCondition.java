@@ -16,10 +16,7 @@
 
 package com.pileproject.drive.execution;
 
-
 import com.pileproject.drive.programming.visual.block.BlockBase;
-import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
-import com.pileproject.drive.programming.visual.block.repetition.WhileForeverBlock;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -31,6 +28,8 @@ import java.util.Stack;
  * A container class that has the condition of program execution.
  */
 public class ExecutionCondition {
+    private static final int FOREVER_WHILE_OFFSET = -1000;
+
     private Stack<Integer> mWhileStack;
     private Stack<SelectionResult> mIfStack;
     private int mBeginningOfCurrentLoop;
@@ -147,10 +146,29 @@ public class ExecutionCondition {
      * Push the index of the beginning block of the current loop to a stack.
      * @param index the index of the beginning block
      */
-    public void pushBeginningOfLoop(int index) {
+    private void pushBeginningOfLoop(int index) {
         mWhileStack.push(index);
         mBeginningOfCurrentLoop = index >= 0 ?
-                index : index - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+                index : index - FOREVER_WHILE_OFFSET;
+    }
+
+    /**
+     * Enters infinite loop.
+     */
+    public void enterInfiniteLoop() {
+        int index = getProgramCount();
+        pushBeginningOfLoop(index + FOREVER_WHILE_OFFSET); // push with offset
+    }
+
+    /**
+     * Enters N-times loop.
+     * @param count number of times this loop repeats.
+     */
+    public void enterNTimesLoop(int count) {
+        int index = getProgramCount();
+        for (int i = 1; i < count; i++) {
+            pushBeginningOfLoop(index);
+        }
     }
 
     /**
@@ -160,7 +178,7 @@ public class ExecutionCondition {
         if (mWhileStack.isEmpty()) return ;
 
         int index = mWhileStack.peek() >= 0 ?
-                    mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+                    mWhileStack.peek() : mWhileStack.peek() - FOREVER_WHILE_OFFSET;
 
         // the loop has already finished
         if (mBeginningOfCurrentLoop != index) {
@@ -189,7 +207,7 @@ public class ExecutionCondition {
         // update index
         if (!mWhileStack.isEmpty()) {
             mBeginningOfCurrentLoop = mWhileStack.peek() >= 0 ?
-                mWhileStack.peek() : mWhileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
+                mWhileStack.peek() : mWhileStack.peek() - FOREVER_WHILE_OFFSET;
         } else {
             mBeginningOfCurrentLoop = -1;
         }
@@ -199,7 +217,7 @@ public class ExecutionCondition {
 
         // move to the end of the current loop
         for (; mBlocks.size() >= mProgramCount; ++mProgramCount) {
-            if (mBlocks.get(mProgramCount).getKind() == RepetitionEndBlock.class) break;
+            if (mBlocks.get(mProgramCount).getKind() == BlockBase.BlockKind.REPETITION_END) break;
         }
     }
 }

@@ -54,7 +54,7 @@ public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
 
         if (block instanceof NumberTextHolder) {
             ((NumberTextHolder) block).setOnLongClickTextViewListener(
-                    new OnTouchNumTextListener(mContext, (NumberTextHolder) block));
+                    new OnTouchNumberTextListener((NumberTextHolder) block));
         }
     }
 
@@ -143,29 +143,27 @@ public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
         }
     }
 
-    private class OnTouchNumTextListener implements View.OnLongClickListener {
+    private class OnTouchNumberTextListener implements View.OnLongClickListener {
 
-        private final Context context;
-        private final NumberTextHolder holder;
+        private final NumberTextHolder mHolder;
 
-        public OnTouchNumTextListener(Context context, NumberTextHolder parent) {
-            this.context = context;
-            this.holder = parent;
+        public OnTouchNumberTextListener(NumberTextHolder parent) {
+            mHolder = parent;
         }
 
         @Override
         public boolean onLongClick(View v) {
 
-            final NumberSelectViewBase numberSelectView = new NumberSelectSeekBarView(context,
-                    holder.getValue(), holder.getRange(), holder.getPrecision(), holder.getUnit());
+            final NumberSelectViewBase numberSelectView = new NumberSelectSeekBarView(mContext,
+                    mHolder.getValue(), mHolder.getRange(), mHolder.getPrecision(), mHolder.getUnit());
 
-            new AlertDialog.Builder(context)
+            new AlertDialog.Builder(mContext)
                     .setTitle(R.string.programming_pleaseSelectNumbers)
                     .setView(numberSelectView)
                     .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                            holder.setValue(numberSelectView.getValue());
+                            mHolder.setValue(numberSelectView.getValue());
                         }
                     })
                     .show();

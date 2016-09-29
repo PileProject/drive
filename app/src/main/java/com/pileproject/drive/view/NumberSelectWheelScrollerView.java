@@ -61,7 +61,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     };
 
     /**
-     * * Constructor.
+     * Constructor.
      * @param context    context
      * @param value      initial value
      * @param range      BigDecimal range. users can select within this range
