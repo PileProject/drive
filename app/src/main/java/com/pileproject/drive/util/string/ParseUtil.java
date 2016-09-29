@@ -31,7 +31,6 @@ public class ParseUtil {
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
     public static double doubleValueOf(String value) {
-
         return doubleValueOf(value, Locale.getDefault());
     }
 
@@ -42,15 +41,11 @@ public class ParseUtil {
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
     public static double doubleValueOf(String value, Locale locale) throws NumberFormatException {
-
         try {
             NumberFormat format = NumberFormat.getNumberInstance(locale);
             Number number = format.parse(value);
-
             return number.doubleValue();
-
         } catch (ParseException e) {
-
             throw new NumberFormatException("String '" + value + "' cannot be parsed as double value" +
                     " in locale " + locale);
         }
@@ -63,7 +58,6 @@ public class ParseUtil {
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
     public static BigDecimal bigDecimalValueOf(String value) throws NumberFormatException {
-
         return bigDecimalValueOf(value, Locale.getDefault());
     }
 
@@ -74,17 +68,12 @@ public class ParseUtil {
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
     public static BigDecimal bigDecimalValueOf(String value, Locale locale) throws NumberFormatException {
-
         try {
             DecimalFormat decimalFormat = (DecimalFormat) NumberFormat.getInstance(locale);
             decimalFormat.setParseBigDecimal(true);
-
             Number number = decimalFormat.parse(value);
-
             return (BigDecimal) number;
-
         } catch (ParseException e) {
-
             throw new NumberFormatException("String '" + value + "' cannot be parsed as double value" +
                     " in locale " + locale);
         }

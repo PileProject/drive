@@ -45,23 +45,17 @@ public class BlockFactory {
 
     @SuppressWarnings("unchecked")
     private static <T extends BlockBase> Class<T> getClassForName(String className) throws RuntimeException {
-
         try {
             return (Class<T>) Class.forName(className);
-
         } catch (ClassNotFoundException e) {
-
             throw new RuntimeException("Invalid class name '" + className + "'", e);
         }
     }
 
     private static BlockBase create(Class<? extends BlockBase> blockClass) throws RuntimeException {
-
         try {
             Constructor<? extends BlockBase> constructor = blockClass.getConstructor(Context.class);
-
             return constructor.newInstance(DriveApplication.getContext());
-
         } catch (Exception e) {
             // there's no way to recover. let App die.
             throw new RuntimeException("Failed to instantiate " + blockClass, e);
@@ -69,17 +63,14 @@ public class BlockFactory {
     }
 
     private static List<BlockBase> createSequenceBlock(Class<? extends BlockBase> blockClass) {
-
         return Collections.singletonList(create(blockClass));
     }
 
     private static List<BlockBase> createRepetitionBlock(Class<? extends BlockBase> blockClass) {
-
         return Arrays.asList(new RepetitionEndBlock(DriveApplication.getContext()), create(blockClass));
     }
 
     private static List<BlockBase> createSelectionBlock(Class<? extends BlockBase> blockClass) {
-
         return Arrays.asList(new SelectionEndBlock(DriveApplication.getContext()), create(blockClass));
     }
 
@@ -100,7 +91,6 @@ public class BlockFactory {
      *                             or <code>howToMake</code> is none of the values listed above
      */
     public static List<BlockBase> createBlocks(@HowToMake int howToMake, String blockName) {
-
         Class<? extends BlockBase> blockClass = getClassForName(blockName);
 
         switch (howToMake) {
