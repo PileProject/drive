@@ -33,6 +33,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/noImage"
-        android:src="@drawable/icon_while_forever"/>
+        android:src="@drawable/icon_loop"/>
 
 </RelativeLayout>

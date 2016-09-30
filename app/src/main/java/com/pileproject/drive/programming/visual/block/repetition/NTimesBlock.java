@@ -17,29 +17,53 @@
 package com.pileproject.drive.programming.visual.block.repetition;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
+
+import java.math.BigDecimal;
 
 /**
- * While forever
+ * While in selected times
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class WhileForeverBlock extends RepetitionBlock {
+public class NTimesBlock extends RepetitionBlockHasNumberText {
 
-    public WhileForeverBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_while_forever, this);
+    // TODO: set from preference
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ONE, new BigDecimal(5));
+
+    private static final int PRECISION = 0;
+
+    public NTimesBlock(Context context) {
+        super(context, R.layout.block_n_times, R.id.block_numText);
     }
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        int index = condition.getProgramCount();
-        condition.pushBeginningOfLoop(index + FOREVER_WHILE_OFFSET); // push with offset
-        return 1;
+        int n = getValue().intValue();
+        condition.enterNTimesLoop(n);
+
+        return 0;
     }
+
+    @Override
+    public int getPrecision() {
+        return PRECISION;
+    }
+
+    @Override
+    public Range<BigDecimal> getRange() {
+        return range;
+    }
+
+    @Override
+    public Unit getUnit() {
+        return Unit.NumberOfTimes;
+    }
+
 }

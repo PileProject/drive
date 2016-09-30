@@ -17,15 +17,15 @@
 package com.pileproject.drive.programming.visual.block.sequence;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
+
+import java.math.BigDecimal;
 
 /**
  * Set right motor power
@@ -33,43 +33,31 @@ import com.pileproject.drive.util.development.Unit;
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class SetRightMotorSpeedBlock extends SequenceBlockHasNumText {
+public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
+
+    // TODO: set from preference
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(100));
+
+    // TODO: set from preference
+    private static final int PRECISION = 0;
 
     public SetRightMotorSpeedBlock(Context context) {
-        super(context);
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_set_right_motor_speed, this);
-        numText = (TextView) layout.findViewById(R.id.block_numText);
+        super(context, R.layout.block_set_right_motor_speed, R.id.block_numText);
     }
 
     @Override
-    public int getNum() {
-        return Integer.parseInt(numText.getText().toString());
+    public int getPrecision() {
+        return PRECISION;
     }
 
     @Override
-    public void setNum(int num) {
-        numText.setText(String.valueOf(num));
+    public Range<BigDecimal> getRange() {
+        return range;
     }
 
     @Override
-    public Integer[] getDigit() {
-        return new Integer[]{3, 0};
-    }
-
-    @Override
-    public double getMax() {
-        return 100.0;
-    }
-
-    @Override
-    public double getMin() {
-        return 0.0;
-    }
-
-    @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getNum());
+    public int action(MachineController controller, ExecutionCondition condition) {
+        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().doubleValue());
         return 0;
     }
 

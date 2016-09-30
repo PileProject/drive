@@ -14,29 +14,29 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.programming.visual.block.selection;
+package com.pileproject.drive.programming.visual.block.repetition;
 
 import android.content.Context;
-import android.widget.TextView;
 
-import com.pileproject.drive.programming.visual.block.NumTextHolder;
+import com.pileproject.drive.R;
+import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
 
 /**
- * SelectionBlock that has a TextView
+ * While forever
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public abstract class SelectionHasNumText extends SelectionBlock implements NumTextHolder {
+public class LoopBlock extends RepetitionBlock {
 
-    protected TextView numText;
-
-    public SelectionHasNumText(Context context) {
-        super(context);
+    public LoopBlock(Context context) {
+        super(context, R.layout.block_loop);
     }
 
     @Override
-    public TextView getTextView() {
-        return numText;
+    public int action(MachineController controller, ExecutionCondition condition) {
+        condition.enterInfiniteLoop();
+        return 1;
     }
 }

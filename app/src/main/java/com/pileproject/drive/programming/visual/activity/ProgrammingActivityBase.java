@@ -148,7 +148,7 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                     // Get results
                     int howToMake = data.getIntExtra(getString(R.string.key_block_how_to_make), BlockFactory.SEQUENCE);
                     String blockName = data.getStringExtra(getString(R.string.key_block_block_name));
-                    ArrayList<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
+                    List<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
                 }
                 break;

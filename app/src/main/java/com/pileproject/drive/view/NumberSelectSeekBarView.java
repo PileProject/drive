@@ -18,13 +18,14 @@ package com.pileproject.drive.view;
 
 import android.content.Context;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.util.math.Range;
 import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
+
+import java.math.BigDecimal;
 
 /**
  * A view class which is used for number selecting on blocks.
@@ -32,28 +33,19 @@ import com.pileproject.drive.util.development.Unit;
  */
 public class NumberSelectSeekBarView extends NumberSelectViewBase {
 
-    private final int mNumberOfIntegralDigits;
-    private final int mNumberOfDecimalDigits;
+    private final Range<BigDecimal> mRange;
+    private final int mPrecision;
+    private final SeekBar mSeekBar;
 
     private final Unit mUnit;
-
-    private double mValue;
-
-    private SeekBar mSeekBar;
-    private TextView mTextView;
-
+    private final TextView mTextView;
+    private BigDecimal mValue;
     private final SeekBar.OnSeekBarChangeListener mListener = new SeekBar.OnSeekBarChangeListener() {
         @Override
         public void onProgressChanged(SeekBar seekbar, int value, boolean fromUser) {
-            // the value should be jacked up by the apparent minimum value of SeekBar
-            // when the value is displayed
-            mValue = toDoubleExpression(value) + mRange.getLowerBound();
+            mValue = fromSeekBarExpression(value, mRange, mPrecision);
 
-            final String fmt =
-                    "%" + mNumberOfIntegralDigits + "." + mNumberOfDecimalDigits + "f";
-
-            // use the proper unit based on the value
-            mTextView.setText(Unit.getUnitString(mContext, mUnit, fmt, mValue));
+            mTextView.setText(mUnit.decorateValue(mValue, mPrecision));
         }
 
         @Override
@@ -68,72 +60,79 @@ public class NumberSelectSeekBarView extends NumberSelectViewBase {
     };
 
     /**
-     * @param context
-     * @param range               - a range users can select within this range
-     * @param unit                - a unit of the value in this view
-     * @param numOfIntegralDigits - number of integral digits
-     * @param numOfDecimalDigits   - number of decimal digits
+     * Constructor.
+     * @param context   context
+     * @param value     initial value
+     * @param range     BigDecimal range. users can select within this range
+     * @param precision precision of the value
+     * @param unit      unit of the value in this view
      */
-    public NumberSelectSeekBarView(Context context, Range<Double> range,
-                                   Unit unit, int numOfIntegralDigits, int numOfDecimalDigits) {
-        super(context, range);
+    public NumberSelectSeekBarView(Context context, BigDecimal value, Range<BigDecimal> range,
+                                   int precision, Unit unit) {
+        super(context);
 
         mUnit = unit;
+        mRange = range;
+        mPrecision = precision;
 
-        mNumberOfIntegralDigits = numOfIntegralDigits;
-        mNumberOfDecimalDigits = numOfDecimalDigits;
-
-        View layout = LayoutInflater.from(context).inflate(R.layout.view_number_select_seekbar, this);
-
-        mTextView = (TextView) layout.findViewById(R.id.programming_numberSelectView_valueText);
-        mSeekBar = (SeekBar) layout.findViewById(R.id.programming_numberSelectView_seekBar);
+        LayoutInflater.from(context).inflate(R.layout.view_number_select_seekbar, this);
+        mTextView = (TextView) findViewById(R.id.programming_numberSelectView_valueText);
+        mSeekBar = (SeekBar) findViewById(R.id.programming_numberSelectView_seekBar);
 
         mSeekBar.setOnSeekBarChangeListener(mListener);
+        mSeekBar.setMax(toSeekBarExpression(mRange.getUpperBound(), mRange, precision));
 
-        int min = toIntegerExpression(mRange.getLowerBound());
-        int max = toIntegerExpression(mRange.getUpperBound());
+        setValue(value);
+    }
 
-        mSeekBar.setMax(max - min);
+    private static int toSeekBarExpression(BigDecimal value, Range<BigDecimal> range, int precision) {
+
+        if (!range.contains(value)) {
+            return 0;
+        }
+
+        // if value = 0.2, range = (-1.0, 1.0), precision = 1, we want to get a result 12
+        // because in seekbar expression, values in the range are converted as below
+        // (-1.0, -0.9, ..., 0.0, ..., 0.9, 1.0) => (0, 1, ..., 10, ..., 19, 20)
+
+        // so the following operations are needed:
+        //   -1.0 => -10
+        BigDecimal lowerMoved = range.getLowerBound().movePointRight(precision);
+        //   0.2 => 2
+        BigDecimal valueMoved = value.movePointRight(precision);
+        //   2 - (-10) = 12
+        BigDecimal ret = valueMoved.subtract(lowerMoved);
+
+        return ret.intValue();
+    }
+
+    private static BigDecimal fromSeekBarExpression(int value, Range<BigDecimal> range, int precision) {
+
+        BigDecimal valueMoved = new BigDecimal(value).movePointLeft(precision);
+        BigDecimal ret = valueMoved.add(range.getLowerBound());
+
+        if (!range.contains(ret)) {
+            throw new RuntimeException("The value to set SeekBar is out of range " +
+                    "(range: " + range + ", value: " + value + ")");
+        }
+
+        return ret;
     }
 
     @Override
-    public void setNum(int num) {
-        double value = toDoubleExpression(num);
+    public BigDecimal getValue() {
+        return mValue;
+    }
+
+    @Override
+    public void setValue(BigDecimal value) {
 
         if (!mRange.contains(value)) {
             throw new RuntimeException("The value to set SeekBar is out of range " +
                                                "(range: " + mRange + ", value: " + value + ")");
         }
 
-        // because minimum value of SeekBar is always 0,
-        // the value to set SeekBar should be subtracted by its "apparent" minimum
-        mValue = value - mRange.getLowerBound();
-
-        mSeekBar.setProgress(toIntegerExpression(mValue));
-    }
-
-    @Override
-    public double getSelectedNum() {
-        return mValue;
-    }
-
-    /**
-     * Get rid of the decimal part.
-     * e.g., 1.15 -> 115
-     * @param value a value in double
-     * @return a value in integer
-     */
-    private int toIntegerExpression(double value) {
-        return (int) (value * Math.pow(10.0, mNumberOfDecimalDigits));
-    }
-
-    /**
-     * Convert an integer value to double value.
-     * e.g., 115 -> 1.15
-     * @param value a value in integer
-     * @return a value in double
-     */
-    private double toDoubleExpression(int value) {
-        return value / Math.pow(10.0, mNumberOfDecimalDigits);
+        mValue = value;
+        mSeekBar.setProgress(toSeekBarExpression(mValue, mRange, mPrecision));
     }
 }

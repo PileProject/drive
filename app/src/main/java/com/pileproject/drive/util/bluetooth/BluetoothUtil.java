@@ -19,6 +19,11 @@ package com.pileproject.drive.util.bluetooth;
 import android.bluetooth.BluetoothAdapter;
 
 public class BluetoothUtil {
+
+    private BluetoothUtil() {
+        throw new AssertionError("This class cannot be instantiated");
+    }
+
     public static boolean hasBluetoothFunction() {
         return BluetoothAdapter.getDefaultAdapter() != null;
     }

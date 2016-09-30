@@ -47,5 +47,5 @@ public class ProgramDataSpec {
 
     // the number which a number holder block has
     @ColumnSpec(defaultValue = "0")
-    int number;
+    String number;
 }

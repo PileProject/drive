@@ -17,10 +17,8 @@
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 
@@ -33,13 +31,11 @@ import com.pileproject.drive.execution.NxtController;
 public class IfNxtWasTouchedBlock extends SelectionBlock {
 
     public IfNxtWasTouchedBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_if_nxt_was_touched, this);
+        super(context, R.layout.block_if_nxt_was_touched);
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        condition.pushSelectionResult(((NxtController) controller).getTouchSensorValue());
-        return 0;
+    protected boolean evaluateCondition(MachineController controller) {
+        return ((NxtController) controller).getTouchSensorValue();
     }
 }

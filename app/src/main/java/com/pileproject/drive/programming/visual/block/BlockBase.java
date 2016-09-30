@@ -17,6 +17,8 @@
 package com.pileproject.drive.programming.visual.block;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
+import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.pileproject.drive.execution.ExecutionCondition;
@@ -29,9 +31,19 @@ import com.pileproject.drive.execution.MachineController;
  * @version 1.0 18-June-2013
  */
 public abstract class BlockBase extends RelativeLayout {
-    public BlockBase(Context context) {
+
+    public BlockBase(Context context, @LayoutRes int layoutRes) {
         super(context);
+
+        LayoutInflater.from(context).inflate(layoutRes, this);
     }
+
+    /**
+     * Returns kind of this block.
+     *
+     * @return {@link BlockKind}
+     */
+    public abstract BlockKind getKind();
 
     /**
      * Action that this block does while the execution of program.
@@ -45,10 +57,7 @@ public abstract class BlockBase extends RelativeLayout {
     public abstract int action(
             MachineController controller, ExecutionCondition condition);
 
-    /**
-     * Return class to check a program is correct or not
-     *
-     * @return Class<? extends BaseBlock>
-     */
-    public abstract Class<? extends BlockBase> getKind();
+    public enum BlockKind {
+        SEQUENCE, SELECTION_BEGIN, SELECTION_END, REPETITION_BEGIN, REPETITION_END, REPETITION_BREAK
+    }
 }

@@ -30,6 +30,7 @@
     <string name="selection">ぶんき</string>
     <string name="repetition">くりかえし</string>
     <string name="percent">%</string>
+    <string name="second">びょう</string>
     <string name="error">エラー</string>
     <string name="turnedOnBluetooth">Bluetoothきのうをオンにしました</string>
     <string name="bluetoothFunctionIsOff">Bluetooth きのうがオンになっていません</string>
@@ -62,8 +63,8 @@
 
     <!-- Blocks -->
     <!-- Repetition -->
-    <string name="blocks.whileForever">ずっとくりかえす</string>
-    <string name="blocks.whileNum">□かいくりかえす</string>
+    <string name="blocks.loop">ずっとくりかえす</string>
+    <string name="blocks.nTimes">□かいくりかえす</string>
     <string name="blocks.repetitionBreak">くりかえしをぬける</string>
     <string name="blocks.repeatNum">%d かい</string>
 
