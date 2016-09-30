@@ -22,7 +22,7 @@ import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.activity.BlockPositionComparator;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
-import com.pileproject.drive.programming.visual.block.NumTextHolder;
+import com.pileproject.drive.programming.visual.block.NumberTextHolder;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.yahoo.squidb.data.SquidCursor;
 import com.yahoo.squidb.sql.Query;
@@ -129,8 +129,8 @@ public class ProgramDataManager {
                     .setLeft(b.getLeft())
                     .setTop(b.getTop());
             // get the number of TextView if the block has one
-            if (b instanceof NumTextHolder) {
-                data.setNumber(((NumTextHolder) b).getNum());
+            if (b instanceof NumberTextHolder) {
+                data.setNumber(((NumberTextHolder) b).getValueAsString());
             }
 
             // save the data
@@ -202,8 +202,8 @@ public class ProgramDataManager {
                 // set data's properties
                 b.setLeft(data.getLeft());
                 b.setTop(data.getTop());
-                if (b instanceof NumTextHolder) {
-                    ((NumTextHolder) b).setNum(data.getNumber());
+                if (b instanceof NumberTextHolder) {
+                    ((NumberTextHolder) b).setValueAsString(data.getNumber());
                 }
                 // add the block to a list
                 blocks.add(b);

@@ -17,10 +17,8 @@
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.preferences.BlockPreferences;
@@ -38,17 +36,15 @@ public class IfNxtIsOutOfLineBlock extends SelectionBlock {
     private int mThreshold;
 
     public IfNxtIsOutOfLineBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_if_nxt_is_out_of_line, this);
+        super(context, R.layout.block_if_nxt_is_out_of_line);
 
         mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    protected boolean evaluateCondition(MachineController controller) {
         // comment is weird.
         // getLightPercent returns tenfold value
-        condition.pushSelectionResult(((NxtController) controller).getLineSensorValue() > mThreshold * 10);
-        return 0;
+        return ((NxtController) controller).getLineSensorValue() > mThreshold * 10;
     }
 }

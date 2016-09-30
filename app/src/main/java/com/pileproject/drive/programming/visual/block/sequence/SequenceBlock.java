@@ -17,6 +17,7 @@
 package com.pileproject.drive.programming.visual.block.sequence;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
@@ -28,12 +29,12 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
  */
 public abstract class SequenceBlock extends BlockBase {
 
-    public SequenceBlock(Context context) {
-        super(context);
+    public SequenceBlock(Context context, @LayoutRes int layoutRes) {
+        super(context, layoutRes);
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return SequenceBlock.class;
+    public final BlockKind getKind() {
+        return BlockKind.SEQUENCE;
     }
 }

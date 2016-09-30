@@ -26,6 +26,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 import com.pileproject.drive.util.math.Range;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,76 +35,132 @@ import java.util.List;
  */
 public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     private List<NumberPicker> mNumbers;
-    private int mIntegralPart, mDecimalPart;
+
+    private final Range<BigDecimal> mRange;
+    private final int mScaledMaximum;
+    private final int mScaledMinimum;
+
+    private final int mDigitCounts;
+    private final int mPrecision;
+
+    private final OnValueChangeListener listener = new OnValueChangeListener() {
+
+        @Override
+        public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
+
+            picker.setValue(newVal);
+
+            int scaledValue = getScaledValue();
+
+            if (scaledValue > mScaledMaximum) {
+                changeToMax();
+            } else if (scaledValue < mScaledMinimum) {
+                changeToMin();
+            }
+        }
+    };
 
     /**
-     * @param context      an application context
-     * @param integralPart the length of integral part
-     * @param decimalPart  the length of decimal part
+     * Constructor.
+     * @param context    context
+     * @param value      initial value
+     * @param range      BigDecimal range. users can select within this range
+     * @param precision  precision of the value
+     * @param digitCount number of digits this view has
      */
-    public NumberSelectWheelScrollerView(Context context, Range<Double> range, int integralPart, int decimalPart) {
-        super(context, range);
+    public NumberSelectWheelScrollerView(Context context, BigDecimal value, Range<BigDecimal> range, int precision, int digitCount) {
+        super(context);
 
-        final double min = range.getLowerBound();
-        final double max = range.getUpperBound();
+        mPrecision = precision;
+        mDigitCounts = digitCount;
 
-        // choose somewhat correct lengths
-        mIntegralPart = (integralPart > 0) ? integralPart : 3;
-        mDecimalPart = (decimalPart >= 0) ? decimalPart : 0;
-        mNumbers = new ArrayList<>(mIntegralPart + mDecimalPart);
+        mRange = range;
+        mScaledMaximum = mRange.getUpperBound().movePointRight(mPrecision).intValue();
+        mScaledMinimum = mRange.getLowerBound().movePointRight(mPrecision).intValue();
+
+        mNumbers = new ArrayList<>(mDigitCounts);
 
         // create LayoutParams (width = 0, height = wrap_content, weight = 1.0f)
         LayoutParams lp = new LayoutParams(0, FrameLayout.LayoutParams.WRAP_CONTENT);
         lp.weight = 1.0f;
 
-        for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            NumberPicker picker = new NumberPicker(context);
+        for (int i = 0; i < mDigitCounts; i++) {
+            NumberPicker picker = createNumberPicker(context);
 
-            // allow numbers 0 to 9
-            picker.setMaxValue(9);
-            picker.setMinValue(0);
-
-            // hide software keyboard
-            picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
-            picker.setOnValueChangedListener(new OnValueChangeListener() {
-                @Override
-                public void onValueChange(NumberPicker picker, int oldVal, int newVal) {
-                    int index = mNumbers.indexOf(picker);
-                    picker.setValue(oldVal); // reset old values for check
-
-                    double raw = getSelectedNum();
-
-                    // prevent overflow
-                    if ((oldVal + 1) % 10 == newVal) {
-                        // check the new value is larger than the maximum value or not
-                        if (raw + Math.pow(10, mIntegralPart - (index + 1)) > max) {
-                            changeToMax(); // change value to maximum
-                            return;
-                        }
-                    }
-                    // prevent underflow
-                    else {
-                        // check the new value is lower than the minimum value or not
-                        if (raw - Math.pow(10, mIntegralPart - (index + 1)) < min) {
-                            changeToMin(); // change value to minimum
-                            return;
-                        }
-                    }
-                    picker.setValue(newVal);
-                }
-            });
             this.addView(picker, lp);
             mNumbers.add(picker);
         }
 
-        if (mDecimalPart != 0) {
+        if (mPrecision != 0) {
             // add period between integral part and decimal part
             TextView period = new TextView(context);
             period.setText(R.string.select_number_period);
             // period.setTextSize(R.dimen.period);
 
             lp.gravity = Gravity.CENTER;
-            this.addView(period, mIntegralPart, lp);
+            int insertIndex = mDigitCounts - mPrecision;
+            this.addView(period, insertIndex, lp);
+        }
+
+        setValue(value);
+    }
+
+    @Override
+    public BigDecimal getValue() {
+        return new BigDecimal(getScaledValue()).movePointLeft(mPrecision);
+    }
+
+    @Override
+    public void setValue(BigDecimal value) {
+        setScaledValue(value.movePointRight(mPrecision).intValue());
+    }
+
+    /**
+     * Change the number of this view to maximum value.
+     */
+    public void changeToMax() {
+        setScaledValue(mScaledMaximum);
+    }
+
+    /**
+     * Change the number of this view to minimum value.
+     */
+    public void changeToMin() {
+        setScaledValue(mScaledMinimum);
+    }
+
+    private NumberPicker createNumberPicker(Context context) {
+
+        NumberPicker picker = new NumberPicker(context);
+
+        // allow numbers 0 to 9
+        picker.setMaxValue(9);
+        picker.setMinValue(0);
+
+        // hide software keyboard
+        picker.setDescendantFocusability(NumberPicker.FOCUS_BLOCK_DESCENDANTS);
+        picker.setOnValueChangedListener(listener);
+
+        return picker;
+    }
+
+    private int getScaledValue() {
+        int scaledResult = 0;
+
+        for (int i = 0; i < mDigitCounts; ++i) {
+            int digit = mNumbers.get(mDigitCounts - (i + 1)).getValue();
+
+            scaledResult += digit * Math.pow(10, i);
+        }
+
+        return scaledResult;
+    }
+
+    private void setScaledValue(int scaledValue) {
+        for (int i = 0; i < mDigitCounts; ++i) {
+            int digit = (int) Math.pow(10, mDigitCounts - (i + 1));
+            mNumbers.get(i).setValue(scaledValue / digit);
+            scaledValue %= digit;
         }
     }
 
@@ -111,6 +168,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
      * Carry up count.
      * @param index the index of the target number
      */
+    @Deprecated
     public void carryUp(int index) {
         if (index < 0) {
             return;
@@ -130,6 +188,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
      * Carry down count.
      * @param index the index of the target number
      */
+    @Deprecated
     public void carryDown(int index) {
         if (index < 0) {
             return;
@@ -143,48 +202,5 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
         } else {
             picker.setValue(picker.getValue() - 1);
         }
-    }
-
-    @Override
-    public double getSelectedNum() {
-        double result = 0;
-        for (int i = 0; i < mIntegralPart + mDecimalPart; i++)
-            result += mNumbers.get(i).getValue() * Math.pow(10, mIntegralPart - (i + 1));
-        return result;
-    }
-
-    @Override
-    public void setNum(int num) {
-        // set the number to NumberPicker
-        for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            int digit = (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
-            mNumbers.get(i).setValue(num / digit);
-            num %= digit;
-        }
-    }
-
-    private void changeTo(double target) {
-        int num = (int) (target * Math.pow(10, mDecimalPart));
-        for (int i = 0; i < mIntegralPart + mDecimalPart; i++) {
-            int digit = (int) Math.pow(10, mIntegralPart + mDecimalPart - (i + 1));
-            mNumbers.get(i).setValue(num / digit);
-            num %= digit;
-        }
-    }
-
-    /**
-     * Change the number of this view to maximum value.
-     */
-    public void changeToMax() {
-        final double max = mRange.getUpperBound();
-        changeTo(max);
-    }
-
-    /**
-     * Change the number of this view to minimum value.
-     */
-    public void changeToMin() {
-        final double min = mRange.getLowerBound();
-        changeTo(min);
     }
 }

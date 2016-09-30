@@ -17,7 +17,10 @@
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 
+import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
@@ -28,12 +31,21 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
  */
 public abstract class SelectionBlock extends BlockBase {
 
-    public SelectionBlock(Context context) {
-        super(context);
+    public SelectionBlock(Context context, @LayoutRes int layoutRes) {
+        super(context, layoutRes);
+    }
+
+    protected abstract boolean evaluateCondition(MachineController controller);
+
+    @Override
+    public final BlockKind getKind() {
+        return BlockKind.SELECTION_BEGIN;
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return SelectionBlock.class;
+    public final int action(MachineController controller, ExecutionCondition condition) {
+        condition.pushSelectionResult(evaluateCondition(controller));
+        return 0;
     }
+
 }

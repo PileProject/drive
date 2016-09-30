@@ -19,31 +19,27 @@ package com.pileproject.drive.view;
 import android.content.Context;
 import android.widget.LinearLayout;
 
-import com.pileproject.drive.util.math.Range;
+import java.math.BigDecimal;
 
 /**
  * An abstract view class which provides an interface of a view for selecting values.
  */
 public abstract class NumberSelectViewBase extends LinearLayout {
-    final protected Range<Double> mRange;
-    protected Context mContext;
 
-    public NumberSelectViewBase(Context context, Range<Double> range) {
+    public NumberSelectViewBase(Context context) {
         super(context);
-        mContext = context;
-        mRange = range;
     }
-
-    /**
-     * A setter of a value.
-     * @param num a value to be set
-     */
-    public abstract void setNum(int num);
 
     /**
      * A getter of a value.
      * This is used to get the real value in double.
      * @return the selected value
      */
-    public abstract double getSelectedNum();
+    public abstract BigDecimal getValue();
+
+    /**
+     * A setter of a value.
+     * @param value a value to be set
+     */
+    public abstract void setValue(BigDecimal value);
 }
