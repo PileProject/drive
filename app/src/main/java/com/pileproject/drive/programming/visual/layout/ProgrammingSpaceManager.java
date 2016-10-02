@@ -19,26 +19,21 @@ package com.pileproject.drive.programming.visual.layout;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.DialogInterface.OnClickListener;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnLongClickListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.CycleInterpolator;
 import android.widget.LinearLayout.LayoutParams;
-import android.widget.TextView;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.programming.visual.block.BlockBase;
-import com.pileproject.drive.programming.visual.block.NumTextHolder;
-import com.pileproject.drive.util.development.Unit;
-import com.pileproject.drive.util.math.Range;
+import com.pileproject.drive.programming.visual.block.NumberTextHolder;
 import com.pileproject.drive.view.NumberSelectSeekBarView;
 import com.pileproject.drive.view.NumberSelectViewBase;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
@@ -46,7 +41,38 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * A manager of BlockSpaceLayout that helps users to make programs.
  */
 public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
-    public final OnTouchListener mMoveBlock = new OnTouchListener() {
+
+    private final BlockOnTouchListener mOnTouchListener = new BlockOnTouchListener();
+
+    public ProgrammingSpaceManager(Context context, BlockSpaceLayout layout) {
+        super(context, layout);
+    }
+
+    private void setListeners(BlockBase block) {
+        // set OnTouchListener to the block
+        block.setOnTouchListener(mOnTouchListener);
+
+        if (block instanceof NumberTextHolder) {
+            ((NumberTextHolder) block).setOnLongClickTextViewListener(
+                    new OnTouchNumberTextListener((NumberTextHolder) block));
+        }
+    }
+
+    @Override
+    public void addBlocks(List<BlockBase> blocks) {
+        // emphasize block animation
+        AlphaAnimation alpha = new AlphaAnimation(1, 0);
+        alpha.setDuration(1000);
+        alpha.setInterpolator(new CycleInterpolator(3));
+
+        for (BlockBase block : blocks) {
+            setListeners(block);
+            mLayout.addView(block, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
+            block.setAnimation(alpha);
+        }
+    }
+
+    private class BlockOnTouchListener implements OnTouchListener {
         int currentX; // the left position of this view (x coordinate)
         int currentY; // the top position of this view (y coordinate)
         int offsetX; // the x position of user's finger
@@ -115,85 +141,33 @@ public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
 
             view.layout(currentX, currentY, currentX + view.getWidth(), currentY + view.getHeight());
         }
-    };
-
-    public ProgrammingSpaceManager(Context context, BlockSpaceLayout layout) {
-        super(context, layout);
     }
 
-    private void setListeners(BlockBase block) {
-        // set OnTouchListener to the block
-        block.setOnTouchListener(mMoveBlock);
-        // set OnTouchListener to TextView
-        if (block instanceof NumTextHolder) {
-            TextView numText = ((NumTextHolder) block).getTextView();
-            numText.setOnLongClickListener(new OnTouchNumTextListener(block));
-        }
-    }
+    private class OnTouchNumberTextListener implements View.OnLongClickListener {
 
-    @Override
-    public void addBlocks(ArrayList<BlockBase> blocks) {
-        // emphasize block animation
-        AlphaAnimation alpha = new AlphaAnimation(1, 0);
-        alpha.setDuration(1000);
-        alpha.setInterpolator(new CycleInterpolator(3));
+        private final NumberTextHolder mHolder;
 
-        for (BlockBase block : blocks) {
-            setListeners(block);
-            mLayout.addView(block, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
-            block.setAnimation(alpha);
-        }
-    }
-
-    @Override
-    public void deleteAllBlocks() {
-        super.deleteAllBlocks();
-    }
-
-    /**
-     * A listener to pick a value.
-     */
-    class OnTouchNumTextListener implements OnLongClickListener {
-        NumTextHolder mParent;
-
-        public OnTouchNumTextListener(BlockBase parent) {
-            mParent = (NumTextHolder) parent;
+        public OnTouchNumberTextListener(NumberTextHolder parent) {
+            mHolder = parent;
         }
 
         @Override
         public boolean onLongClick(View v) {
-            // get the old value
-            final int oldNum = mParent.getNum();
 
-            // create a new NumberPicker and set the old value
-            Integer[] digit = mParent.getDigit();
+            final NumberSelectViewBase numberSelectView = new NumberSelectSeekBarView(mContext,
+                    mHolder.getValue(), mHolder.getRange(), mHolder.getPrecision(), mHolder.getUnit());
 
-            final int numOfIntegralDigits = digit[0];
-            final int numOfDecimalDigits = digit[1];
+            new AlertDialog.Builder(mContext)
+                    .setTitle(R.string.programming_pleaseSelectNumbers)
+                    .setView(numberSelectView)
+                    .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            mHolder.setValue(numberSelectView.getValue());
+                        }
+                    })
+                    .show();
 
-            final Range<Double> range = Range.closed(mParent.getMin(), mParent.getMax());
-            final Unit unit = mParent.getUnit();
-
-            final NumberSelectViewBase numberSelectView =
-                    new NumberSelectSeekBarView(mContext, range, unit, numOfIntegralDigits, numOfDecimalDigits);
-
-            numberSelectView.setNum(oldNum);
-
-            // create a new AlertDialog to pick the number
-            AlertDialog.Builder dialog = new AlertDialog.Builder(mContext);
-            dialog.setTitle(R.string.programming_pleaseSelectNumbers);
-            dialog.setView(numberSelectView);
-            dialog.setPositiveButton(R.string.ok, new OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    double rawNum = numberSelectView.getSelectedNum();
-                    int newNum = (int) (rawNum * Math.pow(10, numOfDecimalDigits));
-
-                    // set new value
-                    mParent.setNum(newNum);
-                }
-            });
-            dialog.show();
             return true;
         }
     }

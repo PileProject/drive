@@ -16,66 +16,66 @@
 
 package com.pileproject.drive.util.development;
 
-import android.content.Context;
+import android.content.res.Resources;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
+import com.pileproject.drive.util.string.NumberUtil;
+
+import java.util.Locale;
 
 /**
  * enumeration of unit for number selecting on blocks
  *
  * @author yusaku
  */
-public enum Unit {
-    Second,
-    Percentage,
-    NumberOfTimes,
-    Dimensionless;
+public class Unit {
 
-    /**
-     * get the unit string based on the value and selected unit
-     *
-     * @return string which contains the value and its unit
-     */
-    public static String getUnitString(
-            Context context, Unit unit, String format, double value) {
-        final String formattedValue = String.format(format, value);
+    public static final Unit Second = new Unit();
+    public static final Unit Percentage = new Unit();
+    public static final Unit NumberOfTimes = new Unit();
 
-        final int quantity = getQuantityOfValueInStringFormat(formattedValue, format);
+    private static final Resources RESOURCES = DriveApplication.getContext().getResources();
 
-        switch (unit) {
-            case Second:
-                return value + " " + context.getResources().getQuantityString(R.plurals.seconds, quantity);
+    private Unit() {
 
-            case Percentage:
-                return value + " " + context.getResources().getString(R.string.percent);
-
-            case NumberOfTimes:
-                return context.getResources()
-                        .getString(R.string.blocks_repeatNum,
-                                   Integer.parseInt(formattedValue.trim()));
-
-            default:
-                break;
-        }
-
-        return "";
     }
 
     /**
-     * returns a quantity of formattedValue
-     * TODO: apply this for other locale than English
-     * See also: http://www.unicode
-     * .org/cldr/charts/latest/supplemental/language_plural_rules.html
+     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * This method takes locales into account and uses default locale by calling
+     * {@link Locale#getDefault()}.
      *
-     * @param formattedValue
-     * @param format
-     * @return
+     * @param value value to be decorated
+     * @param precision precision of the value in the return string.
+     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
+     * @return decorated string in default locale and with given precision.
      */
-    private static int getQuantityOfValueInStringFormat(String formattedValue, String format) {
-        if (formattedValue.equals(String.format(format, 1.0))) {
-            return 1;
+    public <T extends Number> String decorateValue(T value, int precision) {
+        return decorateValue(Locale.getDefault(), value, precision);
+    }
+
+    /**
+     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * This method takes locales into account.
+     *
+     * @param locale the locale in which the value decorated
+     * @param value value to be decorated
+     * @param precision precision of the value in the return string.
+     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
+     * @return decorated string in default locale and with given precision.
+     */
+    public <T extends Number> String decorateValue(Locale locale, T value, int precision) {
+
+        if (this == Second) {
+            return NumberUtil.toString(locale, value, precision) + RESOURCES.getString(R.string.second);
         }
 
-        return 2;
+        if (this == Percentage) {
+            return NumberUtil.toString(locale, value, precision) + RESOURCES.getString(R.string.percent);
+        }
+
+        // if this == NumberOfTimes
+        return RESOURCES.getString(R.string.blocks_repeatNum, (Integer) value);
     }
 }

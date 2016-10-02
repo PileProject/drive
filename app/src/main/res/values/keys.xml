@@ -21,7 +21,6 @@
     <string name="key.execution.isConnected">is_connected</string>
     <string name="key.execution.index">index</string>
     <string name="key.execution.message">message</string>
-    <string name="key.execution.result">result</string>
 
     <string name="key.block.category">category</string>
     <string name="key.block.how_to_make">how_to_make</string>

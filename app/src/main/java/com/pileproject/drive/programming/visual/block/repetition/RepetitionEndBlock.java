@@ -17,7 +17,6 @@
 package com.pileproject.drive.programming.visual.block.repetition;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
@@ -33,54 +32,17 @@ import com.pileproject.drive.programming.visual.block.BlockBase;
 public class RepetitionEndBlock extends BlockBase {
 
     public RepetitionEndBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_repetition_end, this);
+        super(context, R.layout.block_repetition_end);
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return RepetitionEndBlock.class;
+    public final BlockKind getKind() {
+        return BlockKind.REPETITION_END;
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-
-        if (!condition.whileStack.isEmpty()) {
-            // Check the pair of this RepetitionEndBlock is  WhileForeverBlock
-            // Not ForeverWhileBlock
-            if (condition.whileStack.peek() >= 0) {
-                // Check the while loop had already finished or not
-                // Had already finished
-                if (condition.beginningOfCurrentWhileLoop != condition.whileStack.peek()) {
-                    // just update the index of the beginning of current
-                    // while loop
-                    condition.beginningOfCurrentWhileLoop = condition.whileStack.peek();
-                }
-                // Had not finished yet
-                else {
-                    // Go back to the beginning of current while loop
-                    condition.programCount = condition.whileStack.pop();
-                }
-            }
-            // ForeverWhile
-            else {
-                int indexWithoutOffset = condition.whileStack.peek() - WhileForeverBlock.FOREVER_WHILE_OFFSET;
-                // Check the while loop had already finished or not
-                // Had already finished
-                if (condition.beginningOfCurrentWhileLoop != indexWithoutOffset) {
-                    // just update the index of the beginning of current
-                    // while loop
-                    condition.beginningOfCurrentWhileLoop = indexWithoutOffset;
-                }
-                // Had not finished yet
-                else {
-                    // Go back to the beginning of current while loop
-                    // with excluding the offset
-                    condition.programCount = indexWithoutOffset;
-                }
-            }
-        }
-        return 1;
+    public int action(MachineController controller, ExecutionCondition condition) {
+        condition.reachEndOfLoop();
+        return 0;
     }
 }

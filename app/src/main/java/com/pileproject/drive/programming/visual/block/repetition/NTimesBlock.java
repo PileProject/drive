@@ -17,14 +17,14 @@
 package com.pileproject.drive.programming.visual.block.repetition;
 
 import android.content.Context;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.widget.TextView;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.util.development.Unit;
+import com.pileproject.drive.util.math.Range;
+
+import java.math.BigDecimal;
 
 /**
  * While in selected times
@@ -32,53 +32,38 @@ import com.pileproject.drive.util.development.Unit;
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class WhileNumBlock extends RepetitionHasNumText {
+public class NTimesBlock extends RepetitionBlockHasNumberText {
 
-    public WhileNumBlock(Context context) {
-        super(context);
+    // TODO: set from preference
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ONE, new BigDecimal(5));
 
-        View layout = LayoutInflater.from(context).inflate(R.layout.block_while_num, this);
-        numText = (TextView) layout.findViewById(R.id.block_numText);
+    private static final int PRECISION = 0;
+
+    public NTimesBlock(Context context) {
+        super(context, R.layout.block_n_times, R.id.block_numText);
     }
 
     @Override
-    public int getNum() {
-        return Integer.parseInt(numText.getText().toString());
-    }
+    public int action(MachineController controller, ExecutionCondition condition) {
+        int n = getValue().intValue();
+        condition.enterNTimesLoop(n);
 
-    @Override
-    public void setNum(int num) {
-        numText.setText(String.valueOf(num));
-    }
-
-    @Override
-    public Integer[] getDigit() {
-        return new Integer[]{2, 0};
-    }
-
-    @Override
-    public double getMax() {
-        return (double) 5;
-    }
-
-    @Override
-    public double getMin() {
-        return (double) 1;
-    }
-
-    @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
-        int index = condition.programCount;
-        for (int i = 1; i < getNum(); i++) {
-            condition.whileStack.push(index);
-        }
-        condition.beginningOfCurrentWhileLoop = index;
         return 0;
+    }
+
+    @Override
+    public int getPrecision() {
+        return PRECISION;
+    }
+
+    @Override
+    public Range<BigDecimal> getRange() {
+        return range;
     }
 
     @Override
     public Unit getUnit() {
         return Unit.NumberOfTimes;
     }
+
 }
