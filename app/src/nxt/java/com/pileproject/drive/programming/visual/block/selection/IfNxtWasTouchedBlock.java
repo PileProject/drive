@@ -31,7 +31,7 @@ import com.pileproject.drive.preferences.MachinePreferencesSchema;
  * @version 1.0 7-July-2013
  */
 public class IfNxtWasTouchedBlock extends SelectionBlock {
-    private boolean mIsLejosFirmware;
+    private final boolean mIsLejosFirmware;
     public IfNxtWasTouchedBlock(Context context) {
         super(context, R.layout.block_if_nxt_was_touched);
 
