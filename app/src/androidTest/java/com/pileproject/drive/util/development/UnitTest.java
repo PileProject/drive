@@ -18,6 +18,7 @@ package com.pileproject.drive.util.development;
 
 import android.content.res.Configuration;
 import android.content.res.Resources;
+import android.support.test.runner.AndroidJUnit4;
 
 import com.pileproject.drive.app.DriveApplication;
 
@@ -26,6 +27,7 @@ import org.junit.Test;
 import org.junit.experimental.runners.Enclosed;
 import org.junit.runner.RunWith;
 
+import java.math.BigDecimal;
 import java.util.Locale;
 
 import static junit.framework.Assert.assertEquals;
@@ -41,6 +43,7 @@ public class UnitTest {
         res.updateConfiguration(config, res.getDisplayMetrics());
     }
 
+    @RunWith(AndroidJUnit4.class)
     public static class InUS {
 
         @Before
@@ -51,22 +54,23 @@ public class UnitTest {
         @Test
         public void whenUnitIsSecond_thenDecoratesAsSecondString() throws Exception {
             assertEquals("When value is 1.0 and unit is second",
-                    "1.000s", Unit.Second.decorateValue(Locale.ENGLISH, 1.0, 3));
+                    "1.000s", Unit.Second.decorateValue(Locale.ENGLISH, BigDecimal.ONE, 3));
         }
 
         @Test
         public void whenUnitIsPercent_thenDecoratesAsPercentString() throws Exception {
             assertEquals("When value is 100 and unit is percentage",
-                    "100%", Unit.Percentage.decorateValue(Locale.ENGLISH, 100, 0));
+                    "100%", Unit.Percentage.decorateValue(Locale.ENGLISH, new BigDecimal(100), 0));
         }
 
         @Test
         public void whenUnitIsNumberOfTimes_thenDecoratesAsNumberOfTimesString() throws Exception {
             assertEquals("When the value 100 and unit is NumberOfTimes",
-                    "Repeats: 100", Unit.NumberOfTimes.decorateValue(Locale.ENGLISH, 100, 0));
+                    "Repeats: 100", Unit.NumberOfTimes.decorateValue(Locale.ENGLISH, new BigDecimal(100), 0));
         }
     }
 
+    @RunWith(AndroidJUnit4.class)
     public static class InJP {
 
         @Before
@@ -77,19 +81,19 @@ public class UnitTest {
         @Test
         public void whenUnitIsSecond_thenDecoratesAsSecondString() throws Exception {
             assertEquals("When value is 1.0 and unit is second",
-                    "1.000びょう", Unit.Second.decorateValue(Locale.JAPAN, 1.0, 3));
+                    "1.000びょう", Unit.Second.decorateValue(Locale.JAPAN, BigDecimal.ONE, 3));
         }
 
         @Test
         public void whenUnitIsPercent_thenDecoratesAsPercentString() throws Exception {
             assertEquals("When value is 100 and unit is percentage",
-                    "100%", Unit.Percentage.decorateValue(Locale.JAPAN, 100, 0));
+                    "100%", Unit.Percentage.decorateValue(Locale.JAPAN, new BigDecimal(100), 0));
         }
 
         @Test
         public void whenUnitIsNumberOfTimes_thenDecoratesAsNumberOfTimesString() throws Exception {
             assertEquals("When the value 100 and unit is NumberOfTimes",
-                    "100 かい", Unit.NumberOfTimes.decorateValue(Locale.JAPAN, 100, 0));
+                    "100 かい", Unit.NumberOfTimes.decorateValue(Locale.JAPAN, new BigDecimal(100), 0));
         }
     }
 
