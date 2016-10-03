@@ -76,6 +76,6 @@ public class Unit {
         }
 
         // if this == NumberOfTimes
-        return RESOURCES.getString(R.string.blocks_repeatNum, (Integer) value);
+        return RESOURCES.getString(R.string.blocks_repeatNum, value.intValue());
     }
 }
