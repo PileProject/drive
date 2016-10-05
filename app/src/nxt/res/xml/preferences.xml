@@ -28,6 +28,9 @@
         <com.pileproject.drive.setting.machine.NxtThresholdPreference
             android:title="@string/setting.threshold" />
 
+        <com.pileproject.drive.setting.machine.NxtFirmwarePreference
+            android:title="@string/setting.firmware" />
+
     </PreferenceCategory>
 
     <PreferenceCategory

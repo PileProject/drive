@@ -75,4 +75,8 @@
     <string name="setting.threshold.soundSensor">サウンドセンサの閾値</string>
     <string name="setting.threshold.unit.percent">%1d %%</string>
     <string name="setting.threshold.unit.dB">%1d dB</string>
+
+    <string name="setting.firmware">ファームウェア設定</string>
+    <string name="setting.firmware.standard">標準ファームウェア (1.3.1~)</string>
+    <string name="setting.firmware.lejos">leJOS (0.9.1~) </string>
 </resources>
