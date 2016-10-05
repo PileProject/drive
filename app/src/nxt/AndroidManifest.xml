@@ -42,7 +42,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".setting.NxtSettingActivity"
+            android:name=".setting.SettingActivity"
             android:label="@string/setting.label"
             android:screenOrientation="portrait">
         </activity>
