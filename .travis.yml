@@ -47,3 +47,7 @@ script:
   - adb devices
   - adb shell input keyevent 82 &
   - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
+
+notifications:
+  slack:
+    secure: Oj+WxVisr4AMzoE8A8nI9VGBYjjyJ4+JgtHRqRJ2eiyXCte+eZRnO+ge96lkXmi1t4ZkG0hXuusb4pb5xgU1ctA9UKvsQzsRE80sUIFs+yYBF5PFyT7gWf8UNbbeI37/qitjO3FbTYHdJc7lq2Ba6DJs9+wD7bUiKtxt296ynly/iH5levHeLdMAQn90SyIs9QOd1Bd76cAYsucL+Lhwo5ZGm/hy+r2+JoFWbWLsIF54o2L9UdoKoznumc96fw09IVlUULOZfeIAeOiajSk0HcfB7tcR4dOwvMgVXcXxO1WUHpE9W9RQCTfm6c+SjgXLUH3u4JUzU0Ga37+WPTQyOG5IfsxgD9L/CxPaean3lFEsIfEXG+81XE2ncMxpkLGWIJxuMa6b27bVf/wbsGyL3iS1qBZZVuFNtpV8d24JywWLgWABFnvAwHQCljxhFc2YlrLMSd5lJQS0zCkRmyCMmguNxq0jBN8Ay2dNhJkxwf15DfKgGGmST+CO35xyNj111NeVVCLbNFL68qdgNN0NlQ4ncO1WgxMzblwVF1gUdfqKw0IrZDQl9pVDYAei5hB+4Q2vi3OMQ5u8KGd/APjdqGa2Ri/MIm6WH+Z72X7wVVdSnwjxeRkJn87BKdpE1PSnB4DcLuBdQ6DRLuknE0gkJ6VHGYaqm+EyNz9K8qA/Xb0=
