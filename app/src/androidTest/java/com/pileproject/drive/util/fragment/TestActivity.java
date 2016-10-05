@@ -29,8 +29,6 @@ public class TestActivity extends AppCompatActivity implements AlertDialogFragme
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         LinearLayout view = new LinearLayout(this);
-        view.setId(1);
-
         setContentView(view);
 
         new AlertDialogFragment.Builder(this)

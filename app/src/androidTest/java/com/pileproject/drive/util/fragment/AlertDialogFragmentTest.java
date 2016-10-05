@@ -16,7 +16,6 @@
 
 package com.pileproject.drive.util.fragment;
 
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.support.test.rule.ActivityTestRule;
 import android.support.test.runner.AndroidJUnit4;
@@ -50,7 +49,7 @@ public class AlertDialogFragmentTest {
 
     @Test
     public void testCheckComponent_titleString() {
-        //mActivity.showDialog(new AlertDialogFragment.Builder(mActivity).setTag(TAG));
+        // mActivity.showDialog(new AlertDialogFragment.Builder(mActivity).setTag(TAG));
 
         AlertDialogFragment fragment = (AlertDialogFragment) mActivity
                 .getSupportFragmentManager()

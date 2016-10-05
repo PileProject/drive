@@ -21,5 +21,4 @@
     <application>
         <activity android:name=".util.fragment.TestActivity" />
     </application>
-
 </manifest>

@@ -61,7 +61,8 @@ android {
         abortOnError false
     }
     sourceSets {
-        test {
+        // tests run with 'debug' buid type
+        debug {
             manifest.srcFile 'src/androidTest/AndroidManifest.xml'
         }
     }

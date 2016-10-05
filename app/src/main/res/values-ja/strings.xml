@@ -105,8 +105,6 @@
     <string name="setting.label">せっていがめん</string>
 
     <!-- DeviceSelect -->
-    <string name="bluetoothMachineSelect">Bluetooth ロボット設定</string>
-
     <string name="setting.bluetoothMachineSelect.label.pairedMachines">ペアリング済みロボット</string>
     <string name="setting.bluetoothMachineSelect.label.foundMachines">見つけたロボット</string>
     <string name="setting.bluetoothMachineSelect.noMachinesPaired">ペアリング済みロボットはありません</string>
@@ -134,7 +132,6 @@
     <string name="setting.legalNotice">免責事項</string>
 
     <!-- Program List Pragment -->
-    <string name="programList">プログラムリスト</string>
     <string name="setting.programList.delete">消去</string>
     <string name="setting.programList.checkAll">全て選択</string>
     <string name="setting.programList.samplePrograms">サンプルプログラム</string>
