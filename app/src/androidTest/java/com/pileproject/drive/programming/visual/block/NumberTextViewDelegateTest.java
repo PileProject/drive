@@ -56,7 +56,7 @@ public class NumberTextViewDelegateTest {
     public void whenTextViewReturnsNumber_thenGetValueSucceeds() throws Exception {
 
         doReturn("2.500").when(mockTextView).getText();
-        assertEquals(new BigDecimal("2.5"), numberTextViewDelegate.getValue());
+        assertTrue(new BigDecimal("2.500").compareTo(numberTextViewDelegate.getValue()) == 0);
     }
 
     @Test
