@@ -43,10 +43,12 @@ script:
   # PreDex is a feature for making next build faster by caching
   # some intermidiate files.
   # but on Travis such cacing is worthless and just waste of time.
+  - ./gradlew check -PdisablePreDex --continue --stacktrace
+
   - android-wait-for-emulator
   - adb devices
   - adb shell input keyevent 82 &
-  - ./gradlew connectedAndroidTest -PdisablePreDex --continue --stacktrace
+  - ./gradlew connectedCheck -PdisablePreDex --continue --stacktrace
 
 notifications:
   slack:
