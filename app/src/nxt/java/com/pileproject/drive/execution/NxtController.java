@@ -88,6 +88,7 @@ public class NxtController implements MachineController {
      * @return is touched or not
      */
     public boolean getTouchSensorValue() {
+        if (mTouchSensor == null) return false;
         return mTouchSensor.isTouched();
     }
 
@@ -97,6 +98,7 @@ public class NxtController implements MachineController {
      * @return dB
      */
     public int getSoundSensorValue() {
+        if (mSoundSensor == null) return -1;
         return mSoundSensor.getDb();
     }
 
@@ -106,6 +108,7 @@ public class NxtController implements MachineController {
      * @return light strength
      */
     public int getLineSensorValue() {
+        if (mLineSensor == null) return -1;
         return mLineSensor.getSensorValue();
     }
 
