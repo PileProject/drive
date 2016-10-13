@@ -18,7 +18,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:ignore="MissingTranslation">
 
-    <string name="key.execution.isConnected">is_connected</string>
     <string name="key.execution.index">index</string>
     <string name="key.execution.message">message</string>
 

@@ -219,6 +219,7 @@ public class NxtController implements MachineController {
     @Override
     public void finalize() throws RuntimeException {
         halt();
+        mMachine.disconnect();
         mTouchSensor = null;
         mSoundSensor = null;
         mLineSensor = null;
