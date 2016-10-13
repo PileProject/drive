@@ -53,17 +53,17 @@ public class BluetoothCommunicator implements ICommunicator {
         // This call may fail. It depends on the device.
         // Therefore, we do redundancy check with the below reflection method.
         mSocket = mDevice.createRfcommSocketToServiceRecord(SPP_UUID);
-
         try {
             mSocket.connect();
         } catch (IOException firstIOException) {
-            Log.d("Failed to connect by orthodox method");
+            Log.d("Failed to connect with an orthodox method");
             try {
                 // Redundancy check
                 Method method = mDevice.getClass().getMethod("createRfcommSocket", int.class);
                 mSocket = (BluetoothSocket) method.invoke(mDevice, 1);
                 mSocket.connect();
             } catch (IOException secondIOException) {
+                Log.d("Failed to connect with a redundancy method");
                 // Unable to connect; close the socket and get out
                 try {
                     mSocket.close();
