@@ -289,6 +289,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
     private void onThreadEnded() {
         new AlertDialogFragment.Builder(this)
+                .setRequestCode(DIALOG_REQUEST_CODE_THREAD_ENDED)
                 .setMessage(R.string.execute_showNoteOfPort)
                 .setPositiveButtonLabel(android.R.string.ok)
                 .setCancelable(false)
