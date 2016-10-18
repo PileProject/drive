@@ -38,8 +38,8 @@ import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
 
 public class NxtController implements MachineController {
-    public static final int MAX_MOTOR_POWER = 900;
-    public static final int INIT_MOTOR_POWER = 500;
+    public static final int MAX_MOTOR_POWER = 100;
+    public static final int INIT_MOTOR_POWER = 60;
     private NxtMachine mMachine = null;
     private Motor mRightMotor = null;
     private Motor mLeftMotor = null;
@@ -162,7 +162,7 @@ public class NxtController implements MachineController {
      * @param leftMotorDir
      * @param rightMotorDir
      */
-    public void move(MotorDir leftMotorDir, MotorDir rightMotorDir) {
+    private void move(MotorDir leftMotorDir, MotorDir rightMotorDir) {
         if (mLeftMotor != null) {
             switch (leftMotorDir) {
                 case Forward:
