@@ -211,10 +211,10 @@ public class NxtController implements MachineController {
 
         switch (kind) {
             case LeftMotor:
-                mLeftMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);
+                mLeftMotorPower = (int) percent;
                 break;
             case RightMotor:
-                mRightMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);
+                mRightMotorPower = (int) percent;
                 break;
         }
     }
