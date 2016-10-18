@@ -100,13 +100,7 @@ public class BluetoothCommunicator implements ICommunicator {
         try {
             mOutputStream.write(request);
         } catch (IOException e) {
-            Log.e("Write failed.", e);
             throw new RuntimeException(e);
-        }
-
-        Log.d("Write");
-        for (int i = 0; i < request.length; i++) {
-            Log.d("[" + i + "]" + request[i]);
         }
     }
 
@@ -118,16 +112,12 @@ public class BluetoothCommunicator implements ICommunicator {
         try {
             numBytes = mInputStream.read(buffer);
         } catch (IOException e) {
-            Log.e("Read failed.", e);
             throw new RuntimeException(e);
         }
+
         byte[] result = new byte[numBytes];
         System.arraycopy(buffer, 0, result, 0, numBytes);
 
-        Log.d("Read ");
-        for (int i = 0; i < result.length; i++) {
-            Log.d("[" + i + "]" + result[i]);
-        }
         return result;
     }
 }
