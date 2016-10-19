@@ -197,24 +197,24 @@ public class NxtController implements MachineController {
     }
 
     /**
-     * set motor's power as percent
+     * A setter of motor power.
      *
      * @param kind
-     * @param percent
+     * @param power
      */
-    public void setMotorPower(MotorKind kind, double percent) {
-        if (percent > 100.0) {
-            percent = 100.0;
-        } else if (percent < 0) {
-            percent = 0.0;
+    public void setMotorPower(MotorKind kind, int power) {
+        if (power > 100) {
+            power = 100;
+        } else if (power < 0) {
+            power = 0;
         }
 
         switch (kind) {
             case LeftMotor:
-                mLeftMotorPower = (int) percent;
+                mLeftMotorPower = power;
                 break;
             case RightMotor:
-                mRightMotorPower = (int) percent;
+                mRightMotorPower = power;
                 break;
         }
     }

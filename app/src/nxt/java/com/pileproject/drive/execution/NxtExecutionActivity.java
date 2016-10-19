@@ -23,6 +23,10 @@ import com.pileproject.drive.comm.BluetoothCommunicator;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 
+import java.io.IOException;
+
+import trikita.log.Log;
+
 public class NxtExecutionActivity extends ExecutionActivityBase {
     private NxtMachine mMachine;
 
@@ -33,7 +37,15 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
 
         BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
         BluetoothDevice device = adapter.getRemoteDevice(address);
-        mMachine = new NxtMachine(new BluetoothCommunicator(device));
+        try {
+            mMachine = new NxtMachine(new BluetoothCommunicator(device));
+        } catch (IOException e) {
+            // this would not happen
+            // because `getRemoteDevice(address)` above will throw an Exception
+            // when `address` is invalid (= `device` is null)
+            Log.d("Device should not be null.");
+            throw new RuntimeException(e);
+        }
 
         showConnectionProgressDialog(); // create a ProgressDialog
 

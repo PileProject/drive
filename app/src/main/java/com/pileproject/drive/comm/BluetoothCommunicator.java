@@ -39,16 +39,16 @@ public class BluetoothCommunicator implements ICommunicator {
     private OutputStream mOutputStream;
     private InputStream mInputStream;
 
-    public BluetoothCommunicator(BluetoothDevice device) {
+    public BluetoothCommunicator(BluetoothDevice device) throws IOException {
+        if (device == null) {
+            throw new IOException();
+        }
+
         mDevice = device;
     }
 
     @Override
     public void open() throws IOException {
-        if (mDevice == null) {
-            throw new IOException();
-        }
-
         // Orthodox method
         // This call may fail. It depends on the device.
         // Therefore, we do redundancy check with the below reflection method.
