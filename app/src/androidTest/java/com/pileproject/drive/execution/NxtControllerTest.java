@@ -27,6 +27,9 @@ import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 
 import static junit.framework.Assert.assertEquals;
@@ -37,41 +40,29 @@ import static org.mockito.Mockito.doCallRealMethod;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 @RunWith(AndroidJUnit4.class)
 public class NxtControllerTest {
 
-    NxtMachine machine;
-    NxtController controller;
+    @Mock NxtMachine machine;
+    @InjectMocks NxtController controller;
 
-    TouchSensor touchSensor;
-    SoundSensor soundSensor;
-    LineSensor lineSensor;
+    @Mock TouchSensor touchSensor;
+    @Mock SoundSensor soundSensor;
+    @Mock LineSensor lineSensor;
 
-    Motor leftMotor;
-    Motor rightMotor;
+    @Mock Motor leftMotor;
+    @Mock Motor rightMotor;
 
     @Before
     public void setUp() {
-        machine = mock(NxtMachine.class);
-        controller = new NxtController(machine);
-
-        touchSensor = mock(TouchSensor.class);
-        soundSensor = mock(SoundSensor.class);
-        lineSensor = mock(LineSensor.class);
-
-        leftMotor = mock(Motor.class);
-        rightMotor = mock(Motor.class);
+        MockitoAnnotations.initMocks(this);
     }
 
     private void setUpMotors() {
         Whitebox.setInternalState(controller, "mLeftMotor", leftMotor);
-        doCallRealMethod().when(leftMotor).setSpeed(anyInt());
-        doCallRealMethod().when(leftMotor).getSpeed();
-
         Whitebox.setInternalState(controller, "mRightMotor", rightMotor);
-        doCallRealMethod().when(rightMotor).setSpeed(anyInt());
-        doCallRealMethod().when(rightMotor).getSpeed();
     }
 
 
@@ -183,30 +174,35 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void testSetMotorPower() throws Exception {
+    public void whenMotorSpeedsAreNotInitialized_thenMovesForwardWithDefaultValue() throws Exception {
         setUpMotors();
 
-        // at first, they have not been initialized
-        assertEquals(0, leftMotor.getSpeed());
-        assertEquals(0, rightMotor.getSpeed());
-
         controller.moveForward();
-
-        // after a move command, they will be initialized with the default values
-        assertEquals(NxtController.INIT_MOTOR_POWER, leftMotor.getSpeed());
-        assertEquals(NxtController.INIT_MOTOR_POWER, rightMotor.getSpeed());
-
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 100);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, 100);
-
-        controller.moveForward(); // same as above
-
-        assertEquals(NxtController.MAX_MOTOR_POWER, leftMotor.getSpeed());
-        assertEquals(NxtController.MAX_MOTOR_POWER, rightMotor.getSpeed());
+        verify(leftMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
+        verify(rightMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
     }
 
     @Test
-    public void testFinalize() throws Exception {
+    public void whenSetMotorPowerCalled_thenMovesForwardWithTheValue() throws Exception {
+        setUpMotors();
+
+        controller.setMotorPower(NxtController.MotorKind.LeftMotor, NxtController.MAX_MOTOR_POWER);
+        controller.setMotorPower(NxtController.MotorKind.RightMotor, NxtController.MAX_MOTOR_POWER);
+
+        controller.moveForward();
+        verify(leftMotor).setSpeed(NxtController.MAX_MOTOR_POWER);
+        verify(rightMotor).setSpeed(NxtController.MAX_MOTOR_POWER);
+
+        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 10);
+        controller.setMotorPower(NxtController.MotorKind.RightMotor, 10);
+
+        controller.moveForward();
+        verify(leftMotor).setSpeed(10);
+        verify(rightMotor).setSpeed(10);
+    }
+
+    @Test
+    public void whenControllerFinalizes_thenMachineDisconnects() throws Exception {
         controller.finalize();
 
         verify(machine).disconnect();

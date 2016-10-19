@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
@@ -34,15 +35,13 @@ import static org.mockito.Mockito.verify;
 public class BluetoothCommunicatorTest {
 
     @Test(expected = IOException.class)
-    public void whenBluetoothDeviceIsNull_thenThrowAnIOException() throws Exception {
+    public void whenBluetoothDeviceIsNull_thenThrowIOException() throws Exception {
         BluetoothDevice device = null;
         BluetoothCommunicator comm = new BluetoothCommunicator(device);
-
-        comm.open();
     }
 
     @Test
-    public void whenFirstOpenMethodFails_thenTrySecondMethod_thenThrowAnIOException() throws Exception {
+    public void whenFirstOpenMethodFails_thenTrySecondMethod_thenThrowIOException() throws Exception {
         // TODO: write a good test
         // NOTE: can't mock/spy BluetoothDevice/BluetoothSocket
         //       because they are `final` classes
@@ -62,7 +61,7 @@ public class BluetoothCommunicatorTest {
     }
 
     @Test
-    public void testWrite() throws Exception {
+    public void whenOutputIsNull_thenWritesNothing() throws Exception {
         OutputStream outputStream = mock(OutputStream.class);
         BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
@@ -72,16 +71,39 @@ public class BluetoothCommunicatorTest {
         // write null
         comm.write(null, 0);
         verify(outputStream).write(null);
+    }
+
+    @Test
+    public void whenOutputIsArray_thenWritesTheArray() throws Exception {
+        OutputStream outputStream = mock(OutputStream.class);
+        BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+        // use a mock instance
+        Whitebox.setInternalState(comm, "mOutputStream", outputStream);
 
         // write a data
         byte[] data = {0x00, 0x01, 0x02, };
         comm.write(data, 0);
         verify(outputStream).write(data);
+    }
 
+    @Test(expected = RuntimeException.class)
+    public void whenWriteFails_thenThrowRuntimeException() throws Exception {
+        OutputStream outputStream = mock(OutputStream.class);
+        BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+        // write a data
+        byte[] data = {0x00, 0x01, 0x02, };
+
+        // use a mock instance
+        Whitebox.setInternalState(comm, "mOutputStream", outputStream);
+        doThrow(IOException.class).when(outputStream).write(data);
+
+        comm.write(data, 0);
     }
 
     @Test
-    public void testRead() throws Exception {
+    public void whenInputIsNull_thenReadNothing() throws Exception {
         InputStream inputStream = mock(InputStream.class);
         BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
@@ -90,7 +112,30 @@ public class BluetoothCommunicatorTest {
 
         // read null
         comm.read(0, 0);
-        verify(inputStream).read(new byte[0]);
+        verify(inputStream).read(null);
+    }
+    @Test
+
+    public void whenInputIsArray_thenReadTheArray() throws Exception {
+        InputStream inputStream = mock(InputStream.class);
+        BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+        // use a mock instance
+        Whitebox.setInternalState(comm, "mInputStream", inputStream);
+
+        // read a data
+        comm.read(100, 0);
+        verify(inputStream).read(new byte[100]);
+    }
+
+    @Test(expected = RuntimeException.class)
+    public void whenReadFails_thenThrowRuntimeException() throws Exception {
+        InputStream inputStream = mock(InputStream.class);
+        BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+        // use a mock instance
+        Whitebox.setInternalState(comm, "mInputStream", inputStream);
+        doThrow(IOException.class).when(inputStream).read(new byte[100]);
 
         // read a data
         comm.read(100, 0);

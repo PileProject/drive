@@ -34,14 +34,12 @@ import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
 public class BlockProgramLogicTest {
 
-    @Mock ExecutionCondition.SelectionResult trueResult;
-    @Mock ExecutionCondition.SelectionResult falseResult;
+    ExecutionCondition.SelectionResult trueResult;
+    ExecutionCondition.SelectionResult falseResult;
 
     @Mock SelectionBlock selectionBlock;
 
@@ -52,8 +50,8 @@ public class BlockProgramLogicTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        Whitebox.setInternalState(trueResult, "result", true);
-        Whitebox.setInternalState(falseResult, "result", false);
+        trueResult = new ExecutionCondition(null).new SelectionResult(0, true);
+        falseResult = new ExecutionCondition(null).new SelectionResult(0, false);
 
         // NOTE: commented out lines are using final methods
         // TODO: consider using PowerMockito
@@ -75,21 +73,17 @@ public class BlockProgramLogicTest {
     }
 
     @Test
-    public void whenExecuteConditionHasNoSelectionResult_thenExecuteCurrentBlock() throws Exception {
+    public void whenExecuteConditionHasNoSelectionResult_thenReturnsTrue() throws Exception {
 
         ExecutionCondition condition = mock(ExecutionCondition.class);
         doReturn(0).when(condition).sizeOfSelectionResult(); // no selection result
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).sizeOfSelectionResult();  // do call
-        verify(condition, never()).getCurrentBlock(); // do not call
     }
 
     @Test
-    public void whenCurrentBlockIsSelectionEnd_thenExecuteCurrentBlock() throws Exception {
+    public void whenCurrentBlockIsSelectionEnd_thenReturnsTrue() throws Exception {
 
         ExecutionCondition condition = mock(ExecutionCondition.class);
 
@@ -99,14 +93,10 @@ public class BlockProgramLogicTest {
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).getCurrentBlock(); // do call
-        verify(condition, never()).peekSelectionResult(); // do not call
     }
 
     @Test
-    public void whenSelectionResultWasTrue_andCurrentBlockIsInsideOfTrueStatement_thenExecuteCurrentBlock()
+    public void whenSelectionResultWasTrue_andCurrentBlockIsInsideOfTrueStatement_thenReturnsTrue()
             throws Exception {
         ExecutionCondition condition = mock(ExecutionCondition.class);
 
@@ -122,13 +112,10 @@ public class BlockProgramLogicTest {
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).peekSelectionResult(); // do call
     }
 
     @Test
-    public void whenSelectionResultWasTrue_andCurrentBlockIsInsideOfFalseStatement_thenDoNotExecuteCurrentBlock()
+    public void whenSelectionResultWasTrue_andCurrentBlockIsInsideOfFalseStatement_thenReturnsFalse()
             throws Exception {
         ExecutionCondition condition = mock(ExecutionCondition.class);
 
@@ -144,13 +131,10 @@ public class BlockProgramLogicTest {
 
 
         assertFalse(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).peekSelectionResult(); // do call
     }
 
     @Test
-    public void whenSelectionResultWasFalse_andCurrentBlockIsInsideOfTrueStatement_thenDoNotExecuteCurrentBlock()
+    public void whenSelectionResultWasFalse_andCurrentBlockIsInsideOfTrueStatement_thenReturnsFalse()
             throws Exception {
         ExecutionCondition condition = mock(ExecutionCondition.class);
 
@@ -166,13 +150,10 @@ public class BlockProgramLogicTest {
 
 
         assertFalse(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).peekSelectionResult(); // do call
     }
 
     @Test
-    public void whenSelectionResultWasFalse_andCurrentBlockIsInsideOfFalseStatement_thenExecuteCurrentBlock()
+    public void whenSelectionResultWasFalse_andCurrentBlockIsInsideOfFalseStatement_thenReturnsTrue()
             throws Exception {
         ExecutionCondition condition = mock(ExecutionCondition.class);
 
@@ -188,8 +169,5 @@ public class BlockProgramLogicTest {
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
-
-
-        verify(condition).peekSelectionResult(); // do call
     }
 }
