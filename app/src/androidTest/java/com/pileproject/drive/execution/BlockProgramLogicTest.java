@@ -29,6 +29,8 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -50,8 +52,9 @@ public class BlockProgramLogicTest {
     public void setUp() {
         MockitoAnnotations.initMocks(this);
 
-        trueResult = new ExecutionCondition(null).new SelectionResult(0, true);
-        falseResult = new ExecutionCondition(null).new SelectionResult(0, false);
+        ExecutionCondition cond = new ExecutionCondition(new ArrayList<BlockBase>());
+        trueResult = cond.new SelectionResult(0, true);
+        falseResult = cond.new SelectionResult(0, false);
 
         // NOTE: commented out lines are using final methods
         // TODO: consider using PowerMockito
