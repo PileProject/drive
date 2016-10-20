@@ -16,7 +16,6 @@
 
 package com.pileproject.drive.comm;
 
-import android.bluetooth.BluetoothDevice;
 import android.support.test.runner.AndroidJUnit4;
 
 import org.junit.Test;
@@ -34,10 +33,12 @@ import static org.mockito.Mockito.verify;
 @RunWith(AndroidJUnit4.class)
 public class BluetoothCommunicatorTest {
 
-    @Test(expected = IOException.class)
-    public void whenBluetoothDeviceIsNull_thenThrowIOException() throws Exception {
-        BluetoothDevice device = null;
-        BluetoothCommunicator comm = new BluetoothCommunicator(device);
+    @Test
+    // @Test(expected = NullPointerException.class)
+    public void whenBluetoothDeviceIsNull_thenThrowNullPointerException() throws Exception {
+        // @NonNull works properly
+        // it causes a warning
+        new BluetoothCommunicator(null);
     }
 
     @Test
@@ -57,6 +58,7 @@ public class BluetoothCommunicatorTest {
     @Test
     public void whenSocketIsAlreadyNull_thenCloseSucceeds() throws Exception {
         BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
         comm.close();
     }
 
@@ -112,7 +114,7 @@ public class BluetoothCommunicatorTest {
 
         // read null
         comm.read(0, 0);
-        verify(inputStream).read(null);
+        verify(inputStream).read(new byte[0]);
     }
     @Test
 
