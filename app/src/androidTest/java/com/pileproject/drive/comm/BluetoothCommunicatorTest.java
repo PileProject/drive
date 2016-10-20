@@ -33,13 +33,12 @@ import static org.mockito.Mockito.verify;
 @RunWith(AndroidJUnit4.class)
 public class BluetoothCommunicatorTest {
 
-    @Test
     // @Test(expected = NullPointerException.class)
-    public void whenBluetoothDeviceIsNull_thenThrowNullPointerException() throws Exception {
-        // @NonNull works properly
-        // it causes a warning
-        new BluetoothCommunicator(null);
-    }
+    // public void whenBluetoothDeviceIsNull_thenThrowNullPointerException() throws Exception {
+    //     // @NonNull works properly
+    //     // it raises a warning
+    //     new BluetoothCommunicator(null);
+    // }
 
     @Test
     public void whenFirstOpenMethodFails_thenTrySecondMethod_thenThrowIOException() throws Exception {
