@@ -29,115 +29,115 @@ public class BluetoothCommunicatorTest {
         new BluetoothCommunicator(null);
     }
 
-    @Test
-    public void whenFirstOpenMethodFails_thenTrySecondMethod_thenThrowIOException() throws Exception {
-        // TODO: write a good test
-        // NOTE: can't mock/spy BluetoothDevice/BluetoothSocket
-        //       because they are `final` classes
-    }
+    // TODO: consider using PowerMock
 
-    @Test
-    public void whenSocketIsNotNull_thenCloseSucceeds() throws Exception {
-        // TODO: write a good test
-        // NOTE: can't mock/spy BluetoothSocket
-        //       because it is a `final` class
-    }
+    // @Test
+    // public void whenFirstOpenMethodFails_thenTrySecondMethod_thenThrowIOException() throws Exception {
+    //     // TODO: write a good test
+    //     // NOTE: can't mock/spy BluetoothDevice/BluetoothSocket
+    //     //       because they are `final` classes
+    // }
 
-    @Test
-    public void whenSocketIsAlreadyNull_thenCloseSucceeds() throws Exception {
-        // TODO: mock BluetoothDevice
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
+    // @Test
+    // public void whenSocketIsNotNull_thenCloseSucceeds() throws Exception {
+    //     // TODO: write a good test
+    //     // NOTE: can't mock/spy BluetoothSocket
+    //     //       because it is a `final` class
+    // }
 
-        // comm.close();
-    }
+    // @Test
+    // public void whenSocketIsAlreadyNull_thenCloseSucceeds() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
-    @Test
-    public void whenOutputIsNull_thenWritesNothing() throws Exception {
-        // TODO: mock BluetoothDevice
-        // OutputStream outputStream = mock(OutputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
+    //     comm.close();
+    // }
 
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mOutputStream", outputStream);
+    // @Test
+    // public void whenOutputIsNull_thenWritesNothing() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     OutputStream outputStream = mock(OutputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
-        // // write null
-        // comm.write(null, 0);
-        // verify(outputStream).write(null);
-    }
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mOutputStream", outputStream);
 
-    @Test
-    public void whenOutputIsArray_thenWritesTheArray() throws Exception {
-        // TODO: mock BluetoothDevice
-        // OutputStream outputStream = mock(OutputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
+    //     // write null
+    //     comm.write(null, 0);
+    //     verify(outputStream).write(null);
+    // }
 
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mOutputStream", outputStream);
+    // @Test
+    // public void whenOutputIsArray_thenWritesTheArray() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     OutputStream outputStream = mock(OutputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
-        // // write a data
-        // byte[] data = {0x00, 0x01, 0x02, };
-        // comm.write(data, 0);
-        // verify(outputStream).write(data);
-    }
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mOutputStream", outputStream);
 
-    // @Test(expected = RuntimeException.class)
-    @Test
-    public void whenWriteFails_thenThrowRuntimeException() throws Exception {
-        // TODO: mock BluetoothDevice
-        // OutputStream outputStream = mock(OutputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
-
-        // // write a data
-        // byte[] data = {0x00, 0x01, 0x02, };
-
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mOutputStream", outputStream);
-        // doThrow(IOException.class).when(outputStream).write(data);
-
-        // comm.write(data, 0);
-    }
-
-    @Test
-    public void whenInputIsNull_thenReadNothing() throws Exception {
-        // TODO: mock BluetoothDevice
-        // InputStream inputStream = mock(InputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
-
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mInputStream", inputStream);
-
-        // // read null
-        // comm.read(0, 0);
-        // verify(inputStream).read(new byte[0]);
-    }
-
-    @Test
-    public void whenInputIsArray_thenReadTheArray() throws Exception {
-        // TODO: mock BluetoothDevice
-        // InputStream inputStream = mock(InputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
-
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mInputStream", inputStream);
-
-        // // read a data
-        // comm.read(100, 0);
-        // verify(inputStream).read(new byte[100]);
-    }
+    //     // write a data
+    //     byte[] data = {0x00, 0x01, 0x02, };
+    //     comm.write(data, 0);
+    //     verify(outputStream).write(data);
+    // }
 
     // @Test(expected = RuntimeException.class)
-    @Test
-    public void whenReadFails_thenThrowRuntimeException() throws Exception {
-        // TODO: mock BluetoothDevice
-        // InputStream inputStream = mock(InputStream.class);
-        // BluetoothCommunicator comm = new BluetoothCommunicator(null);
+    // public void whenWriteFails_thenThrowRuntimeException() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     OutputStream outputStream = mock(OutputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
 
-        // // use a mock instance
-        // Whitebox.setInternalState(comm, "mInputStream", inputStream);
-        // doThrow(IOException.class).when(inputStream).read(new byte[100]);
+    //     // write a data
+    //     byte[] data = {0x00, 0x01, 0x02, };
 
-        // // read a data
-        // comm.read(100, 0);
-        // verify(inputStream).read(new byte[100]);
-    }
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mOutputStream", outputStream);
+    //     doThrow(IOException.class).when(outputStream).write(data);
+
+    //     comm.write(data, 0);
+    // }
+
+    // @Test
+    // public void whenInputIsNull_thenReadNothing() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     InputStream inputStream = mock(InputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mInputStream", inputStream);
+
+    //     // read null
+    //     comm.read(0, 0);
+    //     verify(inputStream).read(new byte[0]);
+    // }
+
+    // @Test
+    // public void whenInputIsArray_thenReadTheArray() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     InputStream inputStream = mock(InputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mInputStream", inputStream);
+
+    //     // read a data
+    //     comm.read(100, 0);
+    //     verify(inputStream).read(new byte[100]);
+    // }
+
+    // @Test(expected = RuntimeException.class)
+    // public void whenReadFails_thenThrowRuntimeException() throws Exception {
+    //     // TODO: mock BluetoothDevice
+    //     InputStream inputStream = mock(InputStream.class);
+    //     BluetoothCommunicator comm = new BluetoothCommunicator(null);
+
+    //     // use a mock instance
+    //     Whitebox.setInternalState(comm, "mInputStream", inputStream);
+    //     doThrow(IOException.class).when(inputStream).read(new byte[100]);
+
+    //     // read a data
+    //     comm.read(100, 0);
+    //     verify(inputStream).read(new byte[100]);
+    // }
 }
