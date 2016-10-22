@@ -18,7 +18,6 @@ package com.pileproject.drive.comm;
 
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.support.annotation.NonNull;
 
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
@@ -40,7 +39,10 @@ public class BluetoothCommunicator implements ICommunicator {
     private OutputStream mOutputStream;
     private InputStream mInputStream;
 
-    public BluetoothCommunicator(@NonNull BluetoothDevice device) {
+    public BluetoothCommunicator(BluetoothDevice device) throws NullPointerException {
+        if (device == null) {
+            throw new NullPointerException("Device should not be null");
+        }
         mDevice = device;
     }
 
