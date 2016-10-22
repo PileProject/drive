@@ -67,60 +67,59 @@ public class NxtControllerTest {
 
     @Test
     public void whenTouchSensorIsNull_thenReturnFalse() throws Exception {
+        Whitebox.setInternalState(controller, "mTouchSensor", null);
+
         assertFalse(controller.getTouchSensorValue());
     }
 
     @Test
-    public void whenTouchSensorIsNotNull_thenReturnProperValue() throws Exception {
+    public void whenTouchSensorIsNotNull_andTouchSensorIsTouched_thenReturnTrue() throws Exception {
         Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
-
         doReturn(true).when(touchSensor).isTouched();
-        assertTrue(controller.getTouchSensorValue());
 
+        assertTrue(controller.getTouchSensorValue());
+    }
+
+    @Test
+    public void whenTouchSensorIsNotNull_andTouchSensorIsNotTouched_thenReturnFalse() throws Exception {
+        Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
         doReturn(false).when(touchSensor).isTouched();
+
         assertFalse(controller.getTouchSensorValue());
     }
 
     @Test
     public void whenSoundSensorIsNull_thenReturnNegative() throws Exception {
+        Whitebox.setInternalState(controller, "mSoundSensor", null);
+
         assertEquals(controller.getSoundSensorValue(), -1);
     }
 
     @Test
     public void whenSoundSensorIsNotNull_thenReturnProperValue() throws Exception {
         Whitebox.setInternalState(controller, "mSoundSensor", soundSensor);
-
         doReturn(10).when(soundSensor).getDb();
+
         assertEquals(10, controller.getSoundSensorValue());
-
-        doReturn(100).when(soundSensor).getDb();
-        assertEquals(100, controller.getSoundSensorValue());
-
-        doReturn(-10).when(soundSensor).getDb();
-        assertEquals(-10, controller.getSoundSensorValue());
     }
 
     @Test
     public void whenLineSensorIsNull_thenReturnNegative() throws Exception {
+        Whitebox.setInternalState(controller, "mLineSensor", null);
+
         assertEquals(controller.getLineSensorValue(), -1);
     }
 
     @Test
     public void whenLineSensorIsNotNull_thenReturnProperValue() throws Exception {
         Whitebox.setInternalState(controller, "mLineSensor", lineSensor);
-
         doReturn(20).when(lineSensor).getSensorValue();
+
         assertEquals(20, controller.getLineSensorValue());
-
-        doReturn(200).when(lineSensor).getSensorValue();
-        assertEquals(200, controller.getLineSensorValue());
-
-        doReturn(-20).when(lineSensor).getSensorValue();
-        assertEquals(-20, controller.getLineSensorValue());
     }
 
     @Test
-    public void testMoveForward() throws Exception {
+    public void whenMachineMovesForward_thenMotorsMoveCorrectly() throws Exception {
         setUpMotors();
 
         controller.moveForward();
@@ -130,7 +129,7 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void testMoveBackward() throws Exception {
+    public void whenMachineMovesBackward_thenMotorsMoveCorrectly() throws Exception {
         setUpMotors();
 
         controller.moveBackward();
@@ -140,7 +139,7 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void testTurnLeft() throws Exception {
+    public void whenMachineTurnLeft_thenMotorsMoveCorrectly() throws Exception {
         setUpMotors();
 
         controller.turnLeft();
@@ -150,7 +149,7 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void testTurnRight() throws Exception {
+    public void whenMachineTurnRight_thenMotorsMoveCorrectly() throws Exception {
         setUpMotors();
 
         controller.turnRight();
@@ -160,7 +159,7 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void testHalt() throws Exception {
+    public void whenMachineHalt_thenMotorsStopCorrectly() throws Exception {
         setUpMotors();
 
         controller.halt();
@@ -174,6 +173,7 @@ public class NxtControllerTest {
         setUpMotors();
 
         controller.moveForward();
+
         verify(leftMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
         verify(rightMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
     }
@@ -182,19 +182,39 @@ public class NxtControllerTest {
     public void whenSetMotorPowerCalled_thenMovesForwardWithTheValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, NxtController.MAX_MOTOR_POWER);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, NxtController.MAX_MOTOR_POWER);
-
-        controller.moveForward();
-        verify(leftMotor).setSpeed(NxtController.MAX_MOTOR_POWER);
-        verify(rightMotor).setSpeed(NxtController.MAX_MOTOR_POWER);
-
         controller.setMotorPower(NxtController.MotorKind.LeftMotor, 10);
         controller.setMotorPower(NxtController.MotorKind.RightMotor, 10);
 
         controller.moveForward();
+
         verify(leftMotor).setSpeed(10);
         verify(rightMotor).setSpeed(10);
+    }
+
+    @Test
+    public void whenSetMotorPowerCalledWithOverUpperBoundValue_thenMovesForwardWithUpperBoundValue() throws Exception {
+        setUpMotors();
+
+        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 200);
+        controller.setMotorPower(NxtController.MotorKind.RightMotor, 200);
+
+        controller.moveForward();
+
+        verify(leftMotor).setSpeed(100);
+        verify(rightMotor).setSpeed(100);
+    }
+
+    @Test
+    public void whenSetMotorPowerCalledWithUnderLowerBoundValue_thenMovesForwardWithLowerBoundValue() throws Exception {
+        setUpMotors();
+
+        controller.setMotorPower(NxtController.MotorKind.LeftMotor, -10);
+        controller.setMotorPower(NxtController.MotorKind.RightMotor, -10);
+
+        controller.moveForward();
+
+        verify(leftMotor).setSpeed(0);
+        verify(rightMotor).setSpeed(0);
     }
 
     @Test

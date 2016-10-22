@@ -33,15 +33,16 @@ import java.util.ArrayList;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
 
 @RunWith(AndroidJUnit4.class)
 public class BlockProgramLogicTest {
 
-    ExecutionCondition.SelectionResult trueResult;
-    ExecutionCondition.SelectionResult falseResult;
+    final ExecutionCondition.SelectionResult trueResult
+            = new ExecutionCondition(new ArrayList<BlockBase>()).new SelectionResult(0, true);
+    final ExecutionCondition.SelectionResult falseResult
+            = new ExecutionCondition(new ArrayList<BlockBase>()).new SelectionResult(0, false);
 
     @Mock SelectionBlock selectionBlock;
 
@@ -51,10 +52,6 @@ public class BlockProgramLogicTest {
     @Before
     public void setUp() {
         MockitoAnnotations.initMocks(this);
-
-        ExecutionCondition cond = new ExecutionCondition(new ArrayList<BlockBase>());
-        trueResult = cond.new SelectionResult(0, true);
-        falseResult = cond.new SelectionResult(0, false);
 
         // NOTE: commented out lines are using final methods
         // TODO: consider using PowerMockito
@@ -111,7 +108,7 @@ public class BlockProgramLogicTest {
 
         // return a nearest Selection bock
         doReturn(selectionBlock).when(condition)
-                .getNearestSelectionBlock(any(ExecutionCondition.SelectionResult.class));
+                .getNearestSelectionBlock(trueResult);
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
@@ -130,7 +127,7 @@ public class BlockProgramLogicTest {
 
         // return a nearest Selection bock
         doReturn(selectionBlock).when(condition)
-                .getNearestSelectionBlock(any(ExecutionCondition.SelectionResult.class));
+                .getNearestSelectionBlock(trueResult);
 
 
         assertFalse(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
@@ -149,7 +146,7 @@ public class BlockProgramLogicTest {
 
         // return a nearest Selection bock
         doReturn(selectionBlock).when(condition)
-                .getNearestSelectionBlock(any(ExecutionCondition.SelectionResult.class));
+                .getNearestSelectionBlock(falseResult);
 
 
         assertFalse(BlockProgramLogic.willCurrentBlockBeExecuted(condition));
@@ -168,7 +165,7 @@ public class BlockProgramLogicTest {
 
         // return a nearest Selection bock
         doReturn(selectionBlock).when(condition)
-                .getNearestSelectionBlock(any(ExecutionCondition.SelectionResult.class));
+                .getNearestSelectionBlock(falseResult);
 
 
         assertTrue(BlockProgramLogic.willCurrentBlockBeExecuted(condition));

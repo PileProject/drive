@@ -199,8 +199,10 @@ public class NxtController implements MachineController {
     /**
      * A setter of motor power.
      *
-     * @param kind
-     * @param power
+     * @param kind see {@link MotorKind}
+     * @param power [0, 100]
+     *              If an out of bound value is passed, then the value will be clipped
+     *              (e.g., -10 -> 0, 200 -> 100).
      */
     public void setMotorPower(MotorKind kind, int power) {
         if (power > 100) {
