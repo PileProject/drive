@@ -1,5 +1,8 @@
 language: android
 jdk: oraclejdk8
+
+sudo: false
+
 android:
   components:
     # Uncomment the lines below if you want to
@@ -36,19 +39,17 @@ cache:
 before_script:
   - echo no | android create avd --force -n test -t android-23 --abi armeabi-v7a
   - emulator -avd test -no-skin -no-audio -no-window &
-
-sudo: false
-
-script:
-  # PreDex is a feature for making next build faster by caching
-  # some intermidiate files.
-  # but on Travis such cacing is worthless and just waste of time.
-  - ./gradlew check -PdisablePreDex --continue --stacktrace
-
   - android-wait-for-emulator
   - adb devices
   - adb shell input keyevent 82 &
-  - ./gradlew connectedCheck -PdisablePreDex --continue --stacktrace
+
+
+script:
+  - echo $ADB_INSTALL_TIMEOUT
+  # PreDex is a feature for making next build faster by caching
+  # some intermidiate files.
+  # but on Travis such cacing is worthless and just waste of time.
+  - ./gradlew check connectedCheck -PdisablePreDex --continue --stacktrace
 
 notifications:
   slack:
