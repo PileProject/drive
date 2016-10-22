@@ -198,7 +198,7 @@ public class ProgramDataManager {
             while (c.moveToNext()) {
                 data.readPropertiesFromCursor(c);
                 // create a BlockBase with a type (= name)
-                BlockBase b = BlockFactory.createBlocks(BlockFactory.LOAD, data.getType()).get(0);
+                BlockBase b = BlockFactory.createBlock(data.getType());
                 // set data's properties
                 b.setLeft(data.getLeft());
                 b.setTop(data.getTop());

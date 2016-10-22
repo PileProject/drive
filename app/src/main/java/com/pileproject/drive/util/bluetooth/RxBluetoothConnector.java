@@ -19,7 +19,11 @@ package com.pileproject.drive.util.bluetooth;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 
+import com.pileproject.drivecommand.machine.MachineBase;
+
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.UUID;
 
 import rx.Observable;
@@ -32,6 +36,10 @@ import rx.schedulers.Schedulers;
  */
 public class RxBluetoothConnector {
     private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
+
+    private RxBluetoothConnector() {
+        throw new AssertionError("This class cannot be instantiated");
+    }
 
     /**
      * Create {@link Observable} which will produce a stream
@@ -77,11 +85,51 @@ public class RxBluetoothConnector {
 
                     subscriber.onNext(socket);
                     subscriber.onCompleted();
-                } catch (IOException e) {
-                    subscriber.onError(e);
+                } catch (IOException firstCause) {
+
+                    try {
+                        BluetoothSocket socket = connectByRfcommSocket(bluetoothDevice);
+                        subscriber.onNext(socket);
+                        subscriber.onCompleted();
+                    } catch (RfcommSocketInvocationException e) {
+                        Throwable throwable = new IOException("Failed to connect by \"createRfcommSocketToServiceRecord\" " +
+                                "and invoke \"createRfcommSocket\" method", firstCause);
+
+                        subscriber.onError(throwable);
+                    } catch (IOException e) {
+                        Throwable throwable = new IOException("Failed to connect by \"createRfcommSocket\"", e);
+
+                        subscriber.onError(throwable);
+                    }
                 }
             }
         }).subscribeOn(Schedulers.newThread());
     }
 
+    private static BluetoothSocket connectByRfcommSocket(BluetoothDevice bluetoothDevice) throws IOException {
+
+        try {
+            Method method = BluetoothDevice.class.getMethod("createRfcommSocket", int.class);
+            BluetoothSocket socket = (BluetoothSocket) method.invoke(bluetoothDevice, 1);
+
+            socket.connect();
+
+            return socket;
+
+        } catch (NoSuchMethodException e) {
+            // because Android API 15 does not support collapsed catch clauses for these 3 exceptions,
+            // this redundant code is needed (it's since API level 19).
+            throw new RfcommSocketInvocationException("Unable to invoke BluetoothSocket#RfcommSocket:", e);
+        } catch (IllegalAccessException e) {
+            throw new RfcommSocketInvocationException("Unable to invoke BluetoothSocket#RfcommSocket:", e);
+        } catch (InvocationTargetException e) {
+            throw new RfcommSocketInvocationException("Unable to invoke BluetoothSocket#RfcommSocket:", e);
+        }
+    }
+
+    private static class RfcommSocketInvocationException extends RuntimeException {
+        RfcommSocketInvocationException(String message, Throwable e) {
+            super(message, e);
+        }
+    }
 }

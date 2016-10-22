@@ -20,10 +20,42 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+
     <application
         android:name=".app.DriveApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name" />
-
+        android:label="@string/app_name">
+        <activity
+            android:name=".title.TitleActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".programming.visual.activity.ProgrammingActivity"
+            android:label="@string/programming.label"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".setting.SettingActivity"
+            android:label="@string/setting.label"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".programming.visual.activity.BlockListActivity"
+            android:label="@string/blockList.label"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Dialog" >
+        </activity>
+        <activity
+            android:name=".execution.ExecutionActivity"
+            android:label="@string/execute.label"
+            android:screenOrientation="portrait">
+        </activity>
+    </application>
 </manifest>
