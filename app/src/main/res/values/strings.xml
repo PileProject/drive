@@ -70,7 +70,7 @@
 
     <!-- TextsOnBlock -->
     <!-- Sequence -->
-    <string name="textOnBlocks.contentDefaultSec">0</string>
+    <string name="textOnBlocks.contentDefaultSec">0.0</string>
     <string name="textOnBlocks.contentDefaultPercent">0</string>
     <!-- Repetition -->
     <string name="textOnBlocks.whileForever">Repeat</string>

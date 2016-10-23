@@ -51,11 +51,12 @@
     <string name="textOnBlocks.ifNxtWasTouched">タッチされた</string>
     <string name="textOnBlocks.ifThereWasALargeSound">おおきなおとがした</string>
 
-    <string name="sensors.touch">タッチセンサ</string>
-    <string name="sensors.light">ライトセンサ</string>
-    <string name="sensors.sound">サウンドセンサ</string>
-    <string name="motors.left">左モータ</string>
-    <string name="motors.right">右モータ</string>
+    <string name="sensors.touch">タッチ</string>
+    <string name="sensors.light">光</string>
+    <string name="sensors.sound">音</string>
+
+    <string name="motors.left">左</string>
+    <string name="motors.right">右</string>
 
     <string name="setting.portConnection">ポート設定</string>
     <string name="setting.portConnection.sensors">センサ</string>
