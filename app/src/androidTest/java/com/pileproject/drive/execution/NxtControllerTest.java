@@ -29,13 +29,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
@@ -53,7 +53,15 @@ public class NxtControllerTest {
 
     @Before
     public void setUp() {
-        MockitoAnnotations.initMocks(this);
+        machine = mock(NxtMachine.class);
+        controller = new NxtController(machine);
+
+        touchSensor = mock(TouchSensor.class);
+        soundSensor = mock(SoundSensor.class);
+        lineSensor = mock(LineSensor.class);
+
+        leftMotor = mock(Motor.class);
+        rightMotor = mock(Motor.class);
     }
 
     private void setUpMotors() {
