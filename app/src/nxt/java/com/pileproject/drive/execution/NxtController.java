@@ -38,8 +38,8 @@ import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
 
 public class NxtController implements MachineController {
-    public static final int MAX_MOTOR_POWER = 900;
-    public static final int INIT_MOTOR_POWER = 500;
+    public static final int MAX_MOTOR_POWER = 100;
+    public static final int INIT_MOTOR_POWER = 60;
     private NxtMachine mMachine = null;
     private Motor mRightMotor = null;
     private Motor mLeftMotor = null;
@@ -88,6 +88,7 @@ public class NxtController implements MachineController {
      * @return is touched or not
      */
     public boolean getTouchSensorValue() {
+        if (mTouchSensor == null) return false;
         return mTouchSensor.isTouched();
     }
 
@@ -97,6 +98,7 @@ public class NxtController implements MachineController {
      * @return dB
      */
     public int getSoundSensorValue() {
+        if (mSoundSensor == null) return -1;
         return mSoundSensor.getDb();
     }
 
@@ -106,6 +108,7 @@ public class NxtController implements MachineController {
      * @return light strength
      */
     public int getLineSensorValue() {
+        if (mLineSensor == null) return -1;
         return mLineSensor.getSensorValue();
     }
 
@@ -159,7 +162,7 @@ public class NxtController implements MachineController {
      * @param leftMotorDir
      * @param rightMotorDir
      */
-    public void move(MotorDir leftMotorDir, MotorDir rightMotorDir) {
+    private void move(MotorDir leftMotorDir, MotorDir rightMotorDir) {
         if (mLeftMotor != null) {
             switch (leftMotorDir) {
                 case Forward:
@@ -194,24 +197,26 @@ public class NxtController implements MachineController {
     }
 
     /**
-     * set motor's power as percent
+     * A setter of motor power.
      *
-     * @param kind
-     * @param percent
+     * @param kind see {@link MotorKind}
+     * @param power [0, 100]
+     *              If an out of bound value is passed, then the value will be clipped
+     *              (e.g., -10 -> 0, 200 -> 100).
      */
-    public void setMotorPower(MotorKind kind, double percent) {
-        if (percent > 100.0) {
-            percent = 100.0;
-        } else if (percent < 0) {
-            percent = 0.0;
+    public void setMotorPower(MotorKind kind, int power) {
+        if (power > 100) {
+            power = 100;
+        } else if (power < 0) {
+            power = 0;
         }
 
         switch (kind) {
             case LeftMotor:
-                mLeftMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);
+                mLeftMotorPower = power;
                 break;
             case RightMotor:
-                mRightMotorPower = (int) ((MAX_MOTOR_POWER * percent) / 100.0);
+                mRightMotorPower = power;
                 break;
         }
     }
@@ -219,6 +224,7 @@ public class NxtController implements MachineController {
     @Override
     public void finalize() throws RuntimeException {
         halt();
+        mMachine.disconnect();
         mTouchSensor = null;
         mSoundSensor = null;
         mLineSensor = null;

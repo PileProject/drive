@@ -57,7 +57,7 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().doubleValue());
+        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
         return 0;
     }
 

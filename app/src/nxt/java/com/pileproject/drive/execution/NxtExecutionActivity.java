@@ -18,9 +18,7 @@ package com.pileproject.drive.execution;
 
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.content.Intent;
 
-import com.pileproject.drive.R;
 import com.pileproject.drive.comm.BluetoothCommunicator;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
@@ -46,12 +44,6 @@ public class NxtExecutionActivity extends ExecutionActivityBase {
                 try {
                     // try to connect
                     mMachine.connect();
-
-                    // inform this activity has already connected to NXT
-                    Intent intent = new Intent();
-                    intent.putExtra(getString(R.string.key_execution_isConnected), true);
-                    setResult(RESULT_OK, intent);
-
                     startExecution();
                 } catch (Exception e) {
                     showConnectionFailedDialog();

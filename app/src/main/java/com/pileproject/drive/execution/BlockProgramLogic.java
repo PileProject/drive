@@ -30,10 +30,10 @@ public class BlockProgramLogic {
      * @return will be executed (true) or not (false)
      */
     static boolean willCurrentBlockBeExecuted(ExecutionCondition condition) {
-        if (condition.sizeOfSelectionResult() == 0) return false;
+        if (condition.sizeOfSelectionResult() == 0) return true;
 
         BlockBase block = condition.getCurrentBlock();
-        if (block instanceof SelectionEndBlock) return false;
+        if (block instanceof SelectionEndBlock) return true;
 
         ExecutionCondition.SelectionResult selectionResult = condition.peekSelectionResult();
         BlockBase nearestSelectionBlock = condition.getNearestSelectionBlock(selectionResult);
