@@ -29,8 +29,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import java.util.ArrayList;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doReturn;
@@ -39,10 +37,10 @@ import static org.mockito.Mockito.mock;
 @RunWith(AndroidJUnit4.class)
 public class BlockProgramLogicTest {
 
-    final ExecutionCondition.SelectionResult trueResult
-            = new ExecutionCondition(new ArrayList<BlockBase>()).new SelectionResult(0, true);
-    final ExecutionCondition.SelectionResult falseResult
-            = new ExecutionCondition(new ArrayList<BlockBase>()).new SelectionResult(0, false);
+    private static final ExecutionCondition.SelectionResult trueResult
+            = new ExecutionCondition.SelectionResult(0, true);
+    private static final ExecutionCondition.SelectionResult falseResult
+            = new ExecutionCondition.SelectionResult(0, false);
 
     @Mock SelectionBlock selectionBlock;
 
