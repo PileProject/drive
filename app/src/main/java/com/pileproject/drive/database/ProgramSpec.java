@@ -18,6 +18,7 @@ package com.pileproject.drive.database;
 
 import com.yahoo.squidb.annotations.ColumnSpec;
 import com.yahoo.squidb.annotations.Constants;
+import com.yahoo.squidb.annotations.PrimaryKey;
 import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
@@ -28,7 +29,9 @@ import com.yahoo.squidb.annotations.TableModelSpec;
  */
 @TableModelSpec(className="Program", tableName="programs")
 public class ProgramSpec {
-    // _id will be generated automatically
+    @PrimaryKey
+    @ColumnSpec(name = "_id")
+    long id;
 
     // the name of a program
     @ColumnSpec(constraints = "NOT NULL")

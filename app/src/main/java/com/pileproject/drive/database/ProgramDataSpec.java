@@ -17,6 +17,7 @@
 package com.pileproject.drive.database;
 
 import com.yahoo.squidb.annotations.ColumnSpec;
+import com.yahoo.squidb.annotations.PrimaryKey;
 import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
@@ -28,7 +29,9 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 @TableModelSpec(className="ProgramData", tableName="program_data",
                 tableConstraint = "FOREIGN KEY(programId) references programs(_id) ON DELETE CASCADE")
 public class ProgramDataSpec {
-    // _id will be generated automatically
+    @PrimaryKey
+    @ColumnSpec(name = "_id")
+    long id;
 
     @ColumnSpec(constraints = "NOT NULL")
     long programId;
