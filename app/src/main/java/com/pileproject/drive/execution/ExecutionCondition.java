@@ -36,7 +36,7 @@ public class ExecutionCondition {
     private int mProgramCount;
     private final List<BlockBase> mBlocks;
 
-    public class SelectionResult {
+    public static class SelectionResult {
         public final int index;
         public final boolean result;
 

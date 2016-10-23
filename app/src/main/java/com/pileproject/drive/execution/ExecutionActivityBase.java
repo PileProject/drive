@@ -135,24 +135,12 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
     public void onStart() {
         super.onStart();
 
-        // check this activity has already connected to the device
-        Intent intent = getIntent();
-        if (intent.getBooleanExtra(getString(R.string.key_execution_isConnected), false)) {
-            setResult(Activity.RESULT_OK, intent);
-            try {
-                startExecution();
-            } catch (RuntimeException e) {
-                e.printStackTrace();
-                onConnectionError();
-            }
-        } else {
-            if (hasBluetoothFunction()) {
-                if (!mBtAdapter.isEnabled()) {
-                    startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
-                                           REQUEST_ENABLE_BT);
-                } else {
-                    connectToDevice();
-                }
+        if (hasBluetoothFunction()) {
+            if (!mBtAdapter.isEnabled()) {
+                startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE),
+                                       REQUEST_ENABLE_BT);
+            } else {
+                connectToDevice();
             }
         }
     }
@@ -289,6 +277,7 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
 
     private void onThreadEnded() {
         new AlertDialogFragment.Builder(this)
+                .setRequestCode(DIALOG_REQUEST_CODE_THREAD_ENDED)
                 .setMessage(R.string.execute_showNoteOfPort)
                 .setPositiveButtonLabel(android.R.string.ok)
                 .setCancelable(false)
@@ -304,12 +293,6 @@ public abstract class ExecutionActivityBase extends AppCompatActivity implements
                 .setPositiveButtonLabel(android.R.string.ok)
                 .setCancelable(false)
                 .show();
-
-        // inform the status of the connection between an Android device and a robot to other Activities
-        // to avoid wasting time for useless reconnection
-        Intent intent = new Intent();
-        intent.putExtra(getString(R.string.key_execution_isConnected), false);
-        setResult(RESULT_OK, intent);
     }
 
     @Override

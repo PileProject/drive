@@ -64,7 +64,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
     private List<Button> mAddBlockButtons;
     private Button mExecButton;
     private ProgrammingSpaceManager mSpaceManager;
-    private boolean mIsConnected = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,7 +120,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
         // TODO: this check does not work when dissolves paring
         if (address != null || DeployUtils.isOnEmulator()) {
             Intent intent = getIntentToExecute();
-            intent.putExtra(getString(R.string.key_execution_isConnected), mIsConnected);
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;
         }
@@ -151,10 +149,6 @@ public abstract class ProgrammingActivityBase extends AppCompatActivity implemen
                     List<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
                     mSpaceManager.addBlocks(blocks);
                 }
-                break;
-
-            case ACTIVITY_RESULT_EXECUTE_PROGRAM:
-                mIsConnected = !(data == null || !data.getBooleanExtra(getString(R.string.key_execution_isConnected), false));
                 break;
         }
     }
