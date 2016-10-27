@@ -31,8 +31,8 @@ import com.pileproject.drive.R;
  * A TextView which expresses a port.
  */
 public abstract class PortTextViewBase extends TextView {
-    final private String mPortName;
-    final private String mPortType;
+    private final String mPortName;
+    private final String mPortType;
     protected String mDeviceType;
 
     public PortTextViewBase(Context context, AttributeSet attrs) {
