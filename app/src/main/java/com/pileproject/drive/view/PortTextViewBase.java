@@ -31,9 +31,8 @@ import com.pileproject.drive.R;
  * A TextView which expresses a port.
  */
 public abstract class PortTextViewBase extends TextView {
-    final private boolean mIsFreePort;
-    final private String mPortName;
-    final private String mPortType;
+    private final String mPortName;
+    private final String mPortType;
     protected String mDeviceType;
 
     public PortTextViewBase(Context context, AttributeSet attrs) {
@@ -42,7 +41,6 @@ public abstract class PortTextViewBase extends TextView {
         TypedArray tar = context.obtainStyledAttributes(attrs, R.styleable.PortTextViewBase);
         mPortName = tar.getString(R.styleable.PortTextViewBase_portName);
         mPortType = tar.getString(R.styleable.PortTextViewBase_portType);
-        mIsFreePort = (mPortName == null); // NOTE: a free port has no name
         tar.recycle();
 
         setOnTouchListener(new OnTouchListener() {
@@ -55,14 +53,34 @@ public abstract class PortTextViewBase extends TextView {
     }
 
     /**
-     * Swap ports.
+     * Swap the device type of ports.
      * @param lhs a port
      * @param rhs another port
      */
-    public static void swap(PortTextViewBase lhs, PortTextViewBase rhs) {
+    public static void swapDeviceType(PortTextViewBase lhs, PortTextViewBase rhs) {
         String lhsAttachmentType = lhs.getDeviceType();
         lhs.setDeviceType(rhs.getDeviceType());
         rhs.setDeviceType(lhsAttachmentType);
+    }
+
+    private void swap(PortTextViewBase lhs, PortTextViewBase rhs) {
+        if (lhs.mDeviceType == null && rhs.mDeviceType == null) {
+            // do nothing
+        }
+        else if (lhs.mDeviceType == null /* && rhs.mDeviceType != null */) {
+            savePortConnection(lhs.mPortName, rhs.mDeviceType);
+            removePortConnection(rhs.mPortName);
+        }
+        else if (/* lhs.mDeviceType != null && */ rhs.mDeviceType == null) {
+            savePortConnection(rhs.mPortName, lhs.mDeviceType);
+            removePortConnection(lhs.mPortName);
+        }
+        else /* if (lhs.mDeviceType != null && rhs.mDeviceType != null) */ {
+            savePortConnection(lhs.mPortName, rhs.mDeviceType);
+            savePortConnection(rhs.mPortName, lhs.mDeviceType);
+        }
+
+        swapDeviceType(lhs, this);
     }
 
     @Override
@@ -76,7 +94,6 @@ public abstract class PortTextViewBase extends TextView {
         else if (action == DragEvent.ACTION_DROP) {
             // match the port type (e.g. "motor" and "motor", "sensor" and "sensor")
             if (localState.mPortType.equals(this.mPortType)) {
-                swap(localState, this);
 
                 MediaPlayer soundEffectOfMovingBlock = MediaPlayer.create(getContext(), R.raw.pon);
                 soundEffectOfMovingBlock.start(); // play sound
@@ -88,12 +105,7 @@ public abstract class PortTextViewBase extends TextView {
                     }
                 });
 
-                // swap port the connection status
-                if (mIsFreePort) removePortConnection(mPortName);
-                else savePortConnection(mPortName, mDeviceType);
-
-                if (localState.mIsFreePort) removePortConnection(localState.mPortName);
-                else savePortConnection(localState.mPortName, localState.mDeviceType);
+                swap(localState, this);
             }
             return true;
         }

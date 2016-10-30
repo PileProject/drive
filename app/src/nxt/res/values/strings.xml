@@ -52,21 +52,22 @@
     <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
 
     <!-- Machine's Sensors -->
-    <string name="sensors.touch">Touch Sensor</string>
-    <string name="sensors.light">Light Sensor</string>
-    <string name="sensors.sound">Sound Sensor</string>
-    <string name="motors.left">Left Motor</string>
-    <string name="motors.right">Right Motor</string>
+    <string name="sensors.touch">Touch</string>
+    <string name="sensors.light">Light</string>
+    <string name="sensors.sound">Sound</string>
+
+    <string name="motors.left">Left</string>
+    <string name="motors.right">Right</string>
 
     <string name="setting.portConnection">Port Setting</string>
     <string name="setting.portConnection.sensors">Sensors</string>
     <string name="setting.portConnection.motors">Motors</string>
-    <string name="setting.portConnection.deviceSensorPorts">Sensor Ports on Device</string>
+    <string name="setting.portConnection.deviceSensorPorts">Sensors on Device</string>
     <string name="setting.portConnection.deviceSensorPort1">Port1</string>
     <string name="setting.portConnection.deviceSensorPort2">Port2</string>
     <string name="setting.portConnection.deviceSensorPort3">Port3</string>
     <string name="setting.portConnection.deviceSensorPort4">Port4</string>
-    <string name="setting.portConnection.deviceMotorPorts">Motor Ports on Device</string>
+    <string name="setting.portConnection.deviceMotorPorts">Motors on Device</string>
     <string name="setting.portConnection.deviceMotorPortA">PortA</string>
     <string name="setting.portConnection.deviceMotorPortB">PortB</string>
     <string name="setting.portConnection.deviceMotorPortC">PortC</string>
