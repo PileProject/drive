@@ -22,5 +22,5 @@ public interface MachineController {
      */
     void halt();
 
-    void finalize() throws RuntimeException;
+    void close();
 }
