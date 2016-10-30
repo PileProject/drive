@@ -20,9 +20,11 @@ import android.app.Dialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
@@ -64,6 +66,9 @@ public class NxtThresholdFragment extends DialogFragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        // NOTE: this is necessary because this screen collapsed on API 23+
+        resizeDialog();
 
         mLightSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
@@ -108,5 +113,22 @@ public class NxtThresholdFragment extends DialogFragment {
         int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
         mSoundSensorSeekBar.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
         mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
+    }
+
+    /**
+     * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
+     * Otherwise, the dialog size will never be changed
+     */
+    private void resizeDialog() {
+        Dialog dialog = getDialog();
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+        // resize window large enough to display list views
+        int dialogWidth = (int) (metrics.widthPixels * 0.8);
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = dialogWidth;
+        dialog.getWindow().setAttributes(lp);
     }
 }

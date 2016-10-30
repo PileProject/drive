@@ -111,7 +111,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,
         };
         for (String motorType : allMotors) {
-            if (motorsInUsed.contains(motorType)) continue;;
+            if (motorsInUsed.contains(motorType)) continue;
             // set an unconnected motor into an open space
             ((PortTextViewBase) mRootView.findViewById(motorPlaceIds[index++])).setDeviceType(motorType);
         }
