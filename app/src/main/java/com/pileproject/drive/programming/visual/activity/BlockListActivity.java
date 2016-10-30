@@ -21,6 +21,10 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
+import android.support.annotation.NonNull;
+import android.support.annotation.StringRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,62 +32,91 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.block.BlockBase;
-import com.pileproject.drive.programming.visual.block.BlockFactory;
-import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
+import com.pileproject.drive.programming.visual.block.BlockCategory;
+import com.pileproject.drive.programming.visual.block.BlockProvider;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
+
+import javax.inject.Inject;
 
 /**
  * An Activity that shows a list of blocks as a dialog interface.
  */
-public abstract class BlockListActivityBase extends Activity {
-    private final int mCategoryTexts[] = {R.string.sequence, R.string.repetition, R.string.selection,};
-    private final int mHelpImages[] = {
-            R.drawable.help_sequence, R.drawable.help_repetition, R.drawable.help_selection,
-    };
-    private int mCategory = 0;
-    private BlockClassHolder[][] mBlocks;
+public class BlockListActivity extends Activity {
+
+    private static final String INTENT_KEY_CATEGORY = "intent-key-category";
+
+    private static final int[] CATEGORY_STRINGS = {R.string.sequence, R.string.repetition, R.string.selection};
+
+    @Inject
+    public BlockProvider mBlockProvider;
+
+    @BlockCategory
+    private int mCategory;
+
+    private List<BlockClassHolder> mBlockClassHolders;
+
+    /**
+     * Returns an intent having appropriate extras for invoking this Activity.
+     * Use this method to create an intent for this Activity.
+     *
+     * @param context context that will be passed to the constructor of {@link Intent}
+     * @param blockCategory the Activity will display this category of blocks in its dialog
+     * @return intent
+     */
+    public static Intent createIntent(Context context, @BlockCategory int blockCategory) {
+
+        Intent intent = new Intent(context, BlockListActivity.class);
+        intent.putExtra(INTENT_KEY_CATEGORY, blockCategory);
+
+        return intent;
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.view_block_list);
 
+        inject();
+
         setResult(Activity.RESULT_CANCELED); // set the default result as "canceled"
 
-        Intent intent = getIntent();
-        mCategory = intent.getIntExtra(getString(R.string.key_block_category), BlockFactory.SEQUENCE);
+        // noinspection WrongConstant Safe;
+        mCategory = getIntent().getIntExtra(INTENT_KEY_CATEGORY, BlockCategory.SEQUENCE);
+
+        mBlockClassHolders = createBlockClassHoldersByCategory(mCategory);
 
         // show title based on the category
-        setTitle(getString(R.string.blockList_label) + getString(mCategoryTexts[mCategory]));
-
-        mBlocks = getBlockIcons();
+        setTitle(getString(R.string.blockList_label) + getString(CATEGORY_STRINGS[mCategory]));
 
         setUpViews();
     }
 
+    private void inject() {
+        ((DriveApplication) getApplication()).getAppComponent().inject(this);
+    }
+
     private void setUpViews() {
         GridView gridview = (GridView) findViewById(R.id.blockList_screen);
-        gridview.setAdapter(new BlockIconAdapter(this, R.layout.view_block_icon, mBlocks[mCategory]));
+        gridview.setAdapter(new BlockIconAdapter(this, R.layout.view_block_icon, mBlockClassHolders));
         gridview.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
+                BlockClassHolder selectedBlock = mBlockClassHolders.get(position);
+
                 Intent data = new Intent();
-                // repetitionBreakBlock should be created in the same way in which a SequenceBlock is created
-                if (mBlocks[mCategory][position].isRepetitionBreakBlock()) {
-                    data.putExtra(getString(R.string.key_block_how_to_make), BlockFactory.SEQUENCE);
-                } else {
-                    data.putExtra(getString(R.string.key_block_how_to_make), mCategory);
-                }
-                data.putExtra(getString(R.string.key_block_block_name), mBlocks[mCategory][position].getBlockName());
+                data.putExtra(getString(R.string.key_block_how_to_make), mCategory);
+                data.putExtra(getString(R.string.key_block_block_name), selectedBlock.getBlockName());
 
                 // set the result as "ok" and return the data
                 setResult(Activity.RESULT_OK, data);
@@ -91,56 +124,92 @@ public abstract class BlockListActivityBase extends Activity {
             }
         });
 
-        Button helpButton = (Button) findViewById(R.id.blockList_cancelButton);
-        helpButton.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.blockList_cancelButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                final int[] helpImages = {
+                        R.drawable.help_sequence, R.drawable.help_repetition, R.drawable.help_selection,
+                };
+
                 // create a view witch has a help image
-                LayoutInflater inflater = LayoutInflater.from(BlockListActivityBase.this);
+                LayoutInflater inflater = LayoutInflater.from(BlockListActivity.this);
                 View view = inflater.inflate(R.layout.view_help, null);
 
                 // choose a help image based on the category
                 ImageView help = (ImageView) view.findViewById(R.id.help_showHelpImage);
-                help.setImageResource(mHelpImages[mCategory]);
+                help.setImageResource(helpImages[mCategory]);
                 help.setAdjustViewBounds(true);
                 help.setScaleType(ScaleType.FIT_CENTER);
 
                 // create an AlertDialog that shows helps
-                new AlertDialog.Builder(BlockListActivityBase.this)
+                new AlertDialog.Builder(BlockListActivity.this)
                         .setTitle(R.string.blockList_howToUseBlock)
-                        .setMessage(getString(mCategoryTexts[mCategory]) + getString(R.string.blockList_theseBlocksAreUsedLikeThis))
+                        .setMessage(getString(CATEGORY_STRINGS[mCategory]) + getString(R.string.blockList_theseBlocksAreUsedLikeThis))
                         .setView(view)
                         .setPositiveButton(R.string.close, null)
                         .show();
             }
         });
 
-        Button cancelButton = (Button) findViewById(R.id.blockList_cancelButton);
-        cancelButton.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.blockList_cancelButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
                 setResult(Activity.RESULT_CANCELED);
                 finish();
             }
         });
-
     }
 
-    protected abstract BlockClassHolder[][] getBlockIcons();
+    private List<BlockClassHolder> createBlockClassHoldersByCategory(@BlockCategory int category) {
+
+        List<Class<? extends BlockBase>> blockClasses;
+
+        switch (category) {
+            case BlockCategory.SEQUENCE: {
+                blockClasses = mBlockProvider.getSequenceBlockClasses();
+                break;
+            }
+
+            case BlockCategory.REPETITION: {
+                blockClasses = mBlockProvider.getRepetitionBlockClasses();
+                break;
+            }
+
+            case BlockCategory.SELECTION: {
+                blockClasses = mBlockProvider.getSelectionBlockClasses();
+                break;
+            }
+
+            default: {
+                throw new IllegalArgumentException("Illegal category: " + category);
+            }
+        }
+
+        List<BlockClassHolder> blockClassHolders = new ArrayList<>();
+
+        for (Class<? extends BlockBase> blockClass : blockClasses) {
+            blockClassHolders.add(new BlockClassHolder(blockClass));
+        }
+
+        return blockClassHolders;
+    }
 
     /**
      * A holder class that has a block data as a class.
      */
-    protected class BlockClassHolder {
-        private Class<? extends BlockBase> mClass;
+    private class BlockClassHolder {
 
-        public BlockClassHolder(Class<? extends BlockBase> clazz) {
+        private final Class<? extends BlockBase> mClass;
+
+        BlockClassHolder(Class<? extends BlockBase> clazz) {
             mClass = clazz;
         }
 
-        public String getDescription() {
+        @StringRes
+        int getDescriptionStringRes() {
             String className = mClass.getSimpleName();
-            StringBuffer resourceName = new StringBuffer(className);
+            StringBuilder resourceName = new StringBuilder(className);
 
             // remove "Block"
             // e.g., "ForwardSecBlock" -> "ForwardSec"
@@ -157,25 +226,25 @@ public abstract class BlockListActivityBase extends Activity {
             resourceName.insert(0, "blocks.");
 
             // get the description of this class
-            return getString(getResources().getIdentifier(resourceName.toString(), "string", getPackageName()));
+            return getResources().getIdentifier(resourceName.toString(), "string", getPackageName());
         }
 
-        public String getBlockName() {
+        String getBlockName() {
             return mClass.getName();
         }
 
-        public boolean isRepetitionBreakBlock() {
-            return mClass.getSimpleName().equals(RepetitionBreakBlock.class.getSimpleName());
-        }
-
-        public int getIconResourceId() {
+        @DrawableRes
+        int getIconDrawableRes() {
             String className = mClass.getSimpleName();
+
+            // TODO: consider using CaseFormat in Google Guava
+            // https://github.com/google/guava/wiki/StringsExplained#caseformat
 
             // convert the class name from CamelCase to snake_case
             // e.g., "ForwardSecBlock" -> "forward_sec_block"
             String snake = className.replaceAll("([A-Z0-9]+)([A-Z][a-z])", "$1_$2")
                                     .replaceAll("([a-z])([A-Z])", "$1_$2");
-            StringBuffer resourceName = new StringBuffer(snake.toLowerCase(Locale.getDefault()));
+            StringBuilder resourceName = new StringBuilder(snake.toLowerCase(Locale.getDefault()));
 
             // remove "_block"
             // e.g., "forward_sec_block" -> "forward_sec"
@@ -194,23 +263,23 @@ public abstract class BlockListActivityBase extends Activity {
     /**
      * An adapter class that has icons.
      */
-    protected class BlockIconAdapter extends ArrayAdapter<BlockClassHolder> {
-        private LayoutInflater mInflater;
-        private int mLayoutId;
+    private static class BlockIconAdapter extends ArrayAdapter<BlockClassHolder> {
+        private final LayoutInflater mInflater;
+        private final int mLayoutId;
 
         /**
          * @param context  the context of the Activity that calls this adapter
          * @param layoutId the resource id of the icon view
          * @param objects  sets of Icon data
          */
-        public BlockIconAdapter(Context context, int layoutId, BlockClassHolder[] objects) {
+        public BlockIconAdapter(Context context, @LayoutRes int layoutId, List<BlockClassHolder> objects) {
             super(context, 0, objects);
             this.mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             this.mLayoutId = layoutId;
         }
 
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
+        @Override @NonNull
+        public View getView(int position, View convertView, @NonNull ViewGroup parent) {
             IconHolder holder;
 
             // reuse view as much as possible
@@ -224,8 +293,8 @@ public abstract class BlockListActivityBase extends Activity {
                 holder = (IconHolder) convertView.getTag();
             }
             BlockClassHolder data = getItem(position);
-            holder.description.setText(data.getDescription());
-            holder.image.setImageResource(data.getIconResourceId());
+            holder.description.setText(data.getDescriptionStringRes());
+            holder.image.setImageResource(data.getIconDrawableRes());
             return convertView;
         }
 
@@ -237,5 +306,4 @@ public abstract class BlockListActivityBase extends Activity {
             ImageView image;
         }
     }
-
 }

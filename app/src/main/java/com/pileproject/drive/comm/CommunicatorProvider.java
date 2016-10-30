@@ -14,24 +14,22 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.title;
+package com.pileproject.drive.comm;
 
-import android.content.Intent;
-
-import com.pileproject.drive.programming.visual.activity.NxtProgrammingActivity;
-import com.pileproject.drive.setting.SettingActivity;
+import com.pileproject.drivecommand.model.com.ICommunicator;
 
 /**
- * The title page of NxtDrive.
+ * Interface for providing Communicator.
+ * Concrete classes are supposed to provide the concrete classes of {@link ICommunicator}
+ * with respect to their responsible communication means.
+ *
  */
-public class NxtTitleActivity extends TitleActivityBase {
-    @Override
-    protected Intent getIntentToProgrammingPage() {
-        return new Intent(getApplicationContext(), NxtProgrammingActivity.class);
-    }
+public interface CommunicatorProvider {
 
-    @Override
-    protected Intent getIntentToSettingPage() {
-        return new Intent(getApplicationContext(), SettingActivity.class);
-    }
+    /**
+     * Returns a concrete communicator.
+     *
+     * @return concrete instance of {@link ICommunicator}.
+     */
+    ICommunicator getCommunicator();
 }

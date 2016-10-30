@@ -16,6 +16,8 @@
 
 package com.pileproject.drive.setting;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -73,6 +75,10 @@ public class SettingActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public static Intent createIntent(Context context) {
+        return new Intent(context, SettingActivity.class);
     }
 
     public static class SettingFragment extends PreferenceFragmentCompat {

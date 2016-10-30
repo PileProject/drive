@@ -19,6 +19,8 @@ package com.pileproject.drive.app;
 import android.app.Application;
 import android.content.Context;
 
+import com.pileproject.drive.module.FlavorModule;
+
 /**
  * DriveApplication class
  *
@@ -28,14 +30,28 @@ import android.content.Context;
 public class DriveApplication extends Application {
     private static DriveApplication sInstance;
 
+    private DriveComponent mDriveComponent;
+
     @Override
     public void onCreate() {
         super.onCreate();
         sInstance = this;
+
+        initInjection();
     }
 
     public static synchronized Context getContext() {
         return sInstance.getApplicationContext();
+    }
+
+    public DriveComponent getAppComponent() {
+        return mDriveComponent;
+    }
+
+    private void initInjection() {
+        mDriveComponent = DaggerDriveComponent.builder()
+                .flavorModule(new FlavorModule())
+                .build();
     }
 }
 
