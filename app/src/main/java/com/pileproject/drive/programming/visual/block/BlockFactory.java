@@ -17,9 +17,10 @@
 package com.pileproject.drive.programming.visual.block;
 
 import android.content.Context;
-import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 
 import com.pileproject.drive.app.DriveApplication;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
 
@@ -28,6 +29,10 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static com.pileproject.drive.programming.visual.block.BlockCategory.REPETITION;
+import static com.pileproject.drive.programming.visual.block.BlockCategory.SELECTION;
+import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
+
 /**
  * Factory that creates blocks
  *
@@ -35,17 +40,14 @@ import java.util.List;
  * @version 1.0 18-June-2013
  */
 public class BlockFactory {
-    public static final int SEQUENCE = 0;
-    public static final int REPETITION = 1;
-    public static final int SELECTION = 2;
-    public static final int LOAD = 4;
 
     private BlockFactory() {
+        throw new AssertionError("This class cannot be instantiated");
     }
 
-    @SuppressWarnings("unchecked")
     private static <T extends BlockBase> Class<T> getClassForName(String className) throws RuntimeException {
         try {
+            // noinspection unchecked
             return (Class<T>) Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Invalid class name '" + className + "'", e);
@@ -67,7 +69,11 @@ public class BlockFactory {
     }
 
     private static List<BlockBase> createRepetitionBlock(Class<? extends BlockBase> blockClass) {
-        return Arrays.asList(new RepetitionEndBlock(DriveApplication.getContext()), create(blockClass));
+        if (blockClass == RepetitionBreakBlock.class) {
+            return Collections.singletonList(create(blockClass));
+        } else {
+            return Arrays.asList(new RepetitionEndBlock(DriveApplication.getContext()), create(blockClass));
+        }
     }
 
     private static List<BlockBase> createSelectionBlock(Class<? extends BlockBase> blockClass) {
@@ -79,23 +85,23 @@ public class BlockFactory {
      * Type of block can be specified with @{howToMake}, which also determines the number
      * of blocks this function returns.
      *
-     * @param howToMake type of block. must be one of {@link BlockFactory#SEQUENCE},
-     *                  {@link BlockFactory#REPETITION}, {@link BlockFactory#SELECTION},
-     *                  and {@link BlockFactory#LOAD}
+     * @param blockCategory type of block. must be one of {@link BlockCategory#SEQUENCE},
+     *                  {@link BlockCategory#REPETITION}, or {@link BlockCategory#SELECTION}.
      * @param blockName class name of block to be created
      * @return list of blocks. the first element of the list is end block
-     *                  if block type is {@link BlockFactory#SELECTION} or
-     *                  {@link BlockFactory#REPETITION}.
+     *                  if block type is {@link BlockCategory#SELECTION} or
+     *                  {@link BlockCategory#REPETITION}.
      *
      * @exception RuntimeException if <code>blockName</code> is not supported block class name
-     *                             or <code>howToMake</code> is none of the values listed above
+     * @exception IllegalArgumentException if <code>blockCategory</code> is none of the values in {@link BlockCategory}
      */
-    public static List<BlockBase> createBlocks(@HowToMake int howToMake, String blockName) {
+    @NonNull
+    public static List<BlockBase> createBlocks(@BlockCategory int blockCategory, @NonNull String blockName) {
+
         Class<? extends BlockBase> blockClass = getClassForName(blockName);
 
-        switch (howToMake) {
-            case SEQUENCE:
-            case LOAD: {
+        switch (blockCategory) {
+            case SEQUENCE: {
                 return createSequenceBlock(blockClass);
             }
 
@@ -108,10 +114,20 @@ public class BlockFactory {
             }
         }
 
-        throw new RuntimeException("Do not know how to make a block of " + blockName);
+        throw new IllegalArgumentException("blockCategory must be one of @BlockCategory; the argument was " + blockCategory);
     }
 
-    @IntDef({SEQUENCE, REPETITION, SELECTION, LOAD})
-    public @interface HowToMake {
+    /**
+     * Returns a block instance whose class is <code>blockName</code>.
+     *
+     * @param blockName class name of the block to be created.
+     * @return a block instance.
+     * @exception RuntimeException if <code>blockName</code> is not supported block class name
+     */
+    @NonNull
+    public static BlockBase createBlock(@NonNull String blockName) {
+        Class<? extends BlockBase> blockClass = getClassForName(blockName);
+
+        return create(blockClass);
     }
 }

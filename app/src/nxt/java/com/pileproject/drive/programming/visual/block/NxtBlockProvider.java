@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.pileproject.drive.programming.visual.activity;
+package com.pileproject.drive.programming.visual.block;
 
 import com.pileproject.drive.programming.visual.block.repetition.LoopBlock;
 import com.pileproject.drive.programming.visual.block.repetition.NTimesBlock;
@@ -30,27 +30,45 @@ import com.pileproject.drive.programming.visual.block.sequence.StopSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.TurnLeftSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock;
 
-public class NxtBlockListActivity extends BlockListActivityBase {
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+public class NxtBlockProvider implements BlockProvider {
+
     @Override
-    protected BlockClassHolder[][] getBlockIcons() {
-        return new BlockClassHolder[][]{
-                {
-                        new BlockClassHolder(ForwardSecBlock.class),
-                        new BlockClassHolder(BackwardSecBlock.class),
-                        new BlockClassHolder(TurnRightSecBlock.class),
-                        new BlockClassHolder(TurnLeftSecBlock.class),
-                        new BlockClassHolder(StopSecBlock.class),
-                        new BlockClassHolder(SetLeftMotorSpeedBlock.class),
-                        new BlockClassHolder(SetRightMotorSpeedBlock.class),
-                }, {
-                        new BlockClassHolder(LoopBlock.class),
-                        new BlockClassHolder(NTimesBlock.class),
-                        new BlockClassHolder(RepetitionBreakBlock.class),
-                }, {
-                        new BlockClassHolder(IfNxtIsOutOfLineBlock.class),
-                        new BlockClassHolder(IfNxtWasTouchedBlock.class),
-                        new BlockClassHolder(IfThereWasALargeSoundBlock.class),
-                },
-        };
+    public List<Class<? extends BlockBase>> getSequenceBlockClasses() {
+
+        // Because the lowest common ancestor of these blocks is SequenceBlockHasNumberText,
+        // the stupid compiler infers this type as Class<? extends SequenceBlockHasNumberText>.
+        // So without the ugly sentence, the code cannot be compiled.
+        List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(
+                ForwardSecBlock.class, BackwardSecBlock.class,
+                TurnRightSecBlock.class, TurnLeftSecBlock.class,
+                StopSecBlock.class,
+                SetLeftMotorSpeedBlock.class, SetRightMotorSpeedBlock.class
+        );
+
+        return Collections.unmodifiableList(list);
+    }
+
+    @Override
+    public List<Class<? extends BlockBase>> getRepetitionBlockClasses() {
+
+        return Collections.unmodifiableList(Arrays.asList(
+                LoopBlock.class, NTimesBlock.class, RepetitionBreakBlock.class
+        ));
+    }
+
+    @Override
+    public List<Class<? extends BlockBase>> getSelectionBlockClasses() {
+
+        List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(
+                IfNxtIsOutOfLineBlock.class,
+                IfNxtWasTouchedBlock.class,
+                IfThereWasALargeSoundBlock.class
+        );
+
+        return Collections.unmodifiableList(list);
     }
 }
