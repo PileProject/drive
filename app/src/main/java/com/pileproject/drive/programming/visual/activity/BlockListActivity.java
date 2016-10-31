@@ -54,7 +54,9 @@ import javax.inject.Inject;
  */
 public class BlockListActivity extends Activity {
 
-    private static final String INTENT_KEY_CATEGORY = "intent-key-category";
+    public static final String KEY_BLOCK_CATEGORY = "block-list-activity-key-category";
+
+    public static final String KEY_BLOCK_NAME = "block-list-activity-key-block-name";
 
     private static final int[] CATEGORY_STRINGS = {R.string.sequence, R.string.repetition, R.string.selection};
 
@@ -77,7 +79,7 @@ public class BlockListActivity extends Activity {
     public static Intent createIntent(Context context, @BlockCategory int blockCategory) {
 
         Intent intent = new Intent(context, BlockListActivity.class);
-        intent.putExtra(INTENT_KEY_CATEGORY, blockCategory);
+        intent.putExtra(KEY_BLOCK_CATEGORY, blockCategory);
 
         return intent;
     }
@@ -92,7 +94,7 @@ public class BlockListActivity extends Activity {
         setResult(Activity.RESULT_CANCELED); // set the default result as "canceled"
 
         // noinspection WrongConstant Safe;
-        mCategory = getIntent().getIntExtra(INTENT_KEY_CATEGORY, BlockCategory.SEQUENCE);
+        mCategory = getIntent().getIntExtra(KEY_BLOCK_CATEGORY, BlockCategory.SEQUENCE);
 
         mBlockClassHolders = createBlockClassHoldersByCategory(mCategory);
 
@@ -115,8 +117,8 @@ public class BlockListActivity extends Activity {
                 BlockClassHolder selectedBlock = mBlockClassHolders.get(position);
 
                 Intent data = new Intent();
-                data.putExtra(getString(R.string.key_block_how_to_make), mCategory);
-                data.putExtra(getString(R.string.key_block_block_name), selectedBlock.getBlockName());
+                data.putExtra(KEY_BLOCK_CATEGORY, mCategory);
+                data.putExtra(KEY_BLOCK_NAME, selectedBlock.getBlockName());
 
                 // set the result as "ok" and return the data
                 setResult(Activity.RESULT_OK, data);
