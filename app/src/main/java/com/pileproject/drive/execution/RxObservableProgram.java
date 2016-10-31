@@ -28,19 +28,24 @@ import rx.Subscriber;
 /**
  * A concrete class of {@link rx.Observable.OnSubscribe}, which generates
  * a stream of blocks that was executed during a program execution.
+ *
+ * This class is one-off.
+ * Create this instance whenever you want to execute and DO NOT REUSE the instance.
  * <p/>
  * The stream emits {@link Bundle} objects for the subscriber.
  * The bundles contain message type whose key is {@link RxObservableProgram#KEY_MESSAGE_TYPE},
  * and optionally one message argument whose key is {@link RxObservableProgram#KEY_MESSAGE_ARG}.
  * The message types are:
  * <ul>
- *     <li>{@link RxObservableProgram#MESSAGE_START}: emitted at the beginning of the execution</li>
- *     <li>{@link RxObservableProgram#MESSAGE_END}: emitted at the end of the execution</li>
- *     <li>{@link RxObservableProgram#MESSAGE_PAUSE}: emitted when {@link RxObservableProgram#requestPause()} is called</li>
- *     <li>{@link RxObservableProgram#MESSAGE_BLOCK_INDEX}: emitted when a block is executed.
+ *     <li>{@link RxObservableProgram#MESSAGE_STARTED}: emitted at the beginning of the execution</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_TERMINATED}: emitted when {@link RxObservableProgram#requestRestart()} is called</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_PAUSED}: emitted when {@link RxObservableProgram#requestPause()} is called</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_BLOCK_EXECUTED}: emitted when a block is executed.
  *         this message contains an argument which is the index of the block and can be accessed
  *         with {@link RxObservableProgram#KEY_MESSAGE_ARG} </li>
  * </ul>
+ * When the execution of the program that this class holds is ended, {@link rx.Subscriber#onCompleted} is called,
+ * no matter the type of ending (terminated by a user/ended normally).
  * <p/>
  * Typically you can use this class with code like below.
  * Note that the process of this class is heavy, including I/O connection.
@@ -55,13 +60,13 @@ import rx.Subscriber;
  */
 public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
 
-    public static final String KEY_MESSAGE_TYPE = "key";
-    public static final String KEY_MESSAGE_ARG = "arg";
+    public static final String KEY_MESSAGE_TYPE = "rx-observable-program-key-message-type";
+    public static final String KEY_MESSAGE_ARG = "rx-observable-program-key-message-arg";
 
-    public static final int MESSAGE_START = 1;
-    public static final int MESSAGE_END = 2;
-    public static final int MESSAGE_PAUSE = 3;
-    public static final int MESSAGE_BLOCK_INDEX = 4;
+    public static final int MESSAGE_STARTED = 1;
+    public static final int MESSAGE_TERMINATED = 2;
+    public static final int MESSAGE_PAUSED = 3;
+    public static final int MESSAGE_BLOCK_EXECUTED = 4;
 
     private final MachineController mMachineController;
 
@@ -87,7 +92,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
     public void call(Subscriber<? super Bundle> subscriber) {
 
         mRunningThread = Thread.currentThread();
-        subscriber.onNext(makeMessageBundle(MESSAGE_START));
+        subscriber.onNext(makeMessageBundle(MESSAGE_STARTED));
 
         try {
             mainLoop(subscriber);
@@ -107,7 +112,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
         while (!mExecutionCondition.hasProgramFinished()) {
 
             if (mTerminateRequest) {
-                subscriber.onNext(makeMessageBundle(MESSAGE_END));
+                subscriber.onNext(makeMessageBundle(MESSAGE_TERMINATED));
                 break;
             }
 
@@ -123,7 +128,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
                     // next execution should begin at the current block
                     mExecutionCondition.decrementProgramCount();
 
-                    subscriber.onNext(makeMessageBundle(MESSAGE_PAUSE));
+                    subscriber.onNext(makeMessageBundle(MESSAGE_PAUSED));
                     haltNotCalledYet = false;
                 }
 
@@ -156,7 +161,10 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
      */
     public void requestPause() {
         mPauseRequest = true;
-        mRunningThread.interrupt();
+
+        if (mRunningThread != null) {
+            mRunningThread.interrupt();
+        }
     }
 
     /**
@@ -164,7 +172,10 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
      */
     public void requestRestart() {
         mPauseRequest = false;
-        mRunningThread.interrupt();
+
+        if (mRunningThread != null) {
+            mRunningThread.interrupt();
+        }
     }
 
     /**
@@ -172,7 +183,10 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
      */
     public void requestTerminate() {
         mTerminateRequest = true;
-        mRunningThread.interrupt();
+
+        if (mRunningThread != null) {
+            mRunningThread.interrupt();
+        }
     }
 
     private void sleep(int milliseconds) {
@@ -192,7 +206,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
 
     private Bundle makeBlockIndexBundle(int index) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_MESSAGE_TYPE, MESSAGE_BLOCK_INDEX);
+        bundle.putInt(KEY_MESSAGE_TYPE, MESSAGE_BLOCK_EXECUTED);
         bundle.putInt(KEY_MESSAGE_ARG, index);
         return bundle;
     }
