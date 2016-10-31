@@ -34,65 +34,67 @@ import rx.Subscriber;
  * and optionally one message argument whose key is {@link RxObservableProgram#KEY_MESSAGE_ARG}.
  * The message types are:
  * <ul>
- *     <li>{@link RxObservableProgram#START}: emitted at the beginning of the execution</li>
- *     <li>{@link RxObservableProgram#END}: emitted at the end of the execution</li>
- *     <li>{@link RxObservableProgram#PAUSE}: emitted at {@link RxObservableProgram#requestPause()} is called</li>
- *     <li>{@link RxObservableProgram#BLOCK_INDEX}: emitted when a block was executed.
- *         this message contains an argument which is the index of the block </li>
+ *     <li>{@link RxObservableProgram#MESSAGE_START}: emitted at the beginning of the execution</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_END}: emitted at the end of the execution</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_PAUSE}: emitted when {@link RxObservableProgram#requestPause()} is called</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_BLOCK_INDEX}: emitted when a block is executed.
+ *         this message contains an argument which is the index of the block and can be accessed
+ *         with {@link RxObservableProgram#KEY_MESSAGE_ARG} </li>
  * </ul>
  * <p/>
  * Typically you can use this class with code like below.
  * Note that the process of this class is heavy, including I/O connection.
  * Do not run this on your UI thread.
  *
- * <code>
- *     RxObservableProgram program = new RxObservableProgram(...);
- *     Observable.create(program)
- *         .subscribeOn(Schedulers.newThread())
- *         .subscribe(...);
- * </code>
+ * <pre><code>
+ * RxObservableProgram program = new RxObservableProgram(...);
+ * Observable.create(program)
+ *     .subscribeOn(Schedulers.newThread())
+ *     .subscribe( ... ); // your code goes here
+ * </code></pre>
  */
 public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
 
     public static final String KEY_MESSAGE_TYPE = "key";
     public static final String KEY_MESSAGE_ARG = "arg";
-    public static final int START = 1;
-    public static final int BLOCK_INDEX = 3;
-    public static final int PAUSE = 4;
-    public static final int END = 2;
 
-    private final MachineController controller;
+    public static final int MESSAGE_START = 1;
+    public static final int MESSAGE_END = 2;
+    public static final int MESSAGE_PAUSE = 3;
+    public static final int MESSAGE_BLOCK_INDEX = 4;
 
-    private final ExecutionCondition condition;
+    private final MachineController mMachineController;
 
-    private boolean terminateRequest;
+    private final ExecutionCondition mExecutionCondition;
 
-    private boolean pauseRequest;
+    private boolean mTerminateRequest;
 
-    private Thread runningThread;
+    private boolean mPauseRequest;
+
+    private Thread mRunningThread;
 
     /**
      * @param program list of blocks to be executed.
-     * @param controller controller for the machine to be manipulated.
+     * @param machineController MachineController for the machine to be manipulated.
      */
-    public RxObservableProgram(List<BlockBase> program, MachineController controller) {
+    public RxObservableProgram(List<BlockBase> program, MachineController machineController) {
 
-        this.controller = controller;
-        this.condition = new ExecutionCondition(program);
+        mMachineController = machineController;
+        mExecutionCondition = new ExecutionCondition(program);
     }
 
     @Override
     public void call(Subscriber<? super Bundle> subscriber) {
 
-        runningThread = Thread.currentThread();
-        subscriber.onNext(makeMessageBundle(START));
+        mRunningThread = Thread.currentThread();
+        subscriber.onNext(makeMessageBundle(MESSAGE_START));
 
         try {
             mainLoop(subscriber);
         } catch (RuntimeException e) {
             subscriber.onError(e);
         } finally {
-            controller.close();
+            mMachineController.close();
         }
 
         subscriber.onCompleted();
@@ -100,44 +102,52 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
 
     private void mainLoop(Subscriber<? super Bundle> subscriber) throws RuntimeException {
 
-        boolean haltAlreadyCalled = false;
+        boolean haltNotCalledYet = true;
 
-        while (!condition.hasProgramFinished()) {
+        while (!mExecutionCondition.hasProgramFinished()) {
 
-            if (terminateRequest) {
-                subscriber.onNext(makeMessageBundle(END));
+            if (mTerminateRequest) {
+                subscriber.onNext(makeMessageBundle(MESSAGE_END));
                 break;
             }
 
-            if (pauseRequest) {
-                if (!haltAlreadyCalled) {
-                    controller.halt();
-                    condition.decrementProgramCount();
+            if (mPauseRequest) {
+                // NOTE:
+                //   because MachineController#halt and ExecutionCondition#decrementProgramCount should
+                //   not be called twice or more, we have to guard this code-block by the haltNotCalledYet flag.
+                // FIXME: more elegant guard
 
-                    subscriber.onNext(makeMessageBundle(PAUSE));
+                if (haltNotCalledYet) {
+                    mMachineController.halt();
+
+                    // next execution should begin at the current block
+                    mExecutionCondition.decrementProgramCount();
+
+                    subscriber.onNext(makeMessageBundle(MESSAGE_PAUSE));
+                    haltNotCalledYet = false;
                 }
 
-                haltAlreadyCalled = true;
-
                 continue;
             }
 
-            haltAlreadyCalled = false;
+            // after the requestRestart is called, mPauseRequest becomes false
+            // so for next requestPause calls, haltNotCalledYet should be true
+            haltNotCalledYet = true;
 
-            if (!BlockProgramLogic.willCurrentBlockBeExecuted(condition)) {
+            if (!BlockProgramLogic.willCurrentBlockBeExecuted(mExecutionCondition)) {
                 continue;
             }
 
-            int programCount = condition.getProgramCount();
+            int programCount = mExecutionCondition.getProgramCount();
 
             subscriber.onNext(makeBlockIndexBundle(programCount));
 
-            BlockBase block = condition.getCurrentBlock();
+            BlockBase block = mExecutionCondition.getCurrentBlock();
 
-            int delay = block.action(controller, condition);
+            int delay = block.action(mMachineController, mExecutionCondition);
             sleep(delay);
 
-            condition.incrementProgramCount();
+            mExecutionCondition.incrementProgramCount();
         }
     }
 
@@ -145,24 +155,24 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
      * Requests the current execution to be paused.
      */
     public void requestPause() {
-        pauseRequest = true;
-        runningThread.interrupt();
+        mPauseRequest = true;
+        mRunningThread.interrupt();
     }
 
     /**
      * Requests the current execution to be restarted.
      */
     public void requestRestart() {
-        pauseRequest = false;
-        runningThread.interrupt();
+        mPauseRequest = false;
+        mRunningThread.interrupt();
     }
 
     /**
      * Requests the current execution to be terminated.
      */
     public void requestTerminate() {
-        terminateRequest = true;
-        runningThread.interrupt();
+        mTerminateRequest = true;
+        mRunningThread.interrupt();
     }
 
     private void sleep(int milliseconds) {
@@ -182,7 +192,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
 
     private Bundle makeBlockIndexBundle(int index) {
         Bundle bundle = new Bundle();
-        bundle.putInt(KEY_MESSAGE_TYPE, BLOCK_INDEX);
+        bundle.putInt(KEY_MESSAGE_TYPE, MESSAGE_BLOCK_INDEX);
         bundle.putInt(KEY_MESSAGE_ARG, index);
         return bundle;
     }

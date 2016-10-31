@@ -213,12 +213,12 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                         int message = bundle.getInt(RxObservableProgram.KEY_MESSAGE_TYPE);
 
                         switch (message) {
-                            case RxObservableProgram.START: {
+                            case RxObservableProgram.MESSAGE_START: {
                                 Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
                                 break;
                             }
 
-                            case RxObservableProgram.BLOCK_INDEX: {
+                            case RxObservableProgram.MESSAGE_BLOCK_INDEX: {
                                 int index = bundle.getInt(RxObservableProgram.KEY_MESSAGE_ARG);
                                 mSpaceManager.emphasizeBlock(index);
                                 break;
