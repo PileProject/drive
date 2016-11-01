@@ -149,25 +149,23 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     @Override
     protected void onRestart() {
         super.onRestart();
+
+        // if this activity comes back directly (not via ProgrammingActivity),
+        // make this activity finish so that users can start at the programming screen immediately
+
         finish();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+
+        // this activity will be shut down soon if onRestart is called.
+        // so it's safe to call these here (no field members are reused)
+        // note that we have fragments so we cannot do these in onPause
+
         terminateExecution();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-
         mSubscriptions.unsubscribe();
-    }
-
-    @Override
-    public void onBackPressed() {
-        terminateExecution();
     }
 
     private void inject() {
@@ -193,6 +191,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                             .setPositiveButtonLabel(android.R.string.ok)
                             .setCancelable(false)
                             .setWindowGravity(Gravity.BOTTOM)
+                            .setAllowingStateLoss(true)
                             .show();
                     }
 
@@ -204,6 +203,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                             .setMessage(R.string.execute_disconnectedByNXT)
                             .setPositiveButtonLabel(android.R.string.ok)
                             .setCancelable(false)
+                            .setAllowingStateLoss(true)
                             .show();
                     }
 
@@ -254,6 +254,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                                 .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED)
                                 .setMessage(R.string.execute_bluetoothConnectionError)
                                 .setPositiveButtonLabel(android.R.string.ok)
+                                .setAllowingStateLoss(true)
                                 .show();
                     }
 

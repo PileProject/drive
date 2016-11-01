@@ -25,6 +25,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
@@ -81,6 +83,8 @@ public class AlertDialogFragment extends DialogFragment {
         Bundle mParams;
 
         int mGravity = Gravity.NO_GRAVITY;
+
+        boolean mAllowingStateLoss;
 
         /**
          * Constructor of builder for {@link AppCompatActivity}
@@ -221,6 +225,17 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
+         * Specifies the transaction is allowed to lose state.
+         * @param allowingStateLoss the fragment will be showed by {@link FragmentTransaction#commitAllowingStateLoss()}
+         *                       if true, otherwise showed by {@link FragmentTransaction#commit}.
+         * @return reference of this (for method chain)
+         */
+        public Builder setAllowingStateLoss(boolean allowingStateLoss) {
+            mAllowingStateLoss = allowingStateLoss;
+            return this;
+        }
+
+        /**
          * set gravity of the instance
          * @param gravity {@link Gravity} variable
          * @return reference of this (for method chain)
@@ -273,12 +288,18 @@ public class AlertDialogFragment extends DialogFragment {
 
             f.setArguments(args);
 
-            // show instance according to the parent instance
-            if (mParentFragment != null) {
-                f.show(mParentFragment.getChildFragmentManager(), mTag);
+            FragmentManager fragmentManager  = (mParentFragment != null)
+                    ? mParentFragment.getChildFragmentManager()
+                    : mActivity.getSupportFragmentManager();
+
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.add(f, mTag);
+
+            if (mAllowingStateLoss) {
+                fragmentTransaction.commitAllowingStateLoss();
             }
             else {
-                f.show(mActivity.getSupportFragmentManager(), mTag);
+                fragmentTransaction.commit();
             }
         }
 
