@@ -31,22 +31,23 @@ import rx.Subscriber;
  *
  * This class is one-off.
  * Create this instance whenever you want to execute and DO NOT REUSE the instance.
- * <p/>
+ * <p>
  * The stream emits {@link Bundle} objects for the subscriber.
  * The bundles contain message type whose key is {@link RxObservableProgram#KEY_MESSAGE_TYPE},
  * and optionally one message argument whose key is {@link RxObservableProgram#KEY_MESSAGE_ARG}.
  * The message types are:
  * <ul>
  *     <li>{@link RxObservableProgram#MESSAGE_STARTED}: emitted at the beginning of the execution</li>
- *     <li>{@link RxObservableProgram#MESSAGE_TERMINATED}: emitted when {@link RxObservableProgram#requestRestart()} is called</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_TERMINATED}: emitted when {@link RxObservableProgram#requestTerminate()} ()} is called</li>
  *     <li>{@link RxObservableProgram#MESSAGE_PAUSED}: emitted when {@link RxObservableProgram#requestPause()} is called</li>
+ *     <li>{@link RxObservableProgram#MESSAGE_RESTARTED}: emitted when {@link RxObservableProgram#requestRestart()} is called</li>
  *     <li>{@link RxObservableProgram#MESSAGE_BLOCK_EXECUTED}: emitted when a block is executed.
  *         this message contains an argument which is the index of the block and can be accessed
  *         with {@link RxObservableProgram#KEY_MESSAGE_ARG} </li>
  * </ul>
  * When the execution of the program that this class holds is ended, {@link rx.Subscriber#onCompleted} is called,
  * no matter the type of ending (terminated by a user/ended normally).
- * <p/>
+ * <p>
  * Typically you can use this class with code like below.
  * Note that the process of this class is heavy, including I/O connection.
  * Do not run this on your UI thread.
@@ -66,7 +67,8 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
     public static final int MESSAGE_STARTED = 1;
     public static final int MESSAGE_TERMINATED = 2;
     public static final int MESSAGE_PAUSED = 3;
-    public static final int MESSAGE_BLOCK_EXECUTED = 4;
+    public static final int MESSAGE_RESTARTED = 4;
+    public static final int MESSAGE_BLOCK_EXECUTED = 5;
 
     private final MachineController mMachineController;
 
@@ -135,9 +137,16 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
                 continue;
             }
 
-            // after the requestRestart is called, mPauseRequest becomes false
-            // so for next requestPause calls, haltNotCalledYet should be true
-            haltNotCalledYet = true;
+            // if haltNotCalledYet is false and reached here, the execution was resumed
+            if (!haltNotCalledYet) {
+
+                // after the requestRestart is called, mPauseRequest becomes false
+                // so for next requestPause calls, haltNotCalledYet should be true
+                haltNotCalledYet = true;
+
+                subscriber.onNext(makeMessageBundle(MESSAGE_RESTARTED));
+            }
+
 
             if (!BlockProgramLogic.willCurrentBlockBeExecuted(mExecutionCondition)) {
                 continue;
