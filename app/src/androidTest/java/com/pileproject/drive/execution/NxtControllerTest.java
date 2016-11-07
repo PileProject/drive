@@ -226,8 +226,8 @@ public class NxtControllerTest {
     }
 
     @Test
-    public void whenControllerFinalizes_thenMachineDisconnects() throws Exception {
-        controller.finalize();
+    public void whenControllerCloses_thenMachineDisconnects() throws Exception {
+        controller.close();
 
         verify(machine).disconnect();
     }

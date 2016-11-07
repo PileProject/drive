@@ -23,6 +23,7 @@ import android.os.Bundle;
 import android.support.annotation.StringRes;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.text.TextUtils;
 
 /**
@@ -50,7 +51,10 @@ public class ProgressDialogFragment extends DialogFragment {
      */
     public static void showDialog(FragmentManager manager, String title, String message, String tag) {
         ProgressDialogFragment f = newInstance(title, message);
-        f.show(manager, tag);
+
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.add(f, tag);
+        transaction.commitAllowingStateLoss();
     }
 
     /**

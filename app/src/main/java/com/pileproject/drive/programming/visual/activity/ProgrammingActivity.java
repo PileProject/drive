@@ -125,17 +125,15 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        switch (requestCode) {
-            case ACTIVITY_RESULT_ADD_BLOCK:
-                if (resultCode == Activity.RESULT_OK) {
-                    // Get results
-                    int howToMake = data.getIntExtra(getString(R.string.key_block_how_to_make), BlockCategory.SEQUENCE);
-                    String blockName = data.getStringExtra(getString(R.string.key_block_block_name));
-                    List<BlockBase> blocks = BlockFactory.createBlocks(howToMake, blockName);
-                    mSpaceManager.addBlocks(blocks);
-                }
-                break;
+        if (requestCode != ACTIVITY_RESULT_ADD_BLOCK || resultCode != Activity.RESULT_OK) {
+            return;
         }
+
+        @BlockCategory int category = data.getIntExtra(BlockListActivity.KEY_BLOCK_CATEGORY, BlockCategory.SEQUENCE);
+        String blockName = data.getStringExtra(BlockListActivity.KEY_BLOCK_NAME);
+
+        List<BlockBase> blocks = BlockFactory.createBlocks(category, blockName);
+        mSpaceManager.addBlocks(blocks);
     }
 
     private void setUpToolbar() {

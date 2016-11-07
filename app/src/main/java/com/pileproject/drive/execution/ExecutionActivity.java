@@ -22,8 +22,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Gravity;
@@ -37,6 +35,7 @@ import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.comm.BluetoothCommunicatorProvider;
 import com.pileproject.drive.comm.CommunicatorProvider;
 import com.pileproject.drive.comm.RxMachineConnector;
+import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.util.bluetooth.BluetoothUtil;
 import com.pileproject.drive.util.development.DeployUtils;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
@@ -47,14 +46,17 @@ import com.pileproject.drivecommand.machine.MachineBase;
 
 import javax.inject.Inject;
 
+import rx.Observable;
 import rx.Observer;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
  * An Activity that deals with executions of programs.
  */
 public class ExecutionActivity extends AppCompatActivity implements AlertDialogFragment.EventListener {
+
     private static final int DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED = 1;
     private static final int DIALOG_REQUEST_CODE_THREAD_ENDED              = 2;
     private static final int DIALOG_REQUEST_CODE_CONNECTION_ERROR          = 3;
@@ -65,47 +67,15 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     private ExecutionSpaceManager mSpaceManager;
 
     private Button mStopAndRestartButton;
-    private Button mFinishButton;
-    private ExecutionThread mThread = null;
 
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
+
+    private RxObservableProgram mObservableProgram;
 
     private MachineBase mMachine;
 
     @Inject
     public MachineProvider mMachineProvider;
-
-    // a handler for showing the progress of executions
-    private final Handler mProgressHandler = new Handler(new Handler.Callback() {
-        @Override
-        public boolean handleMessage(Message message) {
-            switch (message.getData().getInt(getString(R.string.key_execution_message))) {
-                case ExecutionThread.START_THREAD: {
-                    Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-
-                case ExecutionThread.EMPHASIZE_BLOCK: {
-                    // emphasize the current executing block
-                    int index = message.getData().getInt(getString(R.string.key_execution_index));
-                    mSpaceManager.emphasizeBlock(index);
-                    return true;
-                }
-
-                case ExecutionThread.END_THREAD: {
-                    onThreadEnded();
-                    return true;
-                }
-
-                case ExecutionThread.CONNECTION_ERROR: {
-                    // handle connection errors
-                    onConnectionError();
-                    return true;
-                }
-            }
-            return false;
-        }
-    });
 
     /**
      * Returns an intent for invoking {@link ExecutionActivity}.
@@ -134,22 +104,22 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
 
         mMachine = mMachineProvider.getMachine(communicatorProvider.getCommunicator());
 
+        mObservableProgram = new RxObservableProgram(
+                ProgramDataManager.getInstance().loadExecutionProgram(),
+                mMachineProvider.getMachineController(mMachine));
+
         mSpaceManager.loadExecutionProgram();
 
-        mStopAndRestartButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopExecution();
-            }
-        });
+        mStopAndRestartButton.setOnClickListener(pauser);
 
-        mFinishButton.setOnClickListener(new OnClickListener() {
+        findViewById(R.id.execute_finishButton).setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View v) {
-                finishExecution();
+            public void onClick(View view) {
+                terminateExecution();
             }
         });
     }
+
 
     @Override
     public void onStart() {
@@ -179,25 +149,23 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     @Override
     protected void onRestart() {
         super.onRestart();
+
+        // if this activity comes back directly (not via ProgrammingActivity),
+        // make this activity finish so that users can start at the programming screen immediately
+
         finish();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        finishExecution();
-    }
 
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
+        // this activity will be shut down soon if onRestart is called.
+        // so it's safe to call these here (no field members are reused)
+        // note that we have fragments so we cannot do these in onPause
 
+        terminateExecution();
         mSubscriptions.unsubscribe();
-    }
-
-    @Override
-    public void onBackPressed() {
-        finishExecution();
     }
 
     private void inject() {
@@ -207,93 +175,57 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     private void findViews() {
         mSpaceManager = new ExecutionSpaceManager(this, (BlockSpaceLayout) findViewById(R.id.execute_showingProgressLayout));
         mStopAndRestartButton = (Button) findViewById(R.id.execute_stopAndRestartButton);
-        mFinishButton = (Button) findViewById(R.id.execute_finishButton);
     }
 
     private void startExecution() {
-        if (mThread != null && mThread.isAlive()) return;
+        mSubscriptions.add(
+            Observable.create(mObservableProgram)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.newThread())
+                .subscribe(new Observer<Bundle>() {
+                    @Override
+                    public void onCompleted() {
+                        new AlertDialogFragment.Builder(ExecutionActivity.this)
+                            .setRequestCode(DIALOG_REQUEST_CODE_THREAD_ENDED)
+                            .setMessage(R.string.execute_showNoteOfPort)
+                            .setPositiveButtonLabel(android.R.string.ok)
+                            .setCancelable(false)
+                            .setWindowGravity(Gravity.BOTTOM)
+                            .setAllowingStateLoss(true)
+                            .show();
+                    }
 
-        mThread = new ExecutionThread(mProgressHandler, mMachineProvider.getMachineController(mMachine));
-        mThread.setPriority(Thread.MAX_PRIORITY);
-        mThread.start();
-    }
+                    @Override
+                    public void onError(Throwable e) {
+                        new AlertDialogFragment.Builder(ExecutionActivity.this)
+                            .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ERROR)
+                            .setTitle(R.string.error)
+                            .setMessage(R.string.execute_disconnectedByNXT)
+                            .setPositiveButtonLabel(android.R.string.ok)
+                            .setCancelable(false)
+                            .setAllowingStateLoss(true)
+                            .show();
+                    }
 
-    private void stopExecution() {
-        if (mThread == null || !mThread.isAlive()) return ;
+                    @Override
+                    public void onNext(Bundle bundle) {
 
-        mThread.stopExecution();
-        mStopAndRestartButton.setText(R.string.execute_restart);
-        mStopAndRestartButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                restartExecution();
-            }
-        });
-    }
+                        int message = bundle.getInt(RxObservableProgram.KEY_MESSAGE_TYPE);
 
-    private void restartExecution() {
-        mThread.restartExecution();
-        mStopAndRestartButton.setText(R.string.execute_stop);
-        mStopAndRestartButton.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopExecution();
-            }
-        });
-    }
+                        switch (message) {
+                            case RxObservableProgram.MESSAGE_STARTED: {
+                                Toast.makeText(getBaseContext(), R.string.execute_startExecution, Toast.LENGTH_SHORT).show();
+                                break;
+                            }
 
-    private void finishExecution() {
-        if (mThread == null || !mThread.isAlive()) return ;
-
-        mThread.haltExecution();
-        waitForThreadToBeOver();
-    }
-
-    private void waitForThreadToBeOver() {
-        try {
-            mThread.join();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case REQUEST_ENABLE_BT:
-                if (resultCode == Activity.RESULT_OK) {
-                    Toast.makeText(getBaseContext(), R.string.turnedOnBluetooth, Toast.LENGTH_SHORT).show();
-                    connectToMachine();
-                    break;
-                }
-
-                new AlertDialogFragment.Builder(this)
-                        .setTitle(R.string.error)
-                        .setMessage(R.string.bluetoothFunctionIsOff)
-                        .setPositiveButtonLabel(android.R.string.ok)
-                        .show();
-                break;
-        }
-    }
-
-    private void onThreadEnded() {
-        new AlertDialogFragment.Builder(this)
-                .setRequestCode(DIALOG_REQUEST_CODE_THREAD_ENDED)
-                .setMessage(R.string.execute_showNoteOfPort)
-                .setPositiveButtonLabel(android.R.string.ok)
-                .setCancelable(false)
-                .setWindowGravity(Gravity.BOTTOM)
-                .show();
-    }
-
-    private void onConnectionError() {
-        new AlertDialogFragment.Builder(this)
-                .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ERROR)
-                .setTitle(R.string.error)
-                .setMessage(R.string.execute_disconnectedByNXT)
-                .setPositiveButtonLabel(android.R.string.ok)
-                .setCancelable(false)
-                .show();
+                            case RxObservableProgram.MESSAGE_BLOCK_EXECUTED: {
+                                int index = bundle.getInt(RxObservableProgram.KEY_MESSAGE_ARG);
+                                mSpaceManager.emphasizeBlock(index);
+                                break;
+                            }
+                        }
+                    }
+                }));
     }
 
     private void connectToMachine() {
@@ -322,6 +254,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                                 .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ATTEMPT_FAILED)
                                 .setMessage(R.string.execute_bluetoothConnectionError)
                                 .setPositiveButtonLabel(android.R.string.ok)
+                                .setAllowingStateLoss(true)
                                 .show();
                     }
 
@@ -331,6 +264,30 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                     }
                 })
         );
+    }
+
+    private void terminateExecution() {
+        mObservableProgram.requestTerminate();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+        if (requestCode != REQUEST_ENABLE_BT) {
+            return ;
+        }
+
+        if (resultCode == Activity.RESULT_OK) {
+            Toast.makeText(getBaseContext(), R.string.turnedOnBluetooth, Toast.LENGTH_SHORT).show();
+            connectToMachine();
+
+        } else {
+            new AlertDialogFragment.Builder(this)
+                    .setTitle(R.string.error)
+                    .setMessage(R.string.bluetoothFunctionIsOff)
+                    .setPositiveButtonLabel(android.R.string.ok)
+                    .show();
+        }
     }
 
     @Override
@@ -349,4 +306,24 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     public void onDialogEventCancelled(int requestCode, DialogInterface dialog, Bundle params) {
         // no-op
     }
+
+    private final OnClickListener pauser = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mObservableProgram.requestPause();
+
+            mStopAndRestartButton.setText(R.string.execute_restart);
+            mStopAndRestartButton.setOnClickListener(restarter);
+        }
+    };
+
+    private final OnClickListener restarter = new OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mObservableProgram.requestRestart();
+
+            mStopAndRestartButton.setText(R.string.execute_stop);
+            mStopAndRestartButton.setOnClickListener(pauser);
+        }
+    };
 }
