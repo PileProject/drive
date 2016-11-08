@@ -57,7 +57,8 @@
                 android:data="http://pileproject.com/" />
         </Preference>
 
-        <Preference android:title="@string/setting.copyrightNotice" />
+        <com.pileproject.drive.setting.app.CopyrightNoticePreference
+            android:title="@string/setting.copyrightNotice" />
 
         <Preference android:title="@string/setting.legalNotice"/>
 
