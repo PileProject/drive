@@ -125,6 +125,12 @@ dependencies {
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
 }
 
+license {
+    header rootProject.file('LICENSE')
+    include "**/*.java"
+    exclude "**/*Test.java"
+}
+
 // this is used for downloading licenses
 downloadLicenses {
     ext.apacheTwo = license('Apache License, Version 2.0', 'http://opensource.org/licenses/Apache-2.0')
@@ -136,10 +142,10 @@ downloadLicenses {
         'org.some-bsd:project:1.0' : bsd,
     ]
 
-     aliases = [
-         (apacheTwo) : ['The Apache Software License, Version 2.0', 'Apache 2', 'Apache License Version 2.0', 'Apache License, Version 2.0', 'Apache License 2.0', license('Apache License', 'http://www.apache.org/licenses/LICENSE-2.0')],
-         (bsd) : ['BSD', license('New BSD License', 'http://www.opensource.org/licenses/bsd-license.php')],
-     ]
+    aliases = [
+        (apacheTwo) : ['The Apache Software License, Version 2.0', 'Apache 2', 'Apache License Version 2.0', 'Apache License, Version 2.0', 'Apache License 2.0', license('Apache License', 'http://www.apache.org/licenses/LICENSE-2.0')],
+        (bsd) : ['BSD', license('New BSD License', 'http://www.opensource.org/licenses/bsd-license.php')],
+    ]
 
-      dependencyConfiguration = 'compile'
+    dependencyConfiguration = 'compile'
 }
