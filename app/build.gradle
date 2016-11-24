@@ -155,7 +155,7 @@ def licenseFilename = "dependency-license.xml"
 def buildOutputFolder = "app/build/reports/license"
 def generatedLicense = "${buildOutputFolder}/${licenseFilename}"
 def assetsFolder = "app/src/main/assets"
-def licenseInVersioning = "${assetsFolder}/license.xml"
+def licenseInVersioning = "${assetsFolder}/licenses.xml"
 
 import groovy.xml.*
 task cleanupLicenses << {
