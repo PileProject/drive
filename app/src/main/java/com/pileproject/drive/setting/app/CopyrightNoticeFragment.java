@@ -47,7 +47,7 @@ public class CopyrightNoticeFragment extends DialogFragment {
         mLicensesPage = (WebView) v.findViewById(R.id.licenses_page);
 
         // load a license file located in assets
-        String htmlPath = "file:///android_asset/dependency-license.html";
+        String htmlPath = "file:///android_asset/licenses.html";
         mLicensesPage.loadUrl(htmlPath);
 
         return v;

@@ -13,7 +13,7 @@ buildscript {
         // in the individual module build.gradle files
 
         // for License
-        classpath "gradle.plugin.nl.javadude.gradle.plugins:license-gradle-plugin:0.13.1"
+        classpath 'com.cookpad.android.licensetools:license-tools-plugin:0.19.0'
     }
 }
 

@@ -16,7 +16,7 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
-apply plugin: "com.github.hierynomus.license"
+apply plugin: 'com.cookpad.android.licensetools'
 
 android {
     compileSdkVersion 23
@@ -124,77 +124,3 @@ dependencies {
     compile "com.google.dagger:dagger:$daggerVersion"
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
 }
-
-license {
-    header rootProject.file('LICENSE')
-    include "**/*.java"
-    exclude "**/*Test.java"
-}
-
-// this is used for downloading licenses
-downloadLicenses {
-    ext.apacheTwo = license('Apache License, Version 2.0', 'http://opensource.org/licenses/Apache-2.0')
-    ext.bsd = license('BSD License', 'http://www.opensource.org/licenses/bsd-license.php')
-
-    includeProjectDependencies = true
-    licenses = [
-        'org.apache.james:apache-mime4j:0.6' : apacheTwo,
-        'org.some-bsd:project:1.0' : bsd,
-    ]
-
-    aliases = [
-        (apacheTwo) : ['The Apache Software License, Version 2.0', 'Apache 2', 'Apache License Version 2.0', 'Apache License, Version 2.0', 'Apache License 2.0', license('Apache License', 'http://www.apache.org/licenses/LICENSE-2.0')],
-        (bsd) : ['BSD', license('New BSD License', 'http://www.opensource.org/licenses/bsd-license.php')],
-    ]
-
-    dependencyConfiguration = 'compile'
-}
-
-// === updating licenses ===
-def licenseFilename = "dependency-license.xml"
-def buildOutputFolder = "app/build/reports/license"
-def generatedLicense = "${buildOutputFolder}/${licenseFilename}"
-def assetsFolder = "app/src/main/assets"
-def licenseInVersioning = "${assetsFolder}/licenses.xml"
-
-import groovy.xml.*
-task cleanupLicenses << {
-    final NOT_FOUND = "No license found"
-    final MIT_NAME = "MIT License"
-    final MIT_URL = "http://www.opensource.org/licenses/mit-license.php"
-
-    def dependencies = new XmlParser().parse("${generatedLicense}")
-    dependencies.dependency.each {
-        // please add more lacked license informations here if you want
-
-        if (it.file.text() =~ /kvs-schema*/) {
-            println "kvs-schema: adding the information of MIT License"
-            it.license[0].@name = "${MIT_NAME}"
-            it.license[0].@url = "${MIT_URL}"
-        }
-        else if (it.license[0].attribute("name") == NOT_FOUND) {
-            println "${it.file.text()} has no license. Ignore it."
-            dependencies.remove(it)
-        }
-        else {
-            // println "${it.text()} is okay."
-        }
-    }
-
-    def printer = new XmlNodePrinter(new PrintWriter(new FileWriter("${licenseInVersioning}")))
-    printer.preserveWhitespace = true
-    printer.print(dependencies)
-}
-
-task fillLicenseTemplate << {
-    // println file("${licenseInVersioning}").text
-}
-
-task updateLicenses {
-
-}
-
-updateLicenses.dependsOn fillLicenseTemplate
-fillLicenseTemplate.dependsOn cleanupLicenses
-cleanupLicenses.dependsOn project.tasks.getByName('downloadLicenses')
-// === /updating licenses ===
