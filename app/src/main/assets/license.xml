@@ -1,0 +1,50 @@
+<dependencies>
+  <dependency name="com.google.dagger:dagger:2.7">
+    <file>dagger-2.7.jar</file>
+    <license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+  </dependency>
+  <dependency name="com.rejasupotaro:kvs-schema:5.0.0">
+    <file>kvs-schema-5.0.0.aar</file>
+    <license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+  </dependency>
+  <dependency name="com.yahoo.squidb:squidb-annotations:3.1.3">
+    <file>squidb-annotations-3.1.3.jar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="io.reactivex:rxjava:1.1.6">
+    <file>rxjava-1.1.6.jar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="co.trikita:log:1.1.5">
+    <file>log-1.1.5.jar</file>
+    <license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+  </dependency>
+  <dependency name="com.jakewharton.fliptables:fliptables:1.0.2">
+    <file>fliptables-1.0.2.jar</file>
+    <license name="Apache 2.0" url="http://www.apache.org/licenses/LICENSE-2.0.txt"/>
+  </dependency>
+  <dependency name="com.pileproject:drivecommand:2.1.0">
+    <file>drivecommand-2.1.0.jar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="javax.inject:javax.inject:1">
+    <file>javax.inject-1.jar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="com.yahoo.squidb:squidb-android:3.1.3">
+    <file>squidb-android-3.1.3.aar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="org.slf4j:slf4j-api:1.7.12">
+    <file>slf4j-api-1.7.12.jar</file>
+    <license name="MIT License" url="http://www.opensource.org/licenses/mit-license.php"/>
+  </dependency>
+  <dependency name="io.reactivex:rxandroid:1.2.1">
+    <file>rxandroid-1.2.1.aar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+  <dependency name="com.yahoo.squidb:squidb:3.1.3">
+    <file>squidb-3.1.3.jar</file>
+    <license name="Apache License, Version 2.0" url="http://opensource.org/licenses/Apache-2.0"/>
+  </dependency>
+</dependencies>

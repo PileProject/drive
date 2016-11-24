@@ -149,3 +149,52 @@ downloadLicenses {
 
     dependencyConfiguration = 'compile'
 }
+
+// === updating licenses ===
+def licenseFilename = "dependency-license.xml"
+def buildOutputFolder = "app/build/reports/license"
+def generatedLicense = "${buildOutputFolder}/${licenseFilename}"
+def assetsFolder = "app/src/main/assets"
+def licenseInVersioning = "${assetsFolder}/license.xml"
+
+import groovy.xml.*
+task cleanupLicenses << {
+    final NOT_FOUND = "No license found"
+    final MIT_NAME = "MIT License"
+    final MIT_URL = "http://www.opensource.org/licenses/mit-license.php"
+
+    def dependencies = new XmlParser().parse("${generatedLicense}")
+    dependencies.dependency.each {
+        // please add more lacked license informations here if you want
+
+        if (it.file.text() =~ /kvs-schema*/) {
+            println "kvs-schema: adding the information of MIT License"
+            it.license[0].@name = "${MIT_NAME}"
+            it.license[0].@url = "${MIT_URL}"
+        }
+        else if (it.license[0].attribute("name") == NOT_FOUND) {
+            println "${it.file.text()} has no license. Ignore it."
+            dependencies.remove(it)
+        }
+        else {
+            // println "${it.text()} is okay."
+        }
+    }
+
+    def printer = new XmlNodePrinter(new PrintWriter(new FileWriter("${licenseInVersioning}")))
+    printer.preserveWhitespace = true
+    printer.print(dependencies)
+}
+
+task fillLicenseTemplate << {
+    // println file("${licenseInVersioning}").text
+}
+
+task updateLicenses {
+
+}
+
+updateLicenses.dependsOn fillLicenseTemplate
+fillLicenseTemplate.dependsOn cleanupLicenses
+cleanupLicenses.dependsOn project.tasks.getByName('downloadLicenses')
+// === /updating licenses ===
