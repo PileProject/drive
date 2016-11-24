@@ -130,4 +130,5 @@ dependencies {
 license {
     header rootProject.file('LICENSE')
     includes(["**/*.java", "**/*.xml"])
+    exclude "**/*Test.java"
 }
