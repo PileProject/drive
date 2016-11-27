@@ -16,6 +16,8 @@
 
 apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
+apply plugin: 'com.cookpad.android.licensetools' // for others' licenses
+apply plugin: "com.github.hierynomus.license" // for our license
 
 android {
     compileSdkVersion 23
@@ -122,4 +124,11 @@ dependencies {
 
     compile "com.google.dagger:dagger:$daggerVersion"
     apt "com.google.dagger:dagger-compiler:$daggerVersion"
+}
+
+// for our license
+license {
+    header rootProject.file('LICENSE')
+    includes(["**/*.java", "**/*.xml"])
+    exclude "**/*Test.java"
 }

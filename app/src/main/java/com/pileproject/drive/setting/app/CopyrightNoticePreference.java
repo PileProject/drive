@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.setting.machine;
+package com.pileproject.drive.setting.app;
 
 import android.content.Context;
 import android.support.v4.app.DialogFragment;
@@ -23,36 +23,33 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
-/**
- * Created by yusaku on 2016/07/10.
- */
-public class NxtThresholdPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
+public class CopyrightNoticePreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
-    private static final String FRAGMENT_TAG = "tag";
+    private static final String FRAGMENT_TAG = "copyright_notice_preference";
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public CopyrightNoticePreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public CopyrightNoticePreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs) {
+    public CopyrightNoticePreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NxtThresholdPreference(Context context) {
+    public CopyrightNoticePreference(Context context) {
         super(context);
     }
 
     @Override
     public void startDialog(PreferenceFragmentCompat parent) {
-         if (parent.getChildFragmentManager().findFragmentByTag(FRAGMENT_TAG) != null) {
+        if (parent.getChildFragmentManager().findFragmentByTag(FRAGMENT_TAG) != null) {
             return;
         }
 
-        DialogFragment f = new NxtThresholdFragment();
+        DialogFragment f = new CopyrightNoticeFragment();
         f.setTargetFragment(parent, 0);
 
         // not 'getFragmentManager' because we are creating

@@ -21,26 +21,8 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <RadioGroup
-        android:id="@+id/firmware.firmwares"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:orientation="vertical" >
-
-        <RadioButton
-            android:id="@+id/firmware.standard"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:checked="true"
-            android:text="@string/setting.firmware.standard" />
-
-        <RadioButton
-            android:id="@+id/firmware.lejos"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/setting.firmware.lejos" />
-    </RadioGroup>
-
+    <WebView
+        android:id="@+id/licenses_page"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 </LinearLayout>
