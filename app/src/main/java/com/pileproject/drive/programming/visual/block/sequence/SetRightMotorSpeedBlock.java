@@ -20,6 +20,7 @@ import android.content.Context;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
@@ -55,8 +56,8 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(CarControllerBase controller, ExecutionCondition condition) {
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
+    public int action(MachineController controller, ExecutionCondition condition) {
+        ((CarControllerBase) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
         return 0;
     }
 

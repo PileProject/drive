@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+/*
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,6 +20,7 @@ import android.content.Context;
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
@@ -54,8 +55,8 @@ public class BackwardSecBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(CarControllerBase controller, ExecutionCondition condition) {
-        controller.moveBackward();
+    public int action(MachineController controller, ExecutionCondition condition) {
+        ((CarControllerBase) controller).moveBackward();
         return getActionValue();
     }
 

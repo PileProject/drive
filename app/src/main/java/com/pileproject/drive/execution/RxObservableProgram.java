@@ -69,7 +69,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
     public static final int MESSAGE_RESTARTED = 4;
     public static final int MESSAGE_BLOCK_EXECUTED = 5;
 
-    private final CarControllerBase mMachineController;
+    private final MachineController mMachineController;
 
     private final ExecutionCondition mExecutionCondition;
 
@@ -83,7 +83,7 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
      * @param program list of blocks to be executed.
      * @param machineController MachineController for the machine to be manipulated.
      */
-    public RxObservableProgram(List<BlockBase> program, CarControllerBase machineController) {
+    public RxObservableProgram(List<BlockBase> program, MachineController machineController) {
 
         mMachineController = machineController;
         mExecutionCondition = new ExecutionCondition(program);

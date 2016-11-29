@@ -19,6 +19,7 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
+import com.pileproject.drive.execution.MachineController;
 
 /**
  * This block checks the touch sensor was touched or not
@@ -30,7 +31,7 @@ public class IfMachineWasTouchedBlock extends SelectionBlock {
     }
 
     @Override
-    protected boolean evaluateCondition(CarControllerBase controller) {
-        return controller.isTouchSensorTouched();
+    protected boolean evaluateCondition(MachineController controller) {
+        return ((CarControllerBase) controller).isTouchSensorTouched();
     }
 }

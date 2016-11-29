@@ -19,6 +19,7 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.preferences.BlockPreferences;
 
 /**
@@ -40,7 +41,7 @@ public class IfMachineIsOutOfLineBlock extends SelectionBlock {
     }
 
     @Override
-    protected boolean evaluateCondition(CarControllerBase controller) {
-        return controller.getLineSensorValue() > mThreshold;
+    protected boolean evaluateCondition(MachineController controller) {
+        return ((CarControllerBase) controller).getLineSensorValue() > mThreshold;
     }
 }

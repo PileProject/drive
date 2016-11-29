@@ -19,7 +19,7 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.preferences.MachinePreferencesSchema;
 
@@ -37,8 +37,8 @@ public class IfNxtWasTouchedBlock extends SelectionBlock {
     }
 
     @Override
-    protected boolean evaluateCondition(CarControllerBase controller) {
-        boolean wasTouched = ((NxtController) controller).isTouchSensorTouched();
+    protected boolean evaluateCondition(MachineController controller) {
+        boolean wasTouched = ((CarControllerBase) controller).isTouchSensorTouched();
 
         // leJOS returns the opposite value
         if (mIsLejosFirmware) wasTouched = !wasTouched;
