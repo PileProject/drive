@@ -27,7 +27,7 @@ public class NxtMachineProvider implements MachineProvider {
     }
 
     @Override
-    public CarControllerBase getMachineController(MachineBase machineBase) {
+    public MachineController getMachineController(MachineBase machineBase) {
         if (machineBase instanceof NxtMachine) {
             return new NxtController((NxtMachine) machineBase);
         }
