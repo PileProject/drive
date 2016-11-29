@@ -24,14 +24,16 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.preferences.MachinePreferencesSchema;
 import com.pileproject.drive.view.PortTextViewBase;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
+import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.NONE;
 
 
 public class NxtPortConnectionFragment extends DialogFragment {
@@ -60,7 +62,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     }
 
     private String loadSensor(int port, String sensor) {
-        if (sensor.equals(MachinePreferencesSchema.SENSOR.NONE)) return sensor;
+        if (sensor.equals(CarControllerBase.INPUT.NONE)) return sensor;
 
         PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(sensor);
@@ -89,7 +91,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     }
 
     private String loadMotor(int port, String motor) {
-        if (motor.equals(MachinePreferencesSchema.MOTOR.NONE)) return motor;
+        if (motor.equals(CarControllerBase.OUTPUT.NONE)) return motor;
 
         PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(motor);

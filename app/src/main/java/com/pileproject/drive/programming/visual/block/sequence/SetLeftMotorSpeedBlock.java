@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+/*
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.sequence;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
@@ -27,21 +27,21 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Backward for a while
+ * Set left motor power
  *
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class BackwardSecBlock extends SequenceBlockHasNumberText {
+public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumberText {
 
     // TODO: set from preference
-    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(100));
 
     // TODO: set from preference
-    private static final int PRECISION = 3;
+    private static final int PRECISION = 0;
 
-    public BackwardSecBlock(Context context) {
-        super(context, R.layout.block_backward_sec, R.id.block_numText);
+    public SetLeftMotorSpeedBlock(Context context) {
+        super(context, R.layout.block_set_left_motor_speed, R.id.block_numText);
     }
 
     @Override
@@ -55,13 +55,13 @@ public class BackwardSecBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).moveBackward();
-        return getActionValue();
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
+        controller.setMotorPower(NxtController.MotorKind.LeftMotor, getValue().intValue());
+        return 0;
     }
 
     @Override
     public Unit getUnit() {
-        return Unit.Second;
+        return Unit.Percentage;
     }
 }

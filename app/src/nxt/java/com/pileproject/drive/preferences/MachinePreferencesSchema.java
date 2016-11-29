@@ -15,6 +15,7 @@
  */
 package com.pileproject.drive.preferences;
 
+import com.pileproject.drive.execution.CarControllerBase;
 import com.rejasupotaro.android.kvs.annotations.Key;
 import com.rejasupotaro.android.kvs.annotations.Table;
 
@@ -31,19 +32,6 @@ public class MachinePreferencesSchema {
         public static final String LEJOS = "lejos";
     }
 
-    public class SENSOR {
-        public static final String TOUCH = "touch_sensor";
-        public static final String SOUND = "sound_sensor";
-        public static final String LINE = "line_sensor";
-        public static final String NONE = "none";
-    }
-
-    public class MOTOR {
-        public static final String RIGHT = "right_motor";
-        public static final String LEFT = "left_motor";
-        public static final String NONE = "none";
-    }
-
     @Key(name = "bluetooth_address")
     String macAddress;
 
@@ -51,23 +39,23 @@ public class MachinePreferencesSchema {
     final String firmware = FIRMWARE.STANDARD;
 
     @Key(name = "input_port_1")
-    final String inputPort1 = SENSOR.TOUCH;
+    final String inputPort1 = CarControllerBase.INPUT.TOUCH;
 
     @Key(name = "input_port_2")
-    final String inputPort2 = SENSOR.SOUND;
+    final String inputPort2 = CarControllerBase.INPUT.SOUND;
 
     @Key(name = "input_port_3")
-    final String inputPort3 = SENSOR.LINE;
+    final String inputPort3 = CarControllerBase.INPUT.LINE;
 
     @Key(name = "input_port_4")
-    final String inputPort4 = SENSOR.NONE;
+    final String inputPort4 = CarControllerBase.INPUT.NONE;
 
     @Key(name = "output_port_A")
-    final String outputPortA = MOTOR.NONE;
+    final String outputPortA = CarControllerBase.OUTPUT.NONE;
 
     @Key(name = "output_port_B")
-    final String outputPortB = MOTOR.RIGHT;
+    final String outputPortB = CarControllerBase.OUTPUT.RIGHT;
 
     @Key(name = "output_port_C")
-    final String outputPortC = MOTOR.LEFT;
+    final String outputPortC = CarControllerBase.OUTPUT.LEFT;
 }

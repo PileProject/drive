@@ -20,8 +20,8 @@ import android.support.annotation.LayoutRes;
 import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 
 /**
  * BaseBlock
@@ -53,8 +53,7 @@ public abstract class BlockBase extends RelativeLayout {
      * @param condition  Condition of the executing program
      * @return
      */
-    public abstract int action(
-            MachineController controller, ExecutionCondition condition);
+    public abstract int action(CarControllerBase controller, ExecutionCondition condition);
 
     public enum BlockKind {
         SEQUENCE, SELECTION_BEGIN, SELECTION_END, REPETITION_BEGIN, REPETITION_END, REPETITION_BREAK

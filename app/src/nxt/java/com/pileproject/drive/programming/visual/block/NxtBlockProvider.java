@@ -18,7 +18,7 @@ package com.pileproject.drive.programming.visual.block;
 import com.pileproject.drive.programming.visual.block.repetition.LoopBlock;
 import com.pileproject.drive.programming.visual.block.repetition.NTimesBlock;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection.IfMachineIsOutOfLineBlock;
 import com.pileproject.drive.programming.visual.block.selection.IfNxtWasTouchedBlock;
 import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
 import com.pileproject.drive.programming.visual.block.sequence.BackwardSecBlock;
@@ -63,7 +63,9 @@ public class NxtBlockProvider implements BlockProvider {
     public List<Class<? extends BlockBase>> getSelectionBlockClasses() {
 
         List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(
-                IfNxtIsOutOfLineBlock.class,
+                IfMachineIsOutOfLineBlock.class,
+                // use IfNxtWasTouchedBlock not IfMachineWasTouchedBlock to do
+                // an adjustment for the variation of firmware
                 IfNxtWasTouchedBlock.class,
                 IfThereWasALargeSoundBlock.class
         );

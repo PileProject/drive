@@ -77,7 +77,7 @@ public class NxtControllerTest {
     public void whenTouchSensorIsNull_thenReturnFalse() throws Exception {
         Whitebox.setInternalState(controller, "mTouchSensor", null);
 
-        assertFalse(controller.getTouchSensorValue());
+        assertFalse(controller.isTouchSensorTouched());
     }
 
     @Test
@@ -85,7 +85,7 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
         doReturn(true).when(touchSensor).isTouched();
 
-        assertTrue(controller.getTouchSensorValue());
+        assertTrue(controller.isTouchSensorTouched());
     }
 
     @Test
@@ -93,14 +93,14 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
         doReturn(false).when(touchSensor).isTouched();
 
-        assertFalse(controller.getTouchSensorValue());
+        assertFalse(controller.isTouchSensorTouched());
     }
 
     @Test
     public void whenSoundSensorIsNull_thenReturnNegative() throws Exception {
         Whitebox.setInternalState(controller, "mSoundSensor", null);
 
-        assertEquals(controller.getSoundSensorValue(), -1);
+        assertEquals(controller.getSoundSensorDb(), -1);
     }
 
     @Test
@@ -108,7 +108,7 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mSoundSensor", soundSensor);
         doReturn(10).when(soundSensor).getDb();
 
-        assertEquals(10, controller.getSoundSensorValue());
+        assertEquals(10, controller.getSoundSensorDb());
     }
 
     @Test

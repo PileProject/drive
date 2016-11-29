@@ -18,32 +18,29 @@ package com.pileproject.drive.programming.visual.block.selection;
 import android.content.Context;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.preferences.BlockPreferences;
 
-
 /**
- * This block check the sound sensor's value and check there
- * was a large sound or not
+ * This block check the light sensor's value
+ * If the value is higher than threshold, it means the machine is on the
+ * light-colored floor and out of black line.
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class IfThereWasALargeSoundBlock extends SelectionBlock {
+public class IfMachineIsOutOfLineBlock extends SelectionBlock {
 
     private int mThreshold;
 
-    public IfThereWasALargeSoundBlock(Context context) {
-        super(context, R.layout.block_if_there_was_a_large_sound);
+    public IfMachineIsOutOfLineBlock(Context context) {
+        super(context, R.layout.block_if_machine_is_out_of_line);
 
-        mThreshold = BlockPreferences.get(context).getSoundSensorThreshold();
+        mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
     }
 
     @Override
-    protected boolean evaluateCondition(MachineController controller) {
-        // need multiply 10 because getdB returns 10 times value
-        // the comment is messed up
-        return ((NxtController) controller).getSoundSensorValue() > mThreshold * 10;
+    protected boolean evaluateCondition(CarControllerBase controller) {
+        return controller.getLineSensorValue() > mThreshold;
     }
 }

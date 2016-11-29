@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.repetition;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
@@ -36,7 +36,7 @@ public class RepetitionBreakBlock extends BlockBase {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
         condition.breakLoop();
         return 0;
     }

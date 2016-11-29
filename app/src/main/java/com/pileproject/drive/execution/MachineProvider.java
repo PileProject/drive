@@ -38,7 +38,7 @@ public interface MachineProvider {
      * Returns a concrete machine controller for the given machine.
      *
      * @param machineBase instance of {@link MachineBase} which will be manipulated by the returned {@link MachineController}
-     * @return {@link MachineController} instance
+     * @return {@link CarControllerBase} instance
      */
-    MachineController getMachineController(MachineBase machineBase);
+    CarControllerBase getMachineController(MachineBase machineBase);
 }

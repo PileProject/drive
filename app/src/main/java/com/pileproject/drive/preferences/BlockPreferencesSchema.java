@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+/*
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,15 +20,13 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
  * Schema for "block_preferences" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 21-April-2016
  */
 @Table(name = "block_preferences")
 public class BlockPreferencesSchema {
     public class THRESHOLD {
         public static final int SOUND_DEFAULT = 70;
         public static final int LINE_DEFAULT = 50;
+        public static final int _DEFAULT = 50;
     }
 
     @Key(name = "sound_sensor_threshold")

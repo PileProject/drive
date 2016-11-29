@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+/*
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.sequence;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
@@ -55,8 +55,8 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
+        controller.setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
         return 0;
     }
 

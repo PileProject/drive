@@ -19,30 +19,18 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
-import com.pileproject.drive.execution.NxtController;
-import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.preferences.MachinePreferencesSchema;
 
 /**
  * This block checks the touch sensor was touched or not
  */
-public class IfNxtWasTouchedBlock extends SelectionBlock {
-    private final boolean mIsLejosFirmware;
+public class IfMachineWasTouchedBlock extends SelectionBlock {
 
-    public IfNxtWasTouchedBlock(Context context) {
+    public IfMachineWasTouchedBlock(Context context) {
         super(context, R.layout.block_if_machine_was_touched);
-
-        String firmware = MachinePreferences.get(getContext()).getFirmware();
-        mIsLejosFirmware = firmware.equals(MachinePreferencesSchema.FIRMWARE.LEJOS);
     }
 
     @Override
     protected boolean evaluateCondition(CarControllerBase controller) {
-        boolean wasTouched = ((NxtController) controller).isTouchSensorTouched();
-
-        // leJOS returns the opposite value
-        if (mIsLejosFirmware) wasTouched = !wasTouched;
-
-        return wasTouched;
+        return controller.isTouchSensorTouched();
     }
 }

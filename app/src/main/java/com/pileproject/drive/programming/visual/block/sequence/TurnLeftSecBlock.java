@@ -1,5 +1,5 @@
-/**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+/*
+ * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,20 +18,20 @@ package com.pileproject.drive.programming.visual.block.sequence;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
 import java.math.BigDecimal;
 
 /**
- * Stop for a while
+ * Turn left for a while
  *
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class StopSecBlock extends SequenceBlockHasNumberText {
+public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
 
     // TODO: set from preference
     private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
@@ -39,8 +39,8 @@ public class StopSecBlock extends SequenceBlockHasNumberText {
     // TODO: set from preference
     private static final int PRECISION = 3;
 
-    public StopSecBlock(Context context) {
-        super(context, R.layout.block_stop_sec, R.id.block_numText);
+    public TurnLeftSecBlock(Context context) {
+        super(context, R.layout.block_turn_left_sec, R.id.block_numText);
     }
 
     @Override
@@ -54,8 +54,8 @@ public class StopSecBlock extends SequenceBlockHasNumberText {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        controller.halt();
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
+        controller.turnLeft();
         return getActionValue();
     }
 

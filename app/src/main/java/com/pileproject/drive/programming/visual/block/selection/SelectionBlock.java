@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.selection;
 import android.content.Context;
 import android.support.annotation.LayoutRes;
 
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
@@ -34,7 +34,7 @@ public abstract class SelectionBlock extends BlockBase {
         super(context, layoutRes);
     }
 
-    protected abstract boolean evaluateCondition(MachineController controller);
+    protected abstract boolean evaluateCondition(CarControllerBase controller);
 
     @Override
     public final BlockKind getKind() {
@@ -42,7 +42,7 @@ public abstract class SelectionBlock extends BlockBase {
     }
 
     @Override
-    public final int action(MachineController controller, ExecutionCondition condition) {
+    public final int action(CarControllerBase controller, ExecutionCondition condition) {
         condition.pushSelectionResult(evaluateCondition(controller));
         return 0;
     }

@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.repetition;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 
 /**
  * While forever
@@ -34,7 +34,7 @@ public class LoopBlock extends RepetitionBlock {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
         condition.enterInfiniteLoop();
         return 1;
     }

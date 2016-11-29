@@ -18,8 +18,8 @@ package com.pileproject.drive.programming.visual.block.selection;
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
@@ -38,7 +38,7 @@ public class SelectionEndBlock extends BlockBase {
     }
 
     @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
+    public int action(CarControllerBase controller, ExecutionCondition condition) {
         // just pop one
         condition.popSelectionResult();
         return 0;
