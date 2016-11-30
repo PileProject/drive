@@ -164,7 +164,7 @@ public class CarControllerBase implements MachineController {
     }
 
     /**
-     * Gets touch sensor value
+     * Checks the touch sensor is touched or not now.
      *
      * @return is touched (true) or not (false)
      */

@@ -15,8 +15,8 @@
  */
 package com.pileproject.drive.execution;
 
-import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.preferences.MachinePreferences;
+import com.pileproject.drive.preferences.MachinePreferencesSchema;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
@@ -24,18 +24,21 @@ import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 import java.util.LinkedList;
 import java.util.List;
 
+import static com.pileproject.drive.app.DriveApplication.getContext;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.LINE;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.SOUND;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.TOUCH;
 
 public class NxtController extends CarControllerBase {
+    private final boolean mIsLejosFirmware;
+
     /**
      * binds each sensor and motor to their port
      */
     public NxtController(NxtMachine machine) {
         mMachine = machine;
 
-        MachinePreferences preferences = MachinePreferences.get(DriveApplication.getContext());
+        MachinePreferences preferences = MachinePreferences.get(getContext());
 
         // connect motors
         connectOutputPort(preferences.getOutputPortA(), NxtOutputPort.PORT_A);
@@ -47,6 +50,24 @@ public class NxtController extends CarControllerBase {
         connectInputPort(preferences.getInputPort2(), NxtInputPort.PORT_2);
         connectInputPort(preferences.getInputPort3(), NxtInputPort.PORT_3);
         connectInputPort(preferences.getInputPort4(), NxtInputPort.PORT_4);
+
+        String firmware = MachinePreferences.get(getContext()).getFirmware();
+        mIsLejosFirmware = firmware.equals(MachinePreferencesSchema.FIRMWARE.LEJOS);
+    }
+
+    /**
+     * Checks the touch sensor is touched or not now.
+     *
+     * @return is touched (true) or not (false)
+     */
+    public boolean isTouchSensorTouched() {
+        if (mTouchSensor == null) return false;
+        boolean isTouched = mTouchSensor.isTouched();
+
+        // leJOS returns the opposite value
+        if (mIsLejosFirmware) isTouched = !isTouched;
+
+        return isTouched;
     }
 
     /**
