@@ -31,6 +31,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.internal.util.reflection.Whitebox;
 
+import static com.pileproject.drive.execution.CarControllerBase.MotorKind.LeftMotor;
+import static com.pileproject.drive.execution.CarControllerBase.MotorKind.RightMotor;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -191,8 +193,8 @@ public class NxtCarControllerTest {
     public void whenSetMotorPowerCalled_thenMovesForwardWithTheValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, 10);
-        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, 10);
+        controller.setMotorPower(LeftMotor, 10);
+        controller.setMotorPower(RightMotor, 10);
 
         controller.moveForward();
 
@@ -204,8 +206,8 @@ public class NxtCarControllerTest {
     public void whenSetMotorPowerCalledWithOverUpperBoundValue_thenMovesForwardWithUpperBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, 200);
-        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, 200);
+        controller.setMotorPower(LeftMotor, 200);
+        controller.setMotorPower(RightMotor, 200);
 
         controller.moveForward();
 
@@ -217,8 +219,8 @@ public class NxtCarControllerTest {
     public void whenSetMotorPowerCalledWithUnderLowerBoundValue_thenMovesForwardWithLowerBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, -10);
-        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, -10);
+        controller.setMotorPower(LeftMotor, -10);
+        controller.setMotorPower(RightMotor, -10);
 
         controller.moveForward();
 
