@@ -22,9 +22,9 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.LEFT;
+import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.LEFT_MOTOR;
 import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.NONE;
-import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.RIGHT;
+import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.RIGHT_MOTOR;
 
 public class NxtMotorPortTextView extends PortTextViewBase {
 
@@ -33,14 +33,14 @@ public class NxtMotorPortTextView extends PortTextViewBase {
     }
 
     public static String getMotorName(Context context, String motorType) {
-        if (LEFT.equals(motorType)) return context.getString(R.string.motors_left);
-        if (RIGHT.equals(motorType)) return context.getString(R.string.motors_right);
+        if (LEFT_MOTOR.equals(motorType)) return context.getString(R.string.motors_left);
+        if (RIGHT_MOTOR.equals(motorType)) return context.getString(R.string.motors_right);
         return "";
     }
 
     public static int getMotorColor(String motorType) {
-        if (LEFT.equals(motorType)) return Color.rgb(70, 89, 183);
-        if (RIGHT.equals(motorType)) return Color.rgb(214, 133, 52);
+        if (LEFT_MOTOR.equals(motorType)) return Color.rgb(70, 89, 183);
+        if (RIGHT_MOTOR.equals(motorType)) return Color.rgb(214, 133, 52);
         return Color.GRAY;
     }
 

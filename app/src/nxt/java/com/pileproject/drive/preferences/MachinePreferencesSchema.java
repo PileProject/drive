@@ -54,8 +54,8 @@ public class MachinePreferencesSchema {
     final String outputPortA = CarControllerBase.OUTPUT.NONE;
 
     @Key(name = "output_port_B")
-    final String outputPortB = CarControllerBase.OUTPUT.RIGHT;
+    final String outputPortB = CarControllerBase.OUTPUT.RIGHT_MOTOR;
 
     @Key(name = "output_port_C")
-    final String outputPortC = CarControllerBase.OUTPUT.LEFT;
+    final String outputPortC = CarControllerBase.OUTPUT.LEFT_MOTOR;
 }

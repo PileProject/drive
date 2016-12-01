@@ -77,8 +77,8 @@ public class CarControllerBase implements MachineController {
     // all output devices
     public class OUTPUT {
         public static final String NONE = "none";
-        public static final String LEFT = "left_motor";
-        public static final String RIGHT = "right_motor";
+        public static final String LEFT_MOTOR = "left_motor";
+        public static final String RIGHT_MOTOR = "right_motor";
         public static final String BUZZER = "buzzer";
         public static final String LED = "led";
     }
@@ -90,8 +90,8 @@ public class CarControllerBase implements MachineController {
     public static final class MotorProperty {
         public static List<String> getAllMotors() {
             List<String> motors = new LinkedList<>();
-            motors.add(OUTPUT.LEFT);
-            motors.add(OUTPUT.RIGHT);
+            motors.add(OUTPUT.LEFT_MOTOR);
+            motors.add(OUTPUT.RIGHT_MOTOR);
             return motors;
         }
     }
@@ -281,8 +281,8 @@ public class CarControllerBase implements MachineController {
 
     protected void connectOutputPort(String outputType, OutputPort port) {
         if (OUTPUT.NONE.equals(outputType)) return ;
-        if (OUTPUT.LEFT.equals(outputType)) mLeftMotor = mMachine.createMotor(port);
-        if (OUTPUT.RIGHT.equals(outputType)) mRightMotor = mMachine.createMotor(port);
+        if (OUTPUT.LEFT_MOTOR.equals(outputType)) mLeftMotor = mMachine.createMotor(port);
+        if (OUTPUT.RIGHT_MOTOR.equals(outputType)) mRightMotor = mMachine.createMotor(port);
         if (OUTPUT.BUZZER.equals(outputType)) mBuzzer = mMachine.createBuzzer(port);
         if (OUTPUT.LED.equals(outputType)) mLed = mMachine.createLed(port);
     }
