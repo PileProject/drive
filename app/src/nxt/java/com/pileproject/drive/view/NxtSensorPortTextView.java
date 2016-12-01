@@ -36,7 +36,7 @@ public class NxtSensorPortTextView extends PortTextViewBase {
     public static String getSensorName(Context context, String sensorType) {
         if (TOUCH.equals(sensorType)) return context.getString(R.string.sensors_touch);
         if (SOUND.equals(sensorType)) return context.getString(R.string.sensors_sound);
-        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_light);
+        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_line);
         return "";
     }
 
