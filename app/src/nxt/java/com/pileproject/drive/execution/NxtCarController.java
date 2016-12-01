@@ -29,13 +29,13 @@ import static com.pileproject.drive.execution.CarControllerBase.INPUT.LINE;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.SOUND;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.TOUCH;
 
-public class NxtController extends CarControllerBase {
+public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
 
     /**
      * binds each sensor and motor to their port
      */
-    public NxtController(NxtMachine machine) {
+    public NxtCarController(NxtMachine machine) {
         mMachine = machine;
 
         MachinePreferences preferences = MachinePreferences.get(getContext());

@@ -29,8 +29,8 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
-import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
+import com.pileproject.drive.execution.NxtCarController.SensorProperty.LineSensor;
+import com.pileproject.drive.execution.NxtCarController.SensorProperty.SoundSensor;
 import com.pileproject.drive.preferences.BlockPreferences;
 
 public class NxtThresholdFragment extends DialogFragment {

@@ -29,7 +29,7 @@ public class NxtMachineProvider implements MachineProvider {
     @Override
     public MachineController getMachineController(MachineBase machineBase) {
         if (machineBase instanceof NxtMachine) {
-            return new NxtController((NxtMachine) machineBase);
+            return new NxtCarController((NxtMachine) machineBase);
         }
 
         throw new IllegalArgumentException("Given MachineBase is not instance of NxtMachine: that was " + machineBase.getClass());

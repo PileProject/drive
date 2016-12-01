@@ -21,11 +21,12 @@ import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
 import java.math.BigDecimal;
+
+import static com.pileproject.drive.execution.CarControllerBase.MotorKind.RightMotor;
 
 /**
  * Set right motor power
@@ -57,7 +58,7 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        ((CarControllerBase) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
+        ((CarControllerBase) controller).setMotorPower(RightMotor, getValue().intValue());
         return 0;
     }
 

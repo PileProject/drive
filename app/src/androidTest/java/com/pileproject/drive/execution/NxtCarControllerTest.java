@@ -39,10 +39,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
-public class NxtControllerTest {
+public class NxtCarControllerTest {
 
     @Mock NxtMachine machine;
-    @InjectMocks NxtController controller;
+    @InjectMocks
+    NxtCarController controller;
 
     @Mock TouchSensor touchSensor;
     @Mock SoundSensor soundSensor;
@@ -54,7 +55,7 @@ public class NxtControllerTest {
     @Before
     public void setUp() {
         machine = mock(NxtMachine.class);
-        controller = new NxtController(machine);
+        controller = new NxtCarController(machine);
 
         touchSensor = mock(TouchSensor.class);
         soundSensor = mock(SoundSensor.class);
@@ -182,16 +183,16 @@ public class NxtControllerTest {
 
         controller.moveForward();
 
-        verify(leftMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
-        verify(rightMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
+        verify(leftMotor).setSpeed(NxtCarController.INIT_MOTOR_POWER);
+        verify(rightMotor).setSpeed(NxtCarController.INIT_MOTOR_POWER);
     }
 
     @Test
     public void whenSetMotorPowerCalled_thenMovesForwardWithTheValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 10);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, 10);
+        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, 10);
+        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, 10);
 
         controller.moveForward();
 
@@ -203,8 +204,8 @@ public class NxtControllerTest {
     public void whenSetMotorPowerCalledWithOverUpperBoundValue_thenMovesForwardWithUpperBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 200);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, 200);
+        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, 200);
+        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, 200);
 
         controller.moveForward();
 
@@ -216,8 +217,8 @@ public class NxtControllerTest {
     public void whenSetMotorPowerCalledWithUnderLowerBoundValue_thenMovesForwardWithLowerBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, -10);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, -10);
+        controller.setMotorPower(NxtCarController.MotorKind.LeftMotor, -10);
+        controller.setMotorPower(NxtCarController.MotorKind.RightMotor, -10);
 
         controller.moveForward();
 

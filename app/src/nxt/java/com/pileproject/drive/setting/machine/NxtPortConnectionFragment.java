@@ -25,15 +25,13 @@ import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.CarControllerBase;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.execution.NxtCarController;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.view.PortTextViewBase;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import static com.pileproject.drive.execution.CarControllerBase.OUTPUT.NONE;
 
 
 public class NxtPortConnectionFragment extends DialogFragment {
@@ -78,7 +76,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort3, preferences.getInputPort3()));
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort4, preferences.getInputPort4()));
 
-        List<String> allSensors = NxtController.SensorProperty.getAllSensors();
+        List<String> allSensors = NxtCarController.SensorProperty.getAllSensors();
         int index = 0;
         final int[] sensorPlaceIds = {
                 R.id.setting_portconfig_sensor1, R.id.setting_portconfig_sensor2, R.id.setting_portconfig_sensor3,
@@ -106,7 +104,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortB, preferences.getOutputPortB()));
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortC, preferences.getOutputPortC()));
 
-        List<String> allMotors = NxtController.MotorProperty.getAllMotors();
+        List<String> allMotors = NxtCarController.MotorProperty.getAllMotors();
         int index = 0;
         final int[] motorPlaceIds = {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,
