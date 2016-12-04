@@ -43,8 +43,8 @@ public class LegalNoticeFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_legal_notice, container, false);
-        mLegalNoticePage = (WebView) v.findViewById(R.id.legal_notice_page);
+        View v = inflater.inflate(R.layout.fragment_webview, container, false);
+        mLegalNoticePage = (WebView) v.findViewById(R.id.plain_html);
 
         // load a legal notice page located in assets
         String htmlPath = "file:///android_asset/legal_notice.html";

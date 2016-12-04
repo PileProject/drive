@@ -43,8 +43,8 @@ public class CopyrightNoticeFragment extends DialogFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
 
-        View v = inflater.inflate(R.layout.fragment_copyright_notice, container, false);
-        mLicensesPage = (WebView) v.findViewById(R.id.licenses_page);
+        View v = inflater.inflate(R.layout.fragment_webview, container, false);
+        mLicensesPage = (WebView) v.findViewById(R.id.plain_html);
 
         // load a license file located in assets
         String htmlPath = "file:///android_asset/licenses.html";

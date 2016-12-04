@@ -22,14 +22,14 @@ Drive series do not guarantee error free behaviour
 with any of LEGO&reg; / PILE products
 and is not responsible for any damage,
 injury, or warranty claim that occurs
-with or in connection with any of LEGO&reg; / PILE products and systems sold.
+with or in connection with any of LEGO&reg; / PILE products and systems.
 
-- Purchaser confirms that they will operate LEGO&reg; MINDSTORMS&reg; or PILE robots.
-- Purchaser assumes all liability for damages to property and persons from the equipment.
-- Purchaser assumes all liability for improper use of the equipment.
-- Purchaser is responsible for proper configuration and maintenance of the equipment.
+- User confirms that they will operate LEGO&reg; MINDSTORMS&reg; or PILE robots.
+- User assumes all liability for damages to property and persons from the equipment.
+- User assumes all liability for improper use of the equipment.
+- User is responsible for proper configuration and maintenance of the equipment.
 
-It is the responsibility of the purchaser to decide
+It is the responsibility of the user to decide
 if the equipment is suitable for your intended use.
 
 We are not responsible for any warranty claim due to misuse, crashes, damage,
