@@ -293,25 +293,23 @@ public abstract class CarControllerBase implements MachineController {
 
     /**
      * A setter of motor power.
-     *
-     * @param kind see {@link MotorKind}
-     * @param power [0, 100]
+     *  @param kind see {@link MotorKind}
+     * @param percent [0, 100]
      *              If an out of bound value is passed, then the value will be clipped
-     *              (e.g., -10 to 0, 200 to 100).
      */
-    public void setMotorPower(MotorKind kind, int power) {
-        if (power > 100) {
-            power = 100;
-        } else if (power < 0) {
-            power = 0;
+    public void setMotorPower(MotorKind kind, int percent) {
+        if (percent > 100) {
+            percent = 100;
+        } else if (percent < 0) {
+            percent = 0;
         }
 
         switch (kind) {
             case LeftMotor:
-                mLeftMotorPower = power;
+                mLeftMotorPower = percent;
                 break;
             case RightMotor:
-                mRightMotorPower = power;
+                mRightMotorPower = percent;
                 break;
         }
     }
