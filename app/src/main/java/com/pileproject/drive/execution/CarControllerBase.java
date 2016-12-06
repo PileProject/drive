@@ -50,8 +50,11 @@ import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.IN
  * motors (see: {@link com.pileproject.drive.execution.CarControllerBase.MotorProperty}). However, as mentioned
  * above, the information of other devices should have been specified in child controllers. For example, we keep the
  * sensor properties of Nxt as {@link com.pileproject.drive.execution.NxtCarController.SensorProperty}.
+ *
+ * To provide a hint to users, please override {@see #getAllInputDevices()}, {@see #getAllOutputDevices()} in your
+ * child classes.
  */
-public class CarControllerBase implements MachineController {
+public abstract class CarControllerBase implements MachineController {
     protected MachineBase mMachine = null;
 
     protected Motor mLeftMotor = null;
@@ -125,6 +128,8 @@ public class CarControllerBase implements MachineController {
         mMachine.disconnect();
     }
 
+    public abstract List<String> getAllInputDevices();
+
     public float[] getColorSensorRgb() {
         throw new UnsupportedOperationException("This machine does not support 'getColorSensorRgb' command");
     }
@@ -189,6 +194,8 @@ public class CarControllerBase implements MachineController {
         throw new UnsupportedOperationException("This machine does not support 'getTouchSensorTouchedCount' command");
     }
 
+
+    public abstract List<String> getAllOutputDevices();
 
     public void turnOnBuzzer() {
         throw new UnsupportedOperationException("This machine does not support 'turnOnBuzzer' command");

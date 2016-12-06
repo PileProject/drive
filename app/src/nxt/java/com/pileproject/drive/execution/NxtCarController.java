@@ -28,9 +28,33 @@ import static com.pileproject.drive.app.DriveApplication.getContext;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.LINE;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.SOUND;
 import static com.pileproject.drive.execution.CarControllerBase.INPUT.TOUCH;
+import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.getAllMotors;
 
 public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
+
+    /**
+     * Internal class that contains sensor properties.
+     */
+    public static final class SensorProperty {
+        public static List<String> getAllSensors() {
+            List<String> sensors = new LinkedList<>();
+            sensors.add(TOUCH);
+            sensors.add(SOUND);
+            sensors.add(LINE);
+            return sensors;
+        }
+
+        public static final class LineSensor {
+            public static final int PctMin = 0;
+            public static final int PctMax = 100;
+        }
+
+        public static final class SoundSensor {
+            public static final int SI_dB_SiMin = 40;
+            public static final int SI_dB_SiMax = 120;
+        }
+    }
 
     /**
      * binds each sensor and motor to their port
@@ -56,6 +80,11 @@ public class NxtCarController extends CarControllerBase {
     }
 
     @Override
+    public List<String> getAllInputDevices() {
+        return SensorProperty.getAllSensors();
+    }
+
+    @Override
     public int getLineSensorValue() {
         if (mLineSensor == null) return -1;
         return mLineSensor.getSensorValue();
@@ -78,26 +107,10 @@ public class NxtCarController extends CarControllerBase {
         return isTouched;
     }
 
-    /**
-     * Internal class that contains sensor properties.
-     */
-    public static final class SensorProperty {
-        public static List<String> getAllSensors() {
-            List<String> sensors = new LinkedList<>();
-            sensors.add(TOUCH);
-            sensors.add(SOUND);
-            sensors.add(LINE);
-            return sensors;
-        }
-
-        public static final class LineSensor {
-            public static final int PctMin = 0;
-            public static final int PctMax = 100;
-        }
-
-        public static final class SoundSensor {
-            public static final int SI_dB_SiMin = 40;
-            public static final int SI_dB_SiMax = 120;
-        }
+    @Override
+    public List<String> getAllOutputDevices() {
+        // NOTE: add more devices if we want use them (e.g., Buzzer)
+        return getAllMotors();
     }
+
 }
