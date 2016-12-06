@@ -160,8 +160,8 @@ public abstract class CarControllerBase implements MachineController {
      * Gets the distance between a machine and a Rangefinder
      * @return distance
      */
-    public int getRangefinderDisance() {
-        throw new UnsupportedOperationException("This machine does not support 'getRangefinderDisance' command");
+    public int getRangefinderDistance() {
+        throw new UnsupportedOperationException("This machine does not support 'getRangefinderDistance' command");
     }
 
     public int getRemoteControlReceiverButton() {
