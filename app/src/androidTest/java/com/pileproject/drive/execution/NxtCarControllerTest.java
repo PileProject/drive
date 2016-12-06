@@ -185,8 +185,8 @@ public class NxtCarControllerTest {
 
         controller.moveForward();
 
-        verify(leftMotor).setSpeed(NxtCarController.INIT_MOTOR_POWER);
-        verify(rightMotor).setSpeed(NxtCarController.INIT_MOTOR_POWER);
+        verify(leftMotor).setSpeed(CarControllerBase.MotorProperty.INIT_MOTOR_POWER);
+        verify(rightMotor).setSpeed(NxtCarController.MotorProperty.INIT_MOTOR_POWER);
     }
 
     @Test

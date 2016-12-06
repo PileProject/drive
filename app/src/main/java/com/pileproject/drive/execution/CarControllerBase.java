@@ -35,10 +35,10 @@ import java.util.List;
 import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.INIT_MOTOR_POWER;
 
 /**
- * A machine controller which controls a car-formed machine. A car-formed machine is a machine that at least has
- * left and right {@link Motor}s. It depends on the machine what kinds of devices (e.g., {@link Buzzer}, {@link TouchSensor}
- * it actually has, and such information (e.g,. methods/properties) should be treated in child controllers like
- * {@link NxtCarController}.
+ * This is a base machine controller which controls a car-formed machine (e.g., Nxt/Ev3/Pile robot). A car-formed
+ * machine is a machine that at least has left and right {@link Motor}s. It depends on the machine what kinds of
+ * devices (e.g., {@link Buzzer}, {@link TouchSensor} it actually has, and such information (e.g.,
+ * methods/properties) should be treated in child controllers like {@link NxtCarController}.
  *
  * This base class must specify the interface to control a car-formed machine as methods which are the union of
  * methods of child controllers, and provide the list of all input/output devices may be used (see: {@link INPUT},
