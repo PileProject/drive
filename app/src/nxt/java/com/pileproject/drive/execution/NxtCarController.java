@@ -55,11 +55,19 @@ public class NxtCarController extends CarControllerBase {
         mIsLejosFirmware = firmware.equals(MachinePreferencesSchema.FIRMWARE.LEJOS);
     }
 
-    /**
-     * Checks the touch sensor is touched or not now.
-     *
-     * @return is touched (true) or not (false)
-     */
+    @Override
+    public int getLineSensorValue() {
+        if (mLineSensor == null) return -1;
+        return mLineSensor.getSensorValue();
+    }
+
+    @Override
+    public int getSoundSensorDb() {
+        if (mSoundSensor == null) return -1;
+        return mSoundSensor.getDb();
+    }
+
+    @Override
     public boolean isTouchSensorTouched() {
         if (mTouchSensor == null) return false;
         boolean isTouched = mTouchSensor.isTouched();
@@ -71,8 +79,7 @@ public class NxtCarController extends CarControllerBase {
     }
 
     /**
-     * Internal class to contain sensor properties
-     * particularly for Android activities
+     * Internal class that contains sensor properties.
      */
     public static final class SensorProperty {
         public static List<String> getAllSensors() {

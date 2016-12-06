@@ -32,9 +32,26 @@ import com.pileproject.drivecommand.machine.device.port.OutputPort;
 import java.util.LinkedList;
 import java.util.List;
 
-public class CarControllerBase implements MachineController {
-    public static final int INIT_MOTOR_POWER = 60;
+import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.INIT_MOTOR_POWER;
 
+/**
+ * A machine controller which controls a car-formed machine. A car-formed machine is a machine that at least has
+ * left and right {@link Motor}s. It depends on the machine what kinds of devices (e.g., {@link Buzzer}, {@link TouchSensor}
+ * it actually has, and such information (e.g,. methods/properties) should be treated in child controllers like
+ * {@link NxtCarController}.
+ *
+ * This base class must specify the interface to control a car-formed machine as methods which are the union of
+ * methods of child controllers, and provide the list of all input/output devices may be used (see: {@link INPUT},
+ * {@link OUTPUT}).
+ * NOTE: Because of this, if you want add a new controller with a new feature which extends this base class , you
+ * should add a new one in this base class.
+ *
+ * Because a car-formed machine must have two motors (left and right), this base class has the properties of these
+ * motors (see: {@link com.pileproject.drive.execution.CarControllerBase.MotorProperty}). However, as mentioned
+ * above, the information of other devices should have been specified in child controllers. For example, we keep the
+ * sensor properties of Nxt as {@link com.pileproject.drive.execution.NxtCarController.SensorProperty}.
+ */
+public class CarControllerBase implements MachineController {
     protected MachineBase mMachine = null;
 
     protected Motor mLeftMotor = null;
@@ -53,14 +70,6 @@ public class CarControllerBase implements MachineController {
 
     protected int mLeftMotorPower = INIT_MOTOR_POWER;
     protected int mRightMotorPower = INIT_MOTOR_POWER;
-
-    public enum MotorDir {
-        Forward, Neutral, Backward
-    }
-
-    public enum MotorKind {
-        LeftMotor, RightMotor
-    }
 
     // all input devices
     public class INPUT {
@@ -83,11 +92,20 @@ public class CarControllerBase implements MachineController {
         public static final String LED = "led";
     }
 
+    public enum MotorDir {
+        Forward, Neutral, Backward
+    }
+
+    public enum MotorKind {
+        LeftMotor, RightMotor
+    }
+
     /**
-     * Internal class to contain motor properties
-     * particularly for Android activities
+     * Internal class that contains motor properties.
      */
     public static final class MotorProperty {
+        public static final int INIT_MOTOR_POWER = 60;
+
         public static List<String> getAllMotors() {
             List<String> motors = new LinkedList<>();
             motors.add(OUTPUT.LEFT_MOTOR);
@@ -108,24 +126,20 @@ public class CarControllerBase implements MachineController {
     }
 
     public float[] getColorSensorRgb() {
-        if (mColorSensor == null) return null;
-        return mColorSensor.getRgb();
+        throw new UnsupportedOperationException("This machine does not support 'getColorSensorRgb' command");
     }
 
     public int getColorSensorIlluminance() {
-        if (mColorSensor == null) return -1;
-        return mColorSensor.getIlluminance();
+        throw new UnsupportedOperationException("This machine does not support 'getColorSensorIlluminance' command");
     }
 
 
     public int getGyroSensorRate() {
-        if (mGyroSensor == null) return -1;
-        return mGyroSensor.getRate();
+        throw new UnsupportedOperationException("This machine does not support 'getGyroSensorRate' command");
     }
 
     public int getGyroSensorAngle() {
-        if (mGyroSensor == null) return -1;
-        return mGyroSensor.getAngle();
+        throw new UnsupportedOperationException("This machine does not support 'getGyroSensorAngle' command");
     }
 
     /**
@@ -134,23 +148,23 @@ public class CarControllerBase implements MachineController {
      * @return light strength
      */
     public int getLineSensorValue() {
-        if (mLineSensor == null) return -1;
-        return mLineSensor.getSensorValue();
+        throw new UnsupportedOperationException("This machine does not support 'getLineSensorValue' command");
     }
 
+    /**
+     * Gets the distance between a machine and a Rangefinder
+     * @return distance
+     */
     public int getRangefinderDisance() {
-        if (mRangefinder == null) return -1;
-        return mRangefinder.getDistance();
+        throw new UnsupportedOperationException("This machine does not support 'getRangefinderDisance' command");
     }
 
     public int getRemoteControlReceiverButton() {
-        if (mRemoteControlReceiver == null) return -1;
-        return mRemoteControlReceiver.getRemoteButton();
+        throw new UnsupportedOperationException("This machine does not support 'getRemoteControlReceiverButton' command");
     }
 
     public int getRemoteControlReceiverDistance() {
-        if (mRemoteControlReceiver == null) return -1;
-        return mRemoteControlReceiver.getRemoteDistance();
+        throw new UnsupportedOperationException("This machine does not support 'getRemoteControlReceiverDistance' command");
     }
 
     /**
@@ -159,8 +173,7 @@ public class CarControllerBase implements MachineController {
      * @return dB
      */
     public int getSoundSensorDb() {
-        if (mSoundSensor == null) return -1;
-        return mSoundSensor.getDb();
+        throw new UnsupportedOperationException("This machine does not support 'getSoundSensorDb' command");
     }
 
     /**
@@ -169,15 +182,33 @@ public class CarControllerBase implements MachineController {
      * @return is touched (true) or not (false)
      */
     public boolean isTouchSensorTouched() {
-        if (mTouchSensor == null) return false;
-        return mTouchSensor.isTouched();
+        throw new UnsupportedOperationException("This machine does not support 'isTouchSensorTouched' command");
     }
 
     public int getTouchSensorTouchedCount() {
-        if (mTouchSensor == null) return -1;
-        return mTouchSensor.getTouchedCount();
+        throw new UnsupportedOperationException("This machine does not support 'getTouchSensorTouchedCount' command");
     }
 
+
+    public void turnOnBuzzer() {
+        throw new UnsupportedOperationException("This machine does not support 'turnOnBuzzer' command");
+    }
+
+    public void turnOffBuzzer() {
+        throw new UnsupportedOperationException("This machine does not support 'turnOffBuzzer' command");
+    }
+
+    public void beepBuzzer() {
+        throw new UnsupportedOperationException("This machine does not support 'beepBuzzer' command");
+    }
+
+    public void turnOnLed() {
+        throw new UnsupportedOperationException("This machine does not support 'turnOnLed' command");
+    }
+
+    public void turnOffLed() {
+        throw new UnsupportedOperationException("This machine does not support 'turnOffLed' command");
+    }
 
     /**
      * move forward
