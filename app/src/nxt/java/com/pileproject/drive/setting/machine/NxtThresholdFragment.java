@@ -34,8 +34,8 @@ import com.pileproject.drive.execution.NxtCarController.SensorProperty.SoundSens
 import com.pileproject.drive.preferences.BlockPreferences;
 
 public class NxtThresholdFragment extends DialogFragment {
-    public static final int LINE_DEFAULT = 50;
-    public static final int SOUND_DEFAULT = 70;
+    public static final int LINE_DEFAULT_THRESHOLD = 50;
+    public static final int SOUND_DEFAULT_THRESHOLD = 70;
 
     private SeekBar mLightSensorSeekBar = null;
     private TextView mLightSensorText = null;
@@ -90,7 +90,7 @@ public class NxtThresholdFragment extends DialogFragment {
             }
         });
 
-        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold(LINE_DEFAULT);
+        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold(LINE_DEFAULT_THRESHOLD);
         mLightSensorSeekBar.setMax(LineSensor.PctMax - LineSensor.PctMin);
         mLightSensorSeekBar.setProgress(savedLightValue - LineSensor.PctMin);
 
@@ -112,7 +112,7 @@ public class NxtThresholdFragment extends DialogFragment {
             }
         });
 
-        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold(SOUND_DEFAULT);
+        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold(SOUND_DEFAULT_THRESHOLD);
         mSoundSensorSeekBar.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
         mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
     }
