@@ -22,10 +22,10 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.LINE;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.NONE;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.SOUND;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.TOUCH;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.NONE;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.TOUCH;
 
 public class NxtSensorPortTextView extends PortTextViewBase {
 

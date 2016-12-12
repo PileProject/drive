@@ -60,7 +60,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     }
 
     private String loadSensor(int port, String sensor) {
-        if (sensor.equals(CarControllerBase.INPUT.NONE)) return sensor;
+        if (sensor.equals(CarControllerBase.InputDevice.NONE)) return sensor;
 
         PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(sensor);
@@ -76,7 +76,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort3, preferences.getInputPort3()));
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort4, preferences.getInputPort4()));
 
-        List<String> allSensors = NxtCarController.SensorProperty.getAllSensors();
+        List<String> allSensors = NxtCarController.SensorProperty.ALL_SENSORS;
         int index = 0;
         final int[] sensorPlaceIds = {
                 R.id.setting_portconfig_sensor1, R.id.setting_portconfig_sensor2, R.id.setting_portconfig_sensor3,
@@ -89,7 +89,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     }
 
     private String loadMotor(int port, String motor) {
-        if (motor.equals(CarControllerBase.OUTPUT.NONE)) return motor;
+        if (motor.equals(CarControllerBase.OutputDevice.NONE)) return motor;
 
         PortTextViewBase portTextView = (PortTextViewBase) mRootView.findViewById(port);
         portTextView.setDeviceType(motor);
@@ -104,7 +104,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortB, preferences.getOutputPortB()));
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortC, preferences.getOutputPortC()));
 
-        List<String> allMotors = NxtCarController.MotorProperty.getAllMotors();
+        List<String> allMotors = NxtCarController.MotorProperty.ALL_MOTORS;
         int index = 0;
         final int[] motorPlaceIds = {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,

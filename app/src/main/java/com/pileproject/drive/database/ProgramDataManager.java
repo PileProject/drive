@@ -37,7 +37,7 @@ import java.util.Collections;
  */
 public class ProgramDataManager {
     private static ProgramDataManager mInstance = new ProgramDataManager();
-    private DriveDatabase mDriveDatabase = null;
+    private DriveDatabase mDriveDatabase;
 
     // the number of execution programs should be less than or equals to 1
     private static final Query EXECUTION_PROGRAM =

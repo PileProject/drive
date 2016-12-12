@@ -31,7 +31,7 @@ import static com.pileproject.drive.preferences.MachinePreferencesSchema.FIRMWAR
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.FIRMWARE.STANDARD;
 
 public class NxtFirmwareFragment extends DialogFragment {
-    private RadioGroup mFirmwareRadioGroup = null;
+    private RadioGroup mFirmwareRadioGroup;
 
     @Override
     @NonNull

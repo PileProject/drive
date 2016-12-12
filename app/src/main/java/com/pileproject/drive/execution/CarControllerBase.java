@@ -29,6 +29,7 @@ import com.pileproject.drivecommand.machine.device.output.Motor;
 import com.pileproject.drivecommand.machine.device.port.InputPort;
 import com.pileproject.drivecommand.machine.device.port.OutputPort;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,8 +42,8 @@ import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.IN
  * methods/properties) should be treated in child controllers like {@link NxtCarController}.
  *
  * This base class must specify the interface to control a car-formed machine as methods which are the union of
- * methods of child controllers, and provide the list of all input/output devices may be used (see: {@link INPUT},
- * {@link OUTPUT}).
+ * methods of child controllers, and provide the list of all input/output devices may be used (see: {@link InputDevice},
+ * {@link OutputDevice}).
  * NOTE: Because of this, if you want add a new controller with a new feature which extends this base class , you
  * should add a new one in this base class.
  *
@@ -55,27 +56,27 @@ import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.IN
  * child classes.
  */
 public abstract class CarControllerBase implements MachineController {
-    protected MachineBase mMachine = null;
+    protected MachineBase mMachine;
 
-    protected Motor mLeftMotor = null;
-    protected Motor mRightMotor = null;
+    protected Motor mLeftMotor;
+    protected Motor mRightMotor;
 
-    protected Buzzer mBuzzer = null;
-    protected Led mLed = null;
+    protected Buzzer mBuzzer;
+    protected Led mLed;
 
-    protected ColorSensor mColorSensor = null;
-    protected GyroSensor mGyroSensor = null;
-    protected LineSensor mLineSensor = null;
-    protected Rangefinder mRangefinder = null;
-    protected RemoteControlReceiver mRemoteControlReceiver = null;
-    protected SoundSensor mSoundSensor = null;
-    protected TouchSensor mTouchSensor = null;
+    protected ColorSensor mColorSensor;
+    protected GyroSensor mGyroSensor;
+    protected LineSensor mLineSensor;
+    protected Rangefinder mRangefinder;
+    protected RemoteControlReceiver mRemoteControlReceiver;
+    protected SoundSensor mSoundSensor;
+    protected TouchSensor mTouchSensor;
 
     protected int mLeftMotorPower = INIT_MOTOR_POWER;
     protected int mRightMotorPower = INIT_MOTOR_POWER;
 
     // all input devices
-    public class INPUT {
+    public static class InputDevice {
         public static final String NONE = "none";
         public static final String COLOR = "color_sensor";
         public static final String GYRO = "gyro_sensor";
@@ -87,7 +88,7 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     // all output devices
-    public class OUTPUT {
+    public static class OutputDevice {
         public static final String NONE = "none";
         public static final String LEFT_MOTOR = "left_motor";
         public static final String RIGHT_MOTOR = "right_motor";
@@ -108,13 +109,13 @@ public abstract class CarControllerBase implements MachineController {
      */
     public static final class MotorProperty {
         public static final int INIT_MOTOR_POWER = 60;
-
-        public static List<String> getAllMotors() {
-            List<String> motors = new LinkedList<>();
-            motors.add(OUTPUT.LEFT_MOTOR);
-            motors.add(OUTPUT.RIGHT_MOTOR);
-            return motors;
-        }
+        public static final List<String> ALL_MOTORS =
+                Collections.unmodifiableList(new LinkedList<String>() {
+                    {
+                        add(OutputDevice.LEFT_MOTOR);
+                        add(OutputDevice.RIGHT_MOTOR);
+                    }
+                });
     }
 
     @Override
@@ -316,23 +317,23 @@ public abstract class CarControllerBase implements MachineController {
 
 
     protected void connectOutputPort(String outputType, OutputPort port) {
-        if (OUTPUT.NONE.equals(outputType)) return ;
-        if (OUTPUT.LEFT_MOTOR.equals(outputType)) mLeftMotor = mMachine.createMotor(port);
-        if (OUTPUT.RIGHT_MOTOR.equals(outputType)) mRightMotor = mMachine.createMotor(port);
-        if (OUTPUT.BUZZER.equals(outputType)) mBuzzer = mMachine.createBuzzer(port);
-        if (OUTPUT.LED.equals(outputType)) mLed = mMachine.createLed(port);
+        if (OutputDevice.NONE.equals(outputType)) return ;
+        if (OutputDevice.LEFT_MOTOR.equals(outputType)) mLeftMotor = mMachine.createMotor(port);
+        if (OutputDevice.RIGHT_MOTOR.equals(outputType)) mRightMotor = mMachine.createMotor(port);
+        if (OutputDevice.BUZZER.equals(outputType)) mBuzzer = mMachine.createBuzzer(port);
+        if (OutputDevice.LED.equals(outputType)) mLed = mMachine.createLed(port);
     }
 
     protected void connectInputPort(String sensorType, InputPort port) {
-        if (INPUT.NONE.equals(sensorType)) return ;
-        if (INPUT.COLOR.equals(sensorType)) mColorSensor = mMachine.createColorSensor(port);
-        if (INPUT.GYRO.equals(sensorType)) mGyroSensor = mMachine.createGyroSensor(port);
-        if (INPUT.LINE.equals(sensorType)) mLineSensor = mMachine.createLineSensor(port);
-        if (INPUT.RANGEFINDER.equals(sensorType)) mRangefinder = mMachine.createRangefinder(port);
-        if (INPUT.REMOTE_CONTROL_RECEIVER.equals(sensorType))
+        if (InputDevice.NONE.equals(sensorType)) return ;
+        if (InputDevice.COLOR.equals(sensorType)) mColorSensor = mMachine.createColorSensor(port);
+        if (InputDevice.GYRO.equals(sensorType)) mGyroSensor = mMachine.createGyroSensor(port);
+        if (InputDevice.LINE.equals(sensorType)) mLineSensor = mMachine.createLineSensor(port);
+        if (InputDevice.RANGEFINDER.equals(sensorType)) mRangefinder = mMachine.createRangefinder(port);
+        if (InputDevice.REMOTE_CONTROL_RECEIVER.equals(sensorType))
             mRemoteControlReceiver = mMachine.createRemoteControlReceiver(port);
-        if (INPUT.SOUND.equals(sensorType)) mSoundSensor = mMachine.createSoundSensor(port);
-        if (INPUT.TOUCH.equals(sensorType)) mTouchSensor = mMachine.createTouchSensor(port);
+        if (InputDevice.SOUND.equals(sensorType)) mSoundSensor = mMachine.createSoundSensor(port);
+        if (InputDevice.TOUCH.equals(sensorType)) mTouchSensor = mMachine.createTouchSensor(port);
     }
 
 }

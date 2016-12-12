@@ -37,11 +37,11 @@ public class NxtThresholdFragment extends DialogFragment {
     public static final int LINE_DEFAULT_THRESHOLD = 50;
     public static final int SOUND_DEFAULT_THRESHOLD = 70;
 
-    private SeekBar mLightSensorSeekBar = null;
-    private TextView mLightSensorText = null;
+    private SeekBar mLightSensorSeekBar;
+    private TextView mLightSensorText;
 
-    private SeekBar mSoundSensorSeekBar = null;
-    private TextView mSoundSensorText = null;
+    private SeekBar mSoundSensorSeekBar;
+    private TextView mSoundSensorText;
 
     @Override
     @NonNull

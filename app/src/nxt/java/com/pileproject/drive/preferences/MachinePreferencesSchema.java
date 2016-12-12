@@ -39,23 +39,23 @@ public class MachinePreferencesSchema {
     final String firmware = FIRMWARE.STANDARD;
 
     @Key(name = "input_port_1")
-    final String inputPort1 = CarControllerBase.INPUT.TOUCH;
+    final String inputPort1 = CarControllerBase.InputDevice.TOUCH;
 
     @Key(name = "input_port_2")
-    final String inputPort2 = CarControllerBase.INPUT.SOUND;
+    final String inputPort2 = CarControllerBase.InputDevice.SOUND;
 
     @Key(name = "input_port_3")
-    final String inputPort3 = CarControllerBase.INPUT.LINE;
+    final String inputPort3 = CarControllerBase.InputDevice.LINE;
 
     @Key(name = "input_port_4")
-    final String inputPort4 = CarControllerBase.INPUT.NONE;
+    final String inputPort4 = CarControllerBase.InputDevice.NONE;
 
     @Key(name = "output_port_A")
-    final String outputPortA = CarControllerBase.OUTPUT.NONE;
+    final String outputPortA = CarControllerBase.OutputDevice.NONE;
 
     @Key(name = "output_port_B")
-    final String outputPortB = CarControllerBase.OUTPUT.RIGHT_MOTOR;
+    final String outputPortB = CarControllerBase.OutputDevice.RIGHT_MOTOR;
 
     @Key(name = "output_port_C")
-    final String outputPortC = CarControllerBase.OUTPUT.LEFT_MOTOR;
+    final String outputPortC = CarControllerBase.OutputDevice.LEFT_MOTOR;
 }

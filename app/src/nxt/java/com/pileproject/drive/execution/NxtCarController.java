@@ -21,14 +21,14 @@ import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 import static com.pileproject.drive.app.DriveApplication.getContext;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.LINE;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.SOUND;
-import static com.pileproject.drive.execution.CarControllerBase.INPUT.TOUCH;
-import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.getAllMotors;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.execution.CarControllerBase.InputDevice.TOUCH;
 
 public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
@@ -37,13 +37,14 @@ public class NxtCarController extends CarControllerBase {
      * Internal class that contains sensor properties.
      */
     public static final class SensorProperty {
-        public static List<String> getAllSensors() {
-            List<String> sensors = new LinkedList<>();
-            sensors.add(TOUCH);
-            sensors.add(SOUND);
-            sensors.add(LINE);
-            return sensors;
-        }
+        public static final List<String> ALL_SENSORS =
+                Collections.unmodifiableList(new LinkedList<String>(){
+                    {
+                        add(TOUCH);
+                        add(SOUND);
+                        add(LINE);
+                    }
+                });
 
         public static final class LineSensor {
             public static final int PctMin = 0;
@@ -81,7 +82,7 @@ public class NxtCarController extends CarControllerBase {
 
     @Override
     public List<String> getAllInputDevices() {
-        return SensorProperty.getAllSensors();
+        return SensorProperty.ALL_SENSORS;
     }
 
     @Override
@@ -110,7 +111,7 @@ public class NxtCarController extends CarControllerBase {
     @Override
     public List<String> getAllOutputDevices() {
         // NOTE: add more devices if we want use them (e.g., Buzzer)
-        return getAllMotors();
+        return CarControllerBase.MotorProperty.ALL_MOTORS;
     }
 
 }
