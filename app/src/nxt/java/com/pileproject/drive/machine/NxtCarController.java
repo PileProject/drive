@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.execution;
+package com.pileproject.drive.machine;
 
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.preferences.MachinePreferencesSchema;
@@ -26,9 +26,9 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static com.pileproject.drive.app.DriveApplication.getContext;
-import static com.pileproject.drive.execution.CarControllerBase.InputDevice.LINE;
-import static com.pileproject.drive.execution.CarControllerBase.InputDevice.SOUND;
-import static com.pileproject.drive.execution.CarControllerBase.InputDevice.TOUCH;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 
 public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;

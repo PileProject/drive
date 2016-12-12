@@ -17,6 +17,8 @@ package com.pileproject.drive.execution;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.pileproject.drive.machine.CarControllerBase;
+import com.pileproject.drive.machine.NxtCarController;
 import com.pileproject.drivecommand.machine.device.input.LineSensor;
 import com.pileproject.drivecommand.machine.device.input.SoundSensor;
 import com.pileproject.drivecommand.machine.device.input.TouchSensor;
@@ -30,8 +32,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.internal.util.reflection.Whitebox;
 
-import static com.pileproject.drive.execution.CarControllerBase.MotorKind.LeftMotor;
-import static com.pileproject.drive.execution.CarControllerBase.MotorKind.RightMotor;
+import static com.pileproject.drive.machine.CarControllerBase.MotorKind.LeftMotor;
+import static com.pileproject.drive.machine.CarControllerBase.MotorKind.RightMotor;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;

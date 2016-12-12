@@ -21,7 +21,7 @@ import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.machine.MachineController;
 
 /**
  * BaseBlock

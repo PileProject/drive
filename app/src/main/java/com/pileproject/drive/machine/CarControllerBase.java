@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.execution;
+package com.pileproject.drive.machine;
 
 import com.pileproject.drivecommand.machine.MachineBase;
 import com.pileproject.drivecommand.machine.device.input.ColorSensor;
@@ -33,7 +33,7 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.INIT_MOTOR_POWER;
+import static com.pileproject.drive.machine.CarControllerBase.MotorProperty.INIT_MOTOR_POWER;
 
 /**
  * This is a base machine controller which controls a car-formed machine (e.g., Nxt/Ev3/Pile robot). A car-formed
@@ -48,9 +48,9 @@ import static com.pileproject.drive.execution.CarControllerBase.MotorProperty.IN
  * should add a new one in this base class.
  *
  * Because a car-formed machine must have two motors (left and right), this base class has the properties of these
- * motors (see: {@link com.pileproject.drive.execution.CarControllerBase.MotorProperty}). However, as mentioned
+ * motors (see: {@link CarControllerBase.MotorProperty}). However, as mentioned
  * above, the information of other devices should have been specified in child controllers. For example, we keep the
- * sensor properties of Nxt as {@link com.pileproject.drive.execution.NxtCarController.SensorProperty}.
+ * sensor properties of Nxt as {@link NxtCarController.SensorProperty}.
  *
  * To provide a hint to users, please override {@see #getAllInputDevices()}, {@see #getAllOutputDevices()} in your
  * child classes.

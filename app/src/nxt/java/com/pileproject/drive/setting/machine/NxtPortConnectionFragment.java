@@ -24,8 +24,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.CarControllerBase;
-import com.pileproject.drive.execution.NxtCarController;
+import com.pileproject.drive.machine.CarControllerBase;
+import com.pileproject.drive.machine.NxtCarController;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.view.PortTextViewBase;
 

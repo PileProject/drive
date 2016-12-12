@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.programming.visual.block.repetition;
+package com.pileproject.drive.programming.visual.block.selection.car;
 
 import android.content.Context;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.machine.MachineController;
-import com.pileproject.drive.programming.visual.block.BlockBase;
+import com.pileproject.drive.preferences.BlockPreferences;
+import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 
 /**
- * This block is the end of while loop
+ * This block check the light sensor's value
+ * If the value is higher than threshold, it means the machine is on the
+ * light-colored floor and out of black line.
  *
  * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
  * @version 1.0 7-July-2013
  */
-public class RepetitionEndBlock extends BlockBase {
+public class IfMachineIsOutOfLineBlock extends SelectionBlock {
 
-    public RepetitionEndBlock(Context context) {
-        super(context, R.layout.block_repetition_end);
+    private int mThreshold;
+
+    public IfMachineIsOutOfLineBlock(Context context) {
+        super(context, R.layout.block_if_machine_is_out_of_line);
+
+        mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
     }
 
     @Override
-    public final BlockKind getKind() {
-        return BlockKind.REPETITION_END;
-    }
-
-    @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        condition.reachEndOfLoop();
-        return 0;
+    protected boolean evaluateCondition(MachineController controller) {
+        return ((CarControllerBase) controller).getLineSensorValue() > mThreshold;
     }
 }

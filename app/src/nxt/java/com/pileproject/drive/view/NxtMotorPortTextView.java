@@ -22,9 +22,9 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.execution.CarControllerBase.OutputDevice.LEFT_MOTOR;
-import static com.pileproject.drive.execution.CarControllerBase.OutputDevice.NONE;
-import static com.pileproject.drive.execution.CarControllerBase.OutputDevice.RIGHT_MOTOR;
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.LEFT_MOTOR;
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.NONE;
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.RIGHT_MOTOR;
 
 public class NxtMotorPortTextView extends PortTextViewBase {
 

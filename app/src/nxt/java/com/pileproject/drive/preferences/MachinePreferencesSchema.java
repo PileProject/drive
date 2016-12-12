@@ -15,7 +15,7 @@
  */
 package com.pileproject.drive.preferences;
 
-import com.pileproject.drive.execution.CarControllerBase;
+import com.pileproject.drive.machine.CarControllerBase;
 import com.rejasupotaro.android.kvs.annotations.Key;
 import com.rejasupotaro.android.kvs.annotations.Table;
 
