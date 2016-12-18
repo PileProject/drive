@@ -21,8 +21,7 @@ import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
 
-import java.util.Collections;
-import java.util.LinkedList;
+import java.util.Arrays;
 import java.util.List;
 
 import static com.pileproject.drive.app.DriveApplication.getContext;
@@ -34,17 +33,14 @@ public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
 
     /**
-     * Internal class that contains sensor properties.
+     * An internal class that contains sensor properties.
      */
     public static final class SensorProperty {
-        public static final List<String> ALL_SENSORS =
-                Collections.unmodifiableList(new LinkedList<String>(){
-                    {
-                        add(TOUCH);
-                        add(SOUND);
-                        add(LINE);
-                    }
-                });
+        public static final List<String> ALL_SENSORS = Arrays.asList(
+                        TOUCH,
+                        SOUND,
+                        LINE
+                );
 
         public static final class LineSensor {
             public static final int PctMin = 0;
@@ -58,7 +54,7 @@ public class NxtCarController extends CarControllerBase {
     }
 
     /**
-     * binds each sensor and motor to their port
+     * Binds each sensor and motor to their ports by using {@link MachinePreferences} information.
      */
     public NxtCarController(NxtMachine machine) {
         mMachine = machine;
@@ -110,7 +106,7 @@ public class NxtCarController extends CarControllerBase {
 
     @Override
     public List<String> getAllOutputDevices() {
-        // NOTE: add more devices if we want use them (e.g., Buzzer)
+        // NOTE: add more devices if we want to use them (e.g., Buzzer)
         return CarControllerBase.MotorProperty.ALL_MOTORS;
     }
 

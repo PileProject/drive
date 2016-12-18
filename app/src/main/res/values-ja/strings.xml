@@ -103,8 +103,8 @@
     <string name="blocks.repeatNum">%d かい</string>
     <!-- Selection -->
     <string name="blocks.ifMachineIsOutOfLine">ラインからでたら</string>
-    <string name="blocks.ifMachineWasTouched">タッチされたら</string>
-    <string name="blocks.ifThereWasALargeSound">おおきなおとがしたら</string>
+    <string name="blocks.ifMachineIsTouched">タッチされたら</string>
+    <string name="blocks.ifThereIsALargeSound">おおきなおとがしたら</string>
 
 
     <!-- TextsOnBlock -->
@@ -129,8 +129,8 @@
     <string name="textOnBlocks.yes">はい</string>
     <string name="textOnBlocks.no">いいえ</string>
     <string name="textOnBlocks.ifMachineIsOutOfLine">ラインからでた</string>
-    <string name="textOnBlocks.ifMachineWasTouched">タッチされた</string>
-    <string name="textOnBlocks.ifThereWasALargeSound">おおきなおとがした</string>
+    <string name="textOnBlocks.ifMachineIsTouched">タッチされた</string>
+    <string name="textOnBlocks.ifThereIsALargeSound">おおきなおとがした</string>
 
 
     <!-- Execute -->

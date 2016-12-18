@@ -24,12 +24,8 @@ import com.pileproject.drive.preferences.BlockPreferences;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 
 /**
- * This block check the light sensor's value
- * If the value is higher than threshold, it means the machine is on the
- * light-colored floor and out of black line.
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * This block checks if the light sensor's value is higher than the threshold, which means the machine
+ * is on a light-colored floor, thus out of a black line.
  */
 public class IfMachineIsOutOfLineBlock extends SelectionBlock {
 

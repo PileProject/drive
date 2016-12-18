@@ -103,8 +103,8 @@
     <string name="blocks.repeatNum">Repeats: %d</string>
     <!-- Selection -->
     <string name="blocks.ifMachineIsOutOfLine">If machine is out of line</string>
-    <string name="blocks.ifMachineWasTouched">If machine was touched</string>
-    <string name="blocks.ifThereWasALargeSound">If there was a large sound</string>
+    <string name="blocks.ifMachineIsTouched">If machine is touched</string>
+    <string name="blocks.ifThereIsALargeSound">If there is a large sound</string>
 
 
     <!-- TextsOnBlock -->
@@ -129,8 +129,8 @@
     <string name="textOnBlocks.yes">Yes</string>
     <string name="textOnBlocks.no">No</string>
     <string name="textOnBlocks.ifMachineIsOutOfLine">Out of line?</string>
-    <string name="textOnBlocks.ifMachineWasTouched">Touched?</string>
-    <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
+    <string name="textOnBlocks.ifMachineIsTouched">Touched?</string>
+    <string name="textOnBlocks.ifThereIsALargeSound">A large sound?</string>
 
 
     <!-- Execute -->

@@ -20,19 +20,26 @@ import android.content.Context;
 import com.pileproject.drive.R;
 import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.machine.MachineController;
+import com.pileproject.drive.preferences.BlockPreferences;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 
-/**
- * This block checks the touch sensor was touched or not
- */
-public class IfMachineWasTouchedBlock extends SelectionBlock {
 
-    public IfMachineWasTouchedBlock(Context context) {
-        super(context, R.layout.block_if_machine_was_touched);
+/**
+ * This block checks if the current sound sensor's value is larger than the threshold, which means there is a large
+ * sound.
+ */
+public class IfThereIsALargeSoundBlock extends SelectionBlock {
+
+    private int mThreshold;
+
+    public IfThereIsALargeSoundBlock(Context context) {
+        super(context, R.layout.block_if_there_is_a_large_sound);
+
+        mThreshold = BlockPreferences.get(context).getSoundSensorThreshold();
     }
 
     @Override
     protected boolean evaluateCondition(MachineController controller) {
-        return ((CarControllerBase) controller).isTouchSensorTouched();
+        return ((CarControllerBase) controller).getSoundSensorDb() > mThreshold;
     }
 }

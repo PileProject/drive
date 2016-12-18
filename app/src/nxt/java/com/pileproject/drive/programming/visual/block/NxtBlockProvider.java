@@ -19,8 +19,8 @@ import com.pileproject.drive.programming.visual.block.repetition.LoopBlock;
 import com.pileproject.drive.programming.visual.block.repetition.NTimesBlock;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
 import com.pileproject.drive.programming.visual.block.selection.car.IfMachineIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.car.IfMachineWasTouchedBlock;
-import com.pileproject.drive.programming.visual.block.selection.car.IfThereWasALargeSoundBlock;
+import com.pileproject.drive.programming.visual.block.selection.car.IfMachineIsTouchedBlock;
+import com.pileproject.drive.programming.visual.block.selection.car.IfThereIsALargeSoundBlock;
 import com.pileproject.drive.programming.visual.block.sequence.car.BackwardSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.car.ForwardSecBlock;
 import com.pileproject.drive.programming.visual.block.sequence.car.SetLeftMotorSpeedBlock;
@@ -64,8 +64,8 @@ public class NxtBlockProvider implements BlockProvider {
 
         List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(
                 IfMachineIsOutOfLineBlock.class,
-                IfMachineWasTouchedBlock.class,
-                IfThereWasALargeSoundBlock.class
+                IfMachineIsTouchedBlock.class,
+                IfThereIsALargeSoundBlock.class
         );
 
         return Collections.unmodifiableList(list);
