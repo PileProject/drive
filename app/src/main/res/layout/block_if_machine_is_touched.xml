@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="@string/textOnBlocks.ifMachineWasTouched"
+        android:text="@string/textOnBlocks.ifMachineIsTouched"
         android:textColor="@android:color/white"/>
 
     <TextView

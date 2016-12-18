@@ -34,7 +34,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="@string/textOnBlocks.ifThereWasALargeSound"
+        android:text="@string/textOnBlocks.ifThereIsALargeSound"
         android:textColor="@android:color/white"/>
 
     <TextView
