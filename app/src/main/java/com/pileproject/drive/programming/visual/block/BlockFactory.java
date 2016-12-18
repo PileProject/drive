@@ -33,10 +33,7 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SELEC
 import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Factory that creates blocks
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * Factory that creates blocks.
  */
 public class BlockFactory {
 
@@ -44,9 +41,9 @@ public class BlockFactory {
         throw new AssertionError("This class cannot be instantiated");
     }
 
+    @SuppressWarnings("unchecked")
     private static <T extends BlockBase> Class<T> getClassForName(String className) throws RuntimeException {
         try {
-            // noinspection unchecked
             return (Class<T>) Class.forName(className);
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Invalid class name '" + className + "'", e);

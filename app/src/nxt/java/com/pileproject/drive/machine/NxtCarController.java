@@ -16,7 +16,6 @@
 package com.pileproject.drive.machine;
 
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drive.preferences.MachinePreferencesSchema;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
 import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
@@ -28,6 +27,7 @@ import static com.pileproject.drive.app.DriveApplication.getContext;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LINE;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
 
 public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
@@ -73,7 +73,7 @@ public class NxtCarController extends CarControllerBase {
         connectInputPort(preferences.getInputPort4(), NxtInputPort.PORT_4);
 
         String firmware = MachinePreferences.get(getContext()).getFirmware();
-        mIsLejosFirmware = firmware.equals(MachinePreferencesSchema.FIRMWARE.LEJOS);
+        mIsLejosFirmware = firmware.equals(LEJOS);
     }
 
     @Override

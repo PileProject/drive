@@ -21,13 +21,10 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
  * Schema for "machine_preferences" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 21-April-2016
  */
 @Table(name = "machine_preferences")
 public class MachinePreferencesSchema {
-    public class FIRMWARE {
+    public static class Firmware {
         public static final String STANDARD = "standard";
         public static final String LEJOS = "lejos";
     }
@@ -36,7 +33,7 @@ public class MachinePreferencesSchema {
     String macAddress;
 
     @Key(name = "firmware")
-    final String firmware = FIRMWARE.STANDARD;
+    final String firmware = Firmware.STANDARD;
 
     @Key(name = "input_port_1")
     final String inputPort1 = CarControllerBase.InputDevice.TOUCH;
