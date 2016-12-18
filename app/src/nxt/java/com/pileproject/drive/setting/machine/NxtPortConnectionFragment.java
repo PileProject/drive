@@ -104,7 +104,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortB, preferences.getOutputPortB()));
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortC, preferences.getOutputPortC()));
 
-        List<String> allMotors = NxtCarController.MotorProperty.ALL_MOTORS;
+        List<String> allMotors = CarControllerBase.MotorProperty.ALL_MOTORS;
         int index = 0;
         final int[] motorPlaceIds = {
                 R.id.setting_portconfig_motor1, R.id.setting_portconfig_motor2,
