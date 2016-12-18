@@ -129,7 +129,7 @@ public class BlockListActivity extends Activity {
             }
         });
 
-        findViewById(R.id.blockList_cancelButton).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.blockList_helpButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
