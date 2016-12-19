@@ -41,10 +41,11 @@ public class BlockFactory {
         throw new AssertionError("This class cannot be instantiated");
     }
 
-    @SuppressWarnings("unchecked")
     private static <T extends BlockBase> Class<T> getClassForName(String className) throws RuntimeException {
         try {
-            return (Class<T>) Class.forName(className);
+            @SuppressWarnings("unchecked")
+            Class<T> clazz = (Class<T>) Class.forName(className);
+            return clazz;
         } catch (ClassNotFoundException e) {
             throw new RuntimeException("Invalid class name '" + className + "'", e);
         }
