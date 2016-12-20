@@ -15,59 +15,44 @@
  */
 package com.pileproject.drive.preferences;
 
+import com.pileproject.drive.machine.CarControllerBase;
 import com.rejasupotaro.android.kvs.annotations.Key;
 import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
  * Schema for "machine_preferences" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 21-April-2016
  */
 @Table(name = "machine_preferences")
 public class MachinePreferencesSchema {
-    public class FIRMWARE {
+    public static class Firmware {
         public static final String STANDARD = "standard";
         public static final String LEJOS = "lejos";
-    }
-
-    public class SENSOR {
-        public static final String TOUCH = "touch_sensor";
-        public static final String SOUND = "sound_sensor";
-        public static final String LINE = "line_sensor";
-        public static final String NONE = "none";
-    }
-
-    public class MOTOR {
-        public static final String RIGHT = "right_motor";
-        public static final String LEFT = "left_motor";
-        public static final String NONE = "none";
     }
 
     @Key(name = "bluetooth_address")
     String macAddress;
 
     @Key(name = "firmware")
-    final String firmware = FIRMWARE.STANDARD;
+    final String firmware = Firmware.STANDARD;
 
     @Key(name = "input_port_1")
-    final String inputPort1 = SENSOR.TOUCH;
+    final String inputPort1 = CarControllerBase.InputDevice.TOUCH;
 
     @Key(name = "input_port_2")
-    final String inputPort2 = SENSOR.SOUND;
+    final String inputPort2 = CarControllerBase.InputDevice.SOUND;
 
     @Key(name = "input_port_3")
-    final String inputPort3 = SENSOR.LINE;
+    final String inputPort3 = CarControllerBase.InputDevice.LINE;
 
     @Key(name = "input_port_4")
-    final String inputPort4 = SENSOR.NONE;
+    final String inputPort4 = CarControllerBase.InputDevice.NONE;
 
     @Key(name = "output_port_A")
-    final String outputPortA = MOTOR.NONE;
+    final String outputPortA = CarControllerBase.OutputDevice.NONE;
 
     @Key(name = "output_port_B")
-    final String outputPortB = MOTOR.RIGHT;
+    final String outputPortB = CarControllerBase.OutputDevice.RIGHT_MOTOR;
 
     @Key(name = "output_port_C")
-    final String outputPortC = MOTOR.LEFT;
+    final String outputPortC = CarControllerBase.OutputDevice.LEFT_MOTOR;
 }

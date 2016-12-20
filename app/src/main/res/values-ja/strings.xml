@@ -20,6 +20,8 @@
     <string name="action_settings">Action Settings</string>
     <string name="app_name">App Name</string>
 
+
+    <!-- General -->
     <string name="ok">OK</string>
     <string name="back">もどる</string>
     <string name="cancel">キャンセル</string>
@@ -28,14 +30,34 @@
     <string name="confirmation">ほんとうによろしいですか？</string>
     <string name="delete">%1$s をけします</string>
     <string name="noImage">がぞうがありません</string>
-    <string name="sequence">じゅんじ</string>
-    <string name="selection">ぶんき</string>
-    <string name="repetition">くりかえし</string>
-    <string name="percent">%</string>
     <string name="second">びょう</string>
+    <string name="percent">%</string>
     <string name="error">エラー</string>
     <string name="turnedOnBluetooth">Bluetoothきのうをオンにしました</string>
     <string name="bluetoothFunctionIsOff">Bluetooth きのうがオンになっていません</string>
+
+
+    <!-- Machine -->
+    <!-- Input Devices -->
+    <string name="sensors.color">カラー</string>
+    <string name="sensors.gyro">ジャイロ</string>
+    <string name="sensors.line">光</string>
+    <string name="sensors.rangefinder">測距</string>
+    <string name="sensors.remote_control_receiver">リモートコントロールレシーバ</string>
+    <string name="sensors.sound">音</string>
+    <string name="sensors.touch">タッチ</string>
+    <!-- Output Devices -->
+    <string name="motors.left">左</string>
+    <string name="motors.right">右</string>
+    <string name="buzzer">ブザー</string>
+    <string name="led">LED</string>
+
+
+    <!-- Title -->
+    <string name="title.start">はじめる</string>
+    <string name="title.setting">設定画面へ</string>
+    <string name="title.label">タイトル</string>
+
 
     <!-- Programming -->
     <string name="programming.label">プログラミングがめん</string>
@@ -57,23 +79,45 @@
     <string name="programming.targetDevice">そうさするデバイス -> </string>
     <string name="programming.noTargetDevice">デバイスみせってい</string>
 
+
     <!-- BlockList -->
     <string name="blockList.label">"ブロックリスト: "</string>
     <string name="blockList.howToUse">つかいかた</string>
     <string name="blockList.howToUseBlock">ブロックのつかいかた</string>
     <string name="blockList.theseBlocksAreUsedLikeThis">はいかのようにつかいます</string>
 
+
     <!-- Blocks -->
+    <!-- Sequence -->
+    <string name="blocks.forwardSec">□びょうすすむ</string>
+    <string name="blocks.backwardSec">□びょうバック</string>
+    <string name="blocks.turnLeftSec">□びょうひだりまわり</string>
+    <string name="blocks.turnRightSec">□びょうみぎまわり</string>
+    <string name="blocks.stopSec">□びょうとまる</string>
+    <string name="blocks.setLeftMotorSpeed">ひだりタイヤせってい</string>
+    <string name="blocks.setRightMotorSpeed">みぎタイヤせってい</string>
     <!-- Repetition -->
     <string name="blocks.loop">ずっとくりかえす</string>
     <string name="blocks.nTimes">□かいくりかえす</string>
     <string name="blocks.repetitionBreak">くりかえしをぬける</string>
     <string name="blocks.repeatNum">%d かい</string>
+    <!-- Selection -->
+    <string name="blocks.ifMachineIsOutOfLine">ラインからでたら</string>
+    <string name="blocks.ifMachineIsTouched">タッチされたら</string>
+    <string name="blocks.ifThereIsALargeSound">おおきなおとがしたら</string>
+
 
     <!-- TextsOnBlock -->
     <!-- Sequence -->
     <string name="textOnBlocks.contentDefaultSec">0.000</string>
     <string name="textOnBlocks.contentDefaultPercent">0</string>
+    <string name="textOnBlocks.forwardSec">びょうすすむ</string>
+    <string name="textOnBlocks.backwardSec">びょうバック</string>
+    <string name="textOnBlocks.turnLeftSec">びょうひだりまわり</string>
+    <string name="textOnBlocks.turnRightSec">びょうみぎまわり</string>
+    <string name="textOnBlocks.stopSec">びょうとまる</string>
+    <string name="textOnBlocks.rightMotor">みぎタイヤ</string>
+    <string name="textOnBlocks.leftMotor">ひだりタイヤ</string>
     <!-- Repetition -->
     <string name="textOnBlocks.whileForever">くりかえし</string>
     <string name="textOnBlocks.whileNum">かいくりかえし</string>
@@ -84,6 +128,10 @@
     <string name="textOnBlocks.selectionEnd">ぶんきおわり</string>
     <string name="textOnBlocks.yes">はい</string>
     <string name="textOnBlocks.no">いいえ</string>
+    <string name="textOnBlocks.ifMachineIsOutOfLine">ラインからでた</string>
+    <string name="textOnBlocks.ifMachineIsTouched">タッチされた</string>
+    <string name="textOnBlocks.ifThereIsALargeSound">おおきなおとがした</string>
+
 
     <!-- Execute -->
     <string name="execute.label">じっこうがめん</string>
@@ -99,49 +147,49 @@
     <string name="execute.restart">さいかい</string>
     <string name="execute.finish">しゅうりょう</string>
 
-    <!-- SelectNumberView -->
-    <string name="select.number.period">●</string>
-    <string name="select.number.finish">かんりょう</string>
 
-    <!--  SettingActivity -->
-    <string name="setting.label">せっていがめん</string>
-
-    <!-- DeviceSelect -->
+    <!-- SettingActivity -->
+    <string name="setting.label">設定画面</string>
+    <!-- Setting categories -->
+    <string name="setting.category.machine">ロボット設定</string>
+    <string name="setting.category.app">アプリケーション設定</string>
+    <string name="setting.category.others">その他</string>
+    <!-- Setting items -->
+    <string name="setting.bluetoothMachineSelect">Bluetooth ロボット選択</string>
+    <string name="setting.supervisorMode">管理者モード</string>
+    <string name="setting.programList">プログラムリスト</string>
+    <string name="setting.visitWebsite">Web サイト</string>
+    <string name="setting.copyrightNotice">著作権情報</string>
+    <string name="setting.legalNotice">免責事項</string>
+    <!-- MachineSelect -->
     <string name="setting.bluetoothMachineSelect.label.pairedMachines">ペアリング済みロボット</string>
     <string name="setting.bluetoothMachineSelect.label.foundMachines">見つけたロボット</string>
     <string name="setting.bluetoothMachineSelect.noMachinesPaired">ペアリング済みロボットはありません</string>
     <string name="setting.bluetoothMachineSelect.noMachinesFound">ロボットが見つかりません</string>
-
     <string name="setting.bluetoothMachineSelect.progress.connecting.title">接続中</string>
     <string name="setting.bluetoothMachineSelect.progress.connecting.message">接続しています…</string>
     <string name="setting.bluetoothMachineSelect.toast.setDefault">デフォルトロボットを設定しました</string>
     <string name="setting.bluetoothMachineSelect.toast.cannotConnect">ロボットと接続できませんでした</string>
     <string name="setting.bluetoothMachineSelect.alert.enableBt.title">確認</string>
-    <string name="setting.bluetoothMachineSelect.alert.enableBt.message">Bluetooth 機能を ON にしてください.</string>
+    <string name="setting.bluetoothMachineSelect.alert.enableBt.message">Bluetooth 機能を ON にしてください</string>
     <string name="setting.bluetoothMachineSelect.alert.noBt.title">警告</string>
-    <string name="setting.bluetoothMachineSelect.alert.noBt.message">Bluetooth きのうがありません。スキャンできません。</string>
-
-    <string name="setting.bluetoothMachineSelect.didNotSelectDevice">設定画面でロボットをえらんでください</string>
-
-    <!-- SettingActivity -->
-    <string name="setting.category.machine">ロボット設定</string>
-    <string name="setting.category.app">アプリケーション設定</string>
-    <string name="setting.category.others">その他</string>
-    <string name="setting.bluetoothMachineSelect">Bluetooth ロボット選択</string>
-    <string name="setting.supervisorMode">管理者モード</string>
-    <string name="setting.programList">プログラムリスト</string>
-    <string name="setting.visitWebsite">Web サイト</string>
-    <string name="setting.legalNotice">免責事項</string>
-
-    <!-- Program List Pragment -->
+    <string name="setting.bluetoothMachineSelect.alert.noBt.message">Bluetooth 機能がありません。スキャンできません。</string>
+    <string name="setting.bluetoothMachineSelect.didNotSelectDevice">設定画面でロボットを選んでください</string>
+    <!-- Program List -->
+    <string name="setting.programList.summary">保存したプログラムを見る</string>
     <string name="setting.programList.delete">消去</string>
     <string name="setting.programList.checkAll">全て選択</string>
     <string name="setting.programList.samplePrograms">サンプルプログラム</string>
     <string name="setting.programList.userPrograms">ユーザプログラム</string>
+    <!-- Visit website -->
+    <string name="setting.visitWebsite.summary">ブラウザが開きます</string>
 
+
+    <!-- Layouts -->
+    <!-- SelectNumberView -->
+    <string name="select.number.period">●</string>
+    <string name="select.number.finish">かんりょう</string>
+    <!-- NavigationDrawer -->
     <string name="navigation_drawer_open">ナビゲーションドロワーを開く</string>
     <string name="navigation_drawer_close">ナビゲーションドロワーを閉じる</string>
-    <string name="setting.copyrightNotice">著作権情報</string>
-    <string name="setting.visitWebsite.summary">ブラウザが開きます</string>
-    <string name="setting.programList.summary">保存したプログラムを見る</string>
 </resources>

@@ -13,31 +13,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.programming.visual.block.repetition;
+package com.pileproject.drive.programming.visual.block.selection.car;
 
 import android.content.Context;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.machine.MachineController;
-import com.pileproject.drive.programming.visual.block.BlockBase;
+import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 
 /**
- * A block that expresses a break of while loop.
+ * This block checks if the touch sensor is currently touched or not.
  */
-public class RepetitionBreakBlock extends BlockBase {
-    public RepetitionBreakBlock(Context context) {
-        super(context, R.layout.block_repetition_break);
+public class IfMachineIsTouchedBlock extends SelectionBlock {
+
+    public IfMachineIsTouchedBlock(Context context) {
+        super(context, R.layout.block_if_machine_is_touched);
     }
 
     @Override
-    public final BlockKind getKind() {
-        return BlockKind.REPETITION_BREAK;
-    }
-
-    @Override
-    public int action(MachineController controller, ExecutionCondition condition) {
-        condition.breakLoop();
-        return 0;
+    protected boolean evaluateCondition(MachineController controller) {
+        return ((CarControllerBase) controller).isTouchSensorTouched();
     }
 }

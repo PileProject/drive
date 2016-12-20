@@ -22,9 +22,6 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
  * Specification for "programs" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 22-March-2016
  */
 @TableModelSpec(className="Program", tableName="programs")
 public class ProgramSpec {

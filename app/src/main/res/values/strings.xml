@@ -20,6 +20,8 @@
     <string name="action_settings">Action Settings</string>
     <string name="app_name">App Name</string>
 
+
+    <!-- General -->
     <string name="ok">OK</string>
     <string name="back">Back</string>
     <string name="cancel">Cancel</string>
@@ -28,20 +30,40 @@
     <string name="confirmation">Are you sure?</string>
     <string name="delete">%1$s will be deleted</string>
     <string name="noImage">No Image</string>
-    <string name="sequence">Sequence</string>
-    <string name="selection">Selection</string>
-    <string name="repetition">Repetition</string>
-    <string name="percent">%</string>
     <string name="second">s</string>
+    <string name="percent">%</string>
     <string name="error">Error</string>
     <string name="turnedOnBluetooth">Turned on Bluetooth</string>
     <string name="bluetoothFunctionIsOff">Please turn on Bluetooth.</string>
 
+
+    <!-- Machine -->
+    <!-- Input Devices -->
+    <string name="sensors.color">Color</string>
+    <string name="sensors.gyro">Gyro</string>
+    <string name="sensors.line">Line</string>
+    <string name="sensors.rangefinder">Rangefinder</string>
+    <string name="sensors.remote_control_receiver">Remote Control Receiver</string>
+    <string name="sensors.sound">Sound</string>
+    <string name="sensors.touch">Touch</string>
+    <!-- Output Devices -->
+    <string name="motors.left">Left</string>
+    <string name="motors.right">Right</string>
+    <string name="buzzer">Buzzer</string>
+    <string name="led">LED</string>
+
+
+    <!-- Title -->
+    <string name="title.start">Start</string>
+    <string name="title.setting">Setting</string>
+    <string name="title.label">Title</string>
+
+
     <!-- Programming -->
     <string name="programming.label">Programming Screen</string>
     <string name="programming.sequence">Sequence</string>
-    <string name="programming.selection">Selection</string>
     <string name="programming.repetition">Repetition</string>
+    <string name="programming.selection">Selection</string>
     <string name="programming.undo">Undo</string>
     <string name="programming.redo">Redo</string>
     <string name="programming.execute">Execute</string>
@@ -57,23 +79,45 @@
     <string name="programming.targetDevice">Target device -> </string>
     <string name="programming.noTargetDevice">No target</string>
 
+
     <!-- BlockList -->
     <string name="blockList.label">"Block List: "</string>
     <string name="blockList.howToUse">How to use</string>
     <string name="blockList.howToUseBlock">How to use blocks</string>
     <string name="blockList.theseBlocksAreUsedLikeThis">" blocks are used like this."</string>
 
+
     <!-- Blocks -->
+    <!-- Sequence -->
+    <string name="blocks.forwardSec">Forward for □sec</string>
+    <string name="blocks.backwardSec">Backward for □sec</string>
+    <string name="blocks.turnLeftSec">Turn left for □sec</string>
+    <string name="blocks.turnRightSec">Turn right for □sec</string>
+    <string name="blocks.stopSec">Stop for □sec</string>
+    <string name="blocks.setLeftMotorSpeed">Set the left tire\'s speed</string>
+    <string name="blocks.setRightMotorSpeed">Set the right tire\'s speed</string>
     <!-- Repetition -->
     <string name="blocks.loop">Repeat forever</string>
     <string name="blocks.nTimes">Repeat □times</string>
     <string name="blocks.repetitionBreak">Exit a loop</string>
     <string name="blocks.repeatNum">Repeats: %d</string>
+    <!-- Selection -->
+    <string name="blocks.ifMachineIsOutOfLine">If machine is out of line</string>
+    <string name="blocks.ifMachineIsTouched">If machine is touched</string>
+    <string name="blocks.ifThereIsALargeSound">If there is a large sound</string>
+
 
     <!-- TextsOnBlock -->
     <!-- Sequence -->
     <string name="textOnBlocks.contentDefaultSec">0</string>
     <string name="textOnBlocks.contentDefaultPercent">0</string>
+    <string name="textOnBlocks.forwardSec">sec for</string>
+    <string name="textOnBlocks.backwardSec">sec back</string>
+    <string name="textOnBlocks.turnLeftSec">sec left</string>
+    <string name="textOnBlocks.turnRightSec">sec right</string>
+    <string name="textOnBlocks.stopSec">sec stop</string>
+    <string name="textOnBlocks.rightMotor">Right tire</string>
+    <string name="textOnBlocks.leftMotor">Left tire</string>
     <!-- Repetition -->
     <string name="textOnBlocks.whileForever">Repeat</string>
     <string name="textOnBlocks.whileNum">times</string>
@@ -84,6 +128,10 @@
     <string name="textOnBlocks.selectionEnd">/Selection</string>
     <string name="textOnBlocks.yes">Yes</string>
     <string name="textOnBlocks.no">No</string>
+    <string name="textOnBlocks.ifMachineIsOutOfLine">Out of line?</string>
+    <string name="textOnBlocks.ifMachineIsTouched">Touched?</string>
+    <string name="textOnBlocks.ifThereIsALargeSound">A large sound?</string>
+
 
     <!-- Execute -->
     <string name="execute.label">Execute Screen</string>
@@ -99,52 +147,49 @@
     <string name="execute.restart">Restart</string>
     <string name="execute.finish">Finish</string>
 
-    <!-- SelectNumberView -->
-    <string name="select.number.period">●</string>
-    <string name="select.number.finish">OK</string>
 
     <!-- SettingActivity -->
     <string name="setting.label">Setting Screen</string>
-
+    <!-- Setting categories -->
     <string name="setting.category.machine">Machine Setting</string>
-    <string name="setting.bluetoothMachineSelect">Bluetooth Machine Select</string>
-
     <string name="setting.category.app">Application Setting</string>
-    <string name="setting.programList">Program List</string>
-    <string name="setting.programList.summary">View saved programs</string>
-    <string name="setting.supervisorMode">Supervisor Mode</string>
-
     <string name="setting.category.others">Others</string>
+    <!-- Setting items -->
+    <string name="setting.bluetoothMachineSelect">Bluetooth Machine Select</string>
+    <string name="setting.supervisorMode">Supervisor Mode</string>
+    <string name="setting.programList">Program List</string>
     <string name="setting.visitWebsite">Visit our website</string>
-    <string name="setting.visitWebsite.summary">Open in browser</string>
     <string name="setting.copyrightNotice">Copyright Notice</string>
     <string name="setting.legalNotice">Legal Notice</string>
-
-
-    <!-- DeviceSelect -->
+    <!-- MachineSelect -->
     <string name="setting.bluetoothMachineSelect.label.pairedMachines">Paired Bluetooth Machines</string>
     <string name="setting.bluetoothMachineSelect.label.foundMachines">New Bluetooth Machines</string>
     <string name="setting.bluetoothMachineSelect.noMachinesPaired">No Paired Bluetooth Machines</string>
     <string name="setting.bluetoothMachineSelect.noMachinesFound">No New Bluetooth Machines</string>
-
     <string name="setting.bluetoothMachineSelect.progress.connecting.title">Connecting</string>
     <string name="setting.bluetoothMachineSelect.progress.connecting.message" tools:ignore="TypographyEllipsis">Connecting...</string>
     <string name="setting.bluetoothMachineSelect.toast.setDefault">Set %1$s as default</string>
-    <string name="setting.bluetoothMachineSelect.toast.cannotConnect">Could not establish
-        connection with %1$s</string>
+    <string name="setting.bluetoothMachineSelect.toast.cannotConnect">Could not establish connection with %1$s</string>
     <string name="setting.bluetoothMachineSelect.alert.enableBt.title">Bluetooth needed</string>
     <string name="setting.bluetoothMachineSelect.alert.enableBt.message">Please turn Bluetooth on.</string>
     <string name="setting.bluetoothMachineSelect.alert.noBt.title">Alert</string>
     <string name="setting.bluetoothMachineSelect.alert.noBt.message">Failed to scan: No Bluetooth function.</string>
-
     <string name="setting.bluetoothMachineSelect.didNotSelectDevice">Please choose a machine on setting screen.</string>
-
-    <!-- Program List Fragment -->
+    <!-- Program List -->
+    <string name="setting.programList.summary">View saved programs</string>
     <string name="setting.programList.delete">Delete</string>
     <string name="setting.programList.checkAll">Check All</string>
     <string name="setting.programList.samplePrograms">Sample Programs</string>
     <string name="setting.programList.userPrograms">User Programs</string>
+    <!-- Visit website -->
+    <string name="setting.visitWebsite.summary">Open in browser</string>
 
+
+    <!-- Layouts -->
+    <!-- SelectNumberView -->
+    <string name="select.number.period">●</string>
+    <string name="select.number.finish">OK</string>
+    <!-- NavigationDrawer -->
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 </resources>

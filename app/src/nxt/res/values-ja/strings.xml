@@ -19,47 +19,13 @@
 <resources>
     <string name="app_name">NxtDrive</string>
 
+
     <!-- Title -->
     <string name="title">NxtDrive</string>
-    <string name="title.start">はじめる</string>
-    <string name="title.setting">設定画面へ</string>
-    <string name="title.label">タイトル</string>
 
-    <!-- Blocks -->
-    <!-- Sequence -->
-    <string name="blocks.forwardSec">□びょうすすむ</string>
-    <string name="blocks.backwardSec">□びょうバック</string>
-    <string name="blocks.turnLeftSec">□びょうひだりまわり</string>
-    <string name="blocks.turnRightSec">□びょうみぎまわり</string>
-    <string name="blocks.stopSec">□びょうとまる</string>
-    <string name="blocks.setLeftMotorSpeed">ひだりタイヤせってい</string>
-    <string name="blocks.setRightMotorSpeed">みぎタイヤせってい</string>
-    <!-- Selection -->
-    <string name="blocks.ifNxtIsOutOfLine">ラインからでたら</string>
-    <string name="blocks.ifNxtWasTouched">タッチされたら</string>
-    <string name="blocks.ifThereWasALargeSound">おおきなおとがしたら</string>
 
-    <!-- TextsOnBlock -->
-    <!-- Sequence -->
-    <string name="textOnBlocks.forwardSec">びょうすすむ</string>
-    <string name="textOnBlocks.backwardSec">びょうバック</string>
-    <string name="textOnBlocks.turnLeftSec">びょうひだりまわり</string>
-    <string name="textOnBlocks.turnRightSec">びょうみぎまわり</string>
-    <string name="textOnBlocks.stopSec">びょうとまる</string>
-    <string name="textOnBlocks.rightMotor">みぎタイヤ</string>
-    <string name="textOnBlocks.leftMotor">ひだりタイヤ</string>
-    <!-- Selection -->
-    <string name="textOnBlocks.ifNxtIsOutOfLine">ラインからでた</string>
-    <string name="textOnBlocks.ifNxtWasTouched">タッチされた</string>
-    <string name="textOnBlocks.ifThereWasALargeSound">おおきなおとがした</string>
-
-    <string name="sensors.touch">タッチ</string>
-    <string name="sensors.light">光</string>
-    <string name="sensors.sound">音</string>
-
-    <string name="motors.left">左</string>
-    <string name="motors.right">右</string>
-
+    <!-- SettingActivity -->
+    <!-- PortConnection -->
     <string name="setting.portConnection">ポート設定</string>
     <string name="setting.portConnection.sensors">センサ</string>
     <string name="setting.portConnection.motors">モータ</string>
@@ -72,13 +38,13 @@
     <string name="setting.portConnection.deviceMotorPortA">PortA</string>
     <string name="setting.portConnection.deviceMotorPortB">PortB</string>
     <string name="setting.portConnection.deviceMotorPortC">PortC</string>
-
+    <!-- Threshold -->
     <string name="setting.threshold">センサ閾値設定</string>
     <string name="setting.threshold.lightSensor">ライトセンサの閾値</string>
     <string name="setting.threshold.soundSensor">サウンドセンサの閾値</string>
     <string name="setting.threshold.unit.percent">%1d %%</string>
     <string name="setting.threshold.unit.dB">%1d dB</string>
-
+    <!-- Firmware -->
     <string name="setting.firmware">ファームウェア設定</string>
     <string name="setting.firmware.standard">標準ファームウェア (1.3.1~)</string>
     <string name="setting.firmware.lejos">leJOS (0.9.1~) </string>

@@ -30,14 +30,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Program Data manager
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 2.0 2-April-2016
+ * A manger of {@link ProgramData}.
  */
 public class ProgramDataManager {
     private static ProgramDataManager mInstance = new ProgramDataManager();
-    private DriveDatabase mDriveDatabase = null;
+    private DriveDatabase mDriveDatabase;
 
     // the number of execution programs should be less than or equals to 1
     private static final Query EXECUTION_PROGRAM =
@@ -71,29 +68,29 @@ public class ProgramDataManager {
     }
 
     /**
-     * Save program data temporarily to execute it
+     * Saves a program temporarily to execute it.
      *
-     * @param BlockSpaceLayout The programming space that has blocks
+     * @param layout The programming space that has blocks
      */
     public boolean saveExecutionProgram(BlockSpaceLayout layout) {
         return saveProgram(Program.EXECUTION, Program.EXECUTION, layout);
     }
 
     /**
-     * Save a sample program data
+     * Saves a sample program.
      *
-     * @param String the name of a new program
-     * @param BlockSpaceLayout the programming space that has blocks
+     * @param programName the name of a new program
+     * @param layout the programming space that has blocks
      */
     public boolean saveSampleProgram(String programName, BlockSpaceLayout layout) {
         return saveProgram(programName, Program.SAMPLE, layout);
     }
 
     /**
-     * Save a user program data
+     * Saves a user program.
      *
-     * @param String the name of a new program
-     * @param BlockSpaceLayout the programming space that has blocks
+     * @param programName the name of a new program
+     * @param layout the programming space that has blocks
      */
     public boolean saveUserProgram(String programName, BlockSpaceLayout layout) {
         return saveProgram(programName, Program.USER, layout);
@@ -141,29 +138,29 @@ public class ProgramDataManager {
     }
 
     /**
-     * Load an execution program's block data (Sorted)
+     * Loads an execution program's block data (sorted).
      *
-     * @return ArrayList<BlockBase> loaded data
+     * @return loaded data as {@link ArrayList<BlockBase>}
      */
     public ArrayList<BlockBase> loadExecutionProgram() {
         return loadProgram(Program.EXECUTION, Program.EXECUTION);
     }
 
     /**
-     * Load a sample program's block data (Sorted)
+     * Loads a sample program's block data (sorted).
      *
-     * @param String the name of program
-     * @return ArrayList<BlockBase> loaded data
+     * @param programName the name of program
+     * @return loaded data as {@link ArrayList<BlockBase>}
      */
     public ArrayList<BlockBase> loadSampleProgram(String programName) {
         return loadProgram(programName, Program.SAMPLE);
     }
 
     /**
-     * Load a user program's block data
+     * Loads a user program's block data
      *
-     * @param String the name of program
-     * @return ArrayList<BlockBase> loaded data
+     * @param programName the name of program
+     * @return loaded data as {@link ArrayList<BlockBase>}
      */
     public ArrayList<BlockBase> loadUserProgram(String programName) {
         return loadProgram(programName, Program.USER);
@@ -217,18 +214,18 @@ public class ProgramDataManager {
     }
 
     /**
-     * Load all sample program names
+     * Loads all the sample program names.
      *
-     * @return ArrayList<String> the names of sample programs
+     * @return the names of sample programs as {@link ArrayList<String>}
      */
     public ArrayList<String> loadSampleProgramNames() {
         return loadProgramNames(Program.SAMPLE);
     }
 
     /**
-     * Load all user program names
+     * Loads all user program names
      *
-     * @return ArrayList<String> the names of user programs
+     * @return the names of user programs as {@link ArrayList<String>}
      */
     public ArrayList<String> loadUserProgramNames() {
         return loadProgramNames(Program.USER);
@@ -256,24 +253,24 @@ public class ProgramDataManager {
     }
 
     /**
-     * Delete an execution program
+     * Deletes an execution program.
      */
     public void deleteExecutionProgram() {
         deleteProgram(Program.EXECUTION, Program.EXECUTION);
     }
 
     /**
-     * Delete a sample program with 'programName'
+     * Deletes a sample program with <code>programName</code>.
      *
-     * @param String the name of a sample program
+     * @param programName the name of a sample program
      */
     public void deleteSampleProgram(String programName) {
         deleteProgram(programName, Program.SAMPLE);
     }
     /**
-     * Delete a user program with 'programName'
+     * Deletes a user program with <code>programName</code>.
      *
-     * @param String the name of a user program
+     * @param programName the name of a user program
      */
     public void deleteUserProgram(String programName) {
         deleteProgram(programName, Program.USER);

@@ -67,10 +67,10 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
     // fields for new device list
-    private ListView mNewDevicesListView = null;
+    private ListView mNewDevicesListView;
 
     // fields for bonded device list
-    private ListView mPairedDevicesListView = null;
+    private ListView mPairedDevicesListView;
 
     @Override
     @NonNull
