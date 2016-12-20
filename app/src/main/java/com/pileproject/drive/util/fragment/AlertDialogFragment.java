@@ -88,7 +88,7 @@ public class AlertDialogFragment extends DialogFragment {
         /**
          * Constructor of builder for {@link AppCompatActivity}.
          *
-         * @param <A> class of an activity that extends {@link AppCompatActivity} and {@Link EventListener}
+         * @param <A> class of an activity that extends {@link AppCompatActivity} and {@link EventListener}
          * @param activity activity that is trying to show a dialog
          */
         public <A extends AppCompatActivity & EventListener> Builder(@NonNull A activity) {
@@ -99,7 +99,7 @@ public class AlertDialogFragment extends DialogFragment {
         /**
          * Constructor of builder for {@link Fragment}.
          *
-         * @param <F> class of a fragment that extends {@link AppCompatActivity} and {@Link EventListener}
+         * @param <F> class of a fragment that extends {@link AppCompatActivity} and {@link EventListener}
          * @param parentFragment fragment that is trying to show a dialog
          */
         public <F extends Fragment & EventListener> Builder(@NonNull F parentFragment) {
