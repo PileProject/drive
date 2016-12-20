@@ -16,43 +16,40 @@
 package com.pileproject.drive.machine;
 
 import com.pileproject.drive.preferences.MachinePreferences;
-import com.pileproject.drivecommand.model.nxt.NxtMachine;
-import com.pileproject.drivecommand.model.nxt.port.NxtInputPort;
-import com.pileproject.drivecommand.model.nxt.port.NxtOutputPort;
+import com.pileproject.drivecommand.model.ev3.Ev3Machine;
+import com.pileproject.drivecommand.model.ev3.port.Ev3InputPort;
+import com.pileproject.drivecommand.model.ev3.port.Ev3OutputPort;
 
 import java.util.Arrays;
 import java.util.List;
 
 import static com.pileproject.drive.app.DriveApplication.getContext;
-import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LIGHT;
-import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.COLOR;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.RANGEFINDER;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
 
 /**
- * An implementation of {@link CarControllerBase} that controls LEGO MINDSTORMS NXT.
+ * An implementation of {@link CarControllerBase} that controls LEGO MINDSTORMS EV3.
  */
-public class NxtCarController extends CarControllerBase {
-    private final boolean mIsLejosFirmware;
-
+public class Ev3CarController extends CarControllerBase {
     /**
      * An internal class that contains sensor properties.
      */
     public static final class SensorProperty {
         public static final List<String> ALL_SENSORS = Arrays.asList(
                         TOUCH,
-                        SOUND,
-                        LIGHT
+                        COLOR,
+                        RANGEFINDER
                 );
 
-        public static final class LightSensor {
+        public static final class ColorSensor {
             public static final int PCT_MIN = 0;
             public static final int PCT_MAX = 100;
         }
 
-        public static final class SoundSensor {
-            public static final int DB_MIN = 40;
-            public static final int DB_MAX = 120;
+        public static final class Rangefinder {
+            public static final int CM_MIN = 0;
+            public static final int CM_MAX = 255;
         }
     }
 
@@ -60,26 +57,24 @@ public class NxtCarController extends CarControllerBase {
      * Binds each sensor and motor to their ports by using <code>MachinePreferences</code> which is based on
      * {@link com.pileproject.drive.preferences.MachinePreferencesSchema}.
      *
-     * @param machine an {@link NxtMachine} to be manipulated
+     * @param machine an {@link Ev3Machine} to be manipulated
      */
-    public NxtCarController(NxtMachine machine) {
+    public Ev3CarController(Ev3Machine machine) {
         mMachine = machine;
 
         MachinePreferences preferences = MachinePreferences.get(getContext());
 
         // connect motors
-        connectOutputPort(preferences.getOutputPortA(), NxtOutputPort.PORT_A);
-        connectOutputPort(preferences.getOutputPortB(), NxtOutputPort.PORT_B);
-        connectOutputPort(preferences.getOutputPortC(), NxtOutputPort.PORT_C);
+        connectOutputPort(preferences.getOutputPortA(), Ev3OutputPort.PORT_A);
+        connectOutputPort(preferences.getOutputPortB(), Ev3OutputPort.PORT_B);
+        connectOutputPort(preferences.getOutputPortC(), Ev3OutputPort.PORT_C);
+        connectOutputPort(preferences.getOutputPortD(), Ev3OutputPort.PORT_D);
 
         // connect sensors
-        connectInputPort(preferences.getInputPort1(), NxtInputPort.PORT_1);
-        connectInputPort(preferences.getInputPort2(), NxtInputPort.PORT_2);
-        connectInputPort(preferences.getInputPort3(), NxtInputPort.PORT_3);
-        connectInputPort(preferences.getInputPort4(), NxtInputPort.PORT_4);
-
-        String firmware = MachinePreferences.get(getContext()).getFirmware();
-        mIsLejosFirmware = firmware.equals(LEJOS);
+        connectInputPort(preferences.getInputPort1(), Ev3InputPort.PORT_1);
+        connectInputPort(preferences.getInputPort2(), Ev3InputPort.PORT_2);
+        connectInputPort(preferences.getInputPort3(), Ev3InputPort.PORT_3);
+        connectInputPort(preferences.getInputPort4(), Ev3InputPort.PORT_4);
     }
 
     @Override
@@ -88,26 +83,21 @@ public class NxtCarController extends CarControllerBase {
     }
 
     @Override
-    public int getLightSensorValue() {
-        if (mLightSensor == null) return -1;
-        return mLightSensor.getSensorValue();
+    public int getColorSensorIlluminance() {
+        if (mColorSensor == null) return -1;
+        return mColorSensor.getIlluminance();
     }
 
     @Override
-    public int getSoundSensorDb() {
-        if (mSoundSensor == null) return -1;
-        return mSoundSensor.getDb();
+    public int getRangefinderDistance() {
+        if (mRangefinder == null) return -1;
+        return mRangefinder.getDistance();
     }
 
     @Override
     public boolean isTouchSensorTouched() {
         if (mTouchSensor == null) return false;
-        boolean isTouched = mTouchSensor.isTouched();
-
-        // leJOS returns the opposite value
-        if (mIsLejosFirmware) isTouched = !isTouched;
-
-        return isTouched;
+        return mTouchSensor.isTouched();
     }
 
     @Override

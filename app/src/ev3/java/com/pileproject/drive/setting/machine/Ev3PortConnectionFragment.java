@@ -27,7 +27,7 @@ import android.view.WindowManager;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.machine.CarControllerBase;
-import com.pileproject.drive.machine.NxtCarController;
+import com.pileproject.drive.machine.Ev3CarController;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drive.view.PortTextViewBase;
 
@@ -37,9 +37,9 @@ import java.util.Set;
 
 
 /**
- * A fragment for setting the port connections. This fragment will be used by {@link NxtFirmwarePreference}.
+ * A fragment for setting the port connections. This fragment will be used by {@link Ev3PortConnectionFragment}.
  */
-public class NxtPortConnectionFragment extends DialogFragment {
+public class Ev3PortConnectionFragment extends DialogFragment {
     private View mRootView;
 
     @Override
@@ -53,7 +53,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        mRootView = inflater.inflate(R.layout.fragment_nxt_port_config, container, false);
+        mRootView = inflater.inflate(R.layout.fragment_ev3_port_config, container, false);
         return mRootView;
     }
 
@@ -85,7 +85,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort3, preferences.getInputPort3()));
         sensorsInUsed.add(loadSensor(R.id.setting_portconfig_sensorPort4, preferences.getInputPort4()));
 
-        List<String> allSensors = NxtCarController.SensorProperty.ALL_SENSORS;
+        List<String> allSensors = Ev3CarController.SensorProperty.ALL_SENSORS;
         int index = 0;
         final int[] sensorPlaceIds = {
                 R.id.setting_portconfig_sensor1, R.id.setting_portconfig_sensor2, R.id.setting_portconfig_sensor3,
@@ -112,6 +112,7 @@ public class NxtPortConnectionFragment extends DialogFragment {
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortA, preferences.getOutputPortA()));
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortB, preferences.getOutputPortB()));
         motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortC, preferences.getOutputPortC()));
+        motorsInUsed.add(loadMotor(R.id.setting_portconfig_motorPortD, preferences.getOutputPortD()));
 
         List<String> allMotors = CarControllerBase.MotorProperty.ALL_MOTORS;
         int index = 0;

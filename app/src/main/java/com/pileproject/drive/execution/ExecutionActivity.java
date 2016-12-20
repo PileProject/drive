@@ -200,7 +200,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
                         new AlertDialogFragment.Builder(ExecutionActivity.this)
                             .setRequestCode(DIALOG_REQUEST_CODE_CONNECTION_ERROR)
                             .setTitle(R.string.error)
-                            .setMessage(R.string.execute_disconnectedByNXT)
+                            .setMessage(R.string.execute_disconnectedByMachine)
                             .setPositiveButtonLabel(android.R.string.ok)
                             .setCancelable(false)
                             .setAllowingStateLoss(true)

@@ -105,6 +105,7 @@
     <string name="blocks.ifMachineIsOutOfLine">If machine is out of line</string>
     <string name="blocks.ifMachineIsTouched">If machine is touched</string>
     <string name="blocks.ifThereIsALargeSound">If there is a large sound</string>
+    <string name="blocks.ifThereIsAnObstacle">If there is an obstacle</string>
 
 
     <!-- TextsOnBlock -->
@@ -131,6 +132,7 @@
     <string name="textOnBlocks.ifMachineIsOutOfLine">Out of line?</string>
     <string name="textOnBlocks.ifMachineIsTouched">Touched?</string>
     <string name="textOnBlocks.ifThereIsALargeSound">A large sound?</string>
+    <string name="textOnBlocks.ifThereIsAnObstacle">An obstacle?</string>
 
 
     <!-- Execute -->
@@ -142,7 +144,7 @@
     <string name="execute.startExecution">Execution starts.</string>
     <string name="execute.executionIsOver">Execution is over.</string>
     <string name="execute.showNoteOfPort">If your program didn\'t work properly, please check the port settings on setting screen.</string>
-    <string name="execute.disconnectedByNXT">Disconnected by the device.</string>
+    <string name="execute.disconnectedByMachine">Disconnected by the device.</string>
     <string name="execute.stop">Stop</string>
     <string name="execute.restart">Restart</string>
     <string name="execute.finish">Finish</string>

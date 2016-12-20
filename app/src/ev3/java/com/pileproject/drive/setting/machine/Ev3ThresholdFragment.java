@@ -29,22 +29,22 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.machine.NxtCarController.SensorProperty.LightSensor;
-import com.pileproject.drive.machine.NxtCarController.SensorProperty.SoundSensor;
+import com.pileproject.drive.machine.Ev3CarController.SensorProperty.ColorSensor;
+import com.pileproject.drive.machine.Ev3CarController.SensorProperty.Rangefinder;
 import com.pileproject.drive.preferences.BlockPreferences;
 
 /**
- * A fragment for setting the thresholds of devices. This fragment will be used by {@link NxtThresholdPreference}.
+ * A fragment for setting the thresholds of devices. This fragment will be used by {@link Ev3ThresholdPreference}.
  */
-public class NxtThresholdFragment extends DialogFragment {
-    public static final int LIGHT_DEFAULT_THRESHOLD = 50;
-    public static final int SOUND_DEFAULT_THRESHOLD = 70;
+public class Ev3ThresholdFragment extends DialogFragment {
+    public static final int COLOR_DEFAULT_THRESHOLD = 50;
+    public static final int RANGEFINDER_DEFAULT_THRESHOLD = 128;
 
-    private SeekBar mLightSensorSeekBar;
-    private TextView mLightSensorText;
+    private SeekBar mColorSensorSeekBar;
+    private TextView mColorSensorText;
 
-    private SeekBar mSoundSensorSeekBar;
-    private TextView mSoundSensorText;
+    private SeekBar mRangefinderSeekBar;
+    private TextView mRangefinderText;
 
     @Override
     @NonNull
@@ -57,13 +57,13 @@ public class NxtThresholdFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_nxt_threshold, container, false);
+        View v = inflater.inflate(R.layout.fragment_ev3_threshold, container, false);
 
-        mLightSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_lightSensor);
-        mLightSensorText = (TextView) v.findViewById(R.id.setting_threshold_lightSensorValueText);
+        mColorSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_colorSensor);
+        mColorSensorText = (TextView) v.findViewById(R.id.setting_threshold_colorSensorValueText);
 
-        mSoundSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_soundSensor);
-        mSoundSensorText = (TextView) v.findViewById(R.id.setting_threshold_soundSensorValueText);
+        mRangefinderSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_rangefinder);
+        mRangefinderText = (TextView) v.findViewById(R.id.setting_threshold_rangefinderValueText);
 
         return v;
     }
@@ -75,11 +75,11 @@ public class NxtThresholdFragment extends DialogFragment {
         // NOTE: this is necessary because this screen collapsed on API 23+
         resizeDialog();
 
-        mLightSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mColorSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent,
-                                                   progress + LightSensor.PCT_MIN));
+                mColorSensorText.setText(getString(R.string.setting_threshold_unit_percent,
+                                                   progress + ColorSensor.PCT_MIN));
             }
 
             @Override
@@ -89,19 +89,19 @@ public class NxtThresholdFragment extends DialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 BlockPreferences.get(getActivity())
-                        .setLightSensorThreshold(seekBar.getProgress() + LightSensor.PCT_MIN);
+                        .setColorSensorIlluminanceThreshold(seekBar.getProgress() + ColorSensor.PCT_MIN);
             }
         });
 
-        int savedLightValue = BlockPreferences.get(getActivity()).getLightSensorThreshold(LIGHT_DEFAULT_THRESHOLD);
-        mLightSensorSeekBar.setMax(LightSensor.PCT_MAX - LightSensor.PCT_MIN);
-        mLightSensorSeekBar.setProgress(savedLightValue - LightSensor.PCT_MIN);
+        int savedColorValue = BlockPreferences.get(getActivity()).getColorSensorIlluminanceThreshold(COLOR_DEFAULT_THRESHOLD);
+        mColorSensorSeekBar.setMax(ColorSensor.PCT_MAX - ColorSensor.PCT_MIN);
+        mColorSensorSeekBar.setProgress(savedColorValue - ColorSensor.PCT_MIN);
 
-        mSoundSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mRangefinderSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mSoundSensorText.setText(getString(R.string.setting_threshold_unit_dB,
-                                                   progress + SoundSensor.DB_MIN));
+                mRangefinderText.setText(getString(R.string.setting_threshold_unit_cm,
+                                                   progress + Rangefinder.CM_MIN));
             }
 
             @Override
@@ -111,13 +111,13 @@ public class NxtThresholdFragment extends DialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 BlockPreferences.get(getActivity())
-                        .setSoundSensorThreshold(seekBar.getProgress() + SoundSensor.DB_MIN);
+                        .setRangefinderThreshold(seekBar.getProgress() + Rangefinder.CM_MIN);
             }
         });
 
-        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold(SOUND_DEFAULT_THRESHOLD);
-        mSoundSensorSeekBar.setMax(SoundSensor.DB_MAX - SoundSensor.DB_MIN);
-        mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.DB_MIN);
+        int savedRangefinderValue = BlockPreferences.get(getActivity()).getRangefinderThreshold(RANGEFINDER_DEFAULT_THRESHOLD);
+        mRangefinderSeekBar.setMax(Rangefinder.CM_MAX - Rangefinder.CM_MIN);
+        mRangefinderSeekBar.setProgress(savedRangefinderValue - Rangefinder.CM_MIN);
     }
 
     /**

@@ -23,22 +23,39 @@ import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.preferences.BlockPreferences;
 import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
 
+import java.util.List;
+
 /**
  * This block checks if the light sensor's value is higher than the threshold, which means the machine
  * is on a light-colored floor, thus out of a black line.
  */
 public class IfMachineIsOutOfLineBlock extends SelectionBlock {
 
-    private int mThreshold;
+    private final double INVALID = -1_000_000;
 
     public IfMachineIsOutOfLineBlock(Context context) {
         super(context, R.layout.block_if_machine_is_out_of_line);
-
-        mThreshold = BlockPreferences.get(context).getLightSensorThreshold();
     }
 
     @Override
     protected boolean evaluateCondition(MachineController controller) {
-        return ((CarControllerBase) controller).getLightSensorValue() > mThreshold;
+        double threshold = INVALID;
+        double realValue = INVALID;
+
+        List<String> sensors =  ((CarControllerBase) controller).getAllInputDevices();
+        if (sensors.contains(CarControllerBase.InputDevice.LIGHT)) {
+            threshold = BlockPreferences.get(getContext()).getLightSensorThreshold();
+            realValue = ((CarControllerBase) controller).getLightSensorValue();
+        }
+        if (sensors.contains(CarControllerBase.InputDevice.COLOR)) {
+            threshold = BlockPreferences.get(getContext()).getColorSensorIlluminanceThreshold();
+            realValue = ((CarControllerBase) controller).getColorSensorIlluminance();
+        }
+
+        if (threshold == INVALID || realValue == INVALID) {
+            // TODO(tiwanari): throw an exception?
+        }
+
+        return realValue > threshold;
     }
 }

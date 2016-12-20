@@ -105,6 +105,7 @@
     <string name="blocks.ifMachineIsOutOfLine">ラインからでたら</string>
     <string name="blocks.ifMachineIsTouched">タッチされたら</string>
     <string name="blocks.ifThereIsALargeSound">おおきなおとがしたら</string>
+    <string name="blocks.ifThereIsAnObstacle">まえにものがあるなら</string>
 
 
     <!-- TextsOnBlock -->
@@ -131,6 +132,7 @@
     <string name="textOnBlocks.ifMachineIsOutOfLine">ラインからでた</string>
     <string name="textOnBlocks.ifMachineIsTouched">タッチされた</string>
     <string name="textOnBlocks.ifThereIsALargeSound">おおきなおとがした</string>
+    <string name="textOnBlocks.ifThereIsAnObstacle">まえにものがある</string>
 
 
     <!-- Execute -->
@@ -142,7 +144,7 @@
     <string name="execute.startExecution">じっこうかいし</string>
     <string name="execute.executionIsOver">じっこうがしゅうりょうしました</string>
     <string name="execute.showNoteOfPort">プログラムがただしくどうさしないばあいは，せっていがめんからポートのせっていをたしかめてください</string>
-    <string name="execute.disconnectedByNXT">せつぞくがきられました</string>
+    <string name="execute.disconnectedByMachine">せつぞくがきられました</string>
     <string name="execute.stop">いちじていし</string>
     <string name="execute.restart">さいかい</string>
     <string name="execute.finish">しゅうりょう</string>

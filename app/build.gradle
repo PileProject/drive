@@ -35,9 +35,9 @@ android {
             applicationIdSuffix = ".nxt"
         }
 
-        // ev3 {
-        //     applicationIdSuffix = ".ev3"
-        // }
+        ev3 {
+            applicationIdSuffix = ".ev3"
+        }
 
         // pile {
         //     applicationIdSuffix = ".pile"
