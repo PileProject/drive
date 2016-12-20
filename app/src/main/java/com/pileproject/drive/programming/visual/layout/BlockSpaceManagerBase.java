@@ -28,7 +28,7 @@ import java.util.List;
  * A manager of BlockSpaceLayout.
  */
 public abstract class BlockSpaceManagerBase {
-    protected BlockSpaceLayout mLayout = null;
+    protected BlockSpaceLayout mLayout;
     protected Context mContext;
     private ProgramDataManager mManager;
     private static final String USER_PROGRAM_NAME_FORMAT = "%d";

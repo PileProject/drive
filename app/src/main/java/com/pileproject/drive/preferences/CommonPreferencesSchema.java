@@ -20,9 +20,6 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
  * Schema for "common_preferences" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 21-April-2016
  */
 @Table(name = "common_preferences")
 public class CommonPreferencesSchema {

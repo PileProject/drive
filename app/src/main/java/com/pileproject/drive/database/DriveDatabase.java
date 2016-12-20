@@ -24,10 +24,7 @@ import com.yahoo.squidb.data.SquidDatabase;
 import com.yahoo.squidb.sql.Table;
 
 /**
- * Implementation of SquidDatabase for this app.
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 3-April-2016
+ * The implementation of SquidDatabase for this app.
  */
 public class DriveDatabase extends SquidDatabase {
     private static final int VERSION = 1;

@@ -32,7 +32,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
  * A manager of BlockSpaceLayout that manages it to show the progress of execution.
  */
 public class ExecutionSpaceManager extends BlockSpaceManagerBase {
-    private FrameView mFrame = null;
+    private FrameView mFrame;
 
     public ExecutionSpaceManager(Context context, BlockSpaceLayout layout) {
         super(context, layout);
@@ -54,7 +54,7 @@ public class ExecutionSpaceManager extends BlockSpaceManagerBase {
     /**
      * Emphasize the current block.
      *
-     * @param int index
+     * @param index
      */
     public void emphasizeBlock(int index) {
         // get the target block

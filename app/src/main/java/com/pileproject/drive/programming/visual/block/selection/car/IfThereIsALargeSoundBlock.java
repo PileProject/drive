@@ -13,37 +13,33 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.programming.visual.block.selection;
+package com.pileproject.drive.programming.visual.block.selection.car;
 
 import android.content.Context;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.machine.CarControllerBase;
+import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.preferences.BlockPreferences;
+import com.pileproject.drive.programming.visual.block.selection.SelectionBlock;
+
 
 /**
- * This block check the light sensor's value
- * If the value is higher than threshold, it means nxt is on the
- * light-colored floor and out of black line.
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * This block checks if the current sound sensor's value is larger than the threshold, which means there is a large
+ * sound.
  */
-public class IfNxtIsOutOfLineBlock extends SelectionBlock {
+public class IfThereIsALargeSoundBlock extends SelectionBlock {
 
     private int mThreshold;
 
-    public IfNxtIsOutOfLineBlock(Context context) {
-        super(context, R.layout.block_if_nxt_is_out_of_line);
+    public IfThereIsALargeSoundBlock(Context context) {
+        super(context, R.layout.block_if_there_is_a_large_sound);
 
-        mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
+        mThreshold = BlockPreferences.get(context).getSoundSensorThreshold();
     }
 
     @Override
     protected boolean evaluateCondition(MachineController controller) {
-        // comment is weird.
-        // getLightPercent returns tenfold value
-        return ((NxtController) controller).getLineSensorValue() > mThreshold * 10;
+        return ((CarControllerBase) controller).getSoundSensorDb() > mThreshold;
     }
 }

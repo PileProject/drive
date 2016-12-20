@@ -57,7 +57,11 @@ public class BlockListActivity extends Activity {
 
     public static final String KEY_BLOCK_NAME = "block-list-activity-key-block-name";
 
-    private static final int[] CATEGORY_STRINGS = {R.string.sequence, R.string.repetition, R.string.selection};
+    private static final int[] CATEGORY_STRINGS = {
+            R.string.programming_sequence,
+            R.string.programming_repetition,
+            R.string.programming_selection
+    };
 
     @Inject
     public BlockProvider mBlockProvider;
@@ -125,7 +129,7 @@ public class BlockListActivity extends Activity {
             }
         });
 
-        findViewById(R.id.blockList_cancelButton).setOnClickListener(new OnClickListener() {
+        findViewById(R.id.blockList_helpButton).setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 

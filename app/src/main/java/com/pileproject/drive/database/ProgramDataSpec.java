@@ -21,9 +21,6 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
  * Specification for "program_data" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 22-March-2016
  */
 @TableModelSpec(className="ProgramData", tableName="program_data",
                 tableConstraint = "FOREIGN KEY(programId) references programs(_id) ON DELETE CASCADE")

@@ -27,14 +27,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/noImage"
-        android:src="@drawable/icon_if_nxt_is_out_of_line"/>
+        android:src="@drawable/icon_if_machine_is_touched"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="@string/textOnBlocks.ifNxtIsOutOfLine"
+        android:text="@string/textOnBlocks.ifMachineIsTouched"
         android:textColor="@android:color/white"/>
 
     <TextView

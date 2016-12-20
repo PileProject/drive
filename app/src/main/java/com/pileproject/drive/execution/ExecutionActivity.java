@@ -35,6 +35,7 @@ import com.pileproject.drive.comm.BluetoothCommunicatorProvider;
 import com.pileproject.drive.comm.CommunicatorProvider;
 import com.pileproject.drive.comm.RxMachineConnector;
 import com.pileproject.drive.database.ProgramDataManager;
+import com.pileproject.drive.machine.MachineProvider;
 import com.pileproject.drive.util.bluetooth.BluetoothUtil;
 import com.pileproject.drive.util.development.DeployUtils;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
