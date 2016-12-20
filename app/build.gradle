@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'com.cookpad.android.licensetools' // for others' licenses
 apply plugin: "com.github.hierynomus.license" // for our license
+apply plugin: 'com.vanniktech.android.javadoc' // for javadocs
 
 android {
     compileSdkVersion 23
