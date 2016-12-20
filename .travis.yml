@@ -56,7 +56,7 @@ script:
   # PreDex is a feature for making next build faster by caching
   # some intermidiate files.
   # but on Travis such cacing is worthless and just waste of time.
-  - ./gradlew check connectedCheck -PdisablePreDex --continue --stacktrace
+  - ./gradlew license check connectedCheck -PdisablePreDex --continue --stacktrace
 
 notifications:
   slack:
