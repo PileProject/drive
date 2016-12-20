@@ -27,14 +27,14 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:contentDescription="@string/noImage"
-        android:src="@drawable/icon_if_there_was_a_large_sound"/>
+        android:src="@drawable/icon_if_there_is_a_large_sound"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="5dp"
-        android:text="@string/textOnBlocks.ifThereWasALargeSound"
+        android:text="@string/textOnBlocks.ifThereIsALargeSound"
         android:textColor="@android:color/white"/>
 
     <TextView

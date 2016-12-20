@@ -20,21 +20,30 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
  * Schema for "block_preferences" table
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 21-April-2016
  */
 @Table(name = "block_preferences")
 public class BlockPreferencesSchema {
-    public class THRESHOLD {
-        public static final int SOUND_DEFAULT = 70;
-        public static final int LINE_DEFAULT = 50;
-    }
+    @Key(name = "color_sensor_illuminance_threshold")
+    int colorSensorIlluminanceThreshold;
 
-    @Key(name = "sound_sensor_threshold")
-    final int soundSensorThreshold = THRESHOLD.SOUND_DEFAULT;
+    @Key(name = "gyro_sensor_rate_threshold")
+    int gyroSensorRateThreshold;
+
+    @Key(name = "gyro_sensor_angle_threshold")
+    int gyroSensorAngleThreshold;
 
     @Key(name = "line_sensor_threshold")
-    final int lineSensorThreshold = THRESHOLD.LINE_DEFAULT;
-}
+    int lineSensorThreshold;
 
+    @Key(name = "rangefinder_sensor_threshold")
+    int rangefinderThreshold;
+
+    @Key(name = "remote_control_receiver_distance_threshold")
+    int remoteControlReceiverDistanceThreshold;
+
+    @Key(name = "sound_sensor_threshold")
+    int soundSensorThreshold;
+
+    @Key(name = "touch_sensor_touched_count_threshold")
+    int touchSensorTouchedCountThreshold;
+}

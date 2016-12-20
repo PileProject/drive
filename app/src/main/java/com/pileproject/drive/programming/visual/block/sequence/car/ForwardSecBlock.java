@@ -13,26 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.programming.visual.block.sequence;
+package com.pileproject.drive.programming.visual.block.sequence.car;
 
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.machine.MachineController;
+import com.pileproject.drive.programming.visual.block.sequence.SequenceBlockHasNumberText;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
 import java.math.BigDecimal;
 
 /**
- * Turn left for a while
+ * Forward for a while
  *
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
+public class ForwardSecBlock extends SequenceBlockHasNumberText {
 
     // TODO: set from preference
     private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
@@ -40,8 +41,8 @@ public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
     // TODO: set from preference
     private static final int PRECISION = 3;
 
-    public TurnLeftSecBlock(Context context) {
-        super(context, R.layout.block_turn_left_sec, R.id.block_numText);
+    public ForwardSecBlock(Context context) {
+        super(context, R.layout.block_forward_sec, R.id.block_numText);
     }
 
     @Override
@@ -56,7 +57,7 @@ public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).turnLeft();
+        ((CarControllerBase) controller).moveForward();
         return getActionValue();
     }
 

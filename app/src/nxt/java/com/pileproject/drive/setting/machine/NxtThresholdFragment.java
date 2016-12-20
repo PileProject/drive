@@ -29,16 +29,19 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
-import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
+import com.pileproject.drive.machine.NxtCarController.SensorProperty.LineSensor;
+import com.pileproject.drive.machine.NxtCarController.SensorProperty.SoundSensor;
 import com.pileproject.drive.preferences.BlockPreferences;
 
 public class NxtThresholdFragment extends DialogFragment {
-    private SeekBar mLightSensorSeekBar = null;
-    private TextView mLightSensorText = null;
+    public static final int LINE_DEFAULT_THRESHOLD = 50;
+    public static final int SOUND_DEFAULT_THRESHOLD = 70;
 
-    private SeekBar mSoundSensorSeekBar = null;
-    private TextView mSoundSensorText = null;
+    private SeekBar mLightSensorSeekBar;
+    private TextView mLightSensorText;
+
+    private SeekBar mSoundSensorSeekBar;
+    private TextView mSoundSensorText;
 
     @Override
     @NonNull
@@ -87,7 +90,7 @@ public class NxtThresholdFragment extends DialogFragment {
             }
         });
 
-        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold();
+        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold(LINE_DEFAULT_THRESHOLD);
         mLightSensorSeekBar.setMax(LineSensor.PctMax - LineSensor.PctMin);
         mLightSensorSeekBar.setProgress(savedLightValue - LineSensor.PctMin);
 
@@ -109,7 +112,7 @@ public class NxtThresholdFragment extends DialogFragment {
             }
         });
 
-        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold();
+        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold(SOUND_DEFAULT_THRESHOLD);
         mSoundSensorSeekBar.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
         mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
     }

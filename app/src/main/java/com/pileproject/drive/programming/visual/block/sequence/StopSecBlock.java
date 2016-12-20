@@ -19,20 +19,19 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
 import java.math.BigDecimal;
 
 /**
- * Turn right for a while
+ * Stop for a while
  *
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class TurnRightSecBlock extends SequenceBlockHasNumberText {
+public class StopSecBlock extends SequenceBlockHasNumberText {
 
     // TODO: set from preference
     private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
@@ -40,8 +39,8 @@ public class TurnRightSecBlock extends SequenceBlockHasNumberText {
     // TODO: set from preference
     private static final int PRECISION = 3;
 
-    public TurnRightSecBlock(Context context) {
-        super(context, R.layout.block_turn_right_sec, R.id.block_numText);
+    public StopSecBlock(Context context) {
+        super(context, R.layout.block_stop_sec, R.id.block_numText);
     }
 
     @Override
@@ -56,7 +55,7 @@ public class TurnRightSecBlock extends SequenceBlockHasNumberText {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).turnRight();
+        controller.halt();
         return getActionValue();
     }
 

@@ -15,8 +15,8 @@
  */
 package com.pileproject.drive.module;
 
-import com.pileproject.drive.execution.MachineProvider;
-import com.pileproject.drive.execution.NxtMachineProvider;
+import com.pileproject.drive.machine.MachineProvider;
+import com.pileproject.drive.machine.NxtMachineProvider;
 import com.pileproject.drive.programming.visual.block.BlockProvider;
 import com.pileproject.drive.programming.visual.block.NxtBlockProvider;
 

@@ -18,16 +18,16 @@ package com.pileproject.drive.programming.visual.block;
 import com.pileproject.drive.programming.visual.block.repetition.LoopBlock;
 import com.pileproject.drive.programming.visual.block.repetition.NTimesBlock;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfNxtWasTouchedBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
-import com.pileproject.drive.programming.visual.block.sequence.BackwardSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.ForwardSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.SetLeftMotorSpeedBlock;
-import com.pileproject.drive.programming.visual.block.sequence.SetRightMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.selection.car.IfMachineIsOutOfLineBlock;
+import com.pileproject.drive.programming.visual.block.selection.car.IfMachineIsTouchedBlock;
+import com.pileproject.drive.programming.visual.block.selection.car.IfThereIsALargeSoundBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.BackwardSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.ForwardSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.SetLeftMotorSpeedBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.SetRightMotorSpeedBlock;
 import com.pileproject.drive.programming.visual.block.sequence.StopSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.TurnLeftSecBlock;
-import com.pileproject.drive.programming.visual.block.sequence.TurnRightSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.TurnLeftSecBlock;
+import com.pileproject.drive.programming.visual.block.sequence.car.TurnRightSecBlock;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -63,9 +63,9 @@ public class NxtBlockProvider implements BlockProvider {
     public List<Class<? extends BlockBase>> getSelectionBlockClasses() {
 
         List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(
-                IfNxtIsOutOfLineBlock.class,
-                IfNxtWasTouchedBlock.class,
-                IfThereWasALargeSoundBlock.class
+                IfMachineIsOutOfLineBlock.class,
+                IfMachineIsTouchedBlock.class,
+                IfThereIsALargeSoundBlock.class
         );
 
         return Collections.unmodifiableList(list);

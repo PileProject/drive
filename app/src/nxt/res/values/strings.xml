@@ -19,48 +19,13 @@
 <resources>
     <string name="app_name">NxtDrive</string>
 
+
     <!-- Title -->
     <string name="title">NxtDrive</string>
-    <string name="title.start">Start</string>
-    <string name="title.setting">Setting</string>
-    <string name="title.label">Title</string>
 
-    <!-- Blocks -->
-    <!-- Sequence -->
-    <string name="blocks.forwardSec">Forward for □sec</string>
-    <string name="blocks.backwardSec">Backward for □sec</string>
-    <string name="blocks.turnLeftSec">Turn left for □sec</string>
-    <string name="blocks.turnRightSec">Turn right for □sec</string>
-    <string name="blocks.stopSec">Stop for □sec</string>
-    <string name="blocks.setLeftMotorSpeed">Set the left tire\'s power</string>
-    <string name="blocks.setRightMotorSpeed">Set the right tire\'s power</string>
-    <!-- Selection -->
-    <string name="blocks.ifNxtIsOutOfLine">If nxt is out of line</string>
-    <string name="blocks.ifNxtWasTouched">If nxt was touched</string>
-    <string name="blocks.ifThereWasALargeSound">If there was a large sound</string>
 
-    <!-- TextsOnBlock -->
-    <!-- Sequence -->
-    <string name="textOnBlocks.forwardSec">sec for</string>
-    <string name="textOnBlocks.backwardSec">sec back</string>
-    <string name="textOnBlocks.turnLeftSec">sec left</string>
-    <string name="textOnBlocks.turnRightSec">sec right</string>
-    <string name="textOnBlocks.stopSec">sec stop</string>
-    <string name="textOnBlocks.rightMotor">Right tire</string>
-    <string name="textOnBlocks.leftMotor">Left tire</string>
-    <!-- Selection -->
-    <string name="textOnBlocks.ifNxtIsOutOfLine">Out of line?</string>
-    <string name="textOnBlocks.ifNxtWasTouched">Touched?</string>
-    <string name="textOnBlocks.ifThereWasALargeSound">A large sound?</string>
-
-    <!-- Machine's Sensors -->
-    <string name="sensors.touch">Touch</string>
-    <string name="sensors.light">Light</string>
-    <string name="sensors.sound">Sound</string>
-
-    <string name="motors.left">Left</string>
-    <string name="motors.right">Right</string>
-
+    <!-- SettingActivity -->
+    <!-- PortConnection -->
     <string name="setting.portConnection">Port Setting</string>
     <string name="setting.portConnection.sensors">Sensors</string>
     <string name="setting.portConnection.motors">Motors</string>
@@ -73,13 +38,13 @@
     <string name="setting.portConnection.deviceMotorPortA">PortA</string>
     <string name="setting.portConnection.deviceMotorPortB">PortB</string>
     <string name="setting.portConnection.deviceMotorPortC">PortC</string>
-
+    <!-- Threshold -->
     <string name="setting.threshold">Sensor Threshold Setting</string>
     <string name="setting.threshold.lightSensor">Light Sensor</string>
     <string name="setting.threshold.soundSensor">Sound Sensor</string>
     <string name="setting.threshold.unit.percent">%1d %%</string>
     <string name="setting.threshold.unit.dB">%1d dB</string>
-
+    <!-- Firmware -->
     <string name="setting.firmware">Firmware Setting</string>
     <string name="setting.firmware.standard">Standard (1.3.1~)</string>
     <string name="setting.firmware.lejos">leJOS (0.9.1~) </string>

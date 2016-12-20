@@ -13,35 +13,36 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.pileproject.drive.programming.visual.block.sequence;
+package com.pileproject.drive.programming.visual.block.sequence.car;
 
 import android.content.Context;
 
 import com.pileproject.drive.R;
+import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.machine.MachineController;
+import com.pileproject.drive.programming.visual.block.sequence.SequenceBlockHasNumberText;
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
 
 import java.math.BigDecimal;
 
 /**
- * Set right motor power
+ * Turn left for a while
  *
  * @author yusaku
  * @version 1.0 7-July-2013
  */
-public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
+public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
 
     // TODO: set from preference
-    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(100));
+    private static final Range<BigDecimal> range = Range.closed(BigDecimal.ZERO, new BigDecimal(3));
 
     // TODO: set from preference
-    private static final int PRECISION = 0;
+    private static final int PRECISION = 3;
 
-    public SetRightMotorSpeedBlock(Context context) {
-        super(context, R.layout.block_set_right_motor_speed, R.id.block_numText);
+    public TurnLeftSecBlock(Context context) {
+        super(context, R.layout.block_turn_left_sec, R.id.block_numText);
     }
 
     @Override
@@ -56,12 +57,12 @@ public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
 
     @Override
     public int action(MachineController controller, ExecutionCondition condition) {
-        ((NxtController) controller).setMotorPower(NxtController.MotorKind.RightMotor, getValue().intValue());
-        return 0;
+        ((CarControllerBase) controller).turnLeft();
+        return getActionValue();
     }
 
     @Override
     public Unit getUnit() {
-        return Unit.Percentage;
+        return Unit.Second;
     }
 }

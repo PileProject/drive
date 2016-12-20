@@ -22,10 +22,10 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.NONE;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.TOUCH;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.SOUND;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.SENSOR.LINE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.NONE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 
 public class NxtSensorPortTextView extends PortTextViewBase {
 
@@ -36,7 +36,7 @@ public class NxtSensorPortTextView extends PortTextViewBase {
     public static String getSensorName(Context context, String sensorType) {
         if (TOUCH.equals(sensorType)) return context.getString(R.string.sensors_touch);
         if (SOUND.equals(sensorType)) return context.getString(R.string.sensors_sound);
-        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_light);
+        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_line);
         return "";
     }
 
