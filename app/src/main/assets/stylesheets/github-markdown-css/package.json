@@ -1,0 +1,103 @@
+{
+  "_args": [
+    [
+      {
+        "raw": "github-markdown-css",
+        "scope": null,
+        "escapedName": "github-markdown-css",
+        "name": "github-markdown-css",
+        "rawSpec": "",
+        "spec": "latest",
+        "type": "tag"
+      },
+      "/Users/tatsuya/repos/PILE/tiwanari_drive/app/src/main/assets/stylesheets"
+    ]
+  ],
+  "_from": "github-markdown-css@latest",
+  "_id": "github-markdown-css@2.4.1",
+  "_inCache": true,
+  "_location": "/github-markdown-css",
+  "_nodeVersion": "4.5.0",
+  "_npmOperationalInternal": {
+    "host": "packages-12-west.internal.npmjs.com",
+    "tmp": "tmp/github-markdown-css-2.4.1.tgz_1474562373672_0.9937359399627894"
+  },
+  "_npmUser": {
+    "name": "sindresorhus",
+    "email": "sindresorhus@gmail.com"
+  },
+  "_npmVersion": "3.10.7",
+  "_phantomChildren": {},
+  "_requested": {
+    "raw": "github-markdown-css",
+    "scope": null,
+    "escapedName": "github-markdown-css",
+    "name": "github-markdown-css",
+    "rawSpec": "",
+    "spec": "latest",
+    "type": "tag"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/github-markdown-css/-/github-markdown-css-2.4.1.tgz",
+  "_shasum": "b4736d84eea8367a03b3248cf546dda3e8dc55e3",
+  "_shrinkwrap": null,
+  "_spec": "github-markdown-css",
+  "_where": "/Users/tatsuya/repos/PILE/tiwanari_drive/app/src/main/assets/stylesheets",
+  "author": {
+    "name": "Sindre Sorhus",
+    "email": "sindresorhus@gmail.com",
+    "url": "sindresorhus.com"
+  },
+  "bugs": {
+    "url": "https://github.com/sindresorhus/github-markdown-css/issues"
+  },
+  "dependencies": {},
+  "description": "The minimal amount of CSS to replicate the GitHub Markdown style",
+  "devDependencies": {
+    "generate-github-markdown-css": "^2.0.0"
+  },
+  "directories": {},
+  "dist": {
+    "shasum": "b4736d84eea8367a03b3248cf546dda3e8dc55e3",
+    "tarball": "https://registry.npmjs.org/github-markdown-css/-/github-markdown-css-2.4.1.tgz"
+  },
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "files": [
+    "github-markdown.css"
+  ],
+  "gitHead": "7b86e65de4fdd353afb2b4f1989c7c9e4163424a",
+  "homepage": "https://github.com/sindresorhus/github-markdown-css#readme",
+  "keywords": [
+    "browser",
+    "github",
+    "markdown",
+    "md",
+    "css",
+    "style",
+    "stylesheet"
+  ],
+  "license": "MIT",
+  "main": "github-markdown.css",
+  "maintainers": [
+    {
+      "name": "sindresorhus",
+      "email": "sindresorhus@gmail.com"
+    }
+  ],
+  "name": "github-markdown-css",
+  "optionalDependencies": {},
+  "readme": "ERROR: No README data found!",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sindresorhus/github-markdown-css.git"
+  },
+  "scripts": {
+    "make": "github-markdown-css > github-markdown.css"
+  },
+  "version": "2.4.1"
+}

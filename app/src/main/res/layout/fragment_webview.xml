@@ -22,7 +22,7 @@
     android:orientation="vertical" >
 
     <WebView
-        android:id="@+id/licenses_page"
+        android:id="@+id/plain_html"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 </LinearLayout>

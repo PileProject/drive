@@ -61,7 +61,8 @@
         <com.pileproject.drive.setting.app.CopyrightNoticePreference
             android:title="@string/setting.copyrightNotice" />
 
-        <Preference android:title="@string/setting.legalNotice"/>
+        <com.pileproject.drive.setting.app.LegalNoticePreference
+            android:title="@string/setting.legalNotice"/>
 
     </PreferenceCategory>
 </PreferenceScreen>

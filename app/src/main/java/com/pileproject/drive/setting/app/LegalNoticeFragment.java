@@ -28,14 +28,14 @@ import android.webkit.WebView;
 
 import com.pileproject.drive.R;
 
-public class CopyrightNoticeFragment extends DialogFragment {
-    WebView mLicensesPage;
+public class LegalNoticeFragment extends DialogFragment {
+    private WebView mLegalNoticePage;
 
     @Override
     @NonNull
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         Dialog dialog = new Dialog(getActivity());
-        dialog.setTitle(R.string.setting_copyrightNotice);
+        dialog.setTitle(R.string.setting_legalNotice);
         return dialog;
     }
 
@@ -44,11 +44,11 @@ public class CopyrightNoticeFragment extends DialogFragment {
         super.onCreateView(inflater, container, savedInstanceState);
 
         View v = inflater.inflate(R.layout.fragment_webview, container, false);
-        mLicensesPage = (WebView) v.findViewById(R.id.plain_html);
+        mLegalNoticePage = (WebView) v.findViewById(R.id.plain_html);
 
-        // load a license file located in assets
-        String htmlPath = "file:///android_asset/licenses.html";
-        mLicensesPage.loadUrl(htmlPath);
+        // load a legal notice page located in assets
+        String htmlPath = "file:///android_asset/legal_notice.html";
+        mLegalNoticePage.loadUrl(htmlPath);
 
         return v;
     }
