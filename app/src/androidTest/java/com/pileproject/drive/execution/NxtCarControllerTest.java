@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,11 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.execution;
 
 import android.support.test.runner.AndroidJUnit4;
 
+import com.pileproject.drive.machine.CarControllerBase;
+import com.pileproject.drive.machine.NxtCarController;
 import com.pileproject.drivecommand.machine.device.input.LineSensor;
 import com.pileproject.drivecommand.machine.device.input.SoundSensor;
 import com.pileproject.drivecommand.machine.device.input.TouchSensor;
@@ -31,6 +32,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.internal.util.reflection.Whitebox;
 
+import static com.pileproject.drive.machine.CarControllerBase.MotorKind.LeftMotor;
+import static com.pileproject.drive.machine.CarControllerBase.MotorKind.RightMotor;
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -39,10 +42,11 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(AndroidJUnit4.class)
-public class NxtControllerTest {
+public class NxtCarControllerTest {
 
     @Mock NxtMachine machine;
-    @InjectMocks NxtController controller;
+    @InjectMocks
+    NxtCarController controller;
 
     @Mock TouchSensor touchSensor;
     @Mock SoundSensor soundSensor;
@@ -54,7 +58,7 @@ public class NxtControllerTest {
     @Before
     public void setUp() {
         machine = mock(NxtMachine.class);
-        controller = new NxtController(machine);
+        controller = new NxtCarController(machine);
 
         touchSensor = mock(TouchSensor.class);
         soundSensor = mock(SoundSensor.class);
@@ -77,7 +81,7 @@ public class NxtControllerTest {
     public void whenTouchSensorIsNull_thenReturnFalse() throws Exception {
         Whitebox.setInternalState(controller, "mTouchSensor", null);
 
-        assertFalse(controller.getTouchSensorValue());
+        assertFalse(controller.isTouchSensorTouched());
     }
 
     @Test
@@ -85,7 +89,7 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
         doReturn(true).when(touchSensor).isTouched();
 
-        assertTrue(controller.getTouchSensorValue());
+        assertTrue(controller.isTouchSensorTouched());
     }
 
     @Test
@@ -93,14 +97,14 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mTouchSensor", touchSensor);
         doReturn(false).when(touchSensor).isTouched();
 
-        assertFalse(controller.getTouchSensorValue());
+        assertFalse(controller.isTouchSensorTouched());
     }
 
     @Test
     public void whenSoundSensorIsNull_thenReturnNegative() throws Exception {
         Whitebox.setInternalState(controller, "mSoundSensor", null);
 
-        assertEquals(controller.getSoundSensorValue(), -1);
+        assertEquals(controller.getSoundSensorDb(), -1);
     }
 
     @Test
@@ -108,7 +112,7 @@ public class NxtControllerTest {
         Whitebox.setInternalState(controller, "mSoundSensor", soundSensor);
         doReturn(10).when(soundSensor).getDb();
 
-        assertEquals(10, controller.getSoundSensorValue());
+        assertEquals(10, controller.getSoundSensorDb());
     }
 
     @Test
@@ -182,16 +186,16 @@ public class NxtControllerTest {
 
         controller.moveForward();
 
-        verify(leftMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
-        verify(rightMotor).setSpeed(NxtController.INIT_MOTOR_POWER);
+        verify(leftMotor).setSpeed(CarControllerBase.MotorProperty.INIT_MOTOR_POWER);
+        verify(rightMotor).setSpeed(CarControllerBase.MotorProperty.INIT_MOTOR_POWER);
     }
 
     @Test
     public void whenSetMotorPowerCalled_thenMovesForwardWithTheValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 10);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, 10);
+        controller.setMotorPower(LeftMotor, 10);
+        controller.setMotorPower(RightMotor, 10);
 
         controller.moveForward();
 
@@ -203,8 +207,8 @@ public class NxtControllerTest {
     public void whenSetMotorPowerCalledWithOverUpperBoundValue_thenMovesForwardWithUpperBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, 200);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, 200);
+        controller.setMotorPower(LeftMotor, 200);
+        controller.setMotorPower(RightMotor, 200);
 
         controller.moveForward();
 
@@ -216,8 +220,8 @@ public class NxtControllerTest {
     public void whenSetMotorPowerCalledWithUnderLowerBoundValue_thenMovesForwardWithLowerBoundValue() throws Exception {
         setUpMotors();
 
-        controller.setMotorPower(NxtController.MotorKind.LeftMotor, -10);
-        controller.setMotorPower(NxtController.MotorKind.RightMotor, -10);
+        controller.setMotorPower(LeftMotor, -10);
+        controller.setMotorPower(RightMotor, -10);
 
         controller.moveForward();
 

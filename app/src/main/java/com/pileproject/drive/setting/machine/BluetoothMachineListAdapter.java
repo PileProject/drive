@@ -35,7 +35,7 @@ import java.util.List;
  */
 public class BluetoothMachineListAdapter extends ArrayAdapter<BluetoothDevice> {
 
-    private Context mContext = null;
+    private Context mContext;
     private int mTextViewResourceId = 0;
     private List<BluetoothDevice> mDevices;
     private LayoutInflater mInflater;

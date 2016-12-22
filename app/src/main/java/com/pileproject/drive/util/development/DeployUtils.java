@@ -43,7 +43,7 @@ public class DeployUtils {
      */
     public static boolean isDebugMode(Context context) {
         PackageManager manager = context.getPackageManager();
-        ApplicationInfo info = null;
+        ApplicationInfo info;
 
         try {
             info = manager.getApplicationInfo(context.getPackageName(), 0);

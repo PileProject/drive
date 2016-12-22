@@ -19,7 +19,7 @@ import android.content.Context;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.machine.MachineController;
 
 /**
  * While forever

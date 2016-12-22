@@ -44,7 +44,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
                 android:contentDescription="@string/noImage"
-                android:src="@drawable/icon_if_nxt_is_out_of_line"/>
+                android:src="@drawable/icon_if_machine_is_out_of_line"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -92,7 +92,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_margin="3dp"
                 android:contentDescription="@string/noImage"
-                android:src="@drawable/icon_if_there_was_a_large_sound"/>
+                android:src="@drawable/icon_if_there_is_a_large_sound"/>
 
             <LinearLayout
                 android:layout_width="match_parent"

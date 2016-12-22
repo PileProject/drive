@@ -27,11 +27,11 @@ import android.widget.RadioGroup;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.FIRMWARE.LEJOS;
-import static com.pileproject.drive.preferences.MachinePreferencesSchema.FIRMWARE.STANDARD;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
+import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.STANDARD;
 
 public class NxtFirmwareFragment extends DialogFragment {
-    private RadioGroup mFirmwareRadioGroup = null;
+    private RadioGroup mFirmwareRadioGroup;
 
     @Override
     @NonNull
