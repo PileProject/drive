@@ -77,7 +77,7 @@ public class BlockListActivity extends Activity {
      *
      * @param context context that will be passed to the constructor of {@link Intent}
      * @param blockCategory the Activity will display this category of blocks in its dialog
-     * @return intent
+     * @return an {@link Intent}
      */
     public static Intent createIntent(Context context, @BlockCategory int blockCategory) {
 
@@ -273,9 +273,9 @@ public class BlockListActivity extends Activity {
         private final int mLayoutId;
 
         /**
-         * @param context  the context of the Activity that calls this adapter
+         * @param context the context of the Activity that calls this adapter
          * @param layoutId the resource id of the icon view
-         * @param objects  sets of Icon data
+         * @param objects sets of Icon data
          */
         public BlockIconAdapter(Context context, @LayoutRes int layoutId, List<BlockClassHolder> objects) {
             super(context, 0, objects);
@@ -304,7 +304,7 @@ public class BlockListActivity extends Activity {
         }
 
         /**
-         * An icon holder that has a TextView and an ImageView.
+         * An icon holder that has a {@link TextView} and an {@link ImageView}.
          */
         class IconHolder {
             TextView description;

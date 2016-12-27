@@ -46,10 +46,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Users create programs on this Activity
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * An activity where Users create programs.
  */
 public class ProgrammingActivity extends AppCompatActivity implements AlertDialogFragment.EventListener {
 
@@ -69,7 +66,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
      * Returns an intent for invoking {@link ProgrammingActivity}.
      *
      * @param context context to be passed to the constructor of {@link Intent}.
-     * @return intent
+     * @return an {@link Intent}
      */
     public static Intent createIntent(Context context) {
         return new Intent(context, ProgrammingActivity.class);
