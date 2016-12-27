@@ -39,7 +39,7 @@ public class DriveApplication extends Application {
     }
 
     /**
-     * A helper method to get a {@link Context} anywhere.
+     * Gets a {@link Context} anywhere.
      *
      * @return a saved {@link Context}
      */
@@ -48,7 +48,7 @@ public class DriveApplication extends Application {
     }
 
     /**
-     * A helper method to get a {@link DriveComponent}. This will be used for build-flavor specific injections.
+     * Gets a {@link DriveComponent}. The component will be used for build-flavor specific injections.
      *
      * @return a saved {@link DriveComponent}
      */
