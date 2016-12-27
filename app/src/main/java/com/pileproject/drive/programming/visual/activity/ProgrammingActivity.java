@@ -63,7 +63,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
     private ProgrammingSpaceManager mSpaceManager;
 
     /**
-     * Returns an intent for invoking {@link ProgrammingActivity}.
+     * Returns an {@link Intent} for invoking {@link ProgrammingActivity}.
      *
      * @param context context to be passed to the constructor of {@link Intent}.
      * @return an {@link Intent}

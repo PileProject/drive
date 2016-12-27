@@ -53,7 +53,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * An Activity that deals with executions of programs.
+ * An Activity class that deals with executions of programs.
  */
 public class ExecutionActivity extends AppCompatActivity implements AlertDialogFragment.EventListener {
 
@@ -78,10 +78,10 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     public MachineProvider mMachineProvider;
 
     /**
-     * Returns an intent for invoking {@link ExecutionActivity}.
+     * Returns an {@link Intent} for invoking {@link ExecutionActivity}.
      *
      * @param context context to be passed to the constructor of {@link Intent}.
-     * @return intent
+     * @return an {@link Intent}
      */
     public static Intent createIntent(Context context) {
         return new Intent(context, ExecutionActivity.class);

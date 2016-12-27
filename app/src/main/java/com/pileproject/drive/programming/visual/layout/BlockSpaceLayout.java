@@ -36,6 +36,7 @@ public class BlockSpaceLayout extends FrameLayout {
         super(context, attr);
         View layout = LayoutInflater.from(context).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
+
         // keep the number of default children
         // because it is necessary to reset this view (clear all and add default views)
         mDefaultChildrenNum = getChildCount();
@@ -55,18 +56,21 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * Remove all views attached to this layout, then add default views (a trash box).
+     * Removes all the views attached to this layout, then add default views (a trash box).
      */
     @Override
     public void removeAllViews() {
         super.removeAllViews();
+
         // reload layout to add a trash box to this layout
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
     }
 
     /**
-     * Return the number of default children.
+     * Returns the number of default children. This value will be used to reinit this layout.
+     *
+     * @return the number of default children (e.g., a trash box)
      */
     public int getDefaultChildrenCount() {
         return mDefaultChildrenNum;
