@@ -17,6 +17,9 @@ package com.pileproject.drive.util.bluetooth;
 
 import android.bluetooth.BluetoothAdapter;
 
+/**
+ * A utility class that handles Bluetooth functions.
+ */
 public class BluetoothUtil {
 
     private BluetoothUtil() {

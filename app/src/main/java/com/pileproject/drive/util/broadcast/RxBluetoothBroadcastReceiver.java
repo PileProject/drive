@@ -25,13 +25,13 @@ import android.support.annotation.NonNull;
 import rx.Observable;
 
 /**
- * Wrapper class of {@link RxBroadcastReceiver} for handling bluetooth events
+ * A wrapper class of {@link RxBroadcastReceiver} for handling bluetooth events.
  */
 public class RxBluetoothBroadcastReceiver {
 
     /**
-     * Create {@link Observable} which will produce a stream
-     * when BluetoothDevice.ACTION_FOUND has been issued.
+     * Creates {@link Observable} which will produce a stream
+     * when {@link BluetoothDevice#ACTION_FOUND} has been issued.
      */
     @NonNull
     public static Observable<Intent> bluetoothDeviceFound(final Context context) {
@@ -42,8 +42,8 @@ public class RxBluetoothBroadcastReceiver {
     }
 
     /**
-     * Create {@link Observable} which will produce a stream
-     * when BluetoothAdapter.ACTION_DISCOVERY_FINISHED has been issued.
+     * Creates {@link Observable} which will produce a stream
+     * when {@link BluetoothAdapter#ACTION_DISCOVERY_FINISHED} has been issued.
      */
     @NonNull
     public static Observable<Intent> bluetoothDiscoveryFinished(final Context context) {
