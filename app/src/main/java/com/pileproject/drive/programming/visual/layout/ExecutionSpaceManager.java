@@ -29,7 +29,7 @@ import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 
 /**
- * A manager of BlockSpaceLayout that manages it to show the progress of execution.
+ * A manager of {@link BlockSpaceLayout} that manages the layout to show the progress of execution.
  */
 public class ExecutionSpaceManager extends BlockSpaceManagerBase {
     private FrameView mFrame;
@@ -52,18 +52,19 @@ public class ExecutionSpaceManager extends BlockSpaceManagerBase {
     }
 
     /**
-     * Emphasize the current block.
+     * Emphasizes the current block with a {@link FrameView}.
      *
-     * @param index
+     * @param index the index of the current block
      */
     public void emphasizeBlock(int index) {
         // get the target block
         // add the number of default children count of BlockSpaceLayout
         View view = mLayout.getChildAt(index + mLayout.getDefaultChildrenCount());
+
         if (view instanceof BlockBase) {
-            if (mFrame != null)
-                mLayout.removeView(mFrame);
-            // create frame for emphasizing the current block
+            if (mFrame != null) mLayout.removeView(mFrame);
+
+            // create frame to emphasize the current block
             mFrame = new FrameView(mContext, view.getLeft(), view.getTop(), view.getRight(), view.getBottom());
             mLayout.addView(mFrame, new LayoutParams(WRAP_CONTENT, WRAP_CONTENT));
         }

@@ -37,7 +37,7 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * A manager of BlockSpaceLayout that helps users to make programs.
+ * A manager of {@link BlockSpaceLayout} that helps users to make programs.
  */
 public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
 

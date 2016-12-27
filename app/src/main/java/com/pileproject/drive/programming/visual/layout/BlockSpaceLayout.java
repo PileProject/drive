@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import com.pileproject.drive.R;
 
 /**
- * A layout for placing blocks.
+ * A layout where blocks will be placed.
  */
 public class BlockSpaceLayout extends FrameLayout {
     private ImageView mTrashBox;
@@ -42,11 +42,10 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * Check a block is on the trash box or not.
+     * Checks the block is on the trash box or not.
      *
-     * @param View a block
-     * @return boolean
-     * true - a block is on the trash box, false - otherwise
+     * @param view the target block to be checked
+     * @return a block is on the trash box (true), or not (false)
      */
     public boolean isOnTrash(View view) {
         return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + MARGIN &&
