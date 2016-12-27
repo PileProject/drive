@@ -22,13 +22,13 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SELEC
 import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Annotation that represents a category of the blocks in this App.
+ * An annotation that represents a category of the blocks in this app.
  * <ul>
  *     <li><code>SEQUENCE</code>: Sequence block</li>
  *     <li><code>REPETITION</code>: Repetition block</li>
  *     <li><code>SELECTION</code>: Selection block</li>
  * </ul>
- * <p/>
+ * <p>
  * Do not confuse with {@link BlockBase.BlockKind}: this annotation is for wider concept
  * than that of {@link BlockBase.BlockKind} represents.
  *

@@ -26,10 +26,8 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * While in selected times
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A block that represents a N times loop operation. To be more precise, this block represents the beginning of a loop
+ * and the end is expressed by {@link RepetitionEndBlock}.
  */
 public class NTimesBlock extends RepetitionBlockHasNumberText {
 

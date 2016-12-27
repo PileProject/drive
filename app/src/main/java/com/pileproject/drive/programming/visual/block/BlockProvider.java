@@ -18,7 +18,7 @@ package com.pileproject.drive.programming.visual.block;
 import java.util.List;
 
 /**
- * Interface for providing {@link Class} instances of {@link BlockBase} and its descendant classes.
+ * An interface for providing {@link Class} instances of {@link BlockBase} and its descendant classes.
  * Concrete classes are supposed to provide the concrete {@link Class} instances with respecto to
  * their responsible robots.
  *
@@ -28,21 +28,21 @@ public interface BlockProvider {
     /**
      * Returns all available sequence block classes.
      *
-     * @return List of sequence block classes
+     * @return a list of sequence block classes
      */
     List<Class<? extends BlockBase>> getSequenceBlockClasses();
 
     /**
      * Returns all available selection block classes.
      *
-     * @return List of selection block classes
+     * @return a list of selection block classes
      */
     List<Class<? extends BlockBase>> getSelectionBlockClasses();
 
     /**
      * Returns all available repetition block classes.
      *
-     * @return List of repetition block classes
+     * @return a list of repetition block classes
      */
     List<Class<? extends BlockBase>> getRepetitionBlockClasses();
 }

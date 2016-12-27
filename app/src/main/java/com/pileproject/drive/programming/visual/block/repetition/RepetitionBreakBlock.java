@@ -23,7 +23,7 @@ import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * A block that expresses a break of while loop.
+ * A block that represents a break of a loop.
  */
 public class RepetitionBreakBlock extends BlockBase {
     public RepetitionBreakBlock(Context context) {

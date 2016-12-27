@@ -22,10 +22,8 @@ import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.machine.MachineController;
 
 /**
- * While forever
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A block that represents a forever loop operation. To be more precise, this block represents the beginning of a loop
+ * and the end is expressed by {@link RepetitionEndBlock}.
  */
 public class LoopBlock extends RepetitionBlock {
 

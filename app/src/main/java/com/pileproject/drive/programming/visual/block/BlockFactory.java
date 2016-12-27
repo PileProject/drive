@@ -33,7 +33,7 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SELEC
 import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Factory that creates blocks.
+ * A factory class that creates {@link BlockBase}s.
  */
 public class BlockFactory {
 

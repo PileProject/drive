@@ -27,10 +27,7 @@ import com.pileproject.drive.programming.visual.block.NumberTextViewDelegate;
 import java.math.BigDecimal;
 
 /**
- * SelectionBlock that has a TextView
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A {@link SelectionBlock} that has a {@link TextView} which will be used to input numbers such as seconds.
  */
 public abstract class SelectionBlockHasNumberText extends SelectionBlock implements NumberTextHolder {
 

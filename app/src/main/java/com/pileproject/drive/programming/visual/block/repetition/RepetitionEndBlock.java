@@ -23,10 +23,7 @@ import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * This block is the end of while loop
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A block that represents the end of a loop.
  */
 public class RepetitionEndBlock extends BlockBase {
 

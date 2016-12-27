@@ -28,10 +28,7 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Forward for a while
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that represents a forward operation for a while.
  */
 public class ForwardSecBlock extends SequenceBlockHasNumberText {
 

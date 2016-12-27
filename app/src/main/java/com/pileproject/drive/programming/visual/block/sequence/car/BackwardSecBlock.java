@@ -28,10 +28,7 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Backward for a while
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that represents a backward operation for a while.
  */
 public class BackwardSecBlock extends SequenceBlockHasNumberText {
 

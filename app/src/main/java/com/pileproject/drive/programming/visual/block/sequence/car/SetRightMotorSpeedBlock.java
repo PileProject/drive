@@ -30,10 +30,7 @@ import java.math.BigDecimal;
 import static com.pileproject.drive.machine.CarControllerBase.MotorKind.RightMotor;
 
 /**
- * Set right motor power
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that will be used to set the power of right motor.
  */
 public class SetRightMotorSpeedBlock extends SequenceBlockHasNumberText {
 

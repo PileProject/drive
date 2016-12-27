@@ -23,7 +23,7 @@ import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * This block is the end of if commands
+ * A block that represents the end of selection operations.
  *
  */
 public class SelectionEndBlock extends BlockBase {

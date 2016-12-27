@@ -28,10 +28,7 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Turn left for a while
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that represents a counter-clockwise turn operation for a while.
  */
 public class TurnLeftSecBlock extends SequenceBlockHasNumberText {
 
