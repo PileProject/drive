@@ -31,7 +31,7 @@ public class DeployUtils {
     }
 
     /**
-     * Return true if the device is emulator.
+     * Returns <code>true</code> if the device is emulator.
      */
     public static boolean isOnEmulator() {
         // from http://stackoverflow.com/questions/2799097/how-can-i-detect-when-an-android-application-is-running-in-the-emulator
@@ -39,7 +39,9 @@ public class DeployUtils {
     }
 
     /**
-     * Return true if the building configuration is Debug.
+     * Returns <code>true</code> if the building configuration is Debug.
+     *
+     * @param context a {@link Context} of the appliation
      */
     public static boolean isDebugMode(Context context) {
         PackageManager manager = context.getPackageManager();
@@ -56,7 +58,9 @@ public class DeployUtils {
     }
 
     /**
-     * Return true if the building configuration is Release.
+     * Returns <code>true</code> if the building configuration is Release.
+     *
+     * @param context a {@link Context} of the application
      */
     public static boolean isReleaseMode(Context context) {
         return !isDebugMode(context);
