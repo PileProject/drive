@@ -22,10 +22,8 @@ import android.content.Context;
 import com.pileproject.drive.module.FlavorModule;
 
 /**
- * DriveApplication class
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 15-March-2016
+ * An Application class for Drive Applications. This class provides some helper methods to share global information
+ * such as {@link Context}.
  */
 public class DriveApplication extends Application {
     private static DriveApplication sInstance;
@@ -40,10 +38,20 @@ public class DriveApplication extends Application {
         initInjection();
     }
 
+    /**
+     * A helper method to get a {@link Context} anywhere.
+     *
+     * @return a saved {@link Context}
+     */
     public static synchronized Context getContext() {
         return sInstance.getApplicationContext();
     }
 
+    /**
+     * A helper method to get a {@link DriveComponent}. This will be used for build-flavor specific injections.
+     *
+     * @return a saved {@link DriveComponent}
+     */
     public DriveComponent getAppComponent() {
         return mDriveComponent;
     }
