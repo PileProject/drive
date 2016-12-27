@@ -23,6 +23,10 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+/**
+ * A component class that deals with build-flavor variants. We use this class following the Dagger instruction.
+ * @see <a href="https://google.github.io/dagger/">Dagger</a>
+ */
 @Singleton @Component(modules = {FlavorModule.class})
 public interface DriveComponent {
 
