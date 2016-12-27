@@ -68,7 +68,7 @@ public interface NumberTextHolder {
      * Enables the {@link TextView} in this holder if <code>enable</code> is <code>true</code>.
      * Disables the {@link TextView} in this holder if <code>enable</code> is <code>false</code>.
      *
-     * @param enabled allow to edit the {@link TextView}(<code>true</code>) or not(<code>false</code>)
+     * @param enabled allow to edit the {@link TextView} (<code>true</code>) or not (<code>false</code>)
      */
     void enableTextView(boolean enabled);
 
