@@ -28,7 +28,7 @@ import android.text.TextUtils;
 /**
  * A simple dialog with a progress bar (intermediate style).
  * With simply calling {@link ProgressDialogFragment#showDialog(FragmentManager, String, String, String)},
- * a ProgressDialog will appear.
+ * a {@link ProgressDialog} will appear.
  * When no longer needed, call {@link ProgressDialogFragment#dismissDialog()}.
  */
 public class ProgressDialogFragment extends DialogFragment {
@@ -41,12 +41,13 @@ public class ProgressDialogFragment extends DialogFragment {
     }
 
     /**
-     * Show a progress dialog with given parameters.
+     * Shows a progress dialog with given parameters.
      * The dialog is based on {@link DialogFragment}.
-     * @param manager {@link FragmentManager} or its sub-class.
-     * @param title dialog title
-     * @param message dialog message
-     * @param tag fragment tag
+     *
+     * @param manager a {@link FragmentManager} or its sub-class
+     * @param title the dialog title
+     * @param message the ialog message
+     * @param tag the ragment tag
      */
     public static void showDialog(FragmentManager manager, String title, String message, String tag) {
         ProgressDialogFragment f = newInstance(title, message);
@@ -57,21 +58,22 @@ public class ProgressDialogFragment extends DialogFragment {
     }
 
     /**
-     * Show a progress dialog with given parameters.
+     * Shows a progress dialog with given parameters.
      * You can specify title and messages with resource ID.
-     * @param context Context for retrieving strings
-     * @param manager {@link FragmentManager} or its sub-class.
-     * @param titleRes dialog title
-     * @param messageRes dialog message
-     * @param tag fragment tag
+     *
+     * @param context the {@link Context} for retrieving strings
+     * @param manager a {@link FragmentManager} or its sub-class
+     * @param titleRes the dialog title
+     * @param messageRes the dialog message
+     * @param tag the fragment tag
      */
     public static void showDialog(Context context, FragmentManager manager, @StringRes int titleRes, @StringRes int messageRes, String tag) {
         showDialog(manager, context.getString(titleRes), context.getString(messageRes), tag);
     }
 
     /**
-     * Dismiss the dialog you opened.
-     * This function is idempotent (i.e., there's no effect by calling twice or more in a certain state)
+     * Dismisses the dialog you opened.
+     * This function is idempotent (i.e., there's no effect by calling twice or more in a certain state).
      */
     public static void dismissDialog() {
         if (sProgressDialog != null) {
@@ -80,7 +82,7 @@ public class ProgressDialogFragment extends DialogFragment {
     }
 
     /**
-     * Simple factory method for internal use
+     * A simple factory method for internal use.
      */
     private static ProgressDialogFragment newInstance(String title, String message) {
         ProgressDialogFragment fragment = new ProgressDialogFragment();

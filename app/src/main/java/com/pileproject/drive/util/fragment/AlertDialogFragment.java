@@ -51,8 +51,8 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String KEY_GRAVITY        = "gravity";
 
     /**
-     * Builder class for {@link AlertDialogFragment}.
-     * Using this class enables to create an AlertDialogFragment instance by method chains
+     * A builder class for {@link AlertDialogFragment}.
+     * Using this class enables to create an {@link AlertDialogFragment} instance by method chains
      * like {@link AlertDialog}.
      */
     public static class Builder {
@@ -86,7 +86,7 @@ public class AlertDialogFragment extends DialogFragment {
         boolean mAllowingStateLoss;
 
         /**
-         * Constructor of builder for {@link AppCompatActivity}.
+         * A constructor of the builder for {@link AppCompatActivity}.
          *
          * @param <A> a class of an activity that extends {@link AppCompatActivity} and {@link EventListener}
          * @param activity an activity that is trying to show a dialog
@@ -97,7 +97,7 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * Constructor of builder for {@link Fragment}.
+         * A constructor of the builder for {@link Fragment}.
          *
          * @param <F> a class of a fragment that extends {@link AppCompatActivity} and {@link EventListener}
          * @param parentFragment a fragment that is trying to show a dialog
@@ -108,7 +108,7 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * Sets tag for fragment.
+         * Sets a tag for fragment.
          *
          * @param tag a tag to specify the objective of the dialog
          * @return the reference of this (for method chain)
@@ -418,8 +418,8 @@ public class AlertDialogFragment extends DialogFragment {
      * fragment to allow an interaction in this fragment to be communicated
      * to the activity and potentially other fragments contained in that
      * activity.
-     * <p>
-     * See the Android Training lesson <a href=
+     *
+     * See the Android Training lesson @see <a href=
      * "http://developer.android.com/training/basics/fragments/communicating.html"
      * >Communicating with Other Fragments</a> for more information.
      */
