@@ -26,7 +26,7 @@ import com.pileproject.drive.setting.SettingActivity;
 
 /**
  * The base class of title pages.
- * Users can move to programming page or preference page.
+ * Users can move from this to programming page or preference page.
  */
 public class TitleActivity extends AppCompatActivity {
     @Override
