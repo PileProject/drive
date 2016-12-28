@@ -24,7 +24,7 @@ import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 /**
- * A class which produces Observable of RxJava for connecting to a {@link MachineBase}.
+ * A class which produces {@link Observable} of RxJava for connecting to a {@link MachineBase}.
  *
  */
 public class RxMachineConnector {
@@ -42,8 +42,8 @@ public class RxMachineConnector {
      * If {@link MachineBase#connect} causes exceptions, {@link Subscriber#onError(Throwable)} is
      * called with the caught exception.
      *
-     * @param machineBase machine instance to be connected.
-     * @return Observable with the stream
+     * @param machineBase a machine instance to be connected
+     * @return an {@link Observable} with the stream
      */
     public static Observable<MachineBase> connect(final MachineBase machineBase) {
         return Observable.create(new Observable.OnSubscribe<MachineBase>() {

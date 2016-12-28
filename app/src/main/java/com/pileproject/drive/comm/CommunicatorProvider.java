@@ -18,7 +18,7 @@ package com.pileproject.drive.comm;
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
 /**
- * Interface for providing Communicator.
+ * An interface for providing a communicator which makes connections between Android devices and machines.
  * Concrete classes are supposed to provide the concrete classes of {@link ICommunicator}
  * with respect to their responsible communication means.
  *
@@ -28,7 +28,7 @@ public interface CommunicatorProvider {
     /**
      * Returns a concrete communicator.
      *
-     * @return concrete instance of {@link ICommunicator}.
+     * @return a concrete instance of {@link ICommunicator}
      */
     ICommunicator getCommunicator();
 }

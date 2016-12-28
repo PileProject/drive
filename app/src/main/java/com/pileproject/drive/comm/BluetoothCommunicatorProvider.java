@@ -22,6 +22,10 @@ import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
+/**
+ * An implementation of {@link CommunicatorProvider} that provides a concrete {@link ICommunicator} for Bluetooth
+ * connections.
+ */
 public class BluetoothCommunicatorProvider implements CommunicatorProvider {
 
     private static final BluetoothCommunicatorProvider INSTANCE = new BluetoothCommunicatorProvider();
