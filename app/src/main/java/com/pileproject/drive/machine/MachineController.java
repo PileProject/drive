@@ -15,6 +15,9 @@
  */
 package com.pileproject.drive.machine;
 
+/**
+ * An interface class of controllers for {@link com.pileproject.drivecommand.machine.MachineBase}.
+ */
 public interface MachineController {
     /**
      * e.g. halt motors

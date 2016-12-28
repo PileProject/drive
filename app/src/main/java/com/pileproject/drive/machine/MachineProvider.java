@@ -19,7 +19,7 @@ import com.pileproject.drivecommand.machine.MachineBase;
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
 /**
- * Interface for providing Machine and MachineController.
+ * An interface for providing {@link MachineBase} and {@link MachineController}.
  * Concrete classes are supposed to provide the concrete classes of {@link MachineBase}
  * and {@link MachineController} with respect to their responsible robots.
  *
@@ -29,16 +29,17 @@ public interface MachineProvider {
     /**
      * Returns a concrete machine with the given communicator.
      *
-     * @param communicator instance of {@link ICommunicator}
-     * @return concrete instance of {@link MachineBase}
+     * @param communicator the instance of {@link ICommunicator}
+     * @return a concrete instance of {@link MachineBase}
      */
     MachineBase getMachine(ICommunicator communicator);
 
     /**
      * Returns a concrete machine controller for the given machine.
      *
-     * @param machineBase instance of {@link MachineBase} which will be manipulated by the returned {@link MachineController}
-     * @return {@link MachineController} instance
+     * @param machineBase
+     *      the instance of {@link MachineBase} which will be manipulated by the returned {@link MachineController}
+     * @return a concrete instance of {@link MachineController}
      */
     MachineController getMachineController(MachineBase machineBase);
 }
