@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A manger of {@link ProgramData}.
+ * A manger of <code>ProgramData</code> which is generated based on {@link ProgramDataSpec}.
  */
 public class ProgramDataManager {
     private static ProgramDataManager mInstance = new ProgramDataManager();
@@ -70,7 +70,8 @@ public class ProgramDataManager {
     /**
      * Saves a program temporarily to execute it.
      *
-     * @param layout The programming space that has blocks
+     * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
      */
     public boolean saveExecutionProgram(BlockSpaceLayout layout) {
         return saveProgram(Program.EXECUTION, Program.EXECUTION, layout);
@@ -81,6 +82,7 @@ public class ProgramDataManager {
      *
      * @param programName the name of a new program
      * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
      */
     public boolean saveSampleProgram(String programName, BlockSpaceLayout layout) {
         return saveProgram(programName, Program.SAMPLE, layout);
@@ -91,6 +93,7 @@ public class ProgramDataManager {
      *
      * @param programName the name of a new program
      * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
      */
     public boolean saveUserProgram(String programName, BlockSpaceLayout layout) {
         return saveProgram(programName, Program.USER, layout);
@@ -138,29 +141,29 @@ public class ProgramDataManager {
     }
 
     /**
-     * Loads an execution program's block data (sorted).
+     * Loads an execution program's block data (sorted with {@link BlockPositionComparator} in ascending order).
      *
-     * @return loaded data as {@link ArrayList<BlockBase>}
+     * @return a loaded data as {@link ArrayList}
      */
     public ArrayList<BlockBase> loadExecutionProgram() {
         return loadProgram(Program.EXECUTION, Program.EXECUTION);
     }
 
     /**
-     * Loads a sample program's block data (sorted).
+     * Loads a sample program's block data (sorted with {@link BlockPositionComparator} in ascending order).
      *
-     * @param programName the name of program
-     * @return loaded data as {@link ArrayList<BlockBase>}
+     * @param programName the name of a sample program
+     * @return a loaded data as {@link ArrayList}
      */
     public ArrayList<BlockBase> loadSampleProgram(String programName) {
         return loadProgram(programName, Program.SAMPLE);
     }
 
     /**
-     * Loads a user program's block data
+     * Loads a user program's block data (sorted with {@link BlockPositionComparator} in ascending order).
      *
-     * @param programName the name of program
-     * @return loaded data as {@link ArrayList<BlockBase>}
+     * @param programName the name of a user program
+     * @return a loaded data as {@link ArrayList}
      */
     public ArrayList<BlockBase> loadUserProgram(String programName) {
         return loadProgram(programName, Program.USER);
@@ -214,18 +217,18 @@ public class ProgramDataManager {
     }
 
     /**
-     * Loads all the sample program names.
+     * Loads all sample program names.
      *
-     * @return the names of sample programs as {@link ArrayList<String>}
+     * @return the names of sample programs as {@link ArrayList}
      */
     public ArrayList<String> loadSampleProgramNames() {
         return loadProgramNames(Program.SAMPLE);
     }
 
     /**
-     * Loads all user program names
+     * Loads all user program names.
      *
-     * @return the names of user programs as {@link ArrayList<String>}
+     * @return the names of user programs as {@link ArrayList}
      */
     public ArrayList<String> loadUserProgramNames() {
         return loadProgramNames(Program.USER);

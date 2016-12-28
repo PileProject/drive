@@ -21,7 +21,9 @@ import com.yahoo.squidb.annotations.PrimaryKey;
 import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
- * Specification for "programs" table
+ * A specification for "programs" table.
+ *
+ * @see <a href="https://github.com/rejasupotaro/kvs-schema">KVS Schema</a>
  */
 @TableModelSpec(className="Program", tableName="programs")
 public class ProgramSpec {

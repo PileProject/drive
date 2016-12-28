@@ -24,7 +24,7 @@ import com.yahoo.squidb.data.SquidDatabase;
 import com.yahoo.squidb.sql.Table;
 
 /**
- * The implementation of SquidDatabase for this app.
+ * The implementation of {@link SquidDatabase} for this app.
  */
 public class DriveDatabase extends SquidDatabase {
     private static final int VERSION = 1;
