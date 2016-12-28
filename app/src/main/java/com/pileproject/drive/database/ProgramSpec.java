@@ -23,7 +23,7 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 /**
  * A specification for "programs" table.
  *
- * @see <a href="https://github.com/rejasupotaro/kvs-schema">KVS Schema</a>
+ * @see <a href="https://github.com/yahoo/squidb">SquiDB</a>
  */
 @TableModelSpec(className="Program", tableName="programs")
 public class ProgramSpec {

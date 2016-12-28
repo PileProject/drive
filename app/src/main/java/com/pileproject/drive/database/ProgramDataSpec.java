@@ -22,7 +22,7 @@ import com.yahoo.squidb.annotations.TableModelSpec;
 /**
  * A specification for "program_data" table.
  *
- * @see <a href="https://github.com/rejasupotaro/kvs-schema">KVS Schema</a>
+ * @see <a href="https://github.com/yahoo/squidb">SquiDB</a>
  */
 @TableModelSpec(className="ProgramData", tableName="program_data",
                 tableConstraint = "FOREIGN KEY(programId) references programs(_id) ON DELETE CASCADE")

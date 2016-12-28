@@ -30,7 +30,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A manger of <code>ProgramData</code> which is generated based on {@link ProgramDataSpec}.
+ * A manger of program data which is based on {@link ProgramSpec} and {@link ProgramDataSpec}.
  */
 public class ProgramDataManager {
     private static ProgramDataManager mInstance = new ProgramDataManager();
