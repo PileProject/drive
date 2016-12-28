@@ -39,7 +39,7 @@ import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
 import com.pileproject.drive.setting.SettingActivity;
-import com.pileproject.drive.util.development.DeployUtils;
+import com.pileproject.drive.util.development.DeployUtil;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
@@ -99,7 +99,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
-        if (address != null || DeployUtils.isOnEmulator()) {
+        if (address != null || DeployUtil.isOnEmulator()) {
             Intent intent = ExecutionActivity.createIntent(getApplicationContext());
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;

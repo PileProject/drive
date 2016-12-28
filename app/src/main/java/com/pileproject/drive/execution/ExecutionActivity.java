@@ -37,7 +37,7 @@ import com.pileproject.drive.comm.RxMachineConnector;
 import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.machine.MachineProvider;
 import com.pileproject.drive.util.bluetooth.BluetoothUtil;
-import com.pileproject.drive.util.development.DeployUtils;
+import com.pileproject.drive.util.development.DeployUtil;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import com.pileproject.drive.util.fragment.ProgressDialogFragment;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
@@ -126,7 +126,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
         super.onStart();
 
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
-        if (!DeployUtils.isOnEmulator() && !BluetoothUtil.hasBluetoothFunction()) {
+        if (!DeployUtil.isOnEmulator() && !BluetoothUtil.hasBluetoothFunction()) {
             new AlertDialogFragment.Builder(this)
                     .setRequestCode(DIALOG_REQUEST_CODE_BLUETOOTH)
                     .setTitle(R.string.error)
@@ -138,7 +138,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
             return;
         }
 
-        if (!DeployUtils.isOnEmulator() && !BluetoothUtil.isBluetoothEnabled()) {
+        if (!DeployUtil.isOnEmulator() && !BluetoothUtil.isBluetoothEnabled()) {
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
             return;
         }
