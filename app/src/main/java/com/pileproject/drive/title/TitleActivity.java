@@ -25,8 +25,8 @@ import com.pileproject.drive.programming.visual.activity.ProgrammingActivity;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * The base class of title pages.
- * Users can move from this to programming page or preference page.
+ * A class of the title page. Users can move from this page to the programming page ({@link ProgrammingActivity}) or
+ * preference page ({@link SettingActivity}).
  */
 public class TitleActivity extends AppCompatActivity {
     @Override
@@ -34,7 +34,7 @@ public class TitleActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
 
-        // button to move to programming page
+        // a button to move to programming page
         findViewById(R.id.title_startButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,7 +42,7 @@ public class TitleActivity extends AppCompatActivity {
             }
         });
 
-        // button to move to preference page
+        // a button to move to preference page
         findViewById(R.id.title_settingButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
