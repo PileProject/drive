@@ -23,6 +23,9 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for showing the legal notice. This class creates {@link LegalNoticeFragment}.
+ */
 public class LegalNoticePreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
     private static final String FRAGMENT_TAG = "legal_notice_preference";

@@ -19,16 +19,13 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.Checkable;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RadioButton;
 
 import com.pileproject.drive.R;
 
 /**
- * View class for ListView displaying devices in an activity setting default
- * device
- *
- * @author yusaku
- * @version 1.0 4-June-2013
+ * A view class for {@link ListView} to display a list of machines to choose the default machine.
  */
 public class BluetoothMachineListItemView extends LinearLayout implements Checkable {
 
@@ -44,8 +41,7 @@ public class BluetoothMachineListItemView extends LinearLayout implements Checka
         initialize();
     }
 
-    public BluetoothMachineListItemView(
-            Context context, AttributeSet attrs, int defStyle) {
+    public BluetoothMachineListItemView(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
         initialize();
     }

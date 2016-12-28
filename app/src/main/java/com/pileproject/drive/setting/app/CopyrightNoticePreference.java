@@ -23,6 +23,9 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for showing the copyright notice. This class creates {@link CopyrightNoticeFragment}.
+ */
 public class CopyrightNoticePreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
     private static final String FRAGMENT_TAG = "copyright_notice_preference";

@@ -15,6 +15,9 @@
  */
 package com.pileproject.drive.setting.app;
 
+/**
+ * A simple container class of a program.
+ */
 class ProgramData {
     private String mProgramName;
 

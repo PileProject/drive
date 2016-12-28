@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * Created by yusaku on 2016/07/10.
+ * A preference class for showing the list of programs. This class creates {@link ProgramListFragment}.
  */
 public class ProgramListPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 

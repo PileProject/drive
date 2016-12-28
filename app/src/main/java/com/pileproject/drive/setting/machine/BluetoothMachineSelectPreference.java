@@ -23,9 +23,13 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for selecting the default Bluetooth machine. This class creates
+ * {@link BluetoothMachineSelectFragment}.
+ */
 public class BluetoothMachineSelectPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
-    private static final String FRAGMENT_TAG = "tag";
+    private static final String FRAGMENT_TAG = "bluetooth_machine_select_preference";
 
     public BluetoothMachineSelectPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

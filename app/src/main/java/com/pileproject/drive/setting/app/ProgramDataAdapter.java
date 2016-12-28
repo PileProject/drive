@@ -26,11 +26,13 @@ import com.pileproject.drive.R;
 
 import java.util.List;
 
+/**
+ * A list view adapter class for {@link ProgramData}.
+ */
 public class ProgramDataAdapter extends ArrayAdapter<ProgramData> {
     private LayoutInflater mLayoutInflater;
 
-    public ProgramDataAdapter(
-            Context context, int resourceId, List<ProgramData> objects) {
+    public ProgramDataAdapter(Context context, int resourceId, List<ProgramData> objects) {
         super(context, resourceId, objects);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
