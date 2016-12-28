@@ -30,6 +30,9 @@ import com.pileproject.drive.preferences.MachinePreferences;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.STANDARD;
 
+/**
+ * A fragment for selecting the firmware of a machine. This fragment will be used by {@link NxtFirmwarePreference}.
+ */
 public class NxtFirmwareFragment extends DialogFragment {
     private RadioGroup mFirmwareRadioGroup;
 

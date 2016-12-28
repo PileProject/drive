@@ -26,8 +26,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Module class for configuring Product Flavor related injection.
+ * A module class for configuring Product Flavor related injection.
  *
+ * @see <a href="https://google.github.io/dagger/">Dagger</a>
  */
 @Module
 public class FlavorModule {

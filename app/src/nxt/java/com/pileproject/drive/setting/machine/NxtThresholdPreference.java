@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * Created by yusaku on 2016/07/10.
+ * A preference for setting the thresholds of devices. This class creates {@link NxtThresholdFragment}.
  */
 public class NxtThresholdPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 

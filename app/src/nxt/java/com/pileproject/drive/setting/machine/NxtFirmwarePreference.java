@@ -23,6 +23,9 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for selecting the firmware of a machine. This class creates {@link NxtFirmwareFragment}.
+ */
 public class NxtFirmwarePreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
     private static final String FRAGMENT_TAG = "nxt_firmware_preference";

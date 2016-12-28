@@ -34,6 +34,9 @@ import java.util.List;
 import java.util.Set;
 
 
+/**
+ * A fragment for setting the port connections. This fragment will be used by {@link NxtFirmwarePreference}.
+ */
 public class NxtPortConnectionFragment extends DialogFragment {
     private View mRootView;
 

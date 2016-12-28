@@ -33,12 +33,15 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * An implementation of {@link BlockProvider}.
+ */
 public class NxtBlockProvider implements BlockProvider {
 
     @Override
     public List<Class<? extends BlockBase>> getSequenceBlockClasses() {
 
-        // Because the lowest common ancestor of these blocks is SequenceBlockHasNumberText,
+        // because the lowest common ancestor of these blocks is SequenceBlockHasNumberText,
         // the stupid compiler infers this type as Class<? extends SequenceBlockHasNumberText>.
         // So without the ugly sentence, the code cannot be compiled.
         List<Class<? extends BlockBase>> list = Arrays.<Class<? extends BlockBase>> asList(

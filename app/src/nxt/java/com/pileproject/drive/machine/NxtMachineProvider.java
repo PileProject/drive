@@ -19,6 +19,9 @@ import com.pileproject.drivecommand.machine.MachineBase;
 import com.pileproject.drivecommand.model.com.ICommunicator;
 import com.pileproject.drivecommand.model.nxt.NxtMachine;
 
+/**
+ * An implementation of {@link MachineProvider}.
+ */
 public class NxtMachineProvider implements MachineProvider {
 
     @Override
@@ -32,6 +35,7 @@ public class NxtMachineProvider implements MachineProvider {
             return new NxtCarController((NxtMachine) machineBase);
         }
 
-        throw new IllegalArgumentException("Given MachineBase is not instance of NxtMachine: that was " + machineBase.getClass());
+        throw new IllegalArgumentException("Given MachineBase is not an instance of NxtMachine: that was " +
+                                                   machineBase.getClass());
     }
 }

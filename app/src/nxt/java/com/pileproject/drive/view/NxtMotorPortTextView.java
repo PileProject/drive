@@ -26,6 +26,9 @@ import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.LEFT_
 import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.NONE;
 import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.RIGHT_MOTOR;
 
+/**
+ * An implementation of {@link PortTextViewBase} which represents the port of motors of LEGO MINDSTORMS NXT.
+ */
 public class NxtMotorPortTextView extends PortTextViewBase {
 
     public NxtMotorPortTextView(Context context, AttributeSet attrs) {

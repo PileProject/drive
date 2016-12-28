@@ -20,7 +20,9 @@ import com.rejasupotaro.android.kvs.annotations.Key;
 import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
- * Schema for "machine_preferences" table
+ * A schema for "machine_preferences" <code>SharedPreferences</code> table.
+ *
+ * @see <a href="https://github.com/rejasupotaro/kvs-schema">KVS Schema</a>
  */
 @Table(name = "machine_preferences")
 public class MachinePreferencesSchema {

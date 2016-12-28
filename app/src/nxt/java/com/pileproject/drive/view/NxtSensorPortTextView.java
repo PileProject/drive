@@ -27,6 +27,9 @@ import static com.pileproject.drive.machine.CarControllerBase.InputDevice.NONE;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 
+/**
+ * An implementation of {@link PortTextViewBase} which represents the port of sensors of LEGO MINDSTORMS NXT.
+ */
 public class NxtSensorPortTextView extends PortTextViewBase {
 
     public NxtSensorPortTextView(Context context, AttributeSet attrs) {

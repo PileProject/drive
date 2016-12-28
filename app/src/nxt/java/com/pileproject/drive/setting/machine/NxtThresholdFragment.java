@@ -33,6 +33,9 @@ import com.pileproject.drive.machine.NxtCarController.SensorProperty.LineSensor;
 import com.pileproject.drive.machine.NxtCarController.SensorProperty.SoundSensor;
 import com.pileproject.drive.preferences.BlockPreferences;
 
+/**
+ * A fragment for setting the thresholds of devices. This fragment will be used by {@link NxtThresholdPreference}.
+ */
 public class NxtThresholdFragment extends DialogFragment {
     public static final int LINE_DEFAULT_THRESHOLD = 50;
     public static final int SOUND_DEFAULT_THRESHOLD = 70;

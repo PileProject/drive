@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * Created by yusaku on 2016/07/10.
+ * A preference class for setting the port connections. This class creates {@link NxtPortConnectionFragment}.
  */
 public class NxtPortConnectionPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
