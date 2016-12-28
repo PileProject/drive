@@ -19,7 +19,9 @@ import com.rejasupotaro.android.kvs.annotations.Key;
 import com.rejasupotaro.android.kvs.annotations.Table;
 
 /**
- * Schema for "block_preferences" table
+ * A schema for "block_preferences" <code>SharedPreferences</code> table.
+ *
+ * @see <a href="https://github.com/rejasupotaro/kvs-schema">KVS Schema</a>
  */
 @Table(name = "block_preferences")
 public class BlockPreferencesSchema {
