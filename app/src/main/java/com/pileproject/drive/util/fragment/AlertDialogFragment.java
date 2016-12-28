@@ -229,7 +229,7 @@ public class AlertDialogFragment extends DialogFragment {
          * Specifies the instance can be canceled or not
          * (i.e., can be dismissed without tapping buttons).
          *
-         * @param cancelable (true or not)
+         * @param cancelable (<code>true</code>) or not (<code>false</code>)
          * @return the reference of this (for method chain)
          */
         public Builder setCancelable(boolean cancelable) {
