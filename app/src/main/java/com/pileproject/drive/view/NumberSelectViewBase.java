@@ -30,14 +30,16 @@ public abstract class NumberSelectViewBase extends LinearLayout {
     }
 
     /**
-     * A getter of a value.
+     * Gets the value on the view.
      * This is used to get the real value in double.
+     *
      * @return the selected value
      */
     public abstract BigDecimal getValue();
 
     /**
-     * A setter of a value.
+     * Sets a value.
+     *
      * @param value a value to be set
      */
     public abstract void setValue(BigDecimal value);

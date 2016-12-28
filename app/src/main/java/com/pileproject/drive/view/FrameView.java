@@ -15,6 +15,7 @@
  */
 package com.pileproject.drive.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -30,7 +31,7 @@ public class FrameView extends View {
     private Rect mRect;
 
     /**
-     * @param context
+     * @param context the context of the {@link Activity} which shows this view
      * @param l the left of a block
      * @param t the top of a block
      * @param r the right of a block
