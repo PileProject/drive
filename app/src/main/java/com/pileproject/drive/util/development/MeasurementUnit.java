@@ -21,7 +21,7 @@ import java.util.Locale;
 
 /**
  * A class which detects which measurement unit is used in specified country.
- *
+ * <p>
  * Now, however, this class is only for the United States of America,
  * the only major country where people use Imperial units.
  */

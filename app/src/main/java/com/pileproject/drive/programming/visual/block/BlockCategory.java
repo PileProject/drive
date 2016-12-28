@@ -31,7 +31,6 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUE
  * <p>
  * Do not confuse with {@link BlockBase.BlockKind}: this annotation is for wider concept
  * than that of {@link BlockBase.BlockKind} represents.
- *
  */
 @IntDef({SEQUENCE, REPETITION, SELECTION})
 public @interface BlockCategory {
