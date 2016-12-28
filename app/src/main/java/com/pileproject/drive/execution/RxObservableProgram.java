@@ -27,11 +27,11 @@ import rx.Subscriber;
 
 /**
  * A concrete class of {@link rx.Observable.OnSubscribe}, which generates
- * a stream of blocks that was executed during a program execution.
+ * a stream of blocks that is executed during a program execution.
  *
  * This class is one-off.
  * Create this instance whenever you want to execute and DO NOT REUSE the instance.
- * <p>
+ *
  * The stream emits {@link Bundle} objects for the subscriber.
  * The bundles contain message type whose key is {@link RxObservableProgram#KEY_MESSAGE_TYPE},
  * and optionally one message argument whose key is {@link RxObservableProgram#KEY_MESSAGE_ARG}.
@@ -47,7 +47,7 @@ import rx.Subscriber;
  * </ul>
  * When the execution of the program that this class holds is ended, {@link rx.Subscriber#onCompleted} is called,
  * no matter the type of ending (terminated by a user/ended normally).
- * <p>
+ *
  * Typically you can use this class with code like below.
  * Note that the process of this class is heavy, including I/O connection.
  * Do not run this on your UI thread.
@@ -81,8 +81,8 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
     private Thread mRunningThread;
 
     /**
-     * @param program list of blocks to be executed.
-     * @param machineController MachineController for the machine to be manipulated.
+     * @param program a list of blocks to be executed
+     * @param machineController {@link MachineController} for the machine to be manipulated
      */
     public RxObservableProgram(List<BlockBase> program, MachineController machineController) {
 

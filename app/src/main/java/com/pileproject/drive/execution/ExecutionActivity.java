@@ -80,7 +80,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     /**
      * Returns an {@link Intent} for invoking {@link ExecutionActivity}.
      *
-     * @param context context to be passed to the constructor of {@link Intent}.
+     * @param context the context to be passed to the constructor of {@link Intent}
      * @return an {@link Intent}
      */
     public static Intent createIntent(Context context) {
