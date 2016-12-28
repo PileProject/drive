@@ -20,9 +20,12 @@ package com.pileproject.drive.machine;
  */
 public interface MachineController {
     /**
-     * e.g. halt motors
+     * Halts the connected machine (e.g. halt motors).
      */
     void halt();
 
+    /**
+     * Closes the connection between the Android device and the machine.
+     */
     void close();
 }
