@@ -32,6 +32,9 @@ public class RxBluetoothBroadcastReceiver {
     /**
      * Creates {@link Observable} which will produce a stream
      * when {@link BluetoothDevice#ACTION_FOUND} has been issued.
+     *
+     * @param context the context of the application
+     * @return an {@link Observable}
      */
     @NonNull
     public static Observable<Intent> bluetoothDeviceFound(final Context context) {
@@ -44,6 +47,9 @@ public class RxBluetoothBroadcastReceiver {
     /**
      * Creates {@link Observable} which will produce a stream
      * when {@link BluetoothAdapter#ACTION_DISCOVERY_FINISHED} has been issued.
+     *
+     * @param context the context of the application
+     * @return an {@link Observable}
      */
     @NonNull
     public static Observable<Intent> bluetoothDiscoveryFinished(final Context context) {

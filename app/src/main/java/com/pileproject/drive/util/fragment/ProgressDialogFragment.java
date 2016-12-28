@@ -67,7 +67,8 @@ public class ProgressDialogFragment extends DialogFragment {
      * @param messageRes the dialog message
      * @param tag the fragment tag
      */
-    public static void showDialog(Context context, FragmentManager manager, @StringRes int titleRes, @StringRes int messageRes, String tag) {
+    public static void showDialog(Context context, FragmentManager manager,
+                                  @StringRes int titleRes, @StringRes int messageRes, String tag) {
         showDialog(manager, context.getString(titleRes), context.getString(messageRes), tag);
     }
 

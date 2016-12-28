@@ -44,9 +44,9 @@ public class Unit {
      * {@link Locale#getDefault()}.
      *
      * @param value a value to be decorated
-     * @param precision the precision of the value in the return string.
+     * @param precision the precision of the value in the return string
      * @param <T> the type parameter for <code>value</code>, which extends {@link Number}
-     * @return a decorated string in default locale and with given precision.
+     * @return a decorated string in default locale and with given precision
      */
     public <T extends Number> String decorateValue(T value, int precision) {
         return decorateValue(Locale.getDefault(), value, precision);
@@ -58,9 +58,9 @@ public class Unit {
      *
      * @param locale the locale in which the value decorated
      * @param value a value to be decorated
-     * @param precision the precision of the value in the return string.
+     * @param precision the precision of the value in the return string
      * @param <T> the type parameter for <code>value</code>, which extends {@link Number}
-     * @return a decorated string in default locale and with given precision.
+     * @return a decorated string in default locale and with given precision
      */
     public <T extends Number> String decorateValue(Locale locale, T value, int precision) {
 

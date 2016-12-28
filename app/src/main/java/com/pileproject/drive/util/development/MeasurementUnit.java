@@ -29,10 +29,21 @@ public class MeasurementUnit {
     public static MeasurementUnit Imperial = new MeasurementUnit();
     public static MeasurementUnit Metric = new MeasurementUnit();
 
+    /**
+     * Gets the default {@link MeasurementUnit} from the default locale.
+     *
+     * @return the {@link MeasurementUnit}
+     */
     public static MeasurementUnit getDefaultUnit() {
         return getFromLocale(Locale.getDefault());
     }
 
+    /**
+     * Gets the {@link MeasurementUnit} with the locale.
+     *
+     * @param locale the locale to get the unit
+     * @return the {@link MeasurementUnit}
+     */
     public static MeasurementUnit getFromLocale(Locale locale) {
         String countryCode = locale.getCountry();
 
@@ -46,6 +57,12 @@ public class MeasurementUnit {
         return Metric;
     }
 
+    /**
+     * Converts values in centimeter to values in inch.
+     *
+     * @param cm the value in centimeter
+     * @return converted value in inch
+     */
     public static double convertCmToInch(double cm) {
         return cm / 2.54;
     }

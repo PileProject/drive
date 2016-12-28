@@ -37,6 +37,7 @@ public class Range<T extends Comparable<T>> {
     /**
      * Returns an object representing an open interval (exclusive).
      *
+     * @param <T> the type of the value
      * @param lower the lower bound (exclusive)
      * @param upper the upper bound (exclusive)
      * @return the {@link Range}
@@ -48,6 +49,7 @@ public class Range<T extends Comparable<T>> {
     /**
      * Returns an object representing a close interval.
      *
+     * @param <T> the type of bounds
      * @param lower the lower bound (inclusive)
      * @param upper the upper bound (inclusive)
      * @return the {@link Range}
@@ -59,6 +61,7 @@ public class Range<T extends Comparable<T>> {
     /**
      * Returns an object representing a open-closed interval.
      *
+     * @param <T> the type of bounds
      * @param lower the lower bound (exclusive)
      * @param upper the upper bound (inclusive)
      * @return the {@link Range}
@@ -70,6 +73,7 @@ public class Range<T extends Comparable<T>> {
     /**
      * Returns an object representing a closed-open interval.
      *
+     * @param <T> the type of bounds
      * @param lower the lower bound (inclusive)
      * @param upper the upper bound (exclusive)
      * @return the {@link Range}

@@ -22,16 +22,18 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.os.Build;
 
 /**
- * A class for checking building environments, devices, etc.
+ * A utility class for checking building environments, devices, etc.
  */
-public class DeployUtils {
+public class DeployUtil {
 
-    private DeployUtils() {
+    private DeployUtil() {
         throw new AssertionError("This class cannot be instantiated");
     }
 
     /**
      * Returns <code>true</code> if the device is emulator.
+     *
+     * @return is on emulator (<code>true</code>) or not (<code>false</code>)
      */
     public static boolean isOnEmulator() {
         // from http://stackoverflow.com/questions/2799097/how-can-i-detect-when-an-android-application-is-running-in-the-emulator
@@ -41,8 +43,9 @@ public class DeployUtils {
     /**
      * Returns <code>true</code> if the building configuration is Debug.
      *
-     * @param context a {@link Context} of the appliation
-     */
+     * @param context a {@link Context} of the application
+     * @return is in Debug mode (<code>true</code>) or not (<code>false</code>)
+     * */
     public static boolean isDebugMode(Context context) {
         PackageManager manager = context.getPackageManager();
         ApplicationInfo info;
@@ -61,6 +64,7 @@ public class DeployUtils {
      * Returns <code>true</code> if the building configuration is Release.
      *
      * @param context a {@link Context} of the application
+     * @return is in Release mode (<code>true</code>) or not (<code>false</code>)
      */
     public static boolean isReleaseMode(Context context) {
         return !isDebugMode(context);
