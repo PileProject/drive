@@ -36,7 +36,7 @@ public class RxBroadcastReceiver {
      * Creates {@link Observable} which will produce a stream
      * when the events which are specified by {@link IntentFilter} have been issued.
      *
-     * @param context a {@link Context} of the appliation
+     * @param context a {@link Context} of the application
      * @param intentFilter an intent filter that will be passed to
      * {@link Context#registerReceiver(BroadcastReceiver, IntentFilter)}
      * @return an {@link Observable}

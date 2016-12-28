@@ -107,7 +107,7 @@ public class ExecutionCondition {
     /**
      * Gets the current program count.
      *
-     * @return the currrent program count
+     * @return the current program count
      */
     public int getProgramCount() {
         return mProgramCount;
@@ -152,7 +152,7 @@ public class ExecutionCondition {
     }
 
     /**
-     * Pushes the index of the beginning block of the current loop to a loop-statment stack. This will be used by
+     * Pushes the index of the beginning block of the current loop to a loop-statement stack. This will be used by
      * {@link com.pileproject.drive.programming.visual.block.repetition.LoopBlock} or
      * {@link com.pileproject.drive.programming.visual.block.repetition.NTimesBlock}.
      *

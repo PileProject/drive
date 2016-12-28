@@ -46,8 +46,8 @@ public class ProgressDialogFragment extends DialogFragment {
      *
      * @param manager a {@link FragmentManager} or its sub-class
      * @param title the dialog title
-     * @param message the ialog message
-     * @param tag the ragment tag
+     * @param message the dialog message
+     * @param tag the fragment tag
      */
     public static void showDialog(FragmentManager manager, String title, String message, String tag) {
         ProgressDialogFragment f = newInstance(title, message);

@@ -19,7 +19,7 @@ import java.util.List;
 
 /**
  * An interface for providing {@link Class} instances of {@link BlockBase} and its descendant classes.
- * Concrete classes are supposed to provide the concrete {@link Class} instances with respecto to
+ * Concrete classes are supposed to provide the concrete {@link Class} instances with respect to
  * their responsible robots.
  *
  */
