@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,9 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.util.Locale;
 
+/**
+ * A utility class for parsing strings to values with locales, etc.
+ */
 public class ParseUtil {
 
     private ParseUtil() {
@@ -28,20 +31,25 @@ public class ParseUtil {
     }
 
     /**
-     * Parse a string as double in the context of default locale
+     * Parses a string as double in the context of the default locale
      * (e.g., "1,234" means 1234E-3 in France).
      *
-     * @throws NumberFormatException throw if the string makes no sense as number.
+     * @param value the string expression of a value to be converted as number
+     * @return the converted value in double
+     * @throws NumberFormatException if the string makes no sense as number
      */
     public static double doubleValueOf(String value) {
         return doubleValueOf(value, Locale.getDefault());
     }
 
     /**
-     * Parse a string as double.
+     * Parses a string as double.
      * This function takes locale into account (e.g., "1,234" means 1234E-3 in France).
      *
-     * @throws NumberFormatException throw if the string makes no sense as number.
+     * @param value the string expression of a value to be converted as number
+     * @param locale the locale in which the value is expressed
+     * @return the converted value in double
+     * @throws NumberFormatException throw if the string makes no sense as number
      */
     public static double doubleValueOf(String value, Locale locale) throws NumberFormatException {
         try {
@@ -55,19 +63,24 @@ public class ParseUtil {
     }
 
     /**
-     * Parse a string as {@link BigDecimal} in the context of default locale
+     * Parses a string as {@link BigDecimal} in the context of the default locale
      * (e.g., "1,234" means 1234E-3 in France).
      *
-     * @throws NumberFormatException throw if the string makes no sense as number.
+     * @param value the string expression of a value to be converted as number
+     * @return the converted value in {@link BigDecimal}
+     * @throws NumberFormatException throw if the string makes no sense as number
      */
     public static BigDecimal bigDecimalValueOf(String value) throws NumberFormatException {
         return bigDecimalValueOf(value, Locale.getDefault());
     }
 
     /**
-     * Parse a string as {@link BigDecimal}.
+     * Parses a string as {@link BigDecimal}.
      * This function takes locale into account (e.g., "1,234" means 1234E-3 in France).
      *
+     * @param value the string expression of a value to be converted as number
+     * @param locale the locale in which the value is expressed
+     * @return the converted value in {@link BigDecimal}
      * @throws NumberFormatException throw if the string makes no sense as number.
      */
     public static BigDecimal bigDecimalValueOf(String value, Locale locale) throws NumberFormatException {
@@ -77,7 +90,7 @@ public class ParseUtil {
             Number number = decimalFormat.parse(value);
             return (BigDecimal) number;
         } catch (ParseException e) {
-            throw new NumberFormatException("String '" + value + "' cannot be parsed as double value" +
+            throw new NumberFormatException("String '" + value + "' cannot be parsed as BigDecimal value" +
                     " in locale " + locale);
         }
     }

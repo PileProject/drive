@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,9 @@ import com.pileproject.drive.preferences.MachinePreferences;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.STANDARD;
 
+/**
+ * A fragment for selecting the firmware of a machine. This fragment will be used by {@link NxtFirmwarePreference}.
+ */
 public class NxtFirmwareFragment extends DialogFragment {
     private RadioGroup mFirmwareRadioGroup;
 

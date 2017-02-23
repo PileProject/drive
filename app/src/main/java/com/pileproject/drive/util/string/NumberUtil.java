@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,9 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.util.Locale;
 
+/**
+ * A utility class for converting numbers to strings with locales, etc.
+ */
 public class NumberUtil {
 
     private NumberUtil() {
@@ -26,15 +29,15 @@ public class NumberUtil {
     }
 
     /**
-     * Converts numerical value to string expression. This function takes locales into account and
-     * uses default locale by calling {@link Locale#getDefault()}.
-     * With <code>precision</code> in the arguments you can control the number of digits in fraction
+     * Converts a numerical value to a string expression. This function takes locales into account and
+     * uses the default locale by calling {@link Locale#getDefault()}.
+     * With <code>precision</code> in the arguments, you can control the number of digits in fraction
      * part.
      *
-     * @param value value to be converted as a string
-     * @param precision number of precision.
-     * @param <T> type parameter of <code>value</code>, which should be extends {@link Number}
-     * @return string expression of <code>value</code> in appropriate <code>locale</code> and
+     * @param value the value to be converted as a string
+     * @param precision the number of precision
+     * @param <T> the type parameter of <code>value</code>, which should be extends {@link Number}
+     * @return a string expression of <code>value</code> in appropriate <code>locale</code> and
      *         with <code>precision</code>
      */
     public static <T extends Number> String toString(T value, int precision) {
@@ -46,11 +49,11 @@ public class NumberUtil {
      * With <code>precision</code> in the arguments you can control the number of digits in fraction
      * part.
      *
-     * @param locale locale in which the value will be expressed.
-     * @param value value to be converted as a string
-     * @param precision number of precision.
-     * @param <T> type parameter of <code>value</code>, which should be extends {@link Number}
-     * @return string expression of <code>value</code> in appropriate <code>locale</code> and
+     * @param locale the locale in which the value will be expressed
+     * @param value the value to be converted as a string
+     * @param precision the number of precision
+     * @param <T> the type parameter of <code>value</code>, which should be extends {@link Number}
+     * @return a string expression of <code>value</code> in appropriate <code>locale</code> and
      *         with <code>precision</code>
      */
     public static <T extends Number> String toString(Locale locale, T value, int precision) {

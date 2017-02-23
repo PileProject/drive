@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,7 +18,6 @@ package com.pileproject.drive.setting;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.CheckBoxPreference;
 import android.support.v7.preference.DialogPreference;
@@ -29,18 +28,12 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.CommonPreferences;
 
 /**
- * Setting activity
- * <p/>
- * This activity contains setting fragments
- *
- * @author yusaku
- * @version 1.0 4-June-2013
+ * An activity for settings. This activity contains some fragments for preferences.
  */
 public class SettingActivity extends AppCompatActivity {
 
@@ -80,6 +73,9 @@ public class SettingActivity extends AppCompatActivity {
         return new Intent(context, SettingActivity.class);
     }
 
+    /**
+     * A fragment of preferences.
+     */
     public static class SettingFragment extends PreferenceFragmentCompat {
 
         private CheckBoxPreference mSupervisorPreference;
@@ -118,16 +114,16 @@ public class SettingActivity extends AppCompatActivity {
     }
 
     /**
-     * Interface for dialog-based preferences which extends {@link DialogPreference}.
-     * DialogPreference used in {@link SettingFragment} should implement this interface.
+     * An interface for dialog-based preferences which extend {@link DialogPreference}.
+     * {@link DialogPreference} used in {@link SettingFragment} should implement this interface.
      */
     public interface DialogPreferenceInterface {
 
         /**
-         * Called in {@link SettingFragment#onDisplayPreferenceDialog(Preference)}
+         * Called in {@link SettingFragment#onDisplayPreferenceDialog(Preference)}.
          * The function should show a fragment which represents the preference of this class.
          *
-         * @param parent parent fragment, which should be {@link SettingFragment}
+         * @param parent the parent fragment which should be an instance of {@link SettingFragment}
          */
         void startDialog(PreferenceFragmentCompat parent);
     }

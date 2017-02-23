@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,16 +22,15 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SELEC
 import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Annotation that represents a category of the blocks in this App.
+ * An annotation that represents a category of the blocks in this app.
  * <ul>
  *     <li><code>SEQUENCE</code>: Sequence block</li>
  *     <li><code>REPETITION</code>: Repetition block</li>
  *     <li><code>SELECTION</code>: Selection block</li>
  * </ul>
- * <p/>
+ * <p>
  * Do not confuse with {@link BlockBase.BlockKind}: this annotation is for wider concept
  * than that of {@link BlockBase.BlockKind} represents.
- *
  */
 @IntDef({SEQUENCE, REPETITION, SELECTION})
 public @interface BlockCategory {

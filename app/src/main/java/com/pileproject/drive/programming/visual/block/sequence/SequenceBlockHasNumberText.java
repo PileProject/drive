@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,7 @@ import java.math.BigDecimal;
 
 
 /**
- * SequenceBlock that has a TextView
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A {@link SequenceBlock} that has a {@link TextView} which will be used to input numbers such as seconds.
  */
 public abstract class SequenceBlockHasNumberText extends SequenceBlock implements NumberTextHolder {
 
@@ -44,7 +41,9 @@ public abstract class SequenceBlockHasNumberText extends SequenceBlock implement
     }
 
     /**
-     * Returns the value for those which do not understand radix points
+     * Returns the value for those which do not understand radix points.
+     *
+     * @return a formed value
      */
     protected int getActionValue() {
         return mDelegate.getActionValue();

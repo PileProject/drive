@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import java.util.List;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
 
 /**
- * A manager of BlockSpaceLayout that helps users to make programs.
+ * A manager of {@link BlockSpaceLayout} that helps users to make programs.
  */
 public class ProgrammingSpaceManager extends BlockSpaceManagerBase {
 

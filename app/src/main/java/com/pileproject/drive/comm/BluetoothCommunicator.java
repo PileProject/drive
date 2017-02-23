@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,6 +30,12 @@ import java.util.UUID;
 import trikita.log.Log;
 
 
+/**
+ * An implementation of {@link ICommunicator} of the <code>DriveCommand</code> plugin. This enables Android devices
+ * to communicate with machines via Bluetooth.
+ *
+ * @see <a href="https://github.com/PileProject/drivecommand">DriveCommand</a>
+ */
 public class BluetoothCommunicator implements ICommunicator {
 
     private static final UUID SPP_UUID = UUID.fromString("00001101-0000-1000-8000-00805F9B34FB");
@@ -48,32 +54,32 @@ public class BluetoothCommunicator implements ICommunicator {
 
     @Override
     public void open() throws IOException {
-        // Orthodox method
-        // This call may fail. It depends on the device.
-        // Therefore, we do redundancy check with the below reflection method.
+        // NOTE: an orthodox method
+        // it depends on the device if this call fails or not
+        // so, we do a redundancy check with the below reflection method
         mSocket = mDevice.createRfcommSocketToServiceRecord(SPP_UUID);
         try {
             mSocket.connect();
         } catch (IOException firstIOException) {
             Log.d("Failed to connect with an orthodox method");
             try {
-                // Redundancy check
+                // a redundancy check
                 Method method = mDevice.getClass().getMethod("createRfcommSocket", int.class);
                 mSocket = (BluetoothSocket) method.invoke(mDevice, 1);
                 mSocket.connect();
             } catch (IOException secondIOException) {
                 Log.d("Failed to connect with a redundancy method");
-                // Unable to connect; close the socket and get out
+                // unable to connect; close the socket and get out
                 try {
                     mSocket.close();
                 } catch (IOException closeException) {
                     closeException.printStackTrace();
-                    Log.d("it seems unable to recover");
+                    Log.d("It seems unable to recover");
                 }
                 throw secondIOException;
             } catch (Exception exception) {
                 exception.printStackTrace();
-                Log.d("this exception should not be occurred in release " + "version");
+                Log.d("This exception should not be occurred in release version");
             }
         }
 
@@ -87,7 +93,7 @@ public class BluetoothCommunicator implements ICommunicator {
             try {
                 mSocket.close();
             } catch (IOException e) {
-                Log.e("Failed to close connection.", e);
+                Log.e("Failed to close connection", e);
             }
         }
         mSocket = null;

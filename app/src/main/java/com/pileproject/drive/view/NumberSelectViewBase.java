@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,14 +30,16 @@ public abstract class NumberSelectViewBase extends LinearLayout {
     }
 
     /**
-     * A getter of a value.
+     * Gets the value on the view.
      * This is used to get the real value in double.
+     *
      * @return the selected value
      */
     public abstract BigDecimal getValue();
 
     /**
-     * A setter of a value.
+     * Sets a value.
+     *
      * @param value a value to be set
      */
     public abstract void setValue(BigDecimal value);

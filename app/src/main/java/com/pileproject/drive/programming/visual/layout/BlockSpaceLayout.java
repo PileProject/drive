@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,7 @@ import android.widget.ImageView;
 import com.pileproject.drive.R;
 
 /**
- * A layout for placing blocks.
+ * A layout where blocks will be placed.
  */
 public class BlockSpaceLayout extends FrameLayout {
     private ImageView mTrashBox;
@@ -36,17 +36,17 @@ public class BlockSpaceLayout extends FrameLayout {
         super(context, attr);
         View layout = LayoutInflater.from(context).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
+
         // keep the number of default children
         // because it is necessary to reset this view (clear all and add default views)
         mDefaultChildrenNum = getChildCount();
     }
 
     /**
-     * Check a block is on the trash box or not.
+     * Checks the block is on the trash box or not.
      *
-     * @param View a block
-     * @return boolean
-     * true - a block is on the trash box, false - otherwise
+     * @param view the target block to be checked
+     * @return a block is on the trash box (true), or not (false)
      */
     public boolean isOnTrash(View view) {
         return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + MARGIN &&
@@ -56,18 +56,21 @@ public class BlockSpaceLayout extends FrameLayout {
     }
 
     /**
-     * Remove all views attached to this layout, then add default views (a trash box).
+     * Removes all the views attached to this layout, then add default views (a trash box).
      */
     @Override
     public void removeAllViews() {
         super.removeAllViews();
+
         // reload layout to add a trash box to this layout
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
     }
 
     /**
-     * Return the number of default children.
+     * Returns the number of default children. This value will be used to reinit this layout.
+     *
+     * @return the number of default children (e.g., a trash box)
      */
     public int getDefaultChildrenCount() {
         return mDefaultChildrenNum;

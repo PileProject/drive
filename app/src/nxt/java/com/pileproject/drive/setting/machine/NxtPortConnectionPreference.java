@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,7 +24,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * Created by yusaku on 2016/07/10.
+ * A preference class for setting the port connections. This class creates {@link NxtPortConnectionFragment}.
  */
 public class NxtPortConnectionPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 

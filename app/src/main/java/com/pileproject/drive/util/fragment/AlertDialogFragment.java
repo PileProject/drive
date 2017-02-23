@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -51,9 +51,9 @@ public class AlertDialogFragment extends DialogFragment {
     private static final String KEY_GRAVITY        = "gravity";
 
     /**
-     * Builder class for {@link AlertDialogFragment}
-     * Using this class enables to create an AlertDialogFragment instance by method chains
-     * like {@link AlertDialog}
+     * A builder class for {@link AlertDialogFragment}.
+     * Using this class enables to create an {@link AlertDialogFragment} instance by method chains
+     * like {@link AlertDialog}.
      */
     public static class Builder {
         private static final int DEFAULT_REQUEST_CODE = -1;
@@ -86,9 +86,10 @@ public class AlertDialogFragment extends DialogFragment {
         boolean mAllowingStateLoss;
 
         /**
-         * Constructor of builder for {@link AppCompatActivity}
-         * @param activity
-         * @param <A>
+         * A constructor of the builder for {@link AppCompatActivity}.
+         *
+         * @param <A> a class of an activity that extends {@link AppCompatActivity} and {@link EventListener}
+         * @param activity an activity that is trying to show a dialog
          */
         public <A extends AppCompatActivity & EventListener> Builder(@NonNull A activity) {
             mActivity = activity;
@@ -96,9 +97,10 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * Constructor of builder for {@link Fragment}
-         * @param parentFragment
-         * @param <F>
+         * A constructor of the builder for {@link Fragment}.
+         *
+         * @param <F> a class of a fragment that extends {@link AppCompatActivity} and {@link EventListener}
+         * @param parentFragment a fragment that is trying to show a dialog
          */
         public <F extends Fragment & EventListener> Builder(@NonNull F parentFragment) {
             mActivity = null;
@@ -106,9 +108,10 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set tag for the fragment
-         * @param tag
-         * @return reference of this (for method chain)
+         * Sets a tag for fragment.
+         *
+         * @param tag a tag to specify the objective of the dialog
+         * @return the reference of this (for method chain)
          */
         public Builder setTag(@NonNull String tag) {
             mTag = tag;
@@ -116,9 +119,10 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set title string (String class)
-         * @param title
-         * @return reference of this (for method chain)
+         * Sets title string (String class).
+         *
+         * @param title the title string of the dialog
+         * @return the reference of this (for method chain)
          */
         public Builder setTitle(@NonNull String title) {
             mTitle = title;
@@ -126,18 +130,20 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set title string (Android res)
-         * @param title
-         * @return reference of this (for method chain)
+         * Sets title string (Android res).
+         *
+         * @param title the resource id of the title string of the dialog
+         * @return the reference of this (for method chain)
          */
         public Builder setTitle(@StringRes int title) {
             return setTitle(getContext().getString(title));
         }
 
         /**
-         * set message string (String class)
-         * @param message
-         * @return reference of this (for method chain)
+         * Sets message string (String class).
+         *
+         * @param message the message string of the dialog
+         * @return the reference of this (for method chain)
          */
         public Builder setMessage(@NonNull String message) {
             mMessage = message;
@@ -145,18 +151,20 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set message string (Android res)
-         * @param message
-         * @return reference of this (for method chain)
+         * Sets message string (Android res).
+         *
+         * @param message the resource id of the message string of the dialog
+         * @return the reference of this (for method chain)
          */
         public Builder setMessage(@StringRes int message) {
             return setMessage(getContext().getString(message));
         }
 
         /**
-         * set positive button label (String class)
-         * @param positiveLabel
-         * @return reference of this (for method chain)
+         * Sets positive button label (String class).
+         *
+         * @param positiveLabel the label string of the positive button
+         * @return the reference of this (for method chain)
          */
         public Builder setPositiveButtonLabel(@NonNull String positiveLabel) {
             mPositiveLabel = positiveLabel;
@@ -164,18 +172,20 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set positive button label (Android res)
-         * @param positiveLabel
-         * @return reference of this (for method chain)
+         * Sets positive button label (Android res).
+         *
+         * @param positiveLabel the resource id of the label string of the positive button
+         * @return the reference of this (for method chain)
          */
         public Builder setPositiveButtonLabel(@StringRes int positiveLabel) {
             return setPositiveButtonLabel(getContext().getString(positiveLabel));
         }
 
         /**
-         * set positive button label (String class)
-         * @param negativeLabel
-         * @return reference of this (for method chain)
+         * Sets negative button label (String class).
+         *
+         * @param negativeLabel the label string of the negative button
+         * @return the reference of this (for method chain)
          */
         public Builder setNegativeButtonLabel(@NonNull String negativeLabel) {
             mNegativeLabel = negativeLabel;
@@ -183,19 +193,21 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set positive button label (Android res)
-         * @param negativeLabel
-         * @return reference of this (for method chain)
+         * Sets negative button label (Android res).
+         *
+         * @param negativeLabel the resource id of the label string of the negative button
+         * @return the reference of this (for method chain)
          */
         public Builder setNegativeButtonLabel(@NonNull int negativeLabel) {
             return setNegativeButtonLabel(getContext().getString(negativeLabel));
         }
 
         /**
-         * set params for {@link AlertDialogFragment.EventListener#onDialogEventHandled(int, DialogInterface, int, Bundle)}
-         * this params will be passed to the function
-         * @param params
-         * @return reference of this (for method chain)
+         * Sets parameters for {@link AlertDialogFragment.EventListener#onDialogEventHandled(int, DialogInterface, int, Bundle)}.
+         * This parameters will be passed to the function.
+         *
+         * @param params parameters for the function
+         * @return the reference of this (for method chain)
          */
         public Builder setParams(@NonNull Bundle params) {
             mParams = new Bundle(params);
@@ -203,9 +215,10 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set string items displayed in a list view
-         * @param items
-         * @return reference of this (for method chain)
+         * Sets string items displayed in a list view.
+         *
+         * @param items a set of item string
+         * @return the reference of this (for method chain)
          */
         public Builder setItems(@NonNull String... items) {
             mItems = items;
@@ -213,10 +226,11 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * specify the instance can be cancelable or not
-         * (i.e., can be dismissed without tapping buttons)
-         * @param cancelable
-         * @return reference of this (for method chain)
+         * Specifies the instance can be canceled or not
+         * (i.e., can be dismissed without tapping buttons).
+         *
+         * @param cancelable (<code>true</code>) or not (<code>false</code>)
+         * @return the reference of this (for method chain)
          */
         public Builder setCancelable(boolean cancelable) {
             mCancelable = cancelable;
@@ -225,9 +239,10 @@ public class AlertDialogFragment extends DialogFragment {
 
         /**
          * Specifies the transaction is allowed to lose state.
+         *
          * @param allowingStateLoss the fragment will be showed by {@link FragmentTransaction#commitAllowingStateLoss()}
          *                       if true, otherwise showed by {@link FragmentTransaction#commit}.
-         * @return reference of this (for method chain)
+         * @return the reference of this (for method chain)
          */
         public Builder setAllowingStateLoss(boolean allowingStateLoss) {
             mAllowingStateLoss = allowingStateLoss;
@@ -235,9 +250,10 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set gravity of the instance
-         * @param gravity {@link Gravity} variable
-         * @return reference of this (for method chain)
+         * Sets gravity of the instance.
+         *
+         * @param gravity a {@link Gravity} variable
+         * @return the reference of this (for method chain)
          */
         public Builder setWindowGravity(int gravity) {
             mGravity = gravity;
@@ -245,11 +261,12 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * set request code
-         * this value will be passed to {@link AlertDialogFragment.EventListener#onDialogEventHandled(int, DialogInterface, int, Bundle)}
-         * to distinguish callers
-         * @param requestCode
-         * @return reference of this (for method chain)
+         * Sets request code.
+         * This value will be passed to {@link AlertDialogFragment.EventListener#onDialogEventHandled(int, DialogInterface, int, Bundle)}
+         * to distinguish callers.
+         *
+         * @param requestCode the request code to distinguish a caller
+         * @return the reference of this (for method chain)
          */
         public Builder setRequestCode(int requestCode) {
             mRequestCode = requestCode;
@@ -257,7 +274,7 @@ public class AlertDialogFragment extends DialogFragment {
         }
 
         /**
-         * show the instance with configuration you specified before function call
+         * Shows the instance with configuration you specified before this function call.
          */
         public void show() {
             Bundle args = new Bundle();
@@ -310,7 +327,7 @@ public class AlertDialogFragment extends DialogFragment {
     private EventListener mListener;
 
     public AlertDialogFragment() {
-        // Required empty public constructor
+        // required empty public constructor
     }
 
     @Override
@@ -408,16 +425,21 @@ public class AlertDialogFragment extends DialogFragment {
      */
     public interface EventListener {
         /**
-         * Called when a button (positive, negative or neutral) is clicked
-         * @param requestCode request code that has been set by {@link AlertDialogFragment.Builder#setRequestCode}
-         * @param dialog
-         * @param which
+         * Called when a button (positive, negative or neutral) is clicked.
+         *
+         * @param requestCode the request code that has been set by {@link AlertDialogFragment.Builder#setRequestCode}
+         * @param dialog the dialog that was showed
+         * @param which the pushed button
+         * @param params the parameters that have been set by {@link AlertDialogFragment.Builder#setParams}
          */
         void onDialogEventHandled(int requestCode, DialogInterface dialog, int which, Bundle params);
 
         /**
-         * Called when this dialog is cancelled (e.g. user tapped outside of the dialog)
-         * @param requestCode
+         * Called when this dialog is cancelled (e.g. user tapped outside of the dialog).
+         *
+         * @param requestCode the request code that has been set by {@link AlertDialogFragment.Builder#setRequestCode}
+         * @param dialog the dialog that was showed
+         * @param params the parameters that have been set by {@link AlertDialogFragment.Builder#setParams}
          */
         void onDialogEventCancelled(int requestCode, DialogInterface dialog, Bundle params);
     }

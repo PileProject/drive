@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -30,10 +30,7 @@ import java.math.BigDecimal;
 import static com.pileproject.drive.machine.CarControllerBase.MotorKind.LeftMotor;
 
 /**
- * Set left motor power
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that will be used to set the power of left motor.
  */
 public class SetLeftMotorSpeedBlock extends SequenceBlockHasNumberText {
 

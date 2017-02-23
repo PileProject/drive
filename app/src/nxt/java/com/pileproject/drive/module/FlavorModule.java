@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,8 +26,9 @@ import dagger.Module;
 import dagger.Provides;
 
 /**
- * Module class for configuring Product Flavor related injection.
+ * A module class for configuring Product Flavor related injection.
  *
+ * @see <a href="https://google.github.io/dagger/">Dagger</a>
  */
 @Module
 public class FlavorModule {

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,9 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for showing the legal notice. This class creates {@link LegalNoticeFragment}.
+ */
 public class LegalNoticePreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
     private static final String FRAGMENT_TAG = "legal_notice_preference";

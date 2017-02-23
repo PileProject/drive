@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,16 +28,18 @@ import rx.functions.Func1;
 import rx.subscriptions.Subscriptions;
 
 /**
- * A class which produces Observable of RxJava.
- * This class wraps {@link BroadcastReceiver} in Android API
+ * A class which produces {@link Observable} of RxJava.
+ * This class wraps {@link BroadcastReceiver} in Android API.
  */
 public class RxBroadcastReceiver {
     /**
-     * Create {@link Observable} which will produce a stream
-     * when the events which specified by {@link IntentFilter} has been issued.
-     * @param context context
-     * @param intentFilter intent filter that will be passed to {@link Context#registerReceiver(BroadcastReceiver, IntentFilter)}
-     * @return observable
+     * Creates {@link Observable} which will produce a stream
+     * when the events which are specified by {@link IntentFilter} have been issued.
+     *
+     * @param context a {@link Context} of the application
+     * @param intentFilter an intent filter that will be passed to
+     * {@link Context#registerReceiver(BroadcastReceiver, IntentFilter)}
+     * @return an {@link Observable}
      */
     public static Observable<Pair<Context, Intent>> create(final Context context, final IntentFilter intentFilter) {
         return Observable.create(new rx.Observable.OnSubscribe<Pair<Context, Intent>>() {
@@ -68,9 +70,10 @@ public class RxBroadcastReceiver {
     }
 
     /**
-     * Get the context in {@code Pair<Context, Intent>}.
-     * Use like {@code fst}.
-     * @return context
+     * Gets the context in {@code Pair<Context, Intent>}.
+     * This method is used like {@code fst}.
+     *
+     * @return the {@link Context}
      */
     public static Func1<Pair<Context, Intent>, Context> getContext() {
          return new Func1<Pair<Context, Intent>, Context>() {
@@ -83,10 +86,10 @@ public class RxBroadcastReceiver {
     }
 
     /**
+     * Gets the context in {@code Pair<Context, Intent>}.
+     * This method is used like {@code snd}.
      *
-     * Get the context in {@code Pair<Context, Intent>}.
-     * Use like {@code snd}.
-     * @return context
+     * @return the {@link Context}
      */
     public static Func1<Pair<Context, Intent>, Intent> getIntent() {
         return new Func1<Pair<Context, Intent>, Intent>() {

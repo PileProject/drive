@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,17 @@
  */
 package com.pileproject.drive.machine;
 
+/**
+ * An interface class of controllers for {@link com.pileproject.drivecommand.machine.MachineBase}.
+ */
 public interface MachineController {
     /**
-     * e.g. halt motors
+     * Halts the connected machine (e.g. halt motors).
      */
     void halt();
 
+    /**
+     * Closes the connection between the Android device and the machine.
+     */
     void close();
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -29,6 +29,9 @@ import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
 
+/**
+ * An implementation of {@link CarControllerBase} that controls LEGO MINDSTORMS NXT.
+ */
 public class NxtCarController extends CarControllerBase {
     private final boolean mIsLejosFirmware;
 
@@ -54,7 +57,10 @@ public class NxtCarController extends CarControllerBase {
     }
 
     /**
-     * Binds each sensor and motor to their ports by using {@link MachinePreferences} information.
+     * Binds each sensor and motor to their ports by using <code>MachinePreferences</code> which is based on
+     * {@link com.pileproject.drive.preferences.MachinePreferencesSchema}.
+     *
+     * @param machine an {@link NxtMachine} to be manipulated
      */
     public NxtCarController(NxtMachine machine) {
         mMachine = machine;

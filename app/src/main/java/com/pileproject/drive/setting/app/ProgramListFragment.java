@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,14 +41,18 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * A fragment for showing the list of programs. This fragment will be used by {@link ProgramListPreference}.
+ */
 public class ProgramListFragment extends DialogFragment implements AlertDialogFragment.EventListener {
     private ProgramDataManager mManager;
     private Button mDeleteButton;
 
-    // 0 : Sample Programs, 1 : User Programs
+    // 0 : sample programs, 1 : user programs
     private static final int SAMPLE_PROGRAM = 0;
     private static final int USER_PROGRAM = 1;
     private static final int NUM_PROGRAM_KINDS = 2;
+
     private Button[] mProgramsCheckAllButton = new Button[NUM_PROGRAM_KINDS];
     private ListView[] mProgramListView = new ListView[NUM_PROGRAM_KINDS];
     private ProgramDataAdapter[] mProgramDataAdapter = new ProgramDataAdapter[2];
@@ -100,6 +104,7 @@ public class ProgramListFragment extends DialogFragment implements AlertDialogFr
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        resizeDialog();
 
         mDeleteButton.setOnClickListener(new OnClickListener() {
             @Override
@@ -136,7 +141,13 @@ public class ProgramListFragment extends DialogFragment implements AlertDialogFr
                 }
             });
         }
+    }
 
+    /**
+     * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
+     * Otherwise, the dialog size will never be changed.
+     */
+    private void resizeDialog() {
         Dialog dialog = getDialog();
 
         DisplayMetrics metrics = getResources().getDisplayMetrics();
@@ -214,7 +225,7 @@ public class ProgramListFragment extends DialogFragment implements AlertDialogFr
                     if (dataId == SAMPLE_PROGRAM) { // sample programs
                         mManager.deleteSampleProgram(e.getKey());
                     }
-                    else { // user programs
+                    else /* if (dataId == USER_PROGRAM) */ { // user programs
                         mManager.deleteUserProgram(e.getKey());
                     }
                 }

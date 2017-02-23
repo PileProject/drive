@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import android.widget.TextView;
 import com.pileproject.drive.R;
 
 /**
- * A TextView which expresses a port.
+ * A base {@link TextView} which expresses a port.
  */
 public abstract class PortTextViewBase extends TextView {
     private final String mPortName;
@@ -52,7 +52,8 @@ public abstract class PortTextViewBase extends TextView {
     }
 
     /**
-     * Swap the device type of ports.
+     * Swaps the device type of ports.
+     *
      * @param lhs a port
      * @param rhs another port
      */
@@ -112,33 +113,38 @@ public abstract class PortTextViewBase extends TextView {
     }
 
     /**
-     * Save a connection setting.
-     * @param port
-     * @param device
+     * Saves a port connection setting with a device.
+     *
+     * @param port a port in string
+     * @param device a device in string
      */
     protected abstract void savePortConnection(String port, String device);
 
     /**
-     * Remove a port connection setting.
-     * @param port
+     * Removes a port connection setting.
+     *
+     * @param port a port in string
      */
     protected abstract void removePortConnection(String port);
 
     /**
-     * A getter for the type of device.
-     * @return the type of device in string
+     * Gets the type of device.
+     *
+     * @return a device type of this port in string
      */
     public abstract String getDeviceType();
 
     /**
-     * A setter for the type of device.
-     * @param deviceType
+     * Sets the type of device.
+     *
+     * @param deviceType a device type of this port
      */
     public abstract void setDeviceType(String deviceType);
 
     /**
-     * A getter for the name of port.
-     * @return the name of port in string
+     * Gets the name of port.
+     *
+     * @return the name of this port in string
      */
     public String getPortName() {
         return mPortName;

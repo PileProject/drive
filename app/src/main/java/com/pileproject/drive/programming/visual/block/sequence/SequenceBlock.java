@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,10 +21,7 @@ import android.support.annotation.LayoutRes;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * SequenceBlock
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A base block for sequence operations.
  */
 public abstract class SequenceBlock extends BlockBase {
 

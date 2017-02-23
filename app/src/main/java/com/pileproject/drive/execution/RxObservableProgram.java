@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -27,7 +27,7 @@ import rx.Subscriber;
 
 /**
  * A concrete class of {@link rx.Observable.OnSubscribe}, which generates
- * a stream of blocks that was executed during a program execution.
+ * a stream of blocks that is executed during a program execution.
  *
  * This class is one-off.
  * Create this instance whenever you want to execute and DO NOT REUSE the instance.
@@ -81,8 +81,8 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
     private Thread mRunningThread;
 
     /**
-     * @param program list of blocks to be executed.
-     * @param machineController MachineController for the machine to be manipulated.
+     * @param program a list of blocks to be executed
+     * @param machineController {@link MachineController} for the machine to be manipulated
      */
     public RxObservableProgram(List<BlockBase> program, MachineController machineController) {
 
@@ -220,4 +220,3 @@ public class RxObservableProgram implements Observable.OnSubscribe<Bundle> {
         return bundle;
     }
 }
-

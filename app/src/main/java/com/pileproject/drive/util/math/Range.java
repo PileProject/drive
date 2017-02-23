@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,8 +16,9 @@
 package com.pileproject.drive.util.math;
 
 /**
- * Simple class representing mathematical interval.
- * @param <T> numerical type which this class base on
+ * A simple class representing mathematical interval.
+ *
+ * @param <T> a numerical type which this class base on
  */
 public class Range<T extends Comparable<T>> {
     final private T lower;
@@ -26,8 +27,7 @@ public class Range<T extends Comparable<T>> {
     final private boolean includesLower;
     final private boolean includesUpper;
 
-    private Range(
-            T lower, boolean includesLower, T upper, boolean includesUpper) {
+    private Range(T lower, boolean includesLower, T upper, boolean includesUpper) {
         this.lower = lower;
         this.upper = upper;
         this.includesLower = includesLower;
@@ -35,47 +35,58 @@ public class Range<T extends Comparable<T>> {
     }
 
     /**
-     * Return an object representing an open interval (exclusive)
-     * @param lower lower bound (exclusive)
-     * @param upper upper bound (exclusive)
+     * Returns an object representing an open interval (exclusive).
+     *
+     * @param <T> the type of the value
+     * @param lower the lower bound (exclusive)
+     * @param upper the upper bound (exclusive)
+     * @return the {@link Range}
      */
     public static <T extends Comparable<T>> Range<T> open(T lower, T upper) {
         return new Range<>(lower, false, upper, false);
     }
 
     /**
-     * Return an object representing a close interval.
-     * @param lower lower bound (inclusive)
-     * @param upper upper bound (inclusive)
+     * Returns an object representing a close interval.
+     *
+     * @param <T> the type of bounds
+     * @param lower the lower bound (inclusive)
+     * @param upper the upper bound (inclusive)
+     * @return the {@link Range}
      */
     public static <T extends Comparable<T>> Range<T> closed(T lower, T upper) {
         return new Range<>(lower, true, upper, true);
     }
 
     /**
-     * Return an object representing a open-closed interval.
-     * @param lower lower bound (exclusive)
-     * @param upper upper bound (inclusive)
+     * Returns an object representing a open-closed interval.
+     *
+     * @param <T> the type of bounds
+     * @param lower the lower bound (exclusive)
+     * @param upper the upper bound (inclusive)
+     * @return the {@link Range}
      */
-    public static <T extends Comparable<T>> Range<T> openClosed(
-            T lower, T upper) {
+    public static <T extends Comparable<T>> Range<T> openClosed(T lower, T upper) {
         return new Range<>(lower, false, upper, true);
     }
 
     /**
-     * Return an object representing a closed-open interval.
-     * @param lower lower bound (inclusive)
-     * @param upper upper bound (exclusive)
+     * Returns an object representing a closed-open interval.
+     *
+     * @param <T> the type of bounds
+     * @param lower the lower bound (inclusive)
+     * @param upper the upper bound (exclusive)
+     * @return the {@link Range}
      */
-    public static <T extends Comparable<T>> Range<T> closedOpen(
-            T lower, T upper) {
+    public static <T extends Comparable<T>> Range<T> closedOpen(T lower, T upper) {
         return new Range<>(lower, true, upper, false);
     }
 
     /**
-     * Check the given value is in the interval.
+     * Checks the given value is in the interval.
+     *
      * @param value the value to be checked
-     * @return true if the value is in the interval
+     * @return <code>true</code> if the value is in the interval
      */
     public boolean contains(T value) {
         boolean aboveLower = (includesLower) ? lower.compareTo(value) <= 0 : lower.compareTo(value) < 0;

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,10 +28,7 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Turn right for a while
- *
- * @author yusaku
- * @version 1.0 7-July-2013
+ * A block that represents a clockwise turn operation for a while.
  */
 public class TurnRightSecBlock extends SequenceBlockHasNumberText {
 

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -20,7 +20,9 @@ import com.yahoo.squidb.annotations.PrimaryKey;
 import com.yahoo.squidb.annotations.TableModelSpec;
 
 /**
- * Specification for "program_data" table
+ * A specification for "program_data" table.
+ *
+ * @see <a href="https://github.com/yahoo/squidb">SquiDB</a>
  */
 @TableModelSpec(className="ProgramData", tableName="program_data",
                 tableConstraint = "FOREIGN KEY(programId) references programs(_id) ON DELETE CASCADE")

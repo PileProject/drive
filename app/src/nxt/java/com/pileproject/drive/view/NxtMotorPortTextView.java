@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,6 +26,9 @@ import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.LEFT_
 import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.NONE;
 import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.RIGHT_MOTOR;
 
+/**
+ * An implementation of {@link PortTextViewBase} which represents the port of motors of LEGO MINDSTORMS NXT.
+ */
 public class NxtMotorPortTextView extends PortTextViewBase {
 
     public NxtMotorPortTextView(Context context, AttributeSet attrs) {

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,7 +25,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A manager of BlockSpaceLayout.
+ * A base manager class of {@link BlockSpaceLayout}. This class is responsible for some features of the layout such
+ * as program loading.
  */
 public abstract class BlockSpaceManagerBase {
     protected BlockSpaceLayout mLayout;
@@ -40,25 +41,27 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * Save the current program for execution.
+     * Saves the current program for execution.
      */
     public void saveExecutionProgram() {
         mManager.saveExecutionProgram(mLayout);
     }
 
     /**
-     * Save the current program as a sample program.
+     * Saves the current program as a sample program.
      * NOTE: if a name which is already saved is selected, it will be overwritten.
-     * @param String a program name
+     *
+     * @param programName a name of a sample program
      */
     public void saveSampleProgram(String programName) {
         mManager.saveSampleProgram(programName, mLayout);
     }
 
     /**
-     * Save the current program as a user program.
+     * Saves the current program as a user program.
      * NOTE: the name of new program will be automatically generated.
-     * @return the new program name
+     *
+     * @return a name of a user program
      */
     public String saveUserProgram() {
         String newProgramName;
@@ -82,30 +85,33 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * Load a program for execution.
+     * Loads a program for execution.
      */
     public void loadExecutionProgram() {
         placeBlocks(mManager.loadExecutionProgram());
     }
 
     /**
-     * Load a sample program.
-     * @param String a program name
+     * Loads a sample program.
+     *
+     * @param programName the name of the sample program to be loaded
      */
     public void loadSampleProgram(String programName) {
         placeBlocks(mManager.loadSampleProgram(programName));
     }
 
     /**
-     * Load a user program.
-     * @param String a program name
+     * Loads a user program.
+     *
+     * @param programName the name of the user program to be loaded
      */
     public void loadUserProgram(String programName) {
         placeBlocks(mManager.loadUserProgram(programName));
     }
 
     /**
-     * Load sample program names.
+     * Loads names of sample programs.
+     *
      * @return a list of names
      */
     public ArrayList<String> loadSampleProgramNames() {
@@ -113,7 +119,8 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * Load user program names.
+     * Load names of user programs.
+     *
      * @return a list of names
      */
     public ArrayList<String> loadUserProgramNames() {
@@ -121,10 +128,10 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * Add all blocks in this layout.
-     * Please override this method to add specific attributes for blocks.
-     * e.g., can move or not
-     * @param blocks
+     * Adds all blocks into the layout that is managed by this class.
+     * Please override this method to add some attributes (e.g., can be moved) to blocks.
+     *
+     * @param blocks the blocks to be added
      */
     public abstract void addBlocks(List<BlockBase> blocks);
 
@@ -146,10 +153,12 @@ public abstract class BlockSpaceManagerBase {
     }
 
     /**
-     * Delete all blocks.
+     * Deletes all blocks on the layout that is managed by this class. This method also deletes the previous execution
+     * program.
      */
     public void deleteAllBlocks() {
         mLayout.removeAllViews();
+
         // remove the saved execution program
         mManager.deleteExecutionProgram();
     }

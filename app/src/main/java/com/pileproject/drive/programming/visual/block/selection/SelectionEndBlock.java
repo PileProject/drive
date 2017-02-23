@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,7 +23,7 @@ import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * This block is the end of if commands
+ * A block that represents the end of selection operations.
  *
  */
 public class SelectionEndBlock extends BlockBase {
