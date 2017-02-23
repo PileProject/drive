@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ import static com.pileproject.drive.programming.visual.block.BlockCategory.SELEC
 import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Factory that creates blocks.
+ * A factory class that creates {@link BlockBase}s.
  */
 public class BlockFactory {
 
@@ -82,13 +82,12 @@ public class BlockFactory {
      * Type of block can be specified with @{howToMake}, which also determines the number
      * of blocks this function returns.
      *
-     * @param blockCategory type of block. must be one of {@link BlockCategory#SEQUENCE},
-     *                  {@link BlockCategory#REPETITION}, or {@link BlockCategory#SELECTION}.
-     * @param blockName class name of block to be created
-     * @return list of blocks. the first element of the list is end block
+     * @param blockCategory the type of block which must be one of {@link BlockCategory#SEQUENCE},
+     *                  {@link BlockCategory#REPETITION}, or {@link BlockCategory#SELECTION}
+     * @param blockName the class name of the block to be created
+     * @return the list of blocks whose first element is an if-end block
      *                  if block type is {@link BlockCategory#SELECTION} or
-     *                  {@link BlockCategory#REPETITION}.
-     *
+     *                  {@link BlockCategory#REPETITION}
      * @exception RuntimeException if <code>blockName</code> is not supported block class name
      * @exception IllegalArgumentException if <code>blockCategory</code> is none of the values in {@link BlockCategory}
      */
@@ -117,8 +116,8 @@ public class BlockFactory {
     /**
      * Returns a block instance whose class is <code>blockName</code>.
      *
-     * @param blockName class name of the block to be created.
-     * @return a block instance.
+     * @param blockName the class name of the block to be created
+     * @return a {@link BlockBase} instance
      * @exception RuntimeException if <code>blockName</code> is not supported block class name
      */
     @NonNull

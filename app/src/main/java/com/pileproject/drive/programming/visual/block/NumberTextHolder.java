@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,6 +16,7 @@
 package com.pileproject.drive.programming.visual.block;
 
 import android.view.View;
+import android.widget.TextView;
 
 import com.pileproject.drive.util.development.Unit;
 import com.pileproject.drive.util.math.Range;
@@ -23,60 +24,75 @@ import com.pileproject.drive.util.math.Range;
 import java.math.BigDecimal;
 
 /**
- * Interface for block has TextView
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 4-June-2013
+ * An interface for blocks which have {@link TextView}.
  */
 public interface NumberTextHolder {
     /**
-     * Get value of the TextView
+     * Gets value of the TextView.
+     *
+     * @return the {@link BigDecimal}
      */
     BigDecimal getValue();
 
     /**
-     * Set value to TextView
+     * Sets the value to the {@link TextView}.
+     *
+     * @param value a value to be set on the {@link TextView}
      */
     void setValue(BigDecimal value);
 
     /**
      * Represents the precision of the value this class holds in 10-base.
-     * Precision of a value means the length of decimal digits
-     * e.g., if returns 3, the value can be set at 0.001-basis
+     * Precision of a value means the length of decimal digits.
+     * For example, if returns 3, the value can be set at 0.001-basis.
+     *
+     * @return the precision of the value
      */
     int getPrecision();
 
     /**
-     * Returns the range which users can set the value within
-     * @return
+     * Returns the range which users can set the value within.
+     *
+     * @return the {@link Range}
      */
     Range<BigDecimal> getRange();
 
     /**
-     * Returns unit of the value
+     * Returns unit of the value.
+     *
+     * @return the {@link Unit}
      */
     Unit getUnit();
 
     /**
-     * Enable the TextView in this holder if <code>enable</code> is <code>true</code>.
-     * Disable the TextView in this holder if <code>enable</code> is <code>false</code>
+     * Enables the {@link TextView} in this holder if <code>enable</code> is <code>true</code>.
+     * Disables the {@link TextView} in this holder if <code>enable</code> is <code>false</code>.
+     *
+     * @param enabled allow to edit the {@link TextView} (<code>true</code>) or not (<code>false</code>)
      */
     void enableTextView(boolean enabled);
 
     /**
-     * Set {@link android.view.View.OnLongClickListener} to the TextView
+     * Sets {@link android.view.View.OnLongClickListener} to the {@link TextView}.
+     *
+     * @param listener
+     * a {@link android.view.View.OnLongClickListener} to be called when a user edits the value on {@link TextView}.
      */
     void setOnLongClickTextViewListener(View.OnLongClickListener listener);
 
     /**
      * Returns a string which represents the value in this view.
-     * The string is formatted in {@link java.util.Locale#US} ("." means the radix point)
+     * The string is formatted in {@link java.util.Locale#US} ("." means the radix point).
+     *
+     * @return a formatted string
      */
     String getValueAsString();
 
     /**
-     * Set the value as String.
-     * The string should be formateed as {@link java.util.Locale#US}
+     * Sets the value as String.
+     * The string should be formatted as {@link java.util.Locale#US}.
+     *
+     * @param value a formatted string
      */
     void setValueAsString(String value);
 }

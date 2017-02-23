@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -18,8 +18,6 @@ package com.pileproject.drive.util.bluetooth;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 
-import com.pileproject.drivecommand.machine.MachineBase;
-
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -30,7 +28,7 @@ import rx.Subscriber;
 import rx.schedulers.Schedulers;
 
 /**
- * A class which produces Observable of RxJava.
+ * A class which produces {@link Observable} of RxJava.
  * This class is for handling bluetooth connection events.
  */
 public class RxBluetoothConnector {
@@ -41,13 +39,14 @@ public class RxBluetoothConnector {
     }
 
     /**
-     * Create {@link Observable} which will produce a stream
+     * Creates {@link Observable} which will produce a stream
      * for connecting to the given bluetooth device.
      * The connection will be cut just after the connection established, since
      * the paring process can be done in that manner.
      * This function is run on a new thread.
-     * @param bluetoothDevice A bluetooth device to be connected.
-     * @return Observable with a bluetooth device stream
+     *
+     * @param bluetoothDevice a bluetooth device to be connected
+     * @return an {@link Observable} with a bluetooth device stream
      */
     public static Observable<BluetoothDevice> pairing(final BluetoothDevice bluetoothDevice) {
         return Observable.create(new Observable.OnSubscribe<BluetoothDevice>() {
@@ -68,11 +67,12 @@ public class RxBluetoothConnector {
     }
 
     /**
-     * Create {@link Observable} which will produce a stream
+     * Creates {@link Observable} which will produce a stream
      * for connecting to the given bluetooth device.
      * This function is run on a new thread.
-     * @param bluetoothDevice A bluetooth device to be connected.
-     * @return Observable with a bluetooth socket stream
+     *
+     * @param bluetoothDevice a bluetooth device to be connected
+     * @return an {@link Observable} with a bluetooth socket stream
      */
     public static Observable<BluetoothSocket> connect(final BluetoothDevice bluetoothDevice) {
         return Observable.create(new Observable.OnSubscribe<BluetoothSocket>() {

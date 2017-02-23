@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -25,13 +25,16 @@ import android.support.annotation.NonNull;
 import rx.Observable;
 
 /**
- * Wrapper class of {@link RxBroadcastReceiver} for handling bluetooth events
+ * A wrapper class of {@link RxBroadcastReceiver} for handling bluetooth events.
  */
 public class RxBluetoothBroadcastReceiver {
 
     /**
-     * Create {@link Observable} which will produce a stream
-     * when BluetoothDevice.ACTION_FOUND has been issued.
+     * Creates {@link Observable} which will produce a stream
+     * when {@link BluetoothDevice#ACTION_FOUND} has been issued.
+     *
+     * @param context the context of the application
+     * @return an {@link Observable}
      */
     @NonNull
     public static Observable<Intent> bluetoothDeviceFound(final Context context) {
@@ -42,8 +45,11 @@ public class RxBluetoothBroadcastReceiver {
     }
 
     /**
-     * Create {@link Observable} which will produce a stream
-     * when BluetoothAdapter.ACTION_DISCOVERY_FINISHED has been issued.
+     * Creates {@link Observable} which will produce a stream
+     * when {@link BluetoothAdapter#ACTION_DISCOVERY_FINISHED} has been issued.
+     *
+     * @param context the context of the application
+     * @return an {@link Observable}
      */
     @NonNull
     public static Observable<Intent> bluetoothDiscoveryFinished(final Context context) {

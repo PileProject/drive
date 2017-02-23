@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,11 +26,13 @@ import com.pileproject.drive.R;
 
 import java.util.List;
 
+/**
+ * A list view adapter class for {@link ProgramData}.
+ */
 public class ProgramDataAdapter extends ArrayAdapter<ProgramData> {
     private LayoutInflater mLayoutInflater;
 
-    public ProgramDataAdapter(
-            Context context, int resourceId, List<ProgramData> objects) {
+    public ProgramDataAdapter(Context context, int resourceId, List<ProgramData> objects) {
         super(context, resourceId, objects);
         mLayoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }

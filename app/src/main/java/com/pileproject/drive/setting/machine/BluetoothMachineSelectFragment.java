@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -52,10 +52,8 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * Fragment for selecting device
- *
- * @author yusaku
- * @version 1.0 11-Oct-2013
+ * A fragment for selecting the default Bluetooth device. This fragment will be used by
+ * {@link BluetoothMachineSelectPreference}.
  */
 public class BluetoothMachineSelectFragment extends DialogFragment implements AlertDialogFragment.EventListener {
 
@@ -66,10 +64,10 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
 
     private CompositeSubscription mSubscriptions = new CompositeSubscription();
 
-    // fields for new device list
+    // a field for a new device list
     private ListView mNewDevicesListView;
 
-    // fields for bonded device list
+    // a field for a bonded device list
     private ListView mPairedDevicesListView;
 
     @Override
@@ -99,9 +97,9 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
 
         resizeDialog();
 
-        mPairedDevicesListView.setAdapter(new BluetoothMachineListAdapter(
-                getActivity(), R.layout.view_bluetooth_machine_list, new
-                LinkedList<BluetoothDevice>()));
+        mPairedDevicesListView.setAdapter(new BluetoothMachineListAdapter(getActivity(),
+                                                                          R.layout.view_bluetooth_machine_list,
+                                                                          new LinkedList<BluetoothDevice>()));
         mPairedDevicesListView.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         mPairedDevicesListView.setOnItemClickListener(new OnItemClickListener() {
             @Override
@@ -112,14 +110,17 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
 
                 MachinePreferences.get(getActivity()).setMacAddress(bluetoothDevice.getAddress());
 
-                Toast.makeText(getActivity(), getString(R.string.setting_bluetoothMachineSelect_toast_setDefault) +
-                        "\n" + bluetoothDevice.getName(), Toast.LENGTH_LONG).show();
+                Toast.makeText(getActivity(),
+                               getString(R.string.setting_bluetoothMachineSelect_toast_setDefault) + "\n"
+                                       + bluetoothDevice.getName(),
+                               Toast.LENGTH_LONG).show();
             }
         });
 
 
         mNewDevicesListView.setAdapter(new BluetoothMachineListAdapter(getActivity(),
-                R.layout.view_bluetooth_machine_list, new LinkedList<BluetoothDevice>()));
+                                                                       R.layout.view_bluetooth_machine_list,
+                                                                       new LinkedList<BluetoothDevice>()));
         mNewDevicesListView.setOnItemClickListener(new OnItemClickListener() {
 
             @Override
@@ -154,7 +155,8 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
                                         BluetoothAdapter.getDefaultAdapter().startDiscovery();
 
                                         Toast.makeText(getActivity(),
-                                                getString(R.string.setting_bluetoothMachineSelect_toast_cannotConnect, bluetoothDeviceName),
+                                                getString(R.string.setting_bluetoothMachineSelect_toast_cannotConnect,
+                                                          bluetoothDeviceName),
                                                 Toast.LENGTH_LONG).show();
 
                                         ProgressDialogFragment.dismissDialog();
@@ -165,7 +167,8 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
                                         MachinePreferences.get(getActivity()).setMacAddress(bluetoothDevice.getAddress());
 
                                         Toast.makeText(getActivity(),
-                                                getString(R.string.setting_bluetoothMachineSelect_toast_setDefault, bluetoothDeviceName),
+                                                getString(R.string.setting_bluetoothMachineSelect_toast_setDefault,
+                                                          bluetoothDeviceName),
                                                 Toast.LENGTH_LONG).show();
 
                                         BluetoothMachineListAdapter adapter
@@ -179,7 +182,7 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
 
     /**
      * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
-     * Otherwise, the dialog size will never be changed
+     * Otherwise, the dialog size will never be changed.
      */
     private void resizeDialog() {
         Dialog dialog = getDialog();
@@ -211,7 +214,7 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
             return;
         }
 
-        // TODO: handle duplicate calling
+        // TODO: handle duplicate callings
         // typically occurred in the following user interaction
         //   1. the user press ok button
         //      1.1 bluetooth permission window will be appeared
@@ -245,8 +248,8 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
             BluetoothAdapter.getDefaultAdapter().cancelDiscovery();
         }
 
-        // onPause is called when the bluetooth pairing dialog appears.
-        // so mSubscription.unsubscribe should not be called in here.
+        // onPause is called when the bluetooth pairing dialog appears
+        // so mSubscription.unsubscribe should not be called in here
     }
 
     @Override
@@ -286,13 +289,15 @@ public class BluetoothMachineSelectFragment extends DialogFragment implements Al
 
                             @Override
                             public void onNext(Intent intent) {
-                                BluetoothDevice bluetoothDevice = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                                BluetoothDevice bluetoothDevice
+                                        = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                                 if (bluetoothDevice.getBondState() == BluetoothDevice.BOND_BONDED) {
                                     return;
                                 }
 
-                                BluetoothMachineListAdapter adapter = (BluetoothMachineListAdapter) mNewDevicesListView.getAdapter();
+                                BluetoothMachineListAdapter adapter
+                                        = (BluetoothMachineListAdapter) mNewDevicesListView.getAdapter();
 
                                 if (adapter.contains(bluetoothDevice)) {
                                     return;

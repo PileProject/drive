@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,10 +24,8 @@ import com.pileproject.drive.execution.ExecutionCondition;
 import com.pileproject.drive.machine.MachineController;
 
 /**
- * BaseBlock
+ * A base class of all blocks. This class is a custom view extended from {@link RelativeLayout}.
  *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
  */
 public abstract class BlockBase extends RelativeLayout {
 
@@ -38,20 +36,19 @@ public abstract class BlockBase extends RelativeLayout {
     }
 
     /**
-     * Returns kind of this block.
+     * Returns the kind of this block.
      *
      * @return {@link BlockKind}
      */
     public abstract BlockKind getKind();
 
     /**
-     * Action that this block does while the execution of program.
-     * Return delay that occurs after this action
-     * on the millisecond time scale.
+     * Does an action that this block does while the execution of program and
+     * returns delay that occurs after this action in millisecond.
      *
      * @param controller Controller of Device
      * @param condition  Condition of the executing program
-     * @return
+     * @return the delay after the action of this block in millisecond
      */
     public abstract int action(MachineController controller, ExecutionCondition condition);
 

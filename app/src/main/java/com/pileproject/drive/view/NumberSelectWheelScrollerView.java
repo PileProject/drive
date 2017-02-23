@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.pileproject.drive.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.Gravity;
 import android.widget.FrameLayout;
@@ -30,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A view which has a set of NumberPickers to select multiple-digits value.
+ * A view which has a set of {@link NumberPicker}s to select multiple-digits value.
  */
 public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     private List<NumberPicker> mNumbers;
@@ -60,14 +61,14 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     };
 
     /**
-     * Constructor.
-     * @param context    context
-     * @param value      initial value
-     * @param range      BigDecimal range. users can select within this range
-     * @param precision  precision of the value
-     * @param digitCount number of digits this view has
+     * @param context the context of the {@link Activity} which shows this view
+     * @param value the initial value on the view
+     * @param range a {@link BigDecimal} range where users can select the value
+     * @param precision the precision of the value
+     * @param digitCount the number of digits this view has
      */
-    public NumberSelectWheelScrollerView(Context context, BigDecimal value, Range<BigDecimal> range, int precision, int digitCount) {
+    public NumberSelectWheelScrollerView(Context context, BigDecimal value, Range<BigDecimal> range,
+                                         int precision, int digitCount) {
         super(context);
 
         mPrecision = precision;
@@ -115,14 +116,14 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * Change the number of this view to maximum value.
+     * Changes the number of this view to maximum value.
      */
     public void changeToMax() {
         setScaledValue(mScaledMaximum);
     }
 
     /**
-     * Change the number of this view to minimum value.
+     * Changes the number of this view to minimum value.
      */
     public void changeToMin() {
         setScaledValue(mScaledMinimum);
@@ -164,7 +165,8 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * Carry up count.
+     * Carries up the count.
+     *
      * @param index the index of the target number
      */
     @Deprecated
@@ -184,7 +186,8 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * Carry down count.
+     * Carries down the count.
+     *
      * @param index the index of the target number
      */
     @Deprecated

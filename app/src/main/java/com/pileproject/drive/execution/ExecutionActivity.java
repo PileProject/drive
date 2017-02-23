@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import com.pileproject.drive.comm.RxMachineConnector;
 import com.pileproject.drive.database.ProgramDataManager;
 import com.pileproject.drive.machine.MachineProvider;
 import com.pileproject.drive.util.bluetooth.BluetoothUtil;
-import com.pileproject.drive.util.development.DeployUtils;
+import com.pileproject.drive.util.development.DeployUtil;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 import com.pileproject.drive.util.fragment.ProgressDialogFragment;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
@@ -53,7 +53,7 @@ import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
 
 /**
- * An Activity that deals with executions of programs.
+ * An Activity class that deals with executions of programs.
  */
 public class ExecutionActivity extends AppCompatActivity implements AlertDialogFragment.EventListener {
 
@@ -78,10 +78,10 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
     public MachineProvider mMachineProvider;
 
     /**
-     * Returns an intent for invoking {@link ExecutionActivity}.
+     * Returns an {@link Intent} for invoking {@link ExecutionActivity}.
      *
-     * @param context context to be passed to the constructor of {@link Intent}.
-     * @return intent
+     * @param context the context to be passed to the constructor of {@link Intent}
+     * @return an {@link Intent}
      */
     public static Intent createIntent(Context context) {
         return new Intent(context, ExecutionActivity.class);
@@ -126,7 +126,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
         super.onStart();
 
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
-        if (!DeployUtils.isOnEmulator() && !BluetoothUtil.hasBluetoothFunction()) {
+        if (!DeployUtil.isOnEmulator() && !BluetoothUtil.hasBluetoothFunction()) {
             new AlertDialogFragment.Builder(this)
                     .setRequestCode(DIALOG_REQUEST_CODE_BLUETOOTH)
                     .setTitle(R.string.error)
@@ -138,7 +138,7 @@ public class ExecutionActivity extends AppCompatActivity implements AlertDialogF
             return;
         }
 
-        if (!DeployUtils.isOnEmulator() && !BluetoothUtil.isBluetoothEnabled()) {
+        if (!DeployUtil.isOnEmulator() && !BluetoothUtil.isBluetoothEnabled()) {
             startActivityForResult(new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE), REQUEST_ENABLE_BT);
             return;
         }

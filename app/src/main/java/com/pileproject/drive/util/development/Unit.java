@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,9 +24,7 @@ import com.pileproject.drive.util.string.NumberUtil;
 import java.util.Locale;
 
 /**
- * enumeration of unit for number selecting on blocks
- *
- * @author yusaku
+ * An enumeration of unit for number selecting on blocks.
  */
 public class Unit {
 
@@ -41,28 +39,28 @@ public class Unit {
     }
 
     /**
-     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * Decorates numeric value with the {@link Unit} string with <code>precision</code>.
      * This method takes locales into account and uses default locale by calling
      * {@link Locale#getDefault()}.
      *
-     * @param value value to be decorated
-     * @param precision precision of the value in the return string.
-     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
-     * @return decorated string in default locale and with given precision.
+     * @param value a value to be decorated
+     * @param precision the precision of the value in the return string
+     * @param <T> the type parameter for <code>value</code>, which extends {@link Number}
+     * @return a decorated string in default locale and with given precision
      */
     public <T extends Number> String decorateValue(T value, int precision) {
         return decorateValue(Locale.getDefault(), value, precision);
     }
 
     /**
-     * Decorates numeric value with the Unit string with <code>precision</code>.
+     * Decorates numeric value with the {@link Unit} string with <code>precision</code>.
      * This method takes locales into account.
      *
      * @param locale the locale in which the value decorated
-     * @param value value to be decorated
-     * @param precision precision of the value in the return string.
-     * @param <T> type parameter for <code>value</code>, which extends {@link Number}
-     * @return decorated string in default locale and with given precision.
+     * @param value a value to be decorated
+     * @param precision the precision of the value in the return string
+     * @param <T> the type parameter for <code>value</code>, which extends {@link Number}
+     * @return a decorated string in default locale and with given precision
      */
     public <T extends Number> String decorateValue(Locale locale, T value, int precision) {
 

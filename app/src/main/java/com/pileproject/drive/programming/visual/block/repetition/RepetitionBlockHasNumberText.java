@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -26,15 +26,13 @@ import com.pileproject.drive.programming.visual.block.NumberTextViewDelegate;
 
 import java.math.BigDecimal;
 
+/**
+ * A {@link RepetitionBlock} that has a {@link TextView} which will be used to input numbers such as seconds.
+ */
 public abstract class RepetitionBlockHasNumberText extends RepetitionBlock implements NumberTextHolder {
 
     private final NumberTextViewDelegate mDelegate;
 
-    /**
-     * Constructor
-     *
-     * @param context The context of activity that creates this view
-     */
     public RepetitionBlockHasNumberText(Context context, @LayoutRes int layoutRes, @IdRes int textViewId) {
         super(context, layoutRes);
 

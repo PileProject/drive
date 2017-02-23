@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -60,57 +60,64 @@ public class ExecutionCondition {
     }
 
     /**
-     * Check the program count is over than the program size or not.
-     * @return finished (true) or not (false)
+     * Checks if the program count is over than the program size or not.
+     *
+     * @return finished (<code>true</code>) or not (<code>false</code>)
      */
     public boolean hasProgramFinished() {
         return mProgramCount >= mBlocks.size();
     }
 
     /**
-     * Get the specified block with a selection result (it has index as a member).
-     * @param result SelectionResult instance that has the index of an if-block
-     * @return
-     * @throws IndexOutOfBoundsException
+     * Gets the specified block with the specified selection result.
+     *
+     * @param result a {@link SelectionResult} instance that has the index of an if-block
+     * @return a {@link BlockBase}
+     * @throws IndexOutOfBoundsException if the {@link SelectionResult} has the index out of bounds
      */
     public BlockBase getNearestSelectionBlock(SelectionResult result) throws IndexOutOfBoundsException {
         return mBlocks.get(result.index);
     }
 
     /**
-     * Get the current block.
-     * @return
+     * Gets the current block.
+     *
+     * @return the current {@link BlockBase}
      * @throws IndexOutOfBoundsException
+     *      if the program already has been over (thus, the program count is out of bounds).
      */
     public BlockBase getCurrentBlock() throws IndexOutOfBoundsException {
         return mBlocks.get(mProgramCount);
     }
 
     /**
-     * Increment the program count.
+     * Increments the program count.
      */
     public void incrementProgramCount() {
         mProgramCount++;
     }
 
     /**
-     * Decrement the program count.
+     * Decrements the program count.
      */
     public void decrementProgramCount() {
         mProgramCount--;
     }
 
     /**
-     * Get the current program count.
-     * @return program count
+     * Gets the current program count.
+     *
+     * @return the current program count
      */
     public int getProgramCount() {
         return mProgramCount;
     }
 
     /**
-     * Push the pair of (the index of the selection block, the result: true or false) to ifStack
-     * @param result the result of a selection command
+     * Pushes the pair of (the index of the selection block, the result: <code>true</code> or
+     * <code>false</code>false) to the if-statements stack.
+     *
+     * @param result the result of a selection command (<code>true</code> or <code>false</code>)
      */
     public void pushSelectionResult(boolean result) {
         SelectionResult status = new SelectionResult(mProgramCount, result);
@@ -118,32 +125,38 @@ public class ExecutionCondition {
     }
 
     /**
-     * Pop and throw away the latest selection result.
-     * @return
+     * Pops and throws away the latest selection result.
+     *
+     * @return a {@link SelectionResult}
      */
     public SelectionResult popSelectionResult() {
         return mIfStack.pop();
     }
 
     /**
-     * Peek the latest selection result.
-     * @return
+     * Peeks the latest selection result.
+     *
+     * @return a {@link SelectionResult}
      */
     public SelectionResult peekSelectionResult() {
         return mIfStack.peek();
     }
 
     /**
-     * Get the size of selection results.
-     * @return
+     * Gets the size of selection results.
+     *
+     * @return the size
      */
     public int sizeOfSelectionResult() {
         return mIfStack.size();
     }
 
     /**
-     * Push the index of the beginning block of the current loop to a stack.
-     * @param index the index of the beginning block
+     * Pushes the index of the beginning block of the current loop to a loop-statement stack. This will be used by
+     * {@link com.pileproject.drive.programming.visual.block.repetition.LoopBlock} or
+     * {@link com.pileproject.drive.programming.visual.block.repetition.NTimesBlock}.
+     *
+     * @param index the index of the beginning loop block
      */
     private void pushBeginningOfLoop(int index) {
         mWhileStack.push(index);
@@ -152,7 +165,7 @@ public class ExecutionCondition {
     }
 
     /**
-     * Enters infinite loop.
+     * Enters an infinite loop.
      */
     public void enterInfiniteLoop() {
         int index = getProgramCount();
@@ -160,18 +173,19 @@ public class ExecutionCondition {
     }
 
     /**
-     * Enters N-times loop.
-     * @param count number of times this loop repeats.
+     * Enters an N-times loop.
+     *
+     * @param count the number of times this loop should be repeated
      */
     public void enterNTimesLoop(int count) {
         int index = getProgramCount();
-        for (int i = 1; i < count; i++) {
+
+        for (int i = 1; i < count; i++)
             pushBeginningOfLoop(index);
-        }
     }
 
     /**
-     * Reach the end of loop.
+     * Reaches the end of loop. This method deals with the finalizing process of loops.
      */
     public void reachEndOfLoop() {
         if (mWhileStack.isEmpty()) return ;
@@ -194,7 +208,7 @@ public class ExecutionCondition {
     }
 
     /**
-     * Break the current loop.
+     * Breaks out the current loop.
      */
     public void breakLoop() {
         if (mWhileStack.isEmpty()) return;

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.pileproject.drive.view;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.SeekBar;
@@ -59,12 +60,11 @@ public class NumberSelectSeekBarView extends NumberSelectViewBase {
     };
 
     /**
-     * Constructor.
-     * @param context   context
-     * @param value     initial value
-     * @param range     BigDecimal range. users can select within this range
-     * @param precision precision of the value
-     * @param unit      unit of the value in this view
+     * @param context the context of the {@link Activity} which shows this view
+     * @param value the initial value on the view
+     * @param range a {@link BigDecimal} range where users can select the value
+     * @param precision the precision of the value
+     * @param unit the unit of the value in this view
      */
     public NumberSelectSeekBarView(Context context, BigDecimal value, Range<BigDecimal> range,
                                    int precision, Unit unit) {

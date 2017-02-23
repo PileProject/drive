@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,7 +19,7 @@ import android.app.Application;
 import android.test.ApplicationTestCase;
 
 /**
- * <a href="http://d.android.com/tools/testing/testing_android.html">Testing
+ * @see <a href="http://d.android.com/tools/testing/testing_android.html">Testing
  * Fundamentals</a>
  */
 public class ApplicationTest extends ApplicationTestCase<Application> {

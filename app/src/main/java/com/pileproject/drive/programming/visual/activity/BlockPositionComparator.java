@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,34 +21,36 @@ import java.util.Comparator;
 
 
 /**
- * For sorting blocks
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A comparator that sorts {@link BlockBase}s according to the position of them. The position (x, y) is reduced to a
+ * single value by
  */
 public class BlockPositionComparator implements Comparator<BlockBase> {
     public static final int ASC = 1; // ascending order
     public static final int DESC = -1; // descending order
     private final int mSort; // sort order
+    private static final int OFFSET = 10000;
 
     /**
-     * Constructor
-     *
-     * Default sort order is ascending
+     * The default sort order is ascending
      */
     public BlockPositionComparator() {
         mSort = ASC;
     }
 
     /**
-     * Constructor (Select sort order)
+     * A constructor with an argument to specify the sort order.
      *
-     * @param sort Sort order
-     *             ascending order：ViewComparator.ASC
-     *             descending order：ViewComparator.DESC
+     * @param sort the sort order which is one of the following options
+     *             ascending: {@link BlockPositionComparator#ASC}
+     *             descending: {@link BlockPositionComparator#DESC}
      */
     public BlockPositionComparator(int sort) {
         mSort = sort;
+    }
+
+    private int reducePosition(BlockBase a) {
+        // NOTE: the priority of the y position is higher than that of the x position
+        return a.getTop() * OFFSET + a.getLeft();
     }
 
     @Override
@@ -61,8 +63,7 @@ public class BlockPositionComparator implements Comparator<BlockBase> {
             return -1 * mSort; // a < b
         }
 
-        int result = (a.getTop() * 10000 + a.getLeft()) - (b.getTop() * 10000 + b.getLeft());
-
+        int result = reducePosition(a) - reducePosition(b);
         return result * mSort;
     }
 }

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -28,6 +28,9 @@ import android.webkit.WebView;
 
 import com.pileproject.drive.R;
 
+/**
+ * A fragment for showing the legal notice. This fragment will be used by {@link LegalNoticePreference}.
+ */
 public class LegalNoticeFragment extends DialogFragment {
     private WebView mLegalNoticePage;
 
@@ -61,7 +64,7 @@ public class LegalNoticeFragment extends DialogFragment {
 
     /**
      * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
-     * Otherwise, the dialog size will never be changed
+     * Otherwise, the dialog size will never be changed.
      */
     private void resizeDialog() {
         Dialog dialog = getDialog();

@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,6 +15,7 @@
  */
 package com.pileproject.drive.setting.machine;
 
+import android.app.Activity;
 import android.bluetooth.BluetoothDevice;
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -28,27 +29,26 @@ import com.pileproject.drive.R;
 import java.util.List;
 
 /**
- * ListView adapter class for custom view
- *
- * @author yusaku
- * @version 1.0 4-June-2013
+ * A list view adapter class for {@link BluetoothDevice}.
  */
 public class BluetoothMachineListAdapter extends ArrayAdapter<BluetoothDevice> {
 
-    private Context mContext;
     private int mTextViewResourceId = 0;
     private List<BluetoothDevice> mDevices;
     private LayoutInflater mInflater;
 
-    public BluetoothMachineListAdapter(
-            Context context, int textViewResourceId, List<BluetoothDevice> devices) {
+    /**
+     * @param context the context of the {@link Activity} that uses this adapter
+     * @param textViewResourceId the resource id of {@link TextView} of the list
+     * @param devices the list of Bluetooth devices
+     */
+    public BluetoothMachineListAdapter(Context context, int textViewResourceId, List<BluetoothDevice> devices) {
         super(context, textViewResourceId, devices);
 
-        mContext = context;
         mTextViewResourceId = textViewResourceId;
         mDevices = devices;
 
-        mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        mInflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @Override
@@ -69,6 +69,12 @@ public class BluetoothMachineListAdapter extends ArrayAdapter<BluetoothDevice> {
         return view;
     }
 
+    /**
+     * Checks if the list contains the device or not.
+     *
+     * @param device the target device
+     * @return contains (<code>true</code>) or not (<code>false</code>)
+     */
     public boolean contains(BluetoothDevice device) {
         return mDevices.contains(device);
     }

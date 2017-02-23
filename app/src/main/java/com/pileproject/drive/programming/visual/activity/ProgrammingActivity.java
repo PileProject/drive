@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -39,17 +39,14 @@ import com.pileproject.drive.programming.visual.block.BlockFactory;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
 import com.pileproject.drive.programming.visual.layout.ProgrammingSpaceManager;
 import com.pileproject.drive.setting.SettingActivity;
-import com.pileproject.drive.util.development.DeployUtils;
+import com.pileproject.drive.util.development.DeployUtil;
 import com.pileproject.drive.util.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Users create programs on this Activity
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * An activity where Users create programs.
  */
 public class ProgrammingActivity extends AppCompatActivity implements AlertDialogFragment.EventListener {
 
@@ -66,10 +63,10 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
     private ProgrammingSpaceManager mSpaceManager;
 
     /**
-     * Returns an intent for invoking {@link ProgrammingActivity}.
+     * Returns an {@link Intent} for invoking {@link ProgrammingActivity}.
      *
      * @param context context to be passed to the constructor of {@link Intent}.
-     * @return intent
+     * @return an {@link Intent}
      */
     public static Intent createIntent(Context context) {
         return new Intent(context, ProgrammingActivity.class);
@@ -102,7 +99,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
-        if (address != null || DeployUtils.isOnEmulator()) {
+        if (address != null || DeployUtil.isOnEmulator()) {
             Intent intent = ExecutionActivity.createIntent(getApplicationContext());
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;

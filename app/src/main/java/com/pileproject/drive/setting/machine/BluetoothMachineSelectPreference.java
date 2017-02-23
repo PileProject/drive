@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,9 +23,13 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
+/**
+ * A preference class for selecting the default Bluetooth machine. This class creates
+ * {@link BluetoothMachineSelectFragment}.
+ */
 public class BluetoothMachineSelectPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
-    private static final String FRAGMENT_TAG = "tag";
+    private static final String FRAGMENT_TAG = "bluetooth_machine_select_preference";
 
     public BluetoothMachineSelectPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);

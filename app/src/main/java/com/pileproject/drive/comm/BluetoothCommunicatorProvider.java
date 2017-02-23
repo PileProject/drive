@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,6 +22,10 @@ import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.preferences.MachinePreferences;
 import com.pileproject.drivecommand.model.com.ICommunicator;
 
+/**
+ * An implementation of {@link CommunicatorProvider} that provides a concrete {@link ICommunicator} for Bluetooth
+ * connections.
+ */
 public class BluetoothCommunicatorProvider implements CommunicatorProvider {
 
     private static final BluetoothCommunicatorProvider INSTANCE = new BluetoothCommunicatorProvider();

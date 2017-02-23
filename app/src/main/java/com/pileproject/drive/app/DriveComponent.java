@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -23,6 +23,11 @@ import javax.inject.Singleton;
 
 import dagger.Component;
 
+/**
+ * A component class that deals with build-flavor variants. We use this class following the Dagger instruction.
+ *
+ * @see <a href="https://google.github.io/dagger/">Dagger</a>
+ */
 @Singleton @Component(modules = {FlavorModule.class})
 public interface DriveComponent {
 

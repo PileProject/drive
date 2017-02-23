@@ -1,5 +1,5 @@
 /**
- * Copyright (C) 2011-2016 PILE Project, Inc. <dev@pileproject.com>
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -37,7 +37,7 @@ import static com.pileproject.drive.machine.CarControllerBase.MotorProperty.INIT
 /**
  * This is a base machine controller which controls a car-formed machine (e.g., Nxt/Ev3/Pile robot). A car-formed
  * machine is a machine which has {@link Motor}s (left/right) and arbitrary number of other devices (e.g.,
- * {@link Buzzer}, {@link TouchSensor}). Therefore, the information (methods/properties) related to such devices (e.g.,
+ * {@link Buzzer}, {@link TouchSensor}). The information (methods/properties) related to such devices other than motors
  * should be treated in child controllers like {@link NxtCarController}.
  *
  * This base class specifies the interface to control a car-formed machine as methods which are the union of
@@ -48,10 +48,10 @@ import static com.pileproject.drive.machine.CarControllerBase.MotorProperty.INIT
  *
  * Because a car-formed machine must have two motors (left/right), this base class has the properties of these
  * motors (see: {@link CarControllerBase.MotorProperty}). However, as mentioned above, the information of other
- * devices should been treated in child controllers. For example, we keep the sensor properties of Nxt as
+ * devices should be treated in child controllers. For example, we keep the sensor properties of Nxt as
  * {@link NxtCarController.SensorProperty}.
  *
- * To provide a hint to users, please override {@see #getAllInputDevices()}, {@see #getAllOutputDevices()} in your
+ * To provide a hint to users, please override {@link #getAllInputDevices()}, {@link #getAllOutputDevices()} in your
  * child classes.
  */
 public abstract class CarControllerBase implements MachineController {
@@ -141,7 +141,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the color in RGB from a {@link ColorSensor}.
      *
-     * @return color in RGB (<code>float[0:2] = {R, G, B}</code>)
+     * @return the color in RGB (<code>float[0:2] = {R, G, B}</code>)
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -152,7 +152,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the light strength from a {@link ColorSensor}.
      *
-     * @return light strength
+     * @return the light strength
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -163,7 +163,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the moving rate of a {@link GyroSensor}.
      *
-     * @return rate
+     * @return the rate
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -174,7 +174,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the angle of a {@link GyroSensor}.
      *
-     * @return angle
+     * @return the angle
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -185,7 +185,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the light strength from a {@link LineSensor}.
      *
-     * @return light strength
+     * @return the light strength
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -196,7 +196,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the distance to an obstacle from a {@link Rangefinder}.
      *
-     * @return distance
+     * @return the distance
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -207,7 +207,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the button number of RemoteController of a {@link RemoteControlReceiver}.
      *
-     * @return button number
+     * @return the button number
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -218,7 +218,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the distance between a {@link RemoteControlReceiver} attached to this machine and a RemoteController.
      *
-     * @return distance
+     * @return the distance
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -229,7 +229,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Gets the sound volume from a {@link SoundSensor}.
      *
-     * @return sound volume in dB
+     * @return the sound volume in dB
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -240,7 +240,7 @@ public abstract class CarControllerBase implements MachineController {
     /**
      * Checks a {@link TouchSensor} is currently touched or not.
      *
-     * @return is touched (true) or not (false)
+     * @return the machine is touched (<code>true</code>) or not (<code>false</code>)
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
@@ -268,7 +268,7 @@ public abstract class CarControllerBase implements MachineController {
     public abstract List<String> getAllOutputDevices();
 
     /**
-     * Turns on a {@link Buzzer}. Use {@see #turnOffBuzzer()} to stop it.
+     * Turns on a {@link Buzzer}. Use {@link #turnOffBuzzer()} to stop it.
      *
      * @exception UnsupportedOperationException
      *              if buzzer is unsupported by this machine
@@ -278,7 +278,7 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     /**
-     * Turns off a {@link Buzzer}. Use {@see #turnOnBuzzer()} to make it rings.
+     * Turns off a {@link Buzzer}. Use {@link #turnOnBuzzer()} to make it rings.
      *
      * @exception UnsupportedOperationException
      *              if buzzer is unsupported by this machine
@@ -288,7 +288,7 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     /**
-     * Turns on and off a {@link Buzzer} alternately. Use {@see #turnOffBuzzer()} to stop it.
+     * Turns on and off a {@link Buzzer} alternately. Use {@link #turnOffBuzzer()} to stop it.
      *
      * @exception UnsupportedOperationException
      *              if buzzer is unsupported by this machine
@@ -298,7 +298,7 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     /**
-     * Turns on a {@link Led}. Use {@see #turnOffLed()} to stop it.
+     * Turns on a {@link Led}. Use {@link #turnOffLed()} to stop it.
      *
      * @exception UnsupportedOperationException
      *              if LED is unsupported by this machine
@@ -308,7 +308,7 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     /**
-     * Turns off a {@link Led}. Use {@see #turnOnLed()} to make it turn on.
+     * Turns off a {@link Led}. Use {@link #turnOnLed()} to make it turn on.
      *
      * @exception UnsupportedOperationException
      *              if LED is unsupported by this machine
@@ -319,7 +319,7 @@ public abstract class CarControllerBase implements MachineController {
 
     /**
      * Moves motors forward. The power of the left and right motors can be set by
-     * {@see #setMotorPower()} with a {@link MotorKind} argument.
+     * {@link #setMotorPower(MotorKind, int)} with a {@link MotorKind} argument.
      */
     public void moveForward() {
         move(MotorDir.Forward, MotorDir.Forward);
@@ -327,7 +327,7 @@ public abstract class CarControllerBase implements MachineController {
 
     /**
      * Moves motors backward. The power of the left and right motors can be set by
-     * {@see #setMotorPower()} with a {@link MotorKind} argument.
+     * {@link #setMotorPower(MotorKind, int)} with a {@link MotorKind} argument.
      */
     public void moveBackward() {
         move(MotorDir.Backward, MotorDir.Backward);
@@ -387,7 +387,7 @@ public abstract class CarControllerBase implements MachineController {
      * A setter of motor power in percentage.
      *
      * @param kind see {@link MotorKind} to specify the kind of a motor
-     * @param percent power of motor in a range <code>[0, 100]</code>
+     * @param percent the power of a motor in a range <code>[0, 100]</code>
      *              if an out of bound value is passed, then the value will be clipped
      */
     public void setMotorPower(MotorKind kind, int percent) {
