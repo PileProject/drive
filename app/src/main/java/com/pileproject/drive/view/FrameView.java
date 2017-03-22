@@ -24,10 +24,7 @@ import android.graphics.Rect;
 import android.view.View;
 
 /**
- * a frame view to emphasize blocks during program executions
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A frame view to emphasize blocks during program executions.
  */
 public class FrameView extends View {
     private Paint mPaint;

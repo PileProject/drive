@@ -30,10 +30,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * a view which has a set of NumberPickers to select multiple-digits value
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 5-June-2013
+ * A view which has a set of NumberPickers to select multiple-digits value.
  */
 public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     private List<NumberPicker> mNumbers;
@@ -111,8 +108,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * carry up
-     *
+     * Carry up count.
      * @param index the index of the target number
      */
     public void carryUp(int index) {
@@ -131,8 +127,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * carry down
-     *
+     * Carry down count.
      * @param index the index of the target number
      */
     public void carryDown(int index) {
@@ -178,7 +173,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * change the number of this view to maximum value
+     * Change the number of this view to maximum value.
      */
     public void changeToMax() {
         final double max = mRange.getUpperBound();
@@ -186,7 +181,7 @@ public class NumberSelectWheelScrollerView extends NumberSelectViewBase {
     }
 
     /**
-     * change the number of this view to minimum value
+     * Change the number of this view to minimum value.
      */
     public void changeToMin() {
         final double min = mRange.getLowerBound();
