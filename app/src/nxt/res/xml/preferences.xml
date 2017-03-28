@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/setting.category.machine">
+
+        <com.pileproject.drive.setting.machine.BluetoothMachineSelectPreference
+            android:title="@string/setting.bluetoothMachineSelect" />
+
+        <com.pileproject.drive.setting.machine.NxtPortConnectionPreference
+            android:title="@string/setting.portConnection" />
+
+        <com.pileproject.drive.setting.machine.NxtThresholdPreference
+            android:title="@string/setting.threshold" />
+
+        <com.pileproject.drive.setting.machine.NxtFirmwarePreference
+            android:title="@string/setting.firmware" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting.category.app">
+
+        <com.pileproject.drive.setting.app.ProgramListPreference
+            android:summary="@string/setting.programList.summary"
+            android:title="@string/setting.programList" />
+
+        <CheckBoxPreference
+            android:key="supervisor_preference"
+            android:title="@string/setting.supervisorMode" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="@string/setting.category.others">
+
+        <Preference
+            android:title="@string/setting.visitWebsite"
+            android:summary="@string/setting.visitWebsite.summary">
+            <intent
+                android:action="android.intent.action.VIEW"
+                android:data="http://pileproject.com/" />
+        </Preference>
+
+        <com.pileproject.drive.setting.app.CopyrightNoticePreference
+            android:title="@string/setting.copyrightNotice" />
+
+        <com.pileproject.drive.setting.app.LegalNoticePreference
+            android:title="@string/setting.legalNotice"/>
+
+    </PreferenceCategory>
+</PreferenceScreen>

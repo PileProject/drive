@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.view;
 
 import android.content.Context;
@@ -21,51 +20,65 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.preferences.MachinePreferences;
 
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LIGHT;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.NONE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 
-public class NxtSensorPortTextView extends PortTextView {
+/**
+ * An implementation of {@link PortTextViewBase} which represents the port of sensors of LEGO MINDSTORMS NXT.
+ */
+public class NxtSensorPortTextView extends PortTextViewBase {
 
     public NxtSensorPortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public static String getSensorName(Context context, int sensorType) {
-        switch (sensorType) {
-            case NxtController.SensorProperty.SENSOR_LINE:
-                return context.getString(R.string.sensors_light);
-            case NxtController.SensorProperty.SENSOR_SOUND:
-                return context.getString(R.string.sensors_sound);
-            case NxtController.SensorProperty.SENSOR_TOUCH:
-                return context.getString(R.string.sensors_touch);
-        }
-
+    public static String getSensorName(Context context, String sensorType) {
+        if (TOUCH.equals(sensorType)) return context.getString(R.string.sensors_touch);
+        if (SOUND.equals(sensorType)) return context.getString(R.string.sensors_sound);
+        if (LIGHT.equals(sensorType)) return context.getString(R.string.sensors_light);
         return "";
     }
 
-    public static int getSensorColor(int sensorType) {
-        switch (sensorType) {
-            case NxtController.SensorProperty.SENSOR_LINE:
-                return Color.rgb(50, 142, 183);
-            case NxtController.SensorProperty.SENSOR_TOUCH:
-                return Color.rgb(65, 163, 86);
-            case NxtController.SensorProperty.SENSOR_SOUND:
-                return Color.rgb(221, 86, 82);
-        }
-
+    public static int getSensorColor(String sensorType) {
+        if (TOUCH.equals(sensorType)) return Color.rgb(50, 142, 183);
+        if (SOUND.equals(sensorType)) return Color.rgb(65, 163, 86);
+        if (LIGHT.equals(sensorType)) return Color.rgb(221, 86, 82);
         return Color.GRAY;
     }
 
     @Override
-    public int getAttachmentType() {
-        return mAttachmentType;
+    protected void savePortConnection(String port, String device) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort1).equals(port)) p.setInputPort1(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort2).equals(port)) p.setInputPort2(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort3).equals(port)) p.setInputPort3(device);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort4).equals(port)) p.setInputPort4(device);
     }
 
     @Override
-    public void setAttachmentType(int attachmentType) {
-        mAttachmentType = attachmentType;
+    protected void removePortConnection(String port) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort1).equals(port)) p.setInputPort1(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort2).equals(port)) p.setInputPort2(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort3).equals(port)) p.setInputPort3(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceSensorPort4).equals(port)) p.setInputPort4(NONE);
+    }
 
-        this.setText(getSensorName(mContext, attachmentType));
-        this.setBackgroundColor(getSensorColor(attachmentType));
+    @Override
+    public String getDeviceType() {
+        return mDeviceType;
+    }
+
+    @Override
+    public void setDeviceType(String deviceType) {
+        mDeviceType = deviceType;
+        this.setText(getSensorName(getContext(), deviceType));
+        this.setBackgroundColor(getSensorColor(deviceType));
     }
 }

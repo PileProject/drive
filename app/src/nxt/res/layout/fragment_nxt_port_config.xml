@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+    Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+in case attrs in a library project is referenced, the identifier's uri should be written as below 
+http://schemas.android.com/apk/res-auto"
+-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:port="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting.portConnection.deviceSensorPorts"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:stretchColumns="1">
+
+                <TableRow android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceSensorPort1"/>
+
+                    <com.pileproject.drive.view.NxtSensorPortTextView
+                        android:id="@+id/setting.portconfig.sensorPort1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceSensorPort1"
+                        port:portType="sensor"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceSensorPort2"/>
+
+                    <com.pileproject.drive.view.NxtSensorPortTextView
+                        android:id="@+id/setting.portconfig.sensorPort2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceSensorPort2"
+                        port:portType="sensor"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceSensorPort3"/>
+
+                    <com.pileproject.drive.view.NxtSensorPortTextView
+                        android:id="@+id/setting.portconfig.sensorPort3"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceSensorPort3"
+                        port:portType="sensor"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceSensorPort4"/>
+
+                    <com.pileproject.drive.view.NxtSensorPortTextView
+                        android:id="@+id/setting.portconfig.sensorPort4"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceSensorPort4"
+                        port:portType="sensor"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting.portConnection.sensors"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.pileproject.drive.view.NxtSensorPortTextView
+                    android:id="@+id/setting.portconfig.sensor1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#888"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    port:portType="sensor"/>
+
+                <com.pileproject.drive.view.NxtSensorPortTextView
+                    android:id="@+id/setting.portconfig.sensor2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#888"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    port:portType="sensor"/>
+
+                <com.pileproject.drive.view.NxtSensorPortTextView
+                    android:id="@+id/setting.portconfig.sensor3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#888"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    port:portType="sensor"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="3dp"
+        android:baselineAligned="false"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting.portConnection.deviceMotorPorts"/>
+
+            <TableLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="3dp"
+                android:gravity="center"
+                android:stretchColumns="1">
+
+                <TableRow android:layout_height="wrap_content">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceMotorPortA"/>
+
+                    <com.pileproject.drive.view.NxtMotorPortTextView
+                        android:id="@+id/setting.portconfig.motorPortA"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceMotorPortA"
+                        port:portType="motor"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceMotorPortB"/>
+
+                    <com.pileproject.drive.view.NxtMotorPortTextView
+                        android:id="@+id/setting.portconfig.motorPortB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceMotorPortB"
+                        port:portType="motor"/>
+                </TableRow>
+
+                <TableRow>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:padding="10dp"
+                        android:text="@string/setting.portConnection.deviceMotorPortC"/>
+
+                    <com.pileproject.drive.view.NxtMotorPortTextView
+                        android:id="@+id/setting.portconfig.motorPortC"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#888"
+                        android:gravity="center_horizontal"
+                        android:textSize="20sp"
+                        port:portName="@string/setting.portConnection.deviceMotorPortC"
+                        port:portType="motor"/>
+                </TableRow>
+            </TableLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/setting.portConnection.motors"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.pileproject.drive.view.NxtMotorPortTextView
+                    android:id="@+id/setting.portconfig.motor1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#888"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    port:portType="motor"/>
+
+                <com.pileproject.drive.view.NxtMotorPortTextView
+                    android:id="@+id/setting.portconfig.motor2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#888"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    port:portType="motor"/>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

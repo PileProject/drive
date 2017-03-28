@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,42 +13,56 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.setting.machine;
 
-import android.app.Fragment;
+import android.app.Dialog;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController.SensorProperty.LineSensor;
-import com.pileproject.drive.execution.NxtController.SensorProperty.SoundSensor;
-import com.pileproject.drive.programming.visual.block.selection.IfNxtIsOutOfLineBlock;
-import com.pileproject.drive.programming.visual.block.selection.IfThereWasALargeSoundBlock;
-import com.pileproject.drive.util.SharedPreferencesWrapper;
+import com.pileproject.drive.machine.NxtCarController.SensorProperty.LightSensor;
+import com.pileproject.drive.machine.NxtCarController.SensorProperty.SoundSensor;
+import com.pileproject.drive.preferences.BlockPreferences;
 
-public class NxtThresholdFragment extends Fragment {
-    private SeekBar mLightSensorSeek = null;
-    private TextView mLightSensorText = null;
+/**
+ * A fragment for setting the thresholds of devices. This fragment will be used by {@link NxtThresholdPreference}.
+ */
+public class NxtThresholdFragment extends DialogFragment {
+    public static final int LIGHT_DEFAULT_THRESHOLD = 50;
+    public static final int SOUND_DEFAULT_THRESHOLD = 70;
 
-    private SeekBar mSoundSensorSeek = null;
-    private TextView mSoundSensorText = null;
+    private SeekBar mLightSensorSeekBar;
+    private TextView mLightSensorText;
+
+    private SeekBar mSoundSensorSeekBar;
+    private TextView mSoundSensorText;
 
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_nxtthreshold, container, false);
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setTitle(R.string.setting_threshold);
+        return dialog;
+    }
 
-        mLightSensorSeek = (SeekBar) v.findViewById(R.id.setting_threshold_lightSensor);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
+        View v = inflater.inflate(R.layout.fragment_nxt_threshold, container, false);
+
+        mLightSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_lightSensor);
         mLightSensorText = (TextView) v.findViewById(R.id.setting_threshold_lightSensorValueText);
 
-        mSoundSensorSeek = (SeekBar) v.findViewById(R.id.setting_threshold_soundSensor);
+        mSoundSensorSeekBar = (SeekBar) v.findViewById(R.id.setting_threshold_soundSensor);
         mSoundSensorText = (TextView) v.findViewById(R.id.setting_threshold_soundSensorValueText);
 
         return v;
@@ -58,10 +72,14 @@ public class NxtThresholdFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        mLightSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        // NOTE: this is necessary because this screen collapsed on API 23+
+        resizeDialog();
+
+        mLightSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent, progress));
+                mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent,
+                                                   progress + LightSensor.PctMin));
             }
 
             @Override
@@ -70,17 +88,16 @@ public class NxtThresholdFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(IfNxtIsOutOfLineBlock.class.getName(),
-                                                           seekBar.getProgress());
+                BlockPreferences.get(getActivity())
+                        .setLightSensorThreshold(seekBar.getProgress() + LightSensor.PctMin);
             }
         });
 
-        final int savedLightValue =
-                SharedPreferencesWrapper.loadIntPreference(IfNxtIsOutOfLineBlock.class.getName(), -1);
-        mLightSensorSeek.setMax(LineSensor.PctMax);
-        mLightSensorSeek.setProgress((savedLightValue == -1) ? LineSensor.DEFAULT : savedLightValue);
+        int savedLightValue = BlockPreferences.get(getActivity()).getLightSensorThreshold(LIGHT_DEFAULT_THRESHOLD);
+        mLightSensorSeekBar.setMax(LightSensor.PctMax - LightSensor.PctMin);
+        mLightSensorSeekBar.setProgress(savedLightValue - LightSensor.PctMin);
 
-        mSoundSensorSeek.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+        mSoundSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mSoundSensorText.setText(getString(R.string.setting_threshold_unit_dB,
@@ -93,16 +110,30 @@ public class NxtThresholdFragment extends Fragment {
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                SharedPreferencesWrapper.saveIntPreference(IfThereWasALargeSoundBlock.class.getName(),
-                                                           seekBar.getProgress() + SoundSensor.SI_dB_SiMin);
+                BlockPreferences.get(getActivity())
+                        .setSoundSensorThreshold(seekBar.getProgress() + SoundSensor.SI_dB_SiMin);
             }
         });
 
-        final int savedSoundValue =
-                SharedPreferencesWrapper.loadIntPreference(IfThereWasALargeSoundBlock.class.getName(), -1);
-        mSoundSensorSeek.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
-        mSoundSensorSeek.setProgress((savedSoundValue == -1) ?
-                                             SoundSensor.SI_dB_DEFAULT - SoundSensor.SI_dB_SiMin :
-                                             savedSoundValue - SoundSensor.SI_dB_SiMin);
+        int savedSoundValue = BlockPreferences.get(getActivity()).getSoundSensorThreshold(SOUND_DEFAULT_THRESHOLD);
+        mSoundSensorSeekBar.setMax(SoundSensor.SI_dB_SiMax - SoundSensor.SI_dB_SiMin);
+        mSoundSensorSeekBar.setProgress(savedSoundValue - SoundSensor.SI_dB_SiMin);
+    }
+
+    /**
+     * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
+     * Otherwise, the dialog size will never be changed
+     */
+    private void resizeDialog() {
+        Dialog dialog = getDialog();
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+        // resize window large enough to display list views
+        int dialogWidth = (int) (metrics.widthPixels * 0.8);
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = dialogWidth;
+        dialog.getWindow().setAttributes(lp);
     }
 }

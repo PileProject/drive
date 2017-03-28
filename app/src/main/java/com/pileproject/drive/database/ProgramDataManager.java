@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,340 +13,275 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.database;
 
-import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.util.Log;
 import android.view.View;
 
+import com.pileproject.drive.app.DriveApplication;
 import com.pileproject.drive.programming.visual.activity.BlockPositionComparator;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 import com.pileproject.drive.programming.visual.block.BlockFactory;
-import com.pileproject.drive.programming.visual.block.NumTextHolder;
+import com.pileproject.drive.programming.visual.block.NumberTextHolder;
 import com.pileproject.drive.programming.visual.layout.BlockSpaceLayout;
+import com.yahoo.squidb.data.SquidCursor;
+import com.yahoo.squidb.sql.Query;
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * Database manager
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 4-June-2013
+ * A manger of program data which is based on {@link ProgramSpec} and {@link ProgramDataSpec}.
  */
 public class ProgramDataManager {
-    private static final String TAG = "ProgramDataManager";
-    private DatabaseOpenHelper mHelper;
-    private SQLiteDatabase mDb;
+    private static ProgramDataManager mInstance = new ProgramDataManager();
+    private DriveDatabase mDriveDatabase;
 
-    /**
-     * Constructor
-     *
-     * @param context The context of Activity that calls this manager
-     */
-    public ProgramDataManager(Context context) {
-        // Use Helper class
-        mHelper = DatabaseOpenHelper.getInstance(context);
+    // the number of execution programs should be less than or equals to 1
+    private static final Query EXECUTION_PROGRAM =
+            Query.select(Program.PROPERTIES)
+                    .from(Program.TABLE)
+                    .where(Program.TYPE.eq(Program.EXECUTION))
+                    .freeze();
 
-        if (mHelper != null) {
-            mDb = mHelper.getWritableDatabase();
-        } else {
-            mDb = null;
+    private static final Query USER_PROGRAMS =
+            Query.select(Program.PROPERTIES)
+                    .from(Program.TABLE)
+                    .where(Program.TYPE.eq(Program.USER))
+                    .orderBy(Program.UPDATED_AT.asc())
+                    .freeze();
+
+    private static final Query SAMPLE_PROGRAMS =
+            Query.select(Program.PROPERTIES)
+                    .from(Program.TABLE)
+                    .where(Program.TYPE.eq(Program.SAMPLE))
+                    .orderBy(Program.UPDATED_AT.asc())
+                    .freeze();
+
+    private ProgramDataManager() {
+        if (mDriveDatabase == null) {
+            mDriveDatabase = new DriveDatabase(DriveApplication.getContext());
         }
     }
 
-    /**
-     * Close Database
-     */
-    public void close() {
-        mDb.close();
+    public static ProgramDataManager getInstance() {
+        return mInstance;
     }
 
     /**
-     * Save program data temporarily to execute it
+     * Saves a program temporarily to execute it.
      *
-     * @param layout The programming space that has blocks
+     * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
      */
-    public void saveAllBlocks(BlockSpaceLayout layout) {
-        deleteAll(); // Firstly delete all previous data
+    public boolean saveExecutionProgram(BlockSpaceLayout layout) {
+        return saveProgram(Program.EXECUTION, Program.EXECUTION, layout);
+    }
 
-        // Insert all View attached to the layout
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            ContentValues val = new ContentValues();
+    /**
+     * Saves a sample program.
+     *
+     * @param programName the name of a new program
+     * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
+     */
+    public boolean saveSampleProgram(String programName, BlockSpaceLayout layout) {
+        return saveProgram(programName, Program.SAMPLE, layout);
+    }
 
+    /**
+     * Saves a user program.
+     *
+     * @param programName the name of a new program
+     * @param layout the programming space that has blocks
+     * @return succeed (<code>true</code>) or not (<code>false</code>)
+     */
+    public boolean saveUserProgram(String programName, BlockSpaceLayout layout) {
+        return saveProgram(programName, Program.USER, layout);
+    }
+
+    private boolean saveProgram(String programName, String programType, BlockSpaceLayout layout) {
+        // delete the old program with 'programName' and 'programType'
+        deleteProgram(programName, programType);
+
+        // save new program
+        Program program = new Program()
+                .setName(programName)
+                .setType(programType)
+                .setUpdatedAt(System.currentTimeMillis());
+        // save the program (persist will set the _id for the target item)
+        if (!mDriveDatabase.persist(program)) {
+            return false;   // failed to save
+        }
+
+        // insert all views attached to the layout
+        for (int i = 0; i < layout.getChildCount(); ++i) {
             View view = layout.getChildAt(i);
-            // Check this view is a child of BlockBase or not
+            // check this view is a child of BlockBase or not
             if (!(view instanceof BlockBase)) {
-                Log.d(TAG, "Not BlockBase: " + view.getClass().getSimpleName());
                 continue;
             }
 
             BlockBase b = (BlockBase) view;
-            Log.d(TAG, "BlockBase: " + view.getClass().getSimpleName());
-
-            val.put(DatabaseOpenHelper.BLOCK_NAME, b.getClass().getName());
-            val.put(DatabaseOpenHelper.BLOCK_LEFT, b.getLeft());
-            val.put(DatabaseOpenHelper.BLOCK_TOP, b.getTop());
-            val.put(DatabaseOpenHelper.BLOCK_RIGHT, b.getRight());
-            val.put(DatabaseOpenHelper.BLOCK_BOTTOM, b.getBottom());
-
-            // Get the number of TextView if the block has one
-            if (b instanceof NumTextHolder) {
-                val.put(DatabaseOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
-            } else {
-                val.put(DatabaseOpenHelper.BLOCK_NUM, 0);
+            ProgramData data = new ProgramData()
+                    .setProgramId(program.getId())
+                    .setType(b.getClass().getName())
+                    .setLeft(b.getLeft())
+                    .setTop(b.getTop());
+            // get the number of TextView if the block has one
+            if (b instanceof NumberTextHolder) {
+                data.setNumber(((NumberTextHolder) b).getValueAsString());
             }
 
-            // Save
-            mDb.insert(DatabaseOpenHelper.TBL_PROGRAM_DATA, null, val);
-        }
-    }
-
-    private int getProgramIdByName(String programName, boolean isSample) {
-        String selection = DatabaseOpenHelper.PROGRAM_NAME + " = ? AND " +
-                DatabaseOpenHelper.IS_SAMPLE + " = ? ";
-        String[] selectionArgs = {programName, isSample ? "1" : "0"};
-
-        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS,
-                             new String[]{"_id",},
-                             selection,
-                             selectionArgs,
-                             null,
-                             null,
-                             null);
-
-        // if the program name has not been saved
-        if (c.getCount() == 0) {
-            c.close();
-            return -1;
-        }
-
-        c.moveToFirst();
-        int programId = c.getInt(0);
-        c.close();
-        return programId;
-    }
-
-    private int insertProgramName(String programName, boolean isSample) {
-        // add new program
-        ContentValues val = new ContentValues();
-        val.put(DatabaseOpenHelper.PROGRAM_NAME, programName);
-        val.put(DatabaseOpenHelper.IS_SAMPLE, isSample ? 1 : 0);
-        mDb.insert(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, null, val);
-
-        // query again
-        return getProgramIdByName(programName, isSample);
-    }
-
-    public String createNewProgramName() {
-        String selection = DatabaseOpenHelper.IS_SAMPLE + " = ?";
-        String[] selectionArgs = {"0"}; // false = not sample
-        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, new String[]{
-                // this assumes the name of users'
-                // programs are integer strings
-                "max(cast(program_name as integer))"
-        }, selection, selectionArgs, null, null, null);
-
-        c.moveToFirst();
-        int nextId = c.getInt(0) + 1;
-        c.close();
-        return nextId + "";
-    }
-
-    public void saveWithName(String programName, BlockSpaceLayout layout) {
-        saveWithName(programName, layout, false); // not sample (default)
-    }
-
-    public void saveWithName(
-            String programName, BlockSpaceLayout layout, boolean isSample) {
-        int programId = getProgramIdByName(programName, isSample);
-
-        if (programId < 0) {
-            // new program (= not exists)
-            programId = insertProgramName(programName, isSample);
-        } else {
-            // delete old data
-            String selection = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
-            String[] selectionArgs = {programId + ""};
-            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, selection, selectionArgs);
-        }
-        // Insert all Views attached to the layout
-        for (int i = 0; i < layout.getChildCount(); i++) {
-            ContentValues val = new ContentValues();
-
-            View view = layout.getChildAt(i);
-            // Check this view is a child of BlockBase or not
-            if (!(view instanceof BlockBase)) {
-                Log.d(TAG, "Not BlockBase: " + view.getClass().getSimpleName());
-
+            // save the data
+            if (!mDriveDatabase.persist(data)) {
+                return false; // failed to save
             }
-
-            BlockBase b = (BlockBase) view;
-            Log.d(TAG, "BlockBase: " + view.getClass().getSimpleName());
-
-            val.put(DatabaseOpenHelper.SAVED_PROGRAM_ID, programId);
-            val.put(DatabaseOpenHelper.BLOCK_NAME, b.getClass().getName());
-            val.put(DatabaseOpenHelper.BLOCK_LEFT, b.getLeft());
-            val.put(DatabaseOpenHelper.BLOCK_TOP, b.getTop());
-            val.put(DatabaseOpenHelper.BLOCK_RIGHT, b.getRight());
-            val.put(DatabaseOpenHelper.BLOCK_BOTTOM, b.getBottom());
-
-            // Get the number of TextView if the block has one
-            if (b instanceof NumTextHolder) {
-                val.put(DatabaseOpenHelper.BLOCK_NUM, ((NumTextHolder) b).getNum());
-            } else {
-                val.put(DatabaseOpenHelper.BLOCK_NUM, 0);
-            }
-
-            // Save
-            mDb.insert(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, null, val);
         }
+        return true;
     }
 
-    private ArrayList<BlockBase> loadBlocks(Cursor c) {
-        int numRows = c.getCount();
-        ArrayList<BlockBase> blocks = new ArrayList<>(numRows);
+    /**
+     * Loads an execution program's block data (sorted with {@link BlockPositionComparator} in ascending order).
+     *
+     * @return a loaded data as {@link ArrayList}
+     */
+    public ArrayList<BlockBase> loadExecutionProgram() {
+        return loadProgram(Program.EXECUTION, Program.EXECUTION);
+    }
 
-        c.moveToFirst();
-        for (int i = 0; i < numRows; i++) {
-            BlockBase b =
-                    BlockFactory.createBlocks(
-                            BlockFactory.LOAD,
-                            c.getString(0))
-                    .get(0);
+    /**
+     * Loads a sample program's block data (sorted with {@link BlockPositionComparator} in ascending order).
+     *
+     * @param programName the name of a sample program
+     * @return a loaded data as {@link ArrayList}
+     */
+    public ArrayList<BlockBase> loadSampleProgram(String programName) {
+        return loadProgram(programName, Program.SAMPLE);
+    }
 
-            b.left = c.getInt(1);
-            b.top = c.getInt(2);
-            b.right = c.getInt(3);
-            b.bottom = c.getInt(4);
-            if (b instanceof NumTextHolder) {
-                ((NumTextHolder) b).setNum(c.getInt(5));
-            }
+    /**
+     * Loads a user program's block data (sorted with {@link BlockPositionComparator} in ascending order).
+     *
+     * @param programName the name of a user program
+     * @return a loaded data as {@link ArrayList}
+     */
+    public ArrayList<BlockBase> loadUserProgram(String programName) {
+        return loadProgram(programName, Program.USER);
+    }
 
-            blocks.add(b);
-            c.moveToNext();
+    private ArrayList<BlockBase> loadProgram(String programName, String programType) {
+        // search a program with 'programName' and 'programType'
+        Query q = Query
+                .select(Program.ID)
+                .from(Program.TABLE)
+                .where(Program.NAME.eq(programName)
+                               .and(Program.TYPE.eq(programType)));
+        Program program = mDriveDatabase.fetchByQuery(Program.class, q);
+        if (program == null) { // such a program is not found
+            return new ArrayList<>();
         }
-        c.close();
+
+        // search program data with the program id
+        q = Query.select(ProgramData.PROPERTIES)
+                .from(ProgramData.TABLE)
+                .where(ProgramData.PROGRAM_ID.eq(program.getId()));
+        SquidCursor<ProgramData> programData = mDriveDatabase.query(ProgramData.class, q);
+        return loadBlocks(programData);
+    }
+
+    private ArrayList<BlockBase> loadBlocks(SquidCursor<ProgramData> c) {
+        ArrayList<BlockBase> blocks = new ArrayList<>();
+
+        ProgramData data = new ProgramData();
+        try {
+            while (c.moveToNext()) {
+                data.readPropertiesFromCursor(c);
+                // create a BlockBase with a type (= name)
+                BlockBase b = BlockFactory.createBlock(data.getType());
+                // set data's properties
+                b.setLeft(data.getLeft());
+                b.setTop(data.getTop());
+                if (b instanceof NumberTextHolder) {
+                    ((NumberTextHolder) b).setValueAsString(data.getNumber());
+                }
+                // add the block to a list
+                blocks.add(b);
+            }
+        }
+        finally {
+            c.close(); // close the cursor
+        }
+        // sort blocks with their positions
         Collections.sort(blocks, new BlockPositionComparator());
         return blocks;
     }
 
     /**
-     * Load all block data (Sorted)
+     * Loads all sample program names.
      *
-     * @return ArrayList<BlockBase> loaded data
+     * @return the names of sample programs as {@link ArrayList}
      */
-    public ArrayList<BlockBase> loadAll() {
-        if (mDb == null) {
-            return null;
-        }
-        Cursor c = mDb.query(DatabaseOpenHelper.TBL_PROGRAM_DATA, new String[]{
-                DatabaseOpenHelper.BLOCK_NAME,
-                DatabaseOpenHelper.BLOCK_LEFT,
-                DatabaseOpenHelper.BLOCK_TOP,
-                DatabaseOpenHelper.BLOCK_RIGHT,
-                DatabaseOpenHelper.BLOCK_BOTTOM,
-                DatabaseOpenHelper.BLOCK_NUM,
-        }, null, null, null, null, null);
-
-        return loadBlocks(c);
+    public ArrayList<String> loadSampleProgramNames() {
+        return loadProgramNames(Program.SAMPLE);
     }
 
     /**
-     * Load block data (Sorted)
+     * Loads all user program names.
      *
-     * @param programName program name
-     * @return ArrayList<BlockBase> loaded data
+     * @return the names of user programs as {@link ArrayList}
      */
-    public ArrayList<BlockBase> loadByName(String programName) {
-        return loadByName(programName, false);
+    public ArrayList<String> loadUserProgramNames() {
+        return loadProgramNames(Program.USER);
     }
 
-    public ArrayList<BlockBase> loadByName(String programName, boolean isSample) {
-        String selection = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
-        String[] selectionArgs = {
-                getProgramIdByName(programName, isSample) + ""
-        };
-        if (programName.equals(null)) {
-            selection = null;
-            selectionArgs = null;
+    private ArrayList<String> loadProgramNames(String programType) {
+        Query q;
+        if (programType.equals(Program.USER)) {
+            q = USER_PROGRAMS;
         }
-        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, new String[]{
-                DatabaseOpenHelper.BLOCK_NAME,
-                DatabaseOpenHelper.BLOCK_LEFT,
-                DatabaseOpenHelper.BLOCK_TOP,
-                DatabaseOpenHelper.BLOCK_RIGHT,
-                DatabaseOpenHelper.BLOCK_BOTTOM,
-                DatabaseOpenHelper.BLOCK_NUM,
-        }, selection, selectionArgs, null, null, null);
-
-        return loadBlocks(c);
-    }
-
-    /**
-     * Load all not sample program names
-     *
-     * @return
-     */
-    public String[] loadSavedProgramNames() {
-        return loadSavedProgramNames(false);
-    }
-
-    /**
-     * Load all program names (either sample or not sample)
-     *
-     * @param isSample
-     * @return
-     */
-    public String[] loadSavedProgramNames(boolean isSample) {
-        String selection = DatabaseOpenHelper.IS_SAMPLE + " = ?";
-        String[] selectionArgs = {isSample ? "1" : "0"};
-        String orderBy = DatabaseOpenHelper.PROGRAM_NAME + " ASC";
-        Cursor c = mDb.query(DatabaseOpenHelper.TBL_SAVED_PROGRAMS,
-                             new String[]{DatabaseOpenHelper.PROGRAM_NAME,},
-                             selection,
-                             selectionArgs,
-                             null,
-                             null,
-                             orderBy);
-        c.moveToFirst();
-        int numRows = c.getCount();
-        String[] programNames = new String[numRows];
-        for (int i = 0; i < numRows; i++) {
-            programNames[i] = c.getString(0);
-            c.moveToNext();
+        else if (programType.equals(Program.SAMPLE)) {
+            q = SAMPLE_PROGRAMS;
         }
-        c.close();
+        else { // do not allow users to check 'EXECUTION' programs directly
+            return new ArrayList<>();
+        }
+        // execute query
+        SquidCursor<Program> programs = mDriveDatabase.query(Program.class, q);
+        ArrayList<String> programNames = new ArrayList<>();
+        while (programs.moveToNext()) {
+            programNames.add(programs.get(Program.NAME));
+        }
+        programs.close(); // close the cursor
         return programNames;
     }
 
     /**
-     * Delete all Block data
+     * Deletes an execution program.
      */
-    public void deleteAll() {
-        mDb.delete(DatabaseOpenHelper.TBL_PROGRAM_DATA, null, null);
+    public void deleteExecutionProgram() {
+        deleteProgram(Program.EXECUTION, Program.EXECUTION);
     }
 
-    public void deleteProgramByName(String programName) {
-        deleteProgramByName(programName, false);
+    /**
+     * Deletes a sample program with <code>programName</code>.
+     *
+     * @param programName the name of a sample program
+     */
+    public void deleteSampleProgram(String programName) {
+        deleteProgram(programName, Program.SAMPLE);
+    }
+    /**
+     * Deletes a user program with <code>programName</code>.
+     *
+     * @param programName the name of a user program
+     */
+    public void deleteUserProgram(String programName) {
+        deleteProgram(programName, Program.USER);
     }
 
-    public void deleteProgramByName(String programName, boolean isSample) {
-        int id = getProgramIdByName(programName, isSample);
-        {
-            String whereClause = DatabaseOpenHelper.SAVED_PROGRAM_ID + " = ?";
-            String[] whereClauseConditions = {id + ""};
-            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAM_DATA, whereClause, whereClauseConditions);
-        }
-        {
-            String whereClause = DatabaseOpenHelper.PROGRAM_NAME + " = ?";
-            String[] whereClauseConditions = {programName};
-            mDb.delete(DatabaseOpenHelper.TBL_SAVED_PROGRAMS, whereClause, whereClauseConditions);
-        }
+    private void deleteProgram(String programName, String programType) {
+        mDriveDatabase.deleteWhere(Program.class,
+                                   Program.NAME.eq(programName)
+                                        .and(Program.TYPE.eq(programType)));
     }
-
 }

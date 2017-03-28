@@ -1,0 +1,68 @@
+- artifact: co.trikita:log:+
+  name: log
+  copyrightHolder: zserge
+  license: MIT License
+  licenseUrl: http://www.opensource.org/licenses/mit-license.php
+  url: https://github.com/zserge/log
+
+- artifact: com.pileproject:drivecommand:+
+  name: drivecommand
+  copyrightHolder: PILE Project, Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+
+- artifact: io.reactivex:rxjava:+
+  name: rxjava
+  copyrightHolder: Netflix, Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/ReactiveX/RxJava
+
+- artifact: com.android.support:+:+
+  name: Android Support Libraries
+  copyrightHolder: The Android Open Source Project
+  license: Apache 2.0
+
+- artifact: com.google.dagger:dagger:+
+  name: Dagger
+  copyrightHolder: The Dagger Authors
+  license: Apache 2.0
+
+- artifact: com.jakewharton.fliptables:fliptables:+
+  name: Flip Tables
+  copyrightHolder: Jake Wharton
+  license: Apache 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://github.com/JakeWharton/flip-tables/
+
+- artifact: com.rejasupotaro:kvs-schema:+
+  name: kvs-schema
+  copyrightHolder: Kentaro Takiguchi
+  license: MIT License
+
+- artifact: com.yahoo.squidb:+:+
+  name: SquiDB
+  copyrightHolder: Yahoo Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/yahoo/squidb
+
+- artifact: io.reactivex:rxandroid:+
+  name: RxAndroid
+  copyrightHolder: The RxAndroid authors
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/ReactiveX/RxAndroid
+
+- artifact: javax.inject:javax.inject:+
+  name: javax.inject
+  copyrightHolder: Java Dependency Injection Sandard
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://code.google.com/p/atinject/
+
+- artifact: org.slf4j:slf4j-api:+
+  name: SLF4J API Module
+  copyrightHolder: QOS.ch
+  license: MIT License
+  url: http://www.slf4j.org

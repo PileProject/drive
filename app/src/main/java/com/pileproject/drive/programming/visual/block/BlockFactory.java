@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,156 +13,117 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.programming.visual.block;
 
 import android.content.Context;
-import android.util.Log;
+import android.support.annotation.NonNull;
 
+import com.pileproject.drive.app.DriveApplication;
+import com.pileproject.drive.programming.visual.block.repetition.RepetitionBreakBlock;
 import com.pileproject.drive.programming.visual.block.repetition.RepetitionEndBlock;
 import com.pileproject.drive.programming.visual.block.selection.SelectionEndBlock;
-import com.pileproject.drive.app.DriveApplication;
 
 import java.lang.reflect.Constructor;
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
+import static com.pileproject.drive.programming.visual.block.BlockCategory.REPETITION;
+import static com.pileproject.drive.programming.visual.block.BlockCategory.SELECTION;
+import static com.pileproject.drive.programming.visual.block.BlockCategory.SEQUENCE;
 
 /**
- * Factory that creates blocks
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * A factory class that creates {@link BlockBase}s.
  */
 public class BlockFactory {
-    private static final String TAG = "BlockFactory";
-    public static final int SEQUENCE = 0;
-    public static final int REPETITION = 1;
-    public static final int SELECTION = 2;
-    public static final int UNDO = 3;
-    public static final int LOAD = 4;
 
-    /**
-     * This class can't be created as an instance
-     */
     private BlockFactory() {
+        throw new AssertionError("This class cannot be instantiated");
     }
 
-    /**
-     * Return class by name
-     *
-     * @param className
-     * @return Class
-     */
-    @SuppressWarnings("unchecked")
-    private static <T> Class<T> getClassForName(String className) throws RuntimeException {
+    private static <T extends BlockBase> Class<T> getClassForName(String className) throws RuntimeException {
         try {
-            return (Class<T>) Class.forName(className);
+            @SuppressWarnings("unchecked")
+            Class<T> clazz = (Class<T>) Class.forName(className);
+            return clazz;
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Invalid class name '" + className + "'", e);
         }
     }
 
-    /**
-     * Create blocks by reflecting
-     *
-     * @param blockName
-     * @return
-     */
-    private static BlockBase create(String blockName) {
-
-        // Get class
-        Class<BlockBase> blockClass = null;
+    private static BlockBase create(Class<? extends BlockBase> blockClass) throws RuntimeException {
         try {
-            blockClass = getClassForName(blockName);
-        } catch (RuntimeException e) {
-            Log.e(TAG, e.getMessage());
+            Constructor<? extends BlockBase> constructor = blockClass.getConstructor(Context.class);
+            return constructor.newInstance(DriveApplication.getContext());
+        } catch (Exception e) {
+            // there's no way to recover. let App die.
+            throw new RuntimeException("Failed to instantiate " + blockClass, e);
         }
+    }
 
-        // Get constructor
-        Class<?>[] types = {Context.class};
-        Constructor<BlockBase> constructor;
-        try {
-            constructor = blockClass.getConstructor(types);
-        } catch (SecurityException | NoSuchMethodException e) {
-            throw new RuntimeException(e);
-        }
+    private static List<BlockBase> createSequenceBlock(Class<? extends BlockBase> blockClass) {
+        return Collections.singletonList(create(blockClass));
+    }
 
-        // Create a new instance
-        Object[] args = {DriveApplication.getContext()};
-        BlockBase b;
-        try {
-            b = constructor.newInstance(args);
-        } catch (IllegalArgumentException e) {
-            throw new RuntimeException(e);
-        } catch (InstantiationException e) {
-            throw new RuntimeException(e);
-        } catch (IllegalAccessException e) {
-            throw new RuntimeException(e);
-        } catch (InvocationTargetException e) {
-            throw new RuntimeException(e);
+    private static List<BlockBase> createRepetitionBlock(Class<? extends BlockBase> blockClass) {
+        if (blockClass == RepetitionBreakBlock.class) {
+            return Collections.singletonList(create(blockClass));
+        } else {
+            return Arrays.asList(new RepetitionEndBlock(DriveApplication.getContext()), create(blockClass));
         }
-        return b;
+    }
+
+    private static List<BlockBase> createSelectionBlock(Class<? extends BlockBase> blockClass) {
+        return Arrays.asList(new SelectionEndBlock(DriveApplication.getContext()), create(blockClass));
     }
 
     /**
-     * Create a sequence block
+     * Returns one or two instances of block whose class is <code>blockName</code>.
+     * Type of block can be specified with @{howToMake}, which also determines the number
+     * of blocks this function returns.
      *
-     * @param blockName
-     * @return
+     * @param blockCategory the type of block which must be one of {@link BlockCategory#SEQUENCE},
+     *                  {@link BlockCategory#REPETITION}, or {@link BlockCategory#SELECTION}
+     * @param blockName the class name of the block to be created
+     * @return the list of blocks whose first element is an if-end block
+     *                  if block type is {@link BlockCategory#SELECTION} or
+     *                  {@link BlockCategory#REPETITION}
+     * @exception RuntimeException if <code>blockName</code> is not supported block class name
+     * @exception IllegalArgumentException if <code>blockCategory</code> is none of the values in {@link BlockCategory}
      */
-    private static ArrayList<BlockBase> createSequenceBlock(String blockName) {
-        ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = create(blockName);
-        blocks.add(b);
-        return blocks;
-    }
+    @NonNull
+    public static List<BlockBase> createBlocks(@BlockCategory int blockCategory, @NonNull String blockName) {
 
-    /**
-     * create a repetition block and an end block
-     *
-     * @param blockName
-     * @return
-     */
-    private static ArrayList<BlockBase> createRepetitionBlock(
-            String blockName) {
-        ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = new RepetitionEndBlock(DriveApplication.getContext()); // Add
-        // RepetitionEndBlock
-        blocks.add(b);
-        b = create(blockName);
-        blocks.add(b);
-        return blocks;
-    }
+        Class<? extends BlockBase> blockClass = getClassForName(blockName);
 
-    /**
-     * Create a selection block and an end block
-     *
-     * @param blockName
-     * @return
-     */
-    private static ArrayList<BlockBase> createSelectionBlock(String blockName) {
-        ArrayList<BlockBase> blocks = new ArrayList<>();
-        BlockBase b = new SelectionEndBlock(DriveApplication.getContext()); // Add RepetitionEndBlock
-        blocks.add(b);
-        b = create(blockName);
-        blocks.add(b);
-        return blocks;
-    }
+        switch (blockCategory) {
+            case SEQUENCE: {
+                return createSequenceBlock(blockClass);
+            }
 
-    public static ArrayList<BlockBase> createBlocks(int howToMake, String blockName) {
-        ArrayList<BlockBase> blocks = null;
-        if (howToMake == SEQUENCE) {
-            blocks = createSequenceBlock(blockName);
-        } else if (howToMake == REPETITION) {
-            blocks = createRepetitionBlock(blockName);
-        } else if (howToMake == SELECTION) {
-            blocks = createSelectionBlock(blockName);
-        } else if (howToMake == UNDO || howToMake == LOAD) {
-            // When users undo or load their program, this app should create
-            // a block. It is the same way when in which app makes sequence
-            // block
-            blocks = createSequenceBlock(blockName);
+            case REPETITION: {
+                return createRepetitionBlock(blockClass);
+            }
+
+            case SELECTION: {
+                return createSelectionBlock(blockClass);
+            }
         }
-        return blocks;
+
+        throw new IllegalArgumentException("blockCategory must be one of @BlockCategory; the argument was " + blockCategory);
+    }
+
+    /**
+     * Returns a block instance whose class is <code>blockName</code>.
+     *
+     * @param blockName the class name of the block to be created
+     * @return a {@link BlockBase} instance
+     * @exception RuntimeException if <code>blockName</code> is not supported block class name
+     */
+    @NonNull
+    public static BlockBase createBlock(@NonNull String blockName) {
+        Class<? extends BlockBase> blockClass = getClassForName(blockName);
+
+        return create(blockClass);
     }
 }

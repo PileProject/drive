@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,47 +13,46 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.programming.visual.block;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
+import android.view.LayoutInflater;
 import android.widget.RelativeLayout;
 
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.machine.MachineController;
 
 /**
- * BaseBlock
+ * A base class of all blocks. This class is a custom view extended from {@link RelativeLayout}.
  *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
  */
 public abstract class BlockBase extends RelativeLayout {
-    public int left;
-    public int top;
-    public int right;
-    public int bottom;
 
-    public BlockBase(Context context) {
+    public BlockBase(Context context, @LayoutRes int layoutRes) {
         super(context);
+
+        LayoutInflater.from(context).inflate(layoutRes, this);
     }
 
     /**
-     * Action that this block does while the execution of program.
-     * Return delay that occurs after this action
-     * on the millisecond time scale.
+     * Returns the kind of this block.
+     *
+     * @return {@link BlockKind}
+     */
+    public abstract BlockKind getKind();
+
+    /**
+     * Does an action that this block does while the execution of program and
+     * returns delay that occurs after this action in millisecond.
      *
      * @param controller Controller of Device
      * @param condition  Condition of the executing program
-     * @return
+     * @return the delay after the action of this block in millisecond
      */
-    public abstract int action(
-            MachineController controller, ExecutionCondition condition);
+    public abstract int action(MachineController controller, ExecutionCondition condition);
 
-    /**
-     * Return class to check a program is correct or not
-     *
-     * @return Class<? extends BaseBlock>
-     */
-    public abstract Class<? extends BlockBase> getKind();
+    public enum BlockKind {
+        SEQUENCE, SELECTION_BEGIN, SELECTION_END, REPETITION_BEGIN, REPETITION_END, REPETITION_BREAK
+    }
 }

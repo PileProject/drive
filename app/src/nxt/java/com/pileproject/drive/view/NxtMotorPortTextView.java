@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.view;
 
 import android.content.Context;
@@ -21,43 +20,60 @@ import android.graphics.Color;
 import android.util.AttributeSet;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.execution.NxtController;
+import com.pileproject.drive.preferences.MachinePreferences;
 
-public class NxtMotorPortTextView extends PortTextView {
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.LEFT_MOTOR;
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.NONE;
+import static com.pileproject.drive.machine.CarControllerBase.OutputDevice.RIGHT_MOTOR;
+
+/**
+ * An implementation of {@link PortTextViewBase} which represents the port of motors of LEGO MINDSTORMS NXT.
+ */
+public class NxtMotorPortTextView extends PortTextViewBase {
 
     public NxtMotorPortTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public static String getMotorName(Context context, int attachmentType) {
-        switch (attachmentType) {
-            case NxtController.MotorProperty.MOTOR_LEFT:
-                return context.getString(R.string.motors_left);
-            case NxtController.MotorProperty.MOTOR_RIGHT:
-                return context.getString(R.string.motors_right);
-        }
+    public static String getMotorName(Context context, String motorType) {
+        if (LEFT_MOTOR.equals(motorType)) return context.getString(R.string.motors_left);
+        if (RIGHT_MOTOR.equals(motorType)) return context.getString(R.string.motors_right);
         return "";
     }
 
-    public static int getMotorColor(int motorType) {
-        switch (motorType) {
-            case NxtController.MotorProperty.MOTOR_LEFT:
-                return Color.rgb(70, 89, 183);
-            case NxtController.MotorProperty.MOTOR_RIGHT:
-                return Color.rgb(214, 133, 52);
-        }
+    public static int getMotorColor(String motorType) {
+        if (LEFT_MOTOR.equals(motorType)) return Color.rgb(70, 89, 183);
+        if (RIGHT_MOTOR.equals(motorType)) return Color.rgb(214, 133, 52);
         return Color.GRAY;
     }
 
     @Override
-    public int getAttachmentType() {
-        return mAttachmentType;
+    protected void savePortConnection(String port, String device) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortA).equals(port)) p.setOutputPortA(device);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortB).equals(port)) p.setOutputPortB(device);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortC).equals(port)) p.setOutputPortC(device);
     }
 
     @Override
-    public void setAttachmentType(int attachmentType) {
-        mAttachmentType = attachmentType;
-        this.setText(getMotorName(mContext, attachmentType));
-        this.setBackgroundColor(getMotorColor(attachmentType));
+    protected void removePortConnection(String port) {
+        final Context c = getContext();
+        final MachinePreferences p = MachinePreferences.get(c);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortA).equals(port)) p.setOutputPortA(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortB).equals(port)) p.setOutputPortB(NONE);
+        if (c.getString(R.string.setting_portConnection_deviceMotorPortC).equals(port)) p.setOutputPortC(NONE);
+    }
+
+    @Override
+    public String getDeviceType() {
+        return mDeviceType;
+    }
+
+    @Override
+    public void setDeviceType(String deviceType) {
+        mDeviceType = deviceType;
+        this.setText(getMotorName(getContext(), deviceType));
+        this.setBackgroundColor(getMotorColor(deviceType));
     }
 }

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,19 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.setting.app;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.app.Fragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.DialogFragment;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.Button;
@@ -34,31 +34,50 @@ import android.widget.ListView;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.database.ProgramDataManager;
+import com.pileproject.drive.util.fragment.AlertDialogFragment;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ProgramListFragment extends Fragment {
+/**
+ * A fragment for showing the list of programs. This fragment will be used by {@link ProgramListPreference}.
+ */
+public class ProgramListFragment extends DialogFragment implements AlertDialogFragment.EventListener {
     private ProgramDataManager mManager;
     private Button mDeleteButton;
 
-    // 0 : Sample Programs, 1 : User Programs
+    // 0 : sample programs, 1 : user programs
+    private static final int SAMPLE_PROGRAM = 0;
+    private static final int USER_PROGRAM = 1;
     private static final int NUM_PROGRAM_KINDS = 2;
+
     private Button[] mProgramsCheckAllButton = new Button[NUM_PROGRAM_KINDS];
     private ListView[] mProgramListView = new ListView[NUM_PROGRAM_KINDS];
     private ProgramDataAdapter[] mProgramDataAdapter = new ProgramDataAdapter[2];
     private ArrayList<Map<String, Boolean>> mCheckedPrograms = new ArrayList<>();
 
+    public ProgramListFragment() {
+        // required empty constructor
+    }
+
     @Override
-    public View onCreateView(
-            LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @NonNull
+    public Dialog onCreateDialog(Bundle savedInstanceState) {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setTitle(R.string.setting_programList);
+
+        return dialog;
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         super.onCreateView(inflater, container, savedInstanceState);
-        View v = inflater.inflate(R.layout.fragment_programlist, container, false);
+        View v = inflater.inflate(R.layout.fragment_program_list, container, false);
 
         // create ProgramDataManager to list programs
-        mManager = new ProgramDataManager(getActivity());
+        mManager = ProgramDataManager.getInstance();
 
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
         mCheckedPrograms.add(new LinkedHashMap<String, Boolean>());
@@ -85,11 +104,17 @@ public class ProgramListFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        resizeDialog();
 
         mDeleteButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ConfirmDialogFragment().show(getFragmentManager(), "confirmation");
+                new AlertDialogFragment.Builder(ProgramListFragment.this)
+                        .setTitle(R.string.confirmation)
+                        .setMessage(getString(R.string.delete, generateProgramNamesToBeDeleted()))
+                        .setPositiveButtonLabel(android.R.string.ok)
+                        .setNegativeButtonLabel(android.R.string.cancel)
+                        .show();
             }
         });
 
@@ -118,13 +143,32 @@ public class ProgramListFragment extends Fragment {
         }
     }
 
+    /**
+     * This function should be called in {@link DialogFragment#onActivityCreated(Bundle)}.
+     * Otherwise, the dialog size will never be changed.
+     */
+    private void resizeDialog() {
+        Dialog dialog = getDialog();
+
+        DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+        // resize window large enough to display list views
+        int dialogWidth = (int) (metrics.widthPixels * 0.8);
+        int dialogHeight = (int) (metrics.heightPixels * 0.6);
+
+        WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+        lp.width = dialogWidth;
+        lp.height = dialogHeight;
+        dialog.getWindow().setAttributes(lp);
+    }
+
     private void initializeProgramDataAdapter() {
         for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             mCheckedPrograms.get(dataId).clear();
 
             // items are categorized into 2 parts; samples and user programs.
-            String[] programNames = mManager.loadSavedProgramNames(dataId == 0);
-
+            ArrayList<String> programNames =
+                    (dataId == SAMPLE_PROGRAM) ? mManager.loadSampleProgramNames() : mManager.loadUserProgramNames();
             // create an adapter for ListView
             List<ProgramData> data = new ArrayList<>();
             for (String programName : programNames) {
@@ -168,7 +212,6 @@ public class ProgramListFragment extends Fragment {
                 if (sb.length() > 0) {
                     sb.append(separator);
                 }
-
                 sb.append(e.getKey());
             }
         }
@@ -176,13 +219,19 @@ public class ProgramListFragment extends Fragment {
     }
 
     private void deletePrograms() {
-        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
+        for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; ++dataId) {
             for (Map.Entry<String, Boolean> e : mCheckedPrograms.get(dataId).entrySet()) {
                 if (e.getValue()) {
-                    mManager.deleteProgramByName(e.getKey(), true);
+                    if (dataId == SAMPLE_PROGRAM) { // sample programs
+                        mManager.deleteSampleProgram(e.getKey());
+                    }
+                    else /* if (dataId == USER_PROGRAM) */ { // user programs
+                        mManager.deleteUserProgram(e.getKey());
+                    }
                 }
             }
         }
+
         initializeProgramDataAdapter(); // reinitialize data
         for (int dataId = 0; dataId < NUM_PROGRAM_KINDS; dataId++) {
             mProgramListView[dataId].setAdapter(mProgramDataAdapter[dataId]);
@@ -190,22 +239,15 @@ public class ProgramListFragment extends Fragment {
         }
     }
 
-    public class ConfirmDialogFragment extends DialogFragment {
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the Builder class for convenient dialog construction
-            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-            builder.setTitle(R.string.confirmation)
-                    .setMessage(getString(R.string.delete, generateProgramNamesToBeDeleted()))
-                    .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                                           @Override
-                                           public void onClick(
-                                                   DialogInterface dialog, int which) {
-                                               deletePrograms();
-                                           }
-                                       })
-                    .setNegativeButton(R.string.cancel, null);
-            return builder.create();
+    @Override
+    public void onDialogEventHandled(int requestCode, DialogInterface dialog, int which, Bundle params) {
+        if (which == DialogInterface.BUTTON_POSITIVE) {
+            deletePrograms();
         }
+    }
+
+    @Override
+    public void onDialogEventCancelled(int requestCode, DialogInterface dialog, Bundle params) {
+
     }
 }

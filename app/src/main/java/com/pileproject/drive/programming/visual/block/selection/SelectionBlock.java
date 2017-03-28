@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,27 +13,35 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
+import android.support.annotation.LayoutRes;
 
+import com.pileproject.drive.execution.ExecutionCondition;
+import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * SelectionBlock
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
+ * A base block for selection operations.
  */
 public abstract class SelectionBlock extends BlockBase {
 
-    public SelectionBlock(Context context) {
-        super(context);
+    public SelectionBlock(Context context, @LayoutRes int layoutRes) {
+        super(context, layoutRes);
+    }
+
+    protected abstract boolean evaluateCondition(MachineController controller);
+
+    @Override
+    public final BlockKind getKind() {
+        return BlockKind.SELECTION_BEGIN;
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return SelectionBlock.class;
+    public final int action(MachineController controller, ExecutionCondition condition) {
+        condition.pushSelectionResult(evaluateCondition(controller));
+        return 0;
     }
+
 }

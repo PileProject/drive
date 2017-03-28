@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.programming.visual.layout;
 
 import android.content.Context;
@@ -26,52 +25,52 @@ import android.widget.ImageView;
 import com.pileproject.drive.R;
 
 /**
- * Layout for making programs
- *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 18-June-2013
+ * A layout where blocks will be placed.
  */
 public class BlockSpaceLayout extends FrameLayout {
     private ImageView mTrashBox;
     private int mDefaultChildrenNum;
-    private static final int MARGINE = 20;
+    private static final int MARGIN = 20;
 
     public BlockSpaceLayout(Context context, AttributeSet attr) {
         super(context, attr);
         View layout = LayoutInflater.from(context).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
+
+        // keep the number of default children
+        // because it is necessary to reset this view (clear all and add default views)
         mDefaultChildrenNum = getChildCount();
     }
 
     /**
-     * Check a block is on the trash box or not
+     * Checks the block is on the trash box or not.
      *
-     * @param view a block
-     * @return boolean
-     * true - a block is on the trash box, false - otherwise
+     * @param view the target block to be checked
+     * @return a block is on the trash box (true), or not (false)
      */
     public boolean isOnTrash(View view) {
-        return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + MARGINE &&
+        return view.getLeft() > mTrashBox.getLeft() - view.getWidth() + MARGIN &&
                 view.getLeft() < mTrashBox.getRight() &&
-                view.getTop() > mTrashBox.getTop() - view.getHeight() + MARGINE &&
+                view.getTop() > mTrashBox.getTop() - view.getHeight() + MARGIN &&
                 view.getTop() < mTrashBox.getBottom();
     }
 
     /**
-     * Remove all views attached to this layout, then add a trash box imageView
+     * Removes all the views attached to this layout, then add default views (a trash box).
      */
     @Override
     public void removeAllViews() {
         super.removeAllViews();
-        // Reload layout because this layout needs a trash box
+
+        // reload layout to add a trash box to this layout
         View layout = LayoutInflater.from(getContext()).inflate(R.layout.layout_block_space, this);
         mTrashBox = (ImageView) layout.findViewById(R.id.placing_block_space_trash);
     }
 
     /**
-     * Return the number of default children
+     * Returns the number of default children. This value will be used to reinit this layout.
      *
-     * @return
+     * @return the number of default children (e.g., a trash box)
      */
     public int getDefaultChildrenCount() {
         return mDefaultChildrenNum;
@@ -79,19 +78,19 @@ public class BlockSpaceLayout extends FrameLayout {
 
     @Override
     protected void onLayout(boolean changed, int l, int t, int r, int b) {
-
         int count = getChildCount();
         for (int i = 0; i < count; i++) {
             View child = getChildAt(i);
-
-            if (child.getVisibility() != GONE) { // Haven't been gone
-                // a new view
+            if (child.getVisibility() != GONE) { // this block haven't been gone
+                // a new block has no width and height
                 if (child.getLeft() == child.getRight() && child.getTop() == child.getBottom()) {
+                    // calculate the bounding box of this block
                     child.layout(child.getLeft(),
                                  child.getTop(),
                                  child.getLeft() + child.getMeasuredWidth(),
                                  child.getTop() + child.getMeasuredHeight());
                 } else {
+                    // just move to the current position
                     child.layout(child.getLeft(), child.getTop(), child.getRight(), child.getBottom());
                 }
             }

@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,47 +13,118 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.setting;
 
-import android.preference.PreferenceActivity;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.CheckBoxPreference;
+import android.support.v7.preference.DialogPreference;
+import android.support.v7.preference.Preference;
+import android.support.v7.preference.PreferenceFragmentCompat;
+import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 
 import com.pileproject.drive.R;
-
-import java.util.List;
+import com.pileproject.drive.preferences.CommonPreferences;
 
 /**
- * Setting activity
- * <p/>
- * This activity contains setting fragments
- *
- * @author yusaku
- * @version 1.0 4-June-2013
+ * An activity for settings. This activity contains some fragments for preferences.
  */
-public class SettingActivity extends PreferenceActivity {
+public class SettingActivity extends AppCompatActivity {
 
     @Override
-    public void onBuildHeaders(List<Header> target) {
-        super.onBuildHeaders(target);
-        // add back button to header list
-        Header backHeader = new Header();
-        backHeader.id = R.string.back;
-        backHeader.titleRes = R.string.back;
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_setting);
 
-        target.add(backHeader);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.setting_toolbar);
+        toolbar.setTitle(R.string.setting_label);
+        toolbar.setNavigationIcon(R.drawable.abc_ic_ab_back_mtrl_am_alpha);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.setting_content, new SettingFragment())
+                .commit();
     }
 
     @Override
-    public void onHeaderClick(Header header, int position) {
-        if (header.id == R.string.back) {
-            finish();
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                onBackPressed();
+                break;
         }
 
-        super.onHeaderClick(header, position);
+        return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    protected boolean isValidFragment(String fragmentName) {
-        return false;
+    public static Intent createIntent(Context context) {
+        return new Intent(context, SettingActivity.class);
+    }
+
+    /**
+     * A fragment of preferences.
+     */
+    public static class SettingFragment extends PreferenceFragmentCompat {
+
+        private CheckBoxPreference mSupervisorPreference;
+
+        @Override
+        public void onCreatePreferences(Bundle bundle, String s) {
+            addPreferencesFromResource(R.xml.preferences);
+        }
+
+        @Override
+        public void onDisplayPreferenceDialog(Preference preference) {
+            if (preference instanceof DialogPreferenceInterface) {
+                ((DialogPreferenceInterface) preference).startDialog(this);
+                return;
+            }
+
+            super.onDisplayPreferenceDialog(preference);
+        }
+
+        @Override
+        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+            mSupervisorPreference = (CheckBoxPreference) getPreferenceManager().findPreference("supervisor_preference");
+            mSupervisorPreference.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+
+                @Override
+                public boolean onPreferenceChange(Preference preference, Object newValue) {
+                    CommonPreferences.get(getActivity()).setSupervisorMode((boolean) newValue);
+
+                    // newValue is not set to the component (e.g., checkbox) if return false
+                    return true;
+                }
+            });
+
+            return super.onCreateView(inflater, container, savedInstanceState);
+        }
+    }
+
+    /**
+     * An interface for dialog-based preferences which extend {@link DialogPreference}.
+     * {@link DialogPreference} used in {@link SettingFragment} should implement this interface.
+     */
+    public interface DialogPreferenceInterface {
+
+        /**
+         * Called in {@link SettingFragment#onDisplayPreferenceDialog(Preference)}.
+         * The function should show a fragment which represents the preference of this class.
+         *
+         * @param parent the parent fragment which should be an instance of {@link SettingFragment}
+         */
+        void startDialog(PreferenceFragmentCompat parent);
     }
 }

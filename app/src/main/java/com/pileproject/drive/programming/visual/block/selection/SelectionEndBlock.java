@@ -1,5 +1,5 @@
-/*
- * Copyright (C) 2011-2015 PILE Project, Inc. <dev@pileproject.com>
+/**
+ * Copyright (C) 2011-2017 The PILE Developers <pile-dev@googlegroups.com>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,42 +13,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package com.pileproject.drive.programming.visual.block.selection;
 
 import android.content.Context;
-import android.view.LayoutInflater;
 
 import com.pileproject.drive.R;
 import com.pileproject.drive.execution.ExecutionCondition;
-import com.pileproject.drive.execution.MachineController;
+import com.pileproject.drive.machine.MachineController;
 import com.pileproject.drive.programming.visual.block.BlockBase;
 
 /**
- * This block is the end of if commands
+ * A block that represents the end of selection operations.
  *
- * @author <a href="mailto:tatsuyaw0c@gmail.com">Tatsuya Iwanari</a>
- * @version 1.0 7-July-2013
  */
 public class SelectionEndBlock extends BlockBase {
 
     public SelectionEndBlock(Context context) {
-        super(context);
-        LayoutInflater.from(context).inflate(R.layout.block_selection_end, this);
+        super(context, R.layout.block_selection_end);
     }
 
     @Override
-    public Class<? extends BlockBase> getKind() {
-        return SelectionEndBlock.class;
+    public BlockKind getKind() {
+        return BlockKind.SELECTION_END;
     }
 
     @Override
-    public int action(
-            MachineController controller, ExecutionCondition condition) {
+    public int action(MachineController controller, ExecutionCondition condition) {
         // just pop one
-        if (!condition.ifStack.isEmpty()) {
-            condition.ifStack.pop();
-        }
+        condition.popSelectionResult();
         return 0;
     }
 }
