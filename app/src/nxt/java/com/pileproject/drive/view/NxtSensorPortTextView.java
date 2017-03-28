@@ -22,7 +22,7 @@ import android.util.AttributeSet;
 import com.pileproject.drive.R;
 import com.pileproject.drive.preferences.MachinePreferences;
 
-import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LIGHT;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.NONE;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
@@ -39,14 +39,14 @@ public class NxtSensorPortTextView extends PortTextViewBase {
     public static String getSensorName(Context context, String sensorType) {
         if (TOUCH.equals(sensorType)) return context.getString(R.string.sensors_touch);
         if (SOUND.equals(sensorType)) return context.getString(R.string.sensors_sound);
-        if (LINE.equals(sensorType)) return context.getString(R.string.sensors_line);
+        if (LIGHT.equals(sensorType)) return context.getString(R.string.sensors_light);
         return "";
     }
 
     public static int getSensorColor(String sensorType) {
         if (TOUCH.equals(sensorType)) return Color.rgb(50, 142, 183);
         if (SOUND.equals(sensorType)) return Color.rgb(65, 163, 86);
-        if (LINE.equals(sensorType)) return Color.rgb(221, 86, 82);
+        if (LIGHT.equals(sensorType)) return Color.rgb(221, 86, 82);
         return Color.GRAY;
     }
 

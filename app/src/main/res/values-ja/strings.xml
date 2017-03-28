@@ -41,7 +41,7 @@
     <!-- Input Devices -->
     <string name="sensors.color">カラー</string>
     <string name="sensors.gyro">ジャイロ</string>
-    <string name="sensors.line">光</string>
+    <string name="sensors.light">光</string>
     <string name="sensors.rangefinder">測距</string>
     <string name="sensors.remote_control_receiver">リモートコントロールレシーバ</string>
     <string name="sensors.sound">音</string>

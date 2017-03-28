@@ -18,7 +18,7 @@ package com.pileproject.drive.machine;
 import com.pileproject.drivecommand.machine.MachineBase;
 import com.pileproject.drivecommand.machine.device.input.ColorSensor;
 import com.pileproject.drivecommand.machine.device.input.GyroSensor;
-import com.pileproject.drivecommand.machine.device.input.LineSensor;
+import com.pileproject.drivecommand.machine.device.input.LightSensor;
 import com.pileproject.drivecommand.machine.device.input.Rangefinder;
 import com.pileproject.drivecommand.machine.device.input.RemoteControlReceiver;
 import com.pileproject.drivecommand.machine.device.input.SoundSensor;
@@ -65,7 +65,7 @@ public abstract class CarControllerBase implements MachineController {
 
     protected ColorSensor mColorSensor;
     protected GyroSensor mGyroSensor;
-    protected LineSensor mLineSensor;
+    protected LightSensor mLightSensor;
     protected Rangefinder mRangefinder;
     protected RemoteControlReceiver mRemoteControlReceiver;
     protected SoundSensor mSoundSensor;
@@ -82,7 +82,7 @@ public abstract class CarControllerBase implements MachineController {
         public static final String NONE = "none";
         public static final String COLOR = "color_sensor";
         public static final String GYRO = "gyro_sensor";
-        public static final String LINE = "line_sensor";
+        public static final String LIGHT = "light_sensor";
         public static final String RANGEFINDER = "rangefinder";
         public static final String REMOTE_CONTROL_RECEIVER = "remote_control_receiver";
         public static final String SOUND = "sound_sensor";
@@ -183,14 +183,14 @@ public abstract class CarControllerBase implements MachineController {
     }
 
     /**
-     * Gets the light strength from a {@link LineSensor}.
+     * Gets the light strength from a {@link LightSensor}.
      *
      * @return the light strength
      * @exception UnsupportedOperationException
      *              if the sensor is unsupported by this machine
      */
-    public int getLineSensorValue() {
-        throw new UnsupportedOperationException("This machine does not support 'getLineSensorValue' command");
+    public int getLightSensorValue() {
+        throw new UnsupportedOperationException("This machine does not support 'getLightSensorValue' command");
     }
 
     /**
@@ -420,7 +420,7 @@ public abstract class CarControllerBase implements MachineController {
         if (InputDevice.NONE.equals(sensorType)) return ;
         if (InputDevice.COLOR.equals(sensorType)) mColorSensor = mMachine.createColorSensor(port);
         if (InputDevice.GYRO.equals(sensorType)) mGyroSensor = mMachine.createGyroSensor(port);
-        if (InputDevice.LINE.equals(sensorType)) mLineSensor = mMachine.createLineSensor(port);
+        if (InputDevice.LIGHT.equals(sensorType)) mLightSensor = mMachine.createLightSensor(port);
         if (InputDevice.RANGEFINDER.equals(sensorType)) mRangefinder = mMachine.createRangefinder(port);
         if (InputDevice.REMOTE_CONTROL_RECEIVER.equals(sensorType))
             mRemoteControlReceiver = mMachine.createRemoteControlReceiver(port);

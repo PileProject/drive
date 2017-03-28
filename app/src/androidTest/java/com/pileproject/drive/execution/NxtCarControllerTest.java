@@ -19,7 +19,7 @@ import android.support.test.runner.AndroidJUnit4;
 
 import com.pileproject.drive.machine.CarControllerBase;
 import com.pileproject.drive.machine.NxtCarController;
-import com.pileproject.drivecommand.machine.device.input.LineSensor;
+import com.pileproject.drivecommand.machine.device.input.LightSensor;
 import com.pileproject.drivecommand.machine.device.input.SoundSensor;
 import com.pileproject.drivecommand.machine.device.input.TouchSensor;
 import com.pileproject.drivecommand.machine.device.output.Motor;
@@ -50,7 +50,7 @@ public class NxtCarControllerTest {
 
     @Mock TouchSensor touchSensor;
     @Mock SoundSensor soundSensor;
-    @Mock LineSensor lineSensor;
+    @Mock LightSensor lightSensor;
 
     @Mock Motor leftMotor;
     @Mock Motor rightMotor;
@@ -62,7 +62,7 @@ public class NxtCarControllerTest {
 
         touchSensor = mock(TouchSensor.class);
         soundSensor = mock(SoundSensor.class);
-        lineSensor = mock(LineSensor.class);
+        lightSensor = mock(LightSensor.class);
 
         leftMotor = mock(Motor.class);
         rightMotor = mock(Motor.class);
@@ -116,18 +116,18 @@ public class NxtCarControllerTest {
     }
 
     @Test
-    public void whenLineSensorIsNull_thenReturnNegative() throws Exception {
-        Whitebox.setInternalState(controller, "mLineSensor", null);
+    public void whenLightSensorIsNull_thenReturnNegative() throws Exception {
+        Whitebox.setInternalState(controller, "mLightSensor", null);
 
-        assertEquals(controller.getLineSensorValue(), -1);
+        assertEquals(controller.getLightSensorValue(), -1);
     }
 
     @Test
-    public void whenLineSensorIsNotNull_thenReturnProperValue() throws Exception {
-        Whitebox.setInternalState(controller, "mLineSensor", lineSensor);
-        doReturn(20).when(lineSensor).getSensorValue();
+    public void whenLightSensorIsNotNull_thenReturnProperValue() throws Exception {
+        Whitebox.setInternalState(controller, "mLightSensor", lightSensor);
+        doReturn(20).when(lightSensor).getSensorValue();
 
-        assertEquals(20, controller.getLineSensorValue());
+        assertEquals(20, controller.getLightSensorValue());
     }
 
     @Test

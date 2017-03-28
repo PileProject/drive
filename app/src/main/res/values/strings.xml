@@ -41,7 +41,7 @@
     <!-- Input Devices -->
     <string name="sensors.color">Color</string>
     <string name="sensors.gyro">Gyro</string>
-    <string name="sensors.line">Line</string>
+    <string name="sensors.light">Light</string>
     <string name="sensors.rangefinder">Rangefinder</string>
     <string name="sensors.remote_control_receiver">Remote Control Receiver</string>
     <string name="sensors.sound">Sound</string>

@@ -29,7 +29,7 @@ import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.TextView;
 
 import com.pileproject.drive.R;
-import com.pileproject.drive.machine.NxtCarController.SensorProperty.LineSensor;
+import com.pileproject.drive.machine.NxtCarController.SensorProperty.LightSensor;
 import com.pileproject.drive.machine.NxtCarController.SensorProperty.SoundSensor;
 import com.pileproject.drive.preferences.BlockPreferences;
 
@@ -37,7 +37,7 @@ import com.pileproject.drive.preferences.BlockPreferences;
  * A fragment for setting the thresholds of devices. This fragment will be used by {@link NxtThresholdPreference}.
  */
 public class NxtThresholdFragment extends DialogFragment {
-    public static final int LINE_DEFAULT_THRESHOLD = 50;
+    public static final int LIGHT_DEFAULT_THRESHOLD = 50;
     public static final int SOUND_DEFAULT_THRESHOLD = 70;
 
     private SeekBar mLightSensorSeekBar;
@@ -79,7 +79,7 @@ public class NxtThresholdFragment extends DialogFragment {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 mLightSensorText.setText(getString(R.string.setting_threshold_unit_percent,
-                                                   progress + LineSensor.PctMin));
+                                                   progress + LightSensor.PctMin));
             }
 
             @Override
@@ -89,13 +89,13 @@ public class NxtThresholdFragment extends DialogFragment {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 BlockPreferences.get(getActivity())
-                        .setLineSensorThreshold(seekBar.getProgress() + LineSensor.PctMin);
+                        .setLightSensorThreshold(seekBar.getProgress() + LightSensor.PctMin);
             }
         });
 
-        int savedLightValue = BlockPreferences.get(getActivity()).getLineSensorThreshold(LINE_DEFAULT_THRESHOLD);
-        mLightSensorSeekBar.setMax(LineSensor.PctMax - LineSensor.PctMin);
-        mLightSensorSeekBar.setProgress(savedLightValue - LineSensor.PctMin);
+        int savedLightValue = BlockPreferences.get(getActivity()).getLightSensorThreshold(LIGHT_DEFAULT_THRESHOLD);
+        mLightSensorSeekBar.setMax(LightSensor.PctMax - LightSensor.PctMin);
+        mLightSensorSeekBar.setProgress(savedLightValue - LightSensor.PctMin);
 
         mSoundSensorSeekBar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override

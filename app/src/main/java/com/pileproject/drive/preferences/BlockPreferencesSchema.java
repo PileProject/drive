@@ -34,8 +34,8 @@ public class BlockPreferencesSchema {
     @Key(name = "gyro_sensor_angle_threshold")
     int gyroSensorAngleThreshold;
 
-    @Key(name = "line_sensor_threshold")
-    int lineSensorThreshold;
+    @Key(name = "light_sensor_threshold")
+    int lightSensorThreshold;
 
     @Key(name = "rangefinder_sensor_threshold")
     int rangefinderThreshold;

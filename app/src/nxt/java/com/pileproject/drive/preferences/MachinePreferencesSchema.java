@@ -44,7 +44,7 @@ public class MachinePreferencesSchema {
     final String inputPort2 = CarControllerBase.InputDevice.SOUND;
 
     @Key(name = "input_port_3")
-    final String inputPort3 = CarControllerBase.InputDevice.LINE;
+    final String inputPort3 = CarControllerBase.InputDevice.LIGHT;
 
     @Key(name = "input_port_4")
     final String inputPort4 = CarControllerBase.InputDevice.NONE;

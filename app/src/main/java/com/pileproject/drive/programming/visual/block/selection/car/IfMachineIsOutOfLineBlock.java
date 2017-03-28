@@ -34,11 +34,11 @@ public class IfMachineIsOutOfLineBlock extends SelectionBlock {
     public IfMachineIsOutOfLineBlock(Context context) {
         super(context, R.layout.block_if_machine_is_out_of_line);
 
-        mThreshold = BlockPreferences.get(context).getLineSensorThreshold();
+        mThreshold = BlockPreferences.get(context).getLightSensorThreshold();
     }
 
     @Override
     protected boolean evaluateCondition(MachineController controller) {
-        return ((CarControllerBase) controller).getLineSensorValue() > mThreshold;
+        return ((CarControllerBase) controller).getLightSensorValue() > mThreshold;
     }
 }

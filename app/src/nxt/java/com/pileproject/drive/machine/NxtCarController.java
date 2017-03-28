@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import static com.pileproject.drive.app.DriveApplication.getContext;
-import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LINE;
+import static com.pileproject.drive.machine.CarControllerBase.InputDevice.LIGHT;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.SOUND;
 import static com.pileproject.drive.machine.CarControllerBase.InputDevice.TOUCH;
 import static com.pileproject.drive.preferences.MachinePreferencesSchema.Firmware.LEJOS;
@@ -42,10 +42,10 @@ public class NxtCarController extends CarControllerBase {
         public static final List<String> ALL_SENSORS = Arrays.asList(
                         TOUCH,
                         SOUND,
-                        LINE
+                        LIGHT
                 );
 
-        public static final class LineSensor {
+        public static final class LightSensor {
             public static final int PctMin = 0;
             public static final int PctMax = 100;
         }
@@ -88,9 +88,9 @@ public class NxtCarController extends CarControllerBase {
     }
 
     @Override
-    public int getLineSensorValue() {
-        if (mLineSensor == null) return -1;
-        return mLineSensor.getSensorValue();
+    public int getLightSensorValue() {
+        if (mLightSensor == null) return -1;
+        return mLightSensor.getSensorValue();
     }
 
     @Override
