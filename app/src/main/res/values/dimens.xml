@@ -36,7 +36,7 @@
     <dimen name="block_repetition_break_width">150dp</dimen>
     <dimen name="block_repetition_break_height">50dp</dimen>
 
-    <dimen name="block_content_height">20dp</dimen>
+    <dimen name="block_content_height">22dp</dimen>
     <dimen name="block_content_sec_width">40dp</dimen>
     <dimen name="block_content_percent_width">30dp</dimen>
     <dimen name="block_content_count_width">20dp</dimen>

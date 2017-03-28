@@ -20,7 +20,7 @@
     <dimen name="block_sequence_width">160dp</dimen>
     <dimen name="block_sequence_height">60dp</dimen>
 
-    <dimen name="block_content_height">30dp</dimen>
+    <dimen name="block_content_height">33dp</dimen>
 
-    <dimen name="block_content_character_size">12sp</dimen>
+    <dimen name="block_content_character_size">11sp</dimen>
 </resources>

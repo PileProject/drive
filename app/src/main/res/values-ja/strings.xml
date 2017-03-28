@@ -84,18 +84,18 @@
     <string name="blockList.label">"ブロックリスト: "</string>
     <string name="blockList.howToUse">つかいかた</string>
     <string name="blockList.howToUseBlock">ブロックのつかいかた</string>
-    <string name="blockList.theseBlocksAreUsedLikeThis">はいかのようにつかいます</string>
+    <string name="blockList.theseBlocksAreUsedLikeThis">はこのようにつかいます</string>
 
 
     <!-- Blocks -->
     <!-- Sequence -->
-    <string name="blocks.forwardSec">□びょうすすむ</string>
-    <string name="blocks.backwardSec">□びょうバック</string>
-    <string name="blocks.turnLeftSec">□びょうひだりまわり</string>
-    <string name="blocks.turnRightSec">□びょうみぎまわり</string>
-    <string name="blocks.stopSec">□びょうとまる</string>
-    <string name="blocks.setLeftMotorSpeed">ひだりタイヤせってい</string>
-    <string name="blocks.setRightMotorSpeed">みぎタイヤせってい</string>
+    <string name="blocks.forwardSec">□びょう\nすすむ</string>
+    <string name="blocks.backwardSec">□びょう\nバック</string>
+    <string name="blocks.turnLeftSec">□びょう\nひだりまわり</string>
+    <string name="blocks.turnRightSec">□びょう\nみぎまわり</string>
+    <string name="blocks.stopSec">□びょう\nとまる</string>
+    <string name="blocks.setLeftMotorSpeed">ひだりタイヤパワー</string>
+    <string name="blocks.setRightMotorSpeed">みぎタイヤパワー</string>
     <!-- Repetition -->
     <string name="blocks.loop">ずっとくりかえす</string>
     <string name="blocks.nTimes">□かいくりかえす</string>
@@ -111,13 +111,13 @@
     <!-- Sequence -->
     <string name="textOnBlocks.contentDefaultSec">0.000</string>
     <string name="textOnBlocks.contentDefaultPercent">0</string>
-    <string name="textOnBlocks.forwardSec">びょうすすむ</string>
-    <string name="textOnBlocks.backwardSec">びょうバック</string>
-    <string name="textOnBlocks.turnLeftSec">びょうひだりまわり</string>
-    <string name="textOnBlocks.turnRightSec">びょうみぎまわり</string>
-    <string name="textOnBlocks.stopSec">びょうとまる</string>
-    <string name="textOnBlocks.rightMotor">みぎタイヤ</string>
-    <string name="textOnBlocks.leftMotor">ひだりタイヤ</string>
+    <string name="textOnBlocks.forwardSec">びょう\nすすむ</string>
+    <string name="textOnBlocks.backwardSec">びょう\nバック</string>
+    <string name="textOnBlocks.turnLeftSec">びょう\nひだりまわり</string>
+    <string name="textOnBlocks.turnRightSec">びょう\nみぎまわり</string>
+    <string name="textOnBlocks.stopSec">びょう\nとまる</string>
+    <string name="textOnBlocks.rightMotor">みぎ\nタイヤ</string>
+    <string name="textOnBlocks.leftMotor">ひだり\nタイヤ</string>
     <!-- Repetition -->
     <string name="textOnBlocks.whileForever">くりかえし</string>
     <string name="textOnBlocks.whileNum">かいくりかえし</string>
