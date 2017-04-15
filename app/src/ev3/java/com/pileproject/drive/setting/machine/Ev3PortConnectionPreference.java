@@ -23,36 +23,33 @@ import android.util.AttributeSet;
 
 import com.pileproject.drive.setting.SettingActivity;
 
-/**
- * A preference for setting the thresholds of devices. This class creates {@link NxtThresholdFragment}.
- */
-public class NxtThresholdPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
+public class Ev3PortConnectionPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
-    private static final String FRAGMENT_TAG = "nxt_threshold_preference";
+    private static final String FRAGMENT_TAG = "ev3_port_connection_preference";
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Ev3PortConnectionPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Ev3PortConnectionPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs) {
+    public Ev3PortConnectionPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NxtThresholdPreference(Context context) {
+    public Ev3PortConnectionPreference(Context context) {
         super(context);
     }
 
     @Override
     public void startDialog(PreferenceFragmentCompat parent) {
-         if (parent.getChildFragmentManager().findFragmentByTag(FRAGMENT_TAG) != null) {
+        if (parent.getChildFragmentManager().findFragmentByTag(FRAGMENT_TAG) != null) {
             return;
         }
 
-        DialogFragment f = new NxtThresholdFragment();
+        DialogFragment f = new Ev3PortConnectionFragment();
         f.setTargetFragment(parent, 0);
 
         // not 'getFragmentManager' because we are creating

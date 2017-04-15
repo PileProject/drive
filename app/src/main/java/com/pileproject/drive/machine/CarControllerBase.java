@@ -38,7 +38,7 @@ import static com.pileproject.drive.machine.CarControllerBase.MotorProperty.INIT
  * This is a base machine controller which controls a car-formed machine (e.g., Nxt/Ev3/Pile robot). A car-formed
  * machine is a machine which has {@link Motor}s (left/right) and arbitrary number of other devices (e.g.,
  * {@link Buzzer}, {@link TouchSensor}). The information (methods/properties) related to such devices other than motors
- * should be treated in child controllers like {@link NxtCarController}.
+ * should be treated in child controllers like <code>NxtCarController</code>.
  *
  * This base class specifies the interface to control a car-formed machine as methods which are the union of
  * methods of child controllers, and provides the list of all input/output devices which may be used (see:
@@ -49,7 +49,7 @@ import static com.pileproject.drive.machine.CarControllerBase.MotorProperty.INIT
  * Because a car-formed machine must have two motors (left/right), this base class has the properties of these
  * motors (see: {@link CarControllerBase.MotorProperty}). However, as mentioned above, the information of other
  * devices should be treated in child controllers. For example, we keep the sensor properties of Nxt as
- * {@link NxtCarController.SensorProperty}.
+ * <code>NxtCarController.SensorProperty</code>.
  *
  * To provide a hint to users, please override {@link #getAllInputDevices()}, {@link #getAllOutputDevices()} in your
  * child classes.

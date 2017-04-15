@@ -24,25 +24,25 @@ import android.util.AttributeSet;
 import com.pileproject.drive.setting.SettingActivity;
 
 /**
- * A preference for setting the thresholds of devices. This class creates {@link NxtThresholdFragment}.
+ * A preference for setting the thresholds of devices. This class creates {@link Ev3ThresholdFragment}.
  */
-public class NxtThresholdPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
+public class Ev3ThresholdPreference extends DialogPreference implements SettingActivity.DialogPreferenceInterface {
 
-    private static final String FRAGMENT_TAG = "nxt_threshold_preference";
+    private static final String FRAGMENT_TAG = "ev3_threshold_preference";
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public Ev3ThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+    public Ev3ThresholdPreference(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 
-    public NxtThresholdPreference(Context context, AttributeSet attrs) {
+    public Ev3ThresholdPreference(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public NxtThresholdPreference(Context context) {
+    public Ev3ThresholdPreference(Context context) {
         super(context);
     }
 
@@ -52,7 +52,7 @@ public class NxtThresholdPreference extends DialogPreference implements SettingA
             return;
         }
 
-        DialogFragment f = new NxtThresholdFragment();
+        DialogFragment f = new Ev3ThresholdFragment();
         f.setTargetFragment(parent, 0);
 
         // not 'getFragmentManager' because we are creating
