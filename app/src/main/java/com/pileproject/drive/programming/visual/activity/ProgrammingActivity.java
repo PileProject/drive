@@ -99,7 +99,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
         String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
 
-        if (address != null || DeployUtil.isOnEmulator()) {
+        if (!address.equals("") || DeployUtil.isOnEmulator()) {
             Intent intent = ExecutionActivity.createIntent(getApplicationContext());
             startActivityForResult(intent, ACTIVITY_RESULT_EXECUTE_PROGRAM);
             return ;
