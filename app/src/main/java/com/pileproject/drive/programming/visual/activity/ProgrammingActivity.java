@@ -97,7 +97,7 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
         mSpaceManager.saveExecutionProgram();
 
         // TODO: remove bluetooth-dependent code for WiFiCommunicator
-        String address = MachinePreferences.get(getApplicationContext()).getMacAddress();
+        String address = MachinePreferences.get(getApplicationContext()).getMacAddress("");
 
         if (!address.equals("") || DeployUtil.isOnEmulator()) {
             Intent intent = ExecutionActivity.createIntent(getApplicationContext());
@@ -134,9 +134,10 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
 
     private void setUpToolbar() {
         // get device address to show it on toolbar
-        String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress();
+        String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress("");
         deviceAddress =
-                (deviceAddress == null) ? getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
+                (deviceAddress.equals("")) ?
+                        getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
         toolbar.inflateMenu(R.menu.menu_programming);
