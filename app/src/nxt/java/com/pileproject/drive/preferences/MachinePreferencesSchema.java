@@ -32,7 +32,7 @@ public class MachinePreferencesSchema {
     }
 
     @Key(name = "bluetooth_address")
-    String macAddress;
+    String macAddress = "";
 
     @Key(name = "firmware")
     final String firmware = Firmware.STANDARD;

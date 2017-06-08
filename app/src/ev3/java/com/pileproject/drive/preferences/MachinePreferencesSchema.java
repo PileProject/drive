@@ -27,7 +27,7 @@ import com.rejasupotaro.android.kvs.annotations.Table;
 @Table(name = "machine_preferences")
 public class MachinePreferencesSchema {
     @Key(name = "bluetooth_address")
-    String macAddress;
+    String macAddress = "";
 
     @Key(name = "input_port_1")
     final String inputPort1 = CarControllerBase.InputDevice.TOUCH;
