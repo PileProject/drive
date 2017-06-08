@@ -134,10 +134,8 @@ public class ProgrammingActivity extends AppCompatActivity implements AlertDialo
 
     private void setUpToolbar() {
         // get device address to show it on toolbar
-        String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress("");
-        deviceAddress =
-                (deviceAddress.equals("")) ?
-                        getResources().getString(R.string.programming_noTargetDevice) : deviceAddress;
+        final String defaultString = getResources().getString(R.string.programming_noTargetDevice);
+        final String deviceAddress = MachinePreferences.get(getApplicationContext()).getMacAddress(defaultString);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.programming_toolbar);
         toolbar.inflateMenu(R.menu.menu_programming);
