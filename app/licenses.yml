@@ -66,3 +66,33 @@
   copyrightHolder: QOS.ch
   license: MIT License
   url: http://www.slf4j.org
+
+- artifact: com.google.code.findbugs:jsr305:+
+  name: FindBugs-jsr305
+  copyrightHolder: the University of Maryland
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: http://findbugs.sourceforge.net/
+
+- artifact: com.google.errorprone:error_prone_annotations:+
+  name: error-prone annotations
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+
+- artifact: com.google.guava:guava:+
+  name: "Guava: Google Core Libraries for Java"
+  copyrightHolder: The Guava Authors
+  license: The Apache Software License, Version 2.0
+
+- artifact: com.google.j2objc:j2objc-annotations:+
+  name: J2ObjC Annotations
+  copyrightHolder: Google Inc.
+  license: The Apache Software License, Version 2.0
+  licenseUrl: http://www.apache.org/licenses/LICENSE-2.0.txt
+  url: https://github.com/google/j2objc/
+
+- artifact: org.codehaus.mojo:animal-sniffer-annotations:+
+  name: Animal Sniffer Annotations
+  copyrightHolder: codehaus.org.
+  license: MIT License
+  licenseUrl: http://www.opensource.org/licenses/mit-license.php
